@@ -26,6 +26,7 @@
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@commitlint/prompt-cli": "^19.5.0",
+    "@dendelion/paper-camp": "^0.23.2",
     "husky": "^9.1.6",
     "turbo": "^2.1.3"
   },
