@@ -1,8 +1,8 @@
-export { useChat } from './useChat';
-export { useSound } from './useSound';
-export { useStream } from './useStream';
-export { useUserList } from './useUserList';
-export type { User, UserWithStatus } from './useUserList';
-export type { ChatMessage } from './useChat';
-export { useDetailedSound } from './useDetailedSound';
-export { useUserColor } from './useUserColor';
+export { useChat } from './use-chat';
+export { useSound } from './use-sound';
+export { useStream } from './use-stream';
+export { useUserList } from './use-user-list';
+export type { User, UserWithStatus } from './use-user-list';
+export type { ChatMessage } from './use-chat';
+export { useDetailedSound } from './use-detailed-sound';
+export { useUserColor } from './use-user-color';

@@ -1,0 +1,178 @@
+@use '../../styles' as *;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  border-radius: $radius-full;
+  transition: $transition-fast;
+  white-space: nowrap;
+}
+
+// Size variants
+.small {
+  padding: 0.125rem 0.5rem;
+  font-size: 0.625rem;
+  line-height: 1.25;
+
+  .dot {
+    width: 4px;
+    height: 4px;
+  }
+}
+
+.medium {
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  line-height: 1.25;
+
+  .dot {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+.large {
+  padding: 0.375rem 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.25;
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+// Dot indicator
+.dot {
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.withDot {
+  padding-left: 0.5rem;
+}
+
+// Pulse animation
+.pulse .dot {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Variant styles
+.default {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgb(217, 219, 209);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  .dot {
+    background: rgb(217, 219, 209);
+  }
+}
+
+.success {
+  background: rgba(71, 245, 125, 0.15);
+  color: #47f57d;
+  border: 1px solid rgba(71, 245, 125, 0.3);
+  box-shadow: 0 0 10px rgba(71, 245, 125, 0.1);
+
+  .dot {
+    background: #47f57d;
+    box-shadow: 0 0 6px rgba(71, 245, 125, 0.6);
+  }
+}
+
+.warning {
+  background: rgba(255, 189, 48, 0.15);
+  color: #ffbd30;
+  border: 1px solid rgba(255, 189, 48, 0.3);
+  box-shadow: 0 0 10px rgba(255, 189, 48, 0.1);
+
+  .dot {
+    background: #ffbd30;
+    box-shadow: 0 0 6px rgba(255, 189, 48, 0.6);
+  }
+}
+
+.error {
+  background: rgba(255, 80, 80, 0.15);
+  color: #ff5050;
+  border: 1px solid rgba(255, 80, 80, 0.3);
+  box-shadow: 0 0 10px rgba(255, 80, 80, 0.1);
+
+  .dot {
+    background: #ff5050;
+    box-shadow: 0 0 6px rgba(255, 80, 80, 0.6);
+  }
+}
+
+.info {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.1);
+
+  .dot {
+    background: #38bdf8;
+    box-shadow: 0 0 6px rgba(56, 189, 248, 0.6);
+  }
+}
+
+// Nature-themed variants
+.moss {
+  background: rgba(88, 143, 98, 0.2);
+  color: #8fbc8f;
+  border: 1px solid rgba(88, 143, 98, 0.4);
+  box-shadow: 0 0 10px rgba(88, 143, 98, 0.1);
+
+  .dot {
+    background: #8fbc8f;
+    box-shadow: 0 0 6px rgba(88, 143, 98, 0.6);
+  }
+}
+
+.ember {
+  background: rgba(204, 119, 34, 0.2);
+  color: #ffb366;
+  border: 1px solid rgba(204, 119, 34, 0.4);
+  box-shadow: 0 0 10px rgba(204, 119, 34, 0.1);
+
+  .dot {
+    background: #ffb366;
+    box-shadow: 0 0 6px rgba(204, 119, 34, 0.6);
+  }
+}
+
+.sun {
+  background: rgba(255, 204, 92, 0.15);
+  color: #ffcc5c;
+  border: 1px solid rgba(255, 204, 92, 0.3);
+  box-shadow: 0 0 10px rgba(255, 204, 92, 0.1);
+
+  .dot {
+    background: #ffcc5c;
+    box-shadow: 0 0 6px rgba(255, 204, 92, 0.6);
+  }
+}
+
+.river {
+  background: rgba(64, 156, 255, 0.15);
+  color: #64a6ff;
+  border: 1px solid rgba(64, 156, 255, 0.3);
+  box-shadow: 0 0 10px rgba(64, 156, 255, 0.1);
+
+  .dot {
+    background: #64a6ff;
+    box-shadow: 0 0 6px rgba(64, 156, 255, 0.6);
+  }
+}

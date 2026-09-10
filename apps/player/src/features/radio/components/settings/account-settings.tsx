@@ -1,10 +1,9 @@
-import type React from 'react';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { useSound } from '@/features/radio/hooks';
-import { useDetailedSound } from '@/features/radio/hooks/useDetailedSound';
-import { useUserList } from '@/features/radio/hooks/useUserList';
-import { useUserColor } from '@/features/radio/hooks/useUserColor';
+import { useDetailedSound } from '@/features/radio/hooks/use-detailed-sound';
+import { useUserList } from '@/features/radio/hooks/use-user-list';
+import { useUserColor } from '@/features/radio/hooks/use-user-color';
 import { getSocket } from '@/services/socket';
 import { ColorPickerModal } from './color-picker-modal';
 import { CloseButton, Button, ToggleButton } from '@/components/ui';
@@ -16,12 +15,12 @@ interface AccountSettingsProps {
   onNicknameChange: (newNickname: string) => void;
 }
 
-export const AccountSettings: React.FC<AccountSettingsProps> = ({
+export const AccountSettings = ({
   isOpen,
   onClose,
   nickname,
   onNicknameChange,
-}) => {
+}: AccountSettingsProps) => {
   const { isEnabled: masterSoundEnabled, toggle: toggleMasterSound } =
     useSound();
   const {
@@ -34,7 +33,7 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({
   } = useDetailedSound();
 
   const users = useUserList();
-  const { selectedColor, isAutoMode, getEffectiveColor } = useUserColor();
+  const { isAutoMode, getEffectiveColor } = useUserColor();
   const [newNickname, setNewNickname] = useState(nickname);
   const [nicknameError, setNicknameError] = useState<string | null>(null);
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);

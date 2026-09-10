@@ -1,6 +1,4 @@
-import type { SVGProps } from 'react';
-
-export const SoundOnIcon = (props: SVGProps<SVGSVGElement>) => (
+export const SoundOnIcon = () => (
   <svg
     width="32"
     height="32"
@@ -45,7 +43,7 @@ export const SoundOnIcon = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export const SoundOffIcon = (props: SVGProps<SVGSVGElement>) => (
+export const SoundOffIcon = () => (
   <svg
     width="32"
     height="32"

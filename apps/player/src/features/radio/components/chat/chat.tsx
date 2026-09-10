@@ -1,12 +1,12 @@
 import clsx from 'clsx';
-import { useChat } from '@/features/radio/hooks/useChat';
+import { useChat } from '@/features/radio/hooks/use-chat';
 import { ChatInput } from './chat-input';
 import { ChatMessages } from './chat-messages';
 import { NicknameInput } from './nickname-input';
 import type { ChatProps } from './types';
 import { SoundControl } from '../settings/sound-control';
 import { getSocket } from '@/services/socket';
-import { useUserList } from '../../hooks/useUserList';
+import { useUserList } from '../../hooks/use-user-list';
 import { useState } from 'react';
 
 export const Chat = ({ nickname, setNickname }: ChatProps) => {

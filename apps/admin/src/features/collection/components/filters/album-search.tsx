@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Input } from '@radio/mojo-ui';
+import { Input } from '@dendelion/mojo-ui';
 
 type AlbumSearchProps = {
   value: string;

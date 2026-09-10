@@ -1,4 +1,4 @@
-import { Button } from '@radio/mojo-ui';
+import { Button } from '@dendelion/mojo-ui';
 import { SongList } from './song-list';
 import type { Song } from '@radio/types';
 

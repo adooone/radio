@@ -1,5 +1,5 @@
 import type { Album } from '@radio/types';
-import { Switch } from '@radio/mojo-ui';
+import { Switch } from '@dendelion/mojo-ui';
 import { AlbumCover } from './album-cover';
 import { useTogglePublished } from '@/services/api';
 import { useNotificationStore } from '@/stores/notification-store';

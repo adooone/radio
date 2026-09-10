@@ -1,4 +1,4 @@
-import type { UserWithStatus } from '@/features/radio/hooks/useUserList';
+import type { UserWithStatus } from '@/features/radio/hooks/use-user-list';
 
 export type Message = {
   text: string;

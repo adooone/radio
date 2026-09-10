@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "projectName": "radio",
+  "initializedAt": "2026-08-24T09:42:33.287Z",
+  "port": 3666,
+  "nextId": {
+    "idea": 5
+  },
+  "desk": {
+    "services": [
+      {
+        "name": "dev",
+        "cmd": "pnpm dev"
+      },
+      {
+        "name": "rtmp",
+        "cmd": "pnpm wave:rtmp"
+      }
+    ],
+    "checks": [
+      {
+        "name": "Build",
+        "cmd": "pnpm build"
+      },
+      {
+        "name": "Lint",
+        "cmd": "pnpm lint",
+        "fixCmd": "pnpm lint:write"
+      },
+      {
+        "name": "Tests",
+        "cmd": "pnpm test"
+      }
+    ],
+    "ci": {
+      "repo": "croco-dendy/radio",
+      "releasePlease": true
+    }
+  }
+}

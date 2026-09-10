@@ -1,17 +1,17 @@
-@use '../../styles/variables' as *;
+@use '../../styles' as *;
 
 .panel {
   position: relative;
   display: flex;
   flex-direction: column;
-  border-radius: 24px;
+  border-radius: $radius-xl;
 }
 
 .baseLayer {
   position: absolute;
   inset: 0;
-  border-radius: 24px;
-  background: $base-layer-gradient-wide;
+  border-radius: $radius-xl;
+  background: $gradient-metal-wide;
   box-shadow: $shadow-base;
   z-index: 1;
 }
@@ -20,9 +20,9 @@
   position: absolute;
   inset: 4.5px;
   border-radius: 19.5px;
-  background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 100%);
-  border: $input-border;
-  box-shadow: $input-shadow-inset;
+  background: $gradient-input;
+  border: $color-border-subtle;
+  box-shadow: $shadow-input;
   z-index: 2;
 }
 
@@ -30,7 +30,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 24px 24px 16px;
+  padding: $space-6 $space-6 $space-4;
   z-index: 3;
   flex: 1;
 }
@@ -47,29 +47,29 @@
 }
 
 .pinTopLeft {
-  top: 14px;
-  left: 14px;
+  top: $space-3 + $space-2; // ~14px
+  left: $space-3 + $space-2;
 }
 
 .pinTopRight {
-  top: 14px;
-  right: 14px;
+  top: $space-3 + $space-2;
+  right: $space-3 + $space-2;
 }
 
 .pinBottomLeft {
-  bottom: 14px;
-  left: 14px;
+  bottom: $space-3 + $space-2;
+  left: $space-3 + $space-2;
 }
 
 .pinBottomRight {
-  bottom: 14px;
-  right: 14px;
+  bottom: $space-3 + $space-2;
+  right: $space-3 + $space-2;
 }
 
 .header {
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: $space-4;
+  padding-bottom: $space-3;
+  border-bottom: 1px solid $color-border-subtle;
   position: relative;
 
   &::after {
@@ -87,11 +87,11 @@
 }
 
 .title {
-  font-size: 16px;
-  font-weight: 600;
-  font-family: 'Tiny5', sans-serif;
-  text-transform: uppercase;
-  color: #e8e9ed;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  font-family: $font-family-display;
+  text-transform: $text-transform-uppercase;
+  color: $color-text-primary;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5),
     0 0 8px rgba(232, 233, 237, 0.3),
     0 0 16px rgba(232, 233, 237, 0.1);
@@ -104,7 +104,7 @@
 }
 
 .footerActions {
-  margin-top: 32px;
+  margin-top: $space-8;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -139,7 +139,7 @@
     height: 48px;
 
     &:not(:last-child) {
-      margin-right: 12px;
+      margin-right: $space-3;
     }
   }
 }
@@ -166,10 +166,9 @@
   border-top: 2px solid rgba(255, 255, 255, 0.221);
   border-bottom-left-radius: 19px;
   border-bottom-right-radius: 19px;
-  background: $lamp-base-color;
+  background: $color-bg-input;
   box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.4),
     inset -2px -2px 4px rgba(0, 0, 0, 0.05);
-  ;
 }
 
 .ventilationStripes {
@@ -179,7 +178,6 @@
   border-bottom-right-radius: 19px;
   box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.4),
     inset -2px -2px 4px rgba(0, 0, 0, 0.05);
-  ;
   background: repeating-linear-gradient(0deg,
       transparent 0px,
       transparent 4px,

@@ -1,11 +1,13 @@
+@use '../../styles' as *;
+
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 50;
+  z-index: $z-modal;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: $space-4;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
@@ -17,10 +19,10 @@
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  border-radius: 24px;
-  background: rgb(28, 25, 23);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  border-radius: $radius-xl;
+  background: $color-bg-base;
+  border: 1px solid $color-border-strong;
+  box-shadow: $shadow-xl;
   overflow: hidden;
 }
 
@@ -28,32 +30,32 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: $space-6;
+  border-bottom: 1px solid $color-border-default;
 }
 
 .title {
   margin: 0;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #ffffff;
-  line-height: 1.2;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  line-height: $line-height-snug;
 }
 
 .closeButton {
-  padding: 0.5rem;
-  color: rgba(255, 255, 255, 0.6);
+  padding: $space-2;
+  color: $color-text-secondary;
   background: transparent;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: $radius-sm;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: $transition-base;
   display: flex;
   align-items: center;
   justify-content: center;
 
   &:hover {
-    color: rgba(255, 255, 255, 0.9);
+    color: $color-text-primary;
     background: rgba(255, 255, 255, 0.05);
   }
 
@@ -64,7 +66,7 @@
 }
 
 .content {
-  padding: 1.5rem;
+  padding: $space-6;
   overflow-y: auto;
   flex: 1;
   max-height: calc(90vh - 6rem);

@@ -2,8 +2,8 @@ import type React from 'react';
 import { useState } from 'react';
 import clsx from 'clsx';
 import type { RtmpServerConfig } from '@radio/types';
-import { Button } from '@radio/mojo-ui';
-import { sharedStyles } from '@/styles/shared-styles';
+import { Button } from '@dendelion/mojo-ui';
+import { sharedStyles } from '@dendelion/mojo-ui/styles';
 import {
   useRtmpConfig,
   useUpdateRtmpConfig,

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import { PageLayout, VinylTabs } from '@radio/mojo-ui';
-import { sharedStyles } from '@/styles/shared-styles';
+import { PageLayout, VinylTabs } from '@dendelion/mojo-ui';
+import { sharedStyles } from '@dendelion/mojo-ui/styles';
 import { useMonitoringData } from '@/services/api/hooks';
 import { useWebSocket } from '@/hooks/use-websocket';
 import { MonitoringTab, ConfigurationTab, LogsTab } from './components';

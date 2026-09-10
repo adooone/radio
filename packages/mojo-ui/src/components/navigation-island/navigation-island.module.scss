@@ -1,0 +1,96 @@
+@use '../../styles' as *;
+
+.container {
+  position: fixed;
+  bottom: $space-6;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: $z-fixed;
+}
+
+.island {
+  background: rgba($color-bg-base, 0.9);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-full;
+  padding: $space-3 $space-4;
+  box-shadow: $shadow-xl;
+  transition: $transition-base;
+  min-width: fit-content;
+
+  &:hover {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  padding-right: $space-4;
+  border-right: 1px solid $color-border-subtle;
+}
+
+.centerSection {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  padding-left: $space-4;
+  border-left: 1px solid $color-border-subtle;
+}
+
+.navLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-2 $space-4;
+  border-radius: $radius-full;
+  border: 1px solid transparent;
+  color: $color-text-secondary;
+  text-decoration: none;
+  transition: $transition-base;
+
+  &:hover {
+    color: $color-text-primary;
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.navLinkActive {
+  background: linear-gradient(180deg, rgba($color-accent-warning, 0.25) 0%, rgba($color-accent-warning, 0.15) 100%);
+  color: $color-accent-warning;
+  border-color: rgba($color-accent-warning, 0.4);
+  box-shadow: $shadow-md;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.label {
+  font-family: $font-family-display;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  text-transform: $text-transform-uppercase;
+  letter-spacing: $letter-spacing-wide;
+  white-space: nowrap;
+}

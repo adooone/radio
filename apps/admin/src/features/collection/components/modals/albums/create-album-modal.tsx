@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Modal } from '@radio/mojo-ui';
+import { Modal, Input, Textarea, Checkbox } from '@dendelion/mojo-ui';
 import { useCreateAlbum } from '@/services/api';
 import { albumApi } from '@/services/api/album-api';
-import { FormInput, FormTextarea, FormCheckbox } from '@/components/ui';
 import { TagEditor } from '../../shared';
 
 type CreateAlbumModalProps = {
@@ -172,27 +171,27 @@ export const CreateAlbumModal = ({
           </div>
 
           <div className="flex-1 space-y-4">
-            <FormInput
+            <Input
               label="Album Title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
               required
               placeholder="Enter album title"
             />
 
-            <FormInput
+            <Input
               label="Artist"
               value={artist}
-              onChange={(e) => setArtist(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setArtist(e.target.value)}
               required
               placeholder="Enter artist name"
             />
 
-            <FormInput
+            <Input
               label="Year"
               type="number"
               value={year}
-              onChange={(e) => setYear(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setYear(e.target.value)}
               placeholder="1900-2100"
               min="1900"
               max="2100"
@@ -200,20 +199,20 @@ export const CreateAlbumModal = ({
           </div>
         </div>
 
-        <FormTextarea
+        <Textarea
           label="Description"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
           placeholder="Enter album description"
           rows={3}
         />
 
         <TagEditor tags={tags} onTagsChange={setTags} />
 
-        <FormCheckbox
+        <Checkbox
           label="Make this album public"
           checked={isPublic}
-          onChange={(e) => setIsPublic(e.target.checked)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsPublic(e.target.checked)}
         />
 
         <div className="flex gap-3 pt-4">

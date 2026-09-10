@@ -8,7 +8,7 @@ import {
   ArrowUpIcon,
   ArrowDownIcon,
   FilterIcon,
-} from '@radio/mojo-ui';
+} from '@dendelion/mojo-ui';
 
 export const AlbumListHeader = () => {
   const {

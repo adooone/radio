@@ -6,7 +6,7 @@ import {
   SortIcon,
   ArrowUpIcon,
   ArrowDownIcon,
-} from '@radio/mojo-ui';
+} from '@dendelion/mojo-ui';
 
 export const CompactAlbumListHeader = () => {
   const { sortBy, sortOrder, setSortBy, setSortOrder } = useCollectionStore();

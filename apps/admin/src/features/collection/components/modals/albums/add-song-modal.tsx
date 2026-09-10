@@ -1,4 +1,4 @@
-import { Modal } from '@radio/mojo-ui';
+import { Modal } from '@dendelion/mojo-ui';
 
 type AddSongModalProps = {
   isOpen: boolean;

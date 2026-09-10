@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PageLayout, VinylTabs, Panel } from '@radio/mojo-ui';
+import { PageLayout, VinylTabs, Panel } from '@dendelion/mojo-ui';
 import {
   CollectionContent,
   CollectionSidebar,

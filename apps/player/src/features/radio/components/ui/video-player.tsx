@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import type { RefObject } from 'react';
 import clsx from 'clsx';
-import { PlayIcon, PauseIcon } from '../icons/player-icons';
-import { Button } from '@/components/ui';
 
 interface VideoPlayerProps {
-  videoRef: React.RefObject<HTMLVideoElement>;
+  videoRef: RefObject<HTMLVideoElement>;
   isPlaying: boolean;
   isMuted: boolean;
   isHovering: boolean;
@@ -14,17 +13,17 @@ interface VideoPlayerProps {
   onMouseLeave: () => void;
 }
 
-export const VideoPlayer: React.FC<VideoPlayerProps> = ({
+export const VideoPlayer = ({
   videoRef,
-  isPlaying,
+  isPlaying: _isPlaying,
   isMuted,
-  isHovering,
-  onPlayClick,
-  onPauseClick,
+  isHovering: _isHovering,
+  onPlayClick: _onPlayClick,
+  onPauseClick: _onPauseClick,
   onMouseEnter,
   onMouseLeave,
-}) => {
-  const hideTimeoutRef = React.useRef<ReturnType<typeof setTimeout>>();
+}: VideoPlayerProps) => {
+  const hideTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     return () => {

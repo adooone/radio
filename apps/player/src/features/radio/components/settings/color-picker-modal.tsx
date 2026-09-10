@@ -1,7 +1,6 @@
-import type React from 'react';
 import clsx from 'clsx';
 import { useState, useEffect } from 'react';
-import { useUserColor } from '@/features/radio/hooks/useUserColor';
+import { useUserColor } from '@/features/radio/hooks/use-user-color';
 import { CloseButton, Button } from '@/components/ui';
 
 interface ColorPickerModalProps {
@@ -10,11 +9,11 @@ interface ColorPickerModalProps {
   nickname: string;
 }
 
-export const ColorPickerModal: React.FC<ColorPickerModalProps> = ({
+export const ColorPickerModal = ({
   isOpen,
   onClose,
   nickname,
-}) => {
+}: ColorPickerModalProps) => {
   const {
     selectedColor,
     saveColor,

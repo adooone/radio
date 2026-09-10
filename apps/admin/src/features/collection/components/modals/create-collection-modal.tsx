@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import clsx from 'clsx';
-import { Modal } from '@radio/mojo-ui';
+import { Modal, Input, Textarea, Checkbox } from '@dendelion/mojo-ui';
 import { useCreateCollection } from '@/services/api';
 import { sharedStyles } from '@/styles/shared-styles';
-import { FormInput, FormTextarea, FormCheckbox } from '@/components/ui';
 
 type CreateCollectionModalProps = {
   isOpen: boolean;
@@ -60,30 +59,30 @@ export const CreateCollectionModal = ({
       maxWidth="max-w-md"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-        <FormInput
+        <Input
           id="name"
           label="Collection Name *"
           type="text"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
           placeholder="Enter collection name"
           required
         />
 
-        <FormTextarea
+        <Textarea
           id="description"
           label="Description"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
           rows={3}
           placeholder="Optional description"
         />
 
-        <FormCheckbox
+        <Checkbox
           id="isPublic"
           label="Make this collection public"
           checked={isPublic}
-          onChange={(e) => setIsPublic(e.target.checked)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsPublic(e.target.checked)}
         />
 
         <div className="flex gap-3 pt-4 justify-center">

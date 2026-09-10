@@ -1,4 +1,4 @@
-import { ProgressBar } from '@radio/mojo-ui';
+import { ProgressBar } from '@dendelion/mojo-ui';
 import { CollectionStats } from '../stats/collection-stats';
 import { CollectionActions } from './actions';
 import { useCollectionStore } from '@/features/collection/store/collection-store';

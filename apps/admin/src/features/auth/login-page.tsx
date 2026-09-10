@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
+import { Input } from '@dendelion/mojo-ui';
 import { useLogin } from '@/services/api/hooks/use-auth';
 import { useAuthStore } from '@/stores/auth-store';
 import { sharedStyles } from '@/styles/shared-styles';
-import { FormInput } from '@/components/ui';
 
 export const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -54,22 +54,22 @@ export const LoginPage = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <FormInput
+          <Input
             id="username"
             label="Username"
             type="text"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
             placeholder="Enter your username"
             required
           />
 
-          <FormInput
+          <Input
             id="password"
             label="Password"
             type={showPassword ? 'text' : 'password'}
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             placeholder="Enter your password"
             required
             rightElement={

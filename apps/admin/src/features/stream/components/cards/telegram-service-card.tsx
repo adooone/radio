@@ -1,6 +1,6 @@
 import type { UseMutationResult } from '@tanstack/react-query';
 import type { TelegramServiceStats, RtmpServiceStats } from '@radio/types';
-import { Card, Button, StatusIndicator, StatsGrid } from '@radio/mojo-ui';
+import { Card, Button, StatusIndicator, StatsGrid } from '@dendelion/mojo-ui';
 import { InlineServiceAlert } from './inline-service-alert';
 
 interface StatItem {

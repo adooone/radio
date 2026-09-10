@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import clsx from 'clsx';
+import { Input, Select } from '@dendelion/mojo-ui';
 import { sharedStyles } from '@/styles/shared-styles';
 import { useCreateUser } from '@/services/api/hooks/use-user-management';
-import { FormInput, FormSelect } from '@/components/ui';
 
 type CreateUserModalProps = {
   isOpen: boolean;
@@ -80,41 +80,41 @@ export const CreateUserModal = ({
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              <FormInput
+              <Input
                 id="username"
                 label="Username *"
                 type="text"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
                 placeholder="Enter username"
                 required
               />
 
-              <FormInput
+              <Input
                 id="email"
                 label="Email Address *"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 placeholder="Enter email address"
                 required
               />
 
-              <FormInput
+              <Input
                 id="password"
                 label="Password *"
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 placeholder="Enter password"
                 required
               />
 
-              <FormSelect
+              <Select
                 id="role"
                 label="Role"
                 value={role}
-                onChange={(e) => setRole(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRole(e.target.value)}
                 options={[
                   { value: 'user', label: 'User' },
                   { value: 'admin', label: 'Administrator' },

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
-import type { ChatMessage } from '@/features/radio/hooks/useChat';
-import { useUser } from '@/features/radio/hooks/useUser';
-import { useUserColor } from '@/features/radio/hooks/useUserColor';
+import type { ChatMessage } from '@/features/radio/hooks/use-chat';
+import { useUser } from '@/features/radio/hooks/use-user';
+import { useUserColor } from '@/features/radio/hooks/use-user-color';
 import { StatusIcon } from '../icons/status-icon';
 import { formatTime } from '../../utils/time';
 

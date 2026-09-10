@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import type { FC, InputHTMLAttributes } from 'react';
+import type { FC, InputHTMLAttributes, ReactNode } from 'react';
 import {
   type Size,
   capitalizeFirst,
@@ -7,24 +7,29 @@ import {
 } from '../../utils/style-helpers';
 import styles from './input.module.scss';
 
-interface InputProps
+export interface InputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   size?: Size;
   label?: string;
   error?: string;
+  rightElement?: ReactNode;
 }
 
 export const Input: FC<InputProps> = ({
   size = 'medium',
   label,
   error,
+  rightElement,
   className,
   ...props
 }) => {
+  const inputId =
+    props.id || `input-${Math.random().toString(36).substr(2, 9)}`;
+
   return (
     <div className={styles.container}>
       {label && (
-        <label htmlFor={props.id || `input-${size}`} className={styles.label}>
+        <label htmlFor={inputId} className={styles.label}>
           {label}
         </label>
       )}
@@ -47,15 +52,20 @@ export const Input: FC<InputProps> = ({
         />
 
         <input
-          id={props.id || `input-${size}`}
+          id={inputId}
           className={clsx(
             styles.input,
             styles[size],
+            rightElement && styles.inputWithRightElement,
             getSizeTextClass(size),
             className,
           )}
           {...props}
         />
+
+        {rightElement && (
+          <div className={styles.rightElement}>{rightElement}</div>
+        )}
       </div>
       {error && <p className={styles.errorText}>{error}</p>}
     </div>

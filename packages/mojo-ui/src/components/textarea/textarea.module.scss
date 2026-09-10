@@ -1,0 +1,128 @@
+@use '../../styles' as *;
+@use 'sass:map';
+
+.container {
+  width: 100%;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(217, 219, 209);
+  margin-bottom: 0.5rem;
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+
+  &.small {
+    min-height: 80px;
+    border-radius: 18px;
+  }
+
+  &.medium {
+    min-height: 120px;
+    border-radius: 24px;
+  }
+
+  &.large {
+    min-height: 160px;
+    border-radius: 28px;
+  }
+
+  &.error {
+    .field {
+      border-color: rgba(255, 80, 80, 0.5);
+      box-shadow: $input-shadow-inset, 0 0 12px rgba(255, 80, 80, 0.2);
+    }
+  }
+}
+
+.baseLayer {
+  @include soft-base-layer;
+  z-index: 1;
+  border-radius: 24px;
+}
+
+.baseLayerSmall {
+  border-radius: 18px;
+}
+
+.baseLayerMedium {
+  border-radius: 24px;
+}
+
+.baseLayerLarge {
+  border-radius: 28px;
+}
+
+.field {
+  @include input-field;
+  z-index: 2;
+  border-radius: 24px;
+
+  &:has(textarea:focus) {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: $input-shadow-inset, 0 0 12px rgba(255, 255, 255, 0.08);
+  }
+}
+
+.fieldSmall {
+  inset: 3.5px;
+  border-radius: 18px;
+}
+
+.fieldMedium {
+  inset: 4.5px;
+  border-radius: 24px;
+}
+
+.fieldLarge {
+  inset: 5.8px;
+  border-radius: 28px;
+}
+
+.textarea {
+  @include input-content;
+  position: relative;
+  width: 100%;
+  min-height: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgb(238, 237, 234);
+  transition: $transition-smooth;
+  z-index: 3;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.5;
+
+  &::placeholder {
+    color: rgb(107 114 128);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.small {
+    padding: 12px 20px;
+  }
+
+  &.medium {
+    padding: 16px 20px;
+  }
+
+  &.large {
+    padding: 20px 24px;
+  }
+}
+
+.errorText {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: rgb(248 113 113);
+}

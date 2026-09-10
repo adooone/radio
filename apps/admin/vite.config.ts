@@ -2,7 +2,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { VitePWA } from 'vite-plugin-pwa';
-import { resolve } from 'node:path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -58,11 +57,6 @@ export default defineConfig({
       // or when using port forwarding. Avoids ERR_CONNECTION_REFUSED spam.
       protocol: 'ws',
       clientPort: 3001,
-    },
-  },
-  resolve: {
-    alias: {
-      '@radio/mojo-ui': resolve(__dirname, '../../packages/mojo-ui/src'),
     },
   },
   preview: {

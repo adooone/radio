@@ -1,7 +1,6 @@
-import type React from 'react';
 import clsx from 'clsx';
 
-export const Fallback: React.FC = () => (
+export const Fallback = () => (
   <div className={clsx(styles.fallback)}>
     <div className={clsx(styles.fallbackText)}>Відпочиваємо...</div>
   </div>

@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useUpdateAlbum } from '@/services/api';
 import {
-  FormInput,
-  FormTextarea,
-  FormCheckbox,
-  FormSelect,
-} from '@/components/ui';
+  Input,
+  Textarea,
+  Checkbox,
+  Select,
+  Button,
+} from '@dendelion/mojo-ui';
 import { TagEditor } from '@/features/collection/components/shared';
-import { Button } from '@radio/mojo-ui';
 import type { Album } from '@radio/types';
 
 const RPM_OPTIONS = [
@@ -107,59 +107,59 @@ export const AlbumEditForm = ({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormInput
+        <Input
           label="Album Title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
           required
           placeholder="Enter album title"
         />
 
-        <FormInput
+        <Input
           label="Artist"
           value={artist}
-          onChange={(e) => setArtist(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setArtist(e.target.value)}
           required
           placeholder="Enter artist name"
         />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormInput
+        <Input
           label="Year"
           type="number"
           value={year}
-          onChange={(e) => setYear(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setYear(e.target.value)}
           placeholder="1900-2100"
           min="1900"
           max="2100"
         />
 
-        <FormInput
+        <Input
           label="Release Year"
           type="number"
           value={releaseYear}
-          onChange={(e) => setReleaseYear(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReleaseYear(e.target.value)}
           placeholder="e.g. 1975"
           min="1900"
           max="2100"
         />
       </div>
 
-      <FormTextarea
+      <Textarea
         label="Description"
         value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
         placeholder="Enter album description"
         rows={3}
       />
 
       <TagEditor tags={tags} onTagsChange={setTags} />
 
-      <FormCheckbox
+      <Checkbox
         label="Make this album public"
         checked={isPublic}
-        onChange={(e) => setIsPublic(e.target.checked)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsPublic(e.target.checked)}
       />
 
       {/* Vinyl Metadata Section */}
@@ -170,32 +170,32 @@ export const AlbumEditForm = ({
 
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormSelect
+            <Select
               label="RPM Speed"
               value={rpmSpeed}
-              onChange={(e) => setRpmSpeed(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRpmSpeed(e.target.value)}
               options={RPM_OPTIONS}
             />
 
-            <FormSelect
+            <Select
               label="Vinyl Condition"
               value={vinylCondition}
-              onChange={(e) => setVinylCondition(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setVinylCondition(e.target.value)}
               options={CONDITION_OPTIONS}
             />
           </div>
 
-          <FormInput
+          <Input
             label="Digitization Date"
             type="date"
             value={digitizationDate}
-            onChange={(e) => setDigitizationDate(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDigitizationDate(e.target.value)}
           />
 
-          <FormTextarea
+          <Textarea
             label="Equipment Used"
             value={equipmentUsed}
-            onChange={(e) => setEquipmentUsed(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setEquipmentUsed(e.target.value)}
             placeholder="e.g. Technics SL-1200, Audient iD4, Audacity"
             rows={2}
           />

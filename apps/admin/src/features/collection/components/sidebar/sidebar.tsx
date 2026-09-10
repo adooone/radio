@@ -1,4 +1,4 @@
-import { Panel } from '@radio/mojo-ui';
+import { Panel } from '@dendelion/mojo-ui';
 import { PlaylistsSidebar } from './views/playlists-sidebar';
 import { AlbumsSidebar } from './views/albums-sidebar';
 import { useCollectionStore } from '../../store/collection-store';

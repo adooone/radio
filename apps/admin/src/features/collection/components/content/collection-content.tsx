@@ -1,5 +1,5 @@
 import type { Collection } from '@radio/types';
-import { Panel } from '@radio/mojo-ui';
+import { Panel } from '@dendelion/mojo-ui';
 import { CollectionList } from '@/features/collection/components/content/playlists';
 import {
   AlbumList,

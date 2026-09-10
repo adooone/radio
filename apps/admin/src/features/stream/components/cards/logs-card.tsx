@@ -1,7 +1,7 @@
 import type React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useLogs, useServiceLogs } from '@/services/api/hooks/use-monitoring';
-import { sharedStyles } from '@/styles/shared-styles';
+import { sharedStyles } from '@dendelion/mojo-ui/styles';
 import clsx from 'clsx';
 
 interface LogsCardProps {

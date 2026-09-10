@@ -1,9 +1,8 @@
-import type React from 'react';
 import clsx from 'clsx';
 import { getMelomanLabel } from '../../utils';
 import { SettingsIcon } from '../icons/settings-icon';
-import { useUserColor } from '@/features/radio/hooks/useUserColor';
-import { useSound, useUserList } from '../../hooks';
+import { useUserColor } from '@/features/radio/hooks/use-user-color';
+import { useUserList } from '../../hooks';
 import { Button } from '@/components/ui';
 import { useEffect, useRef } from 'react';
 import { soundService } from '@/services/sound';
@@ -17,14 +16,14 @@ interface HeaderProps {
   onSettingsClick: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({
+export const Header = ({
   isPlaying,
   isMuted,
   nickname,
   onMuteClick,
   onUserListClick,
   onSettingsClick,
-}) => {
+}: HeaderProps) => {
   const { getEffectiveColor } = useUserColor();
   const users = useUserList();
   const listeners = users.length;
