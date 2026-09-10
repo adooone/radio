@@ -37,8 +37,8 @@ importers:
   apps/admin:
     dependencies:
       '@dendelion/mojo-ui':
-        specifier: ^0.1.1
-        version: 0.1.1(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.1.2
+        version: 0.1.2(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@fontsource-variable/montserrat':
         specifier: ^5.1.0
         version: 5.2.5
@@ -1127,8 +1127,8 @@ packages:
     resolution: {integrity: sha512-Vd/9EVDiu6PPJt9yAh6roZP6El1xHrdvIVGjyBsHR0RYwNHgL7FJPyIIW4fANJNG6FtyZfvlRPpFI4ZM/lubvw==}
     engines: {node: '>=18'}
 
-  '@dendelion/mojo-ui@0.1.1':
-    resolution: {integrity: sha512-TtsPDwqnUTn3F0X8Mku0Uww8+5s0KFv3LK/pgoV7yOB7UScMYLl/DfpKJ/zQI1noG36ilDIt/NhMqdUBtWj8jA==}
+  '@dendelion/mojo-ui@0.1.2':
+    resolution: {integrity: sha512-nTIkIagpNgZoaEkNvuMy4LJM8jvfjGDCmR6KDmwRaPzDp3kQcK1mK+cZuyPcDQnaYPiKt1uF4d7GYjCL8JV9nQ==}
     peerDependencies:
       framer-motion: ^11.0.0
       react: ^18.0.0
@@ -6736,7 +6736,7 @@ snapshots:
 
   '@csstools/css-tokenizer@3.0.4': {}
 
-  '@dendelion/mojo-ui@0.1.1(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@dendelion/mojo-ui@0.1.2(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       clsx: 2.1.1
       framer-motion: 11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)

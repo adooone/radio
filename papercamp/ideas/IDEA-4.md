@@ -62,3 +62,43 @@ state.
 The RTMP server, its container, its admin cards, and `start-rtmp.sh`,
 which stay as they are. Any replacement for Telegram distribution; there is
 none planned.
+
+### Phases
+
+- [ ] Phase 1 — Delete the wave daemon, service, and routes
+      Remove `telegramStreamDaemon.ts`, `telegramStreamService.ts`, the
+      `/telegram/*` stream routes, the monitoring `/telegram` route and
+      handler, and their tests and mocks.
+
+- [ ] Phase 2 — Strip Telegram branches from wave and shared types
+      Clean `streamService.ts`, `monitoringService.ts`, `errorHandler.ts`,
+      `errorMessages.ts`, `serviceResponse.ts` and the streaming/monitoring
+      types, and drop `TelegramServiceStats`, `TelegramStreamConfig` and the
+      monitoring snapshot's `telegram` field from `packages/types`.
+
+- [ ] Phase 3 — Remove Telegram from wave process config and files
+      Drop the five `telegram*` package scripts, the `radio.telegram` app in
+      `ecosystem.config.js`, the Telegram branches of `stream-manager.sh`,
+      and `data/telegram-stream-status.json` plus the
+      `logs/telegram-stream*.log` paths.
+
+- [ ] Phase 4 — Remove Telegram from the admin stream feature
+      Delete the two Telegram cards and their index entries, unhook them
+      from `configuration-tab.tsx` and `monitoring-tab.tsx`, drop the
+      Telegram log from `logs-card.tsx`, and clear the Telegram calls,
+      hooks, types and events from `stream-control-api.ts`,
+      `use-stream-control.ts`, `streaming/types.ts` and
+      `websocket-service.ts`.
+
+- [ ] Phase 5 — Remove the Telegram sections from the docs
+      Cover the listed pages plus anything a repo-wide search turns up, such
+      as `docs/api/README.md`.
+
+- [ ] Phase 6 — Clean up the machine and record it
+      Run `pm2 delete radio.telegram`, install and configure `pm2-logrotate`
+      (`max_size 10M`, `retain 7`, `compress true`), and document both in the
+      wave README beside the existing pm2 instructions.
+
+- [ ] Phase 7 — Verify nothing Telegram remains and close IDEA-3
+      Grep the repo for `telegram`, run typecheck, lint and tests, confirm
+      wave and admin still build, and mark [[IDEA-3]] dropped.
