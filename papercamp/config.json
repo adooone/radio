@@ -36,5 +36,40 @@
       "repo": "croco-dendy/radio",
       "releasePlease": true
     }
+  },
+  "defaultAgents": {
+    "phase": {
+      "agent": "claude-code",
+      "model": "sonnet",
+      "effort": "medium"
+    },
+    "planDraft": {
+      "agent": "claude-code",
+      "model": "opus",
+      "effort": "high"
+    },
+    "ideaExtend": {
+      "agent": "claude-code",
+      "model": "opus",
+      "effort": "high"
+    },
+    "commitSuggest": {
+      "agent": "claude-code",
+      "model": "sonnet",
+      "effort": "low"
+    },
+    "feedback": {
+      "agent": "claude-code",
+      "model": "sonnet",
+      "effort": "medium"
+    },
+    "codeReview": {
+      "agent": "claude-code",
+      "model": "fable",
+      "effort": "high"
+    },
+    "deskDiscovery": {
+      "agent": "claude-code"
+    }
   }
 }
