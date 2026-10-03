@@ -107,3 +107,82 @@ export const songSchemas = {
     ),
   }),
 };
+
+const albumDataJsonSchema = z.object({
+  album_title: z.string().optional(),
+  artist: z.string().optional(),
+  recording_year: z.number().int().optional(),
+  recording_details: z
+    .object({
+      period: z.string().optional(),
+      location: z.string().optional(),
+      exceptions: z.string().optional(),
+    })
+    .optional(),
+  release_info: z
+    .object({
+      label: z.string().optional(),
+      distributor: z.string().optional(),
+      catalog_number: z.string().optional(),
+      country: z.string().optional(),
+      issue_year: z.number().int().optional(),
+      released: z.string().optional(),
+      format: z.string().optional(),
+      phonographic_copyright: z.string().optional(),
+    })
+    .optional(),
+  discogs: z
+    .object({
+      release_id: z.number().int().optional(),
+      master_id: z.number().int().nullable().optional(),
+      url: z.string().optional(),
+    })
+    .optional(),
+  tracklist: z
+    .array(
+      z.object({
+        position: z.string(),
+        title: z.string(),
+        duration: z.string().optional(),
+      }),
+    )
+    .optional(),
+  personnel: z
+    .array(
+      z.object({
+        name: z.string(),
+        roles: z.array(z.string()),
+      }),
+    )
+    .optional(),
+  production: z
+    .object({
+      engineer: z.string().optional(),
+      producers: z.array(z.string()).optional(),
+      coordination: z.string().optional(),
+      thanks: z.string().optional(),
+      mastering: z.string().optional(),
+    })
+    .optional(),
+  visuals: z
+    .object({
+      photography: z.array(z.string()).optional(),
+      design: z.string().optional(),
+      sleeve_printing: z.string().optional(),
+    })
+    .optional(),
+  additional_info: z.string().optional(),
+});
+
+export const digitizationSchemas = {
+  fetchMetadata: z.object({
+    release: z.string().min(1),
+    force: z.boolean().optional(),
+  }),
+
+  updateMetadata: albumDataJsonSchema,
+
+  search: z.object({
+    q: z.string().min(1),
+  }),
+};
