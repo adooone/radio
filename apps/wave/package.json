@@ -49,6 +49,7 @@
     "hono": "^4.7.6",
     "music-metadata": "^8.1.4",
     "node-media-server": "^4.0.18",
+    "sharp": "^0.33.5",
     "ws": "^8.18.2",
     "xml-js": "^1.6.11",
     "zod": "^3.24.2"

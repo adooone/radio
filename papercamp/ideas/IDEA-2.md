@@ -148,7 +148,7 @@ through wave (CORS already allows admin origins).
       «Cut anyway» when warned). Manual markers are sent as overrides to the
       plan/apply endpoints — this replaces the old vinyl-titles manual flow.
       run: 9m26s · 130 in · 66.7k out · sonnet-5 · sess:86365575-5cbd-46fa-a407-5712d8bcdf3d
-- [ ] Phase 6 — Encode, publish, jobs
+- [x] Phase 6 — Encode, publish, jobs
       `jobService.ts`: minimal in-memory job registry (id, kind, status,
       progress lines, result), `GET /api/digitization/jobs/:id`.
       `encodeService.ts`: per non-empty non-`side-*` wav run
@@ -159,6 +159,7 @@ through wave (CORS already allows admin origins).
       `syncMediaToDatabase` → draft shows «on air». Admin: publish button
       with job progress (poll), errors surfaced in a log panel. Verify
       nginx serves the new album and the collection page picks it up.
+      run: 5m15s · 116 in · 28.6k out · sonnet-5 · sess:11111438-61b2-497c-a08b-4a09a2a8b486
 - [ ] Phase 7 — Lifecycle polish, cleanup, docs
       Draft cleanup action (delete raw side wavs and/or whole inbox folder
       after publish — explicit, confirmed, never automatic). Guard rails
@@ -174,3 +175,4 @@ through wave (CORS already allows admin origins).
 - [x] 2026-10-03 [question] [agent] Run-all parked on phase 1 ("Phase 1 — Wave foundation: inbox drafts API") — the agent needs a decision: Failed to authenticate: OAuth session expired and could not be refreshed
 - [x] 2026-10-03 [decision] [agent] Resumed and finished phase 1: the OAuth failure was a transient session issue, not a product decision — the prior run had already implemented env vars, types, `inboxService.ts`, routes/handlers, and tests correctly; this run verified them (check-types, biome, unit tests all pass) and checked off the phase.
 - [x] 2026-10-03 [decision] [agent] Phase 5: kept the existing modal-based draft detail (widened to `max-w-6xl`) instead of introducing a new `/digitization/:slug` route, since the rest of the feature is modal-only and a route would be the first dynamic-param route in the admin app — out of scope for this phase. Click-to-audition genuinely exercises the Range endpoint from phase 4 (parses the WAV header once per side via a small ranged fetch, then fetches only the ±window PCM slice around the clicked marker and wraps it in a fresh WAV header client-side) rather than blob-loading whole sides, since vinyl side WAVs can be very large. Headless run: UI unverified in a browser, left to a human.
+- [x] 2026-10-03 [decision] [agent] Phase 6: added `sharp` as a new `apps/wave` dependency to back the cover-encode fallback the plan calls for ("fall back to sharp if the build lacks it") — this server's ffmpeg build does have `libwebp`, verified by `encodeService.test.ts` exercising the real ffmpeg path end-to-end, but the sharp branch is untested against a libwebp-less ffmpeg build since none was available here. `jobService.ts` is a plain in-memory `Map`, matching the plan's "job loss on restart is acceptable". Publish's job `kind` is `'publish'` (encode + `syncMediaToDatabase` under one job), not `'encode'`, since that's the operation the button and job actually represent end-to-end. Headless run: nginx serving the new album and the collection page picking it up are left for a human to verify in a browser, as instructed.
