@@ -31,7 +31,16 @@ cp apps/wave/.env.example apps/wave/.env
 ```env
 PORT=6870
 SOCKET_PORT=6871
+MEDIA_ROOT_PATH=/var/www/p-sound
+MEDIA_BASE_URL=/media/p-sound
+MEDIA_INBOX_PATH=/var/www/p-sound-inbox
+DISCOGS_TOKEN=
 ```
+
+`MEDIA_INBOX_PATH` is the vinyl digitization inbox — see
+[Vinyl Digitization Inbox](#vinyl-digitization-inbox) below.
+`DISCOGS_TOKEN` is optional (only needed for Discogs search and cover
+download; release lookup by URL/id works without it).
 
 ### Admin Panel (`apps/admin/.env`)
 
@@ -78,6 +87,34 @@ cd apps/wave
 bun run db:migrate
 bun run admin       # Interactive admin user creation
 ```
+
+### Vinyl Digitization Inbox
+
+The admin "Оцифровка" page turns recorded vinyl side WAVs into published
+albums. The only manual step is on the recording machine (e.g. a Mac
+running Logic Pro):
+
+```bash
+# On the server: create the inbox directory (sibling of MEDIA_ROOT_PATH)
+# and give it write access for the account that rsyncs into it.
+sudo mkdir -p /var/www/p-sound-inbox
+sudo chown "$USER" /var/www/p-sound-inbox
+```
+
+```bash
+# On the Mac, after bouncing side-a.wav, side-b.wav, ... in Logic Pro:
+# the folder must be named band-slug_album-slug (lowercase, hyphens).
+mkdir -p ~/Desktop/pink-floyd_the-dark-side-of-the-moon
+# move/export the side WAVs into it, then:
+rsync -avP --progress \
+  ~/Desktop/pink-floyd_the-dark-side-of-the-moon \
+  user@server:/var/www/p-sound-inbox/
+```
+
+The folder shows up in the admin "Оцифровка" page as a draft once it
+lands — fetch Discogs metadata, review/plan the track split, and publish
+from there. See [`apps/wave/API_ENDPOINTS.md`](../../apps/wave/API_ENDPOINTS.md#digitization-api-admin-only)
+for the underlying API.
 
 ### RTMP Server
 

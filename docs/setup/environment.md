@@ -17,7 +17,22 @@ LOG_DIR=./logs
 
 # Optional: External services
 EXTERNAL_API_URL=https://api.example.com
+
+# Media library / vinyl digitization pipeline
+MEDIA_ROOT_PATH=/var/www/p-sound
+MEDIA_BASE_URL=/media/p-sound
+MEDIA_INBOX_PATH=/var/www/p-sound-inbox
+DISCOGS_TOKEN=
 ```
+
+`MEDIA_ROOT_PATH` / `MEDIA_BASE_URL` are required — they're where
+`sync-media` publishes albums from. `MEDIA_INBOX_PATH` is a sibling
+directory where recorded vinyl side WAVs land (a `band-slug_album-slug`
+folder per draft) before they're split, encoded, and published into
+`MEDIA_ROOT_PATH` by the admin "Оцифровка" page — see
+[Vinyl Digitization Inbox](./README.md#vinyl-digitization-inbox) for
+provisioning it and an rsync example from a Mac. `DISCOGS_TOKEN` is
+optional, needed only for Discogs search and cover-image download.
 
 ### Admin Panel (`apps/admin/.env`)
 ```env

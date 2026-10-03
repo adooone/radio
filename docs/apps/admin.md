@@ -29,6 +29,7 @@ src/
 │   │   │   └── sidebar/  # Sidebar navigation, stats, views
 │   │   ├── hooks/        # Collection state hooks
 │   │   └── store/        # Collection Zustand store
+│   ├── digitization/     # Vinyl digitization pipeline («Оцифровка»)
 │   ├── main/             # Dashboard
 │   ├── stream/           # Stream control (RTMP, Telegram)
 │   └── users/            # User management
@@ -40,6 +41,7 @@ src/
 ## Features
 
 - **Collection Management** - Albums, songs, and playlists with search and filtering
+- **Vinyl Digitization** - Discogs metadata, waveform-based track splitting, encode and publish of recorded vinyl sides from `MEDIA_INBOX_PATH`
 - **Stream Control** - RTMP server and Telegram streaming management
 - **User Management** - Account creation and role management
 - **Real-time Monitoring** - Service status and system health

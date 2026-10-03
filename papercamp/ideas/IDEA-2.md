@@ -2,7 +2,7 @@
 id: IDEA-2
 title: Vinyl digitization pipeline in admin
 type: feat
-status: in-progress
+status: review
 created: 2026-08-26
 updated: 2026-08-26
 tags:
@@ -160,7 +160,7 @@ through wave (CORS already allows admin origins).
       with job progress (poll), errors surfaced in a log panel. Verify
       nginx serves the new album and the collection page picks it up.
       run: 5m15s · 116 in · 28.6k out · sonnet-5 · sess:11111438-61b2-497c-a08b-4a09a2a8b486
-- [ ] Phase 7 — Lifecycle polish, cleanup, docs
+- [x] Phase 7 — Lifecycle polish, cleanup, docs
       Draft cleanup action (delete raw side wavs and/or whole inbox folder
       after publish — explicit, confirmed, never automatic). Guard rails
       pass: overwrite refusals everywhere, friendly errors for missing
@@ -170,9 +170,11 @@ through wave (CORS already allows admin origins).
       setup docs (new env vars, inbox dir provisioning + rsync example for
       the Mac). Fix the known zod-schema lag for album vinyl fields while
       touching validation.
+      run: 11m7s · 232 in · 46.1k out · sonnet-5 · sess:aedb920b-d129-4c33-976d-77e4959e413b
 
 ### Thread
 - [x] 2026-10-03 [question] [agent] Run-all parked on phase 1 ("Phase 1 — Wave foundation: inbox drafts API") — the agent needs a decision: Failed to authenticate: OAuth session expired and could not be refreshed
 - [x] 2026-10-03 [decision] [agent] Resumed and finished phase 1: the OAuth failure was a transient session issue, not a product decision — the prior run had already implemented env vars, types, `inboxService.ts`, routes/handlers, and tests correctly; this run verified them (check-types, biome, unit tests all pass) and checked off the phase.
 - [x] 2026-10-03 [decision] [agent] Phase 5: kept the existing modal-based draft detail (widened to `max-w-6xl`) instead of introducing a new `/digitization/:slug` route, since the rest of the feature is modal-only and a route would be the first dynamic-param route in the admin app — out of scope for this phase. Click-to-audition genuinely exercises the Range endpoint from phase 4 (parses the WAV header once per side via a small ranged fetch, then fetches only the ±window PCM slice around the clicked marker and wraps it in a fresh WAV header client-side) rather than blob-loading whole sides, since vinyl side WAVs can be very large. Headless run: UI unverified in a browser, left to a human.
 - [x] 2026-10-03 [decision] [agent] Phase 6: added `sharp` as a new `apps/wave` dependency to back the cover-encode fallback the plan calls for ("fall back to sharp if the build lacks it") — this server's ffmpeg build does have `libwebp`, verified by `encodeService.test.ts` exercising the real ffmpeg path end-to-end, but the sharp branch is untested against a libwebp-less ffmpeg build since none was available here. `jobService.ts` is a plain in-memory `Map`, matching the plan's "job loss on restart is acceptable". Publish's job `kind` is `'publish'` (encode + `syncMediaToDatabase` under one job), not `'encode'`, since that's the operation the button and job actually represent end-to-end. Headless run: nginx serving the new album and the collection page picking it up are left for a human to verify in a browser, as instructed.
+- [x] 2026-10-03 [decision] [agent] Phase 7: cleanup (`POST .../:slug/cleanup`, body `{ target: "sides" | "folder", confirm: true }`) is gated on `draft.stage === 'on-air'` — refuses with 409 on anything not yet published, since the plan requires it to run only after publish, explicit and confirmed, never automatic. Admin UI gates the same way (only rendered once a draft is on-air) and uses `window.confirm`, matching the existing delete-album pattern — no reusable confirm-dialog component exists yet. `resolveDraftFolder` now splits its error into "Invalid draft slug" (400, malformed/path-traversal slug) vs "Not found" (404, well-formed slug with no folder) instead of collapsing both into "Not found" — updated the two inboxService tests that asserted the old collapsed message. Fixed the real (if currently inert, since `createAlbumHandler`/`updateAlbumHandler` re-read the raw body instead of the validated one) zod lag on `albumSchemas.create/update`: added `isPublished`, `releaseYear`, `rpmSpeed`, `vinylCondition`, `digitizationDate`, `equipmentUsed` so malformed values in these fields now get a clean 400 instead of silently reaching the DB layer. Docs updated: `apps/wave/API_ENDPOINTS.md` and `docs/api/README.md` gained a full Digitization API section; `docs/apps/admin.md` and `apps/admin/README.md` gained the digitization feature/directory; `docs/setup/README.md` and `docs/setup/environment.md` gained the env vars plus inbox provisioning + an rsync-from-Mac example. Headless run: UI unverified in a browser, left to a human.

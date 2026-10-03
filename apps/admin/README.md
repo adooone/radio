@@ -13,6 +13,7 @@ pnpm admin:dev
 ## Features
 
 - **Collection Management** - Albums, songs, playlists with filtering and search
+- **Vinyl Digitization** - Discogs metadata, waveform track splitting, encode and publish of recorded vinyl sides («Оцифровка»)
 - **Stream Control** - RTMP server and Telegram stream management
 - **User Management** - Create and manage user accounts
 - **Real-time Monitoring** - System health and service status via WebSocket
@@ -48,6 +49,7 @@ src/
 │   ├── admin/        # Admin layout, navigation, user menu
 │   ├── auth/         # Login page
 │   ├── collection/   # Album and playlist management
+│   ├── digitization/ # Vinyl digitization pipeline
 │   ├── main/         # Main dashboard
 │   ├── stream/       # Stream control interface
 │   └── users/        # User management

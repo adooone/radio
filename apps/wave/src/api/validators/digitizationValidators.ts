@@ -21,4 +21,8 @@ export const digitizationValidators = {
   get splitApplyValidator() {
     return zValidator('json', digitizationSchemas.splitApply);
   },
+
+  get cleanupValidator() {
+    return zValidator('json', digitizationSchemas.cleanup);
+  },
 };

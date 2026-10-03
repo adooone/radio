@@ -65,6 +65,12 @@ export const albumSchemas = {
     description: z.string().max(1000).optional(),
     tags: z.string().optional(),
     isPublic: z.boolean().optional().default(false),
+    isPublished: z.boolean().optional(),
+    releaseYear: z.number().int().min(1900).max(2100).optional(),
+    rpmSpeed: z.string().max(20).optional(),
+    vinylCondition: z.string().max(50).optional(),
+    digitizationDate: z.string().optional(),
+    equipmentUsed: z.string().max(500).optional(),
   }),
 
   update: z.object({
@@ -74,6 +80,12 @@ export const albumSchemas = {
     description: z.string().max(1000).optional(),
     tags: z.string().optional(),
     isPublic: z.boolean().optional(),
+    isPublished: z.boolean().optional(),
+    releaseYear: z.number().int().min(1900).max(2100).optional(),
+    rpmSpeed: z.string().max(20).optional(),
+    vinylCondition: z.string().max(50).optional(),
+    digitizationDate: z.string().optional(),
+    equipmentUsed: z.string().max(500).optional(),
   }),
 
   filter: z.object({
@@ -212,5 +224,10 @@ export const digitizationSchemas = {
         }),
       )
       .min(1),
+  }),
+
+  cleanup: z.object({
+    target: z.enum(['sides', 'folder']),
+    confirm: z.literal(true),
   }),
 };

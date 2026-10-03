@@ -47,6 +47,28 @@ JWT-based authentication via session tokens. Login returns a token used in subse
 | `PUT` | `/api/collections/:id` | Update collection |
 | `DELETE` | `/api/collections/:id` | Delete collection |
 
+## Digitization API (`/api/digitization`, admin only)
+
+Vinyl digitization pipeline — fetch Discogs metadata, plan/apply track
+splits, encode, and publish a `MEDIA_INBOX_PATH` draft folder into
+`MEDIA_ROOT_PATH`. See [`apps/wave/API_ENDPOINTS.md`](../../apps/wave/API_ENDPOINTS.md#digitization-api-admin-only)
+for the full reference.
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/drafts` | List inbox drafts with derived stage |
+| `GET` | `/drafts/:slug` | Get one draft |
+| `GET` | `/drafts/:slug/cover` | Draft cover image |
+| `POST` | `/drafts/:slug/metadata` | Fetch metadata from Discogs (refuses to overwrite without `force`) |
+| `PUT` | `/drafts/:slug/metadata` | Save a manual metadata edit |
+| `GET` | `/discogs/search` | Search Discogs releases |
+| `POST` | `/drafts/:slug/split/plan` | Compute a cut plan from the side recordings |
+| `POST` | `/drafts/:slug/split/apply` | Cut sides into track wavs (refuses to overwrite existing non-empty tracks) |
+| `GET` | `/drafts/:slug/audio/:file` | Range-enabled audio playback for auditioning |
+| `POST` | `/drafts/:slug/publish` | Encode + publish into `MEDIA_ROOT_PATH` (background job) |
+| `POST` | `/drafts/:slug/cleanup` | Delete raw sides or the whole draft folder — explicit, confirmed, only after publish |
+| `GET` | `/jobs/:id` | Poll a background job (encode/publish) |
+
 ## User Management (Admin)
 
 | Method | Endpoint | Description |
