@@ -138,7 +138,7 @@ through wave (CORS already allows admin origins).
       plus `GET .../:slug/audio/:file` with Range support for auditioning.
       Test the planner against a real digitized record's side wavs.
       run: 9m45s · 170 in · 52.1k out · sonnet-5 · sess:a724e48c-4e5d-479e-bc2c-a55c81e03d3a
-- [ ] Phase 5 — Split review UI: waveform with cut markers
+- [x] Phase 5 — Split review UI: waveform with cut markers
       Admin draft detail: per-side waveform rendered from peaks, cut markers
       (kind-coded: gap / refined / expected / manual) that can be dragged,
       added, and deleted; per-track table (filename, length vs expected,
@@ -147,6 +147,7 @@ through wave (CORS already allows admin origins).
       around a marker via the Range endpoint; confirm button («Cut tracks» /
       «Cut anyway» when warned). Manual markers are sent as overrides to the
       plan/apply endpoints — this replaces the old vinyl-titles manual flow.
+      run: 9m26s · 130 in · 66.7k out · sonnet-5 · sess:86365575-5cbd-46fa-a407-5712d8bcdf3d
 - [ ] Phase 6 — Encode, publish, jobs
       `jobService.ts`: minimal in-memory job registry (id, kind, status,
       progress lines, result), `GET /api/digitization/jobs/:id`.
@@ -172,3 +173,4 @@ through wave (CORS already allows admin origins).
 ### Thread
 - [x] 2026-10-03 [question] [agent] Run-all parked on phase 1 ("Phase 1 — Wave foundation: inbox drafts API") — the agent needs a decision: Failed to authenticate: OAuth session expired and could not be refreshed
 - [x] 2026-10-03 [decision] [agent] Resumed and finished phase 1: the OAuth failure was a transient session issue, not a product decision — the prior run had already implemented env vars, types, `inboxService.ts`, routes/handlers, and tests correctly; this run verified them (check-types, biome, unit tests all pass) and checked off the phase.
+- [x] 2026-10-03 [decision] [agent] Phase 5: kept the existing modal-based draft detail (widened to `max-w-6xl`) instead of introducing a new `/digitization/:slug` route, since the rest of the feature is modal-only and a route would be the first dynamic-param route in the admin app — out of scope for this phase. Click-to-audition genuinely exercises the Range endpoint from phase 4 (parses the WAV header once per side via a small ranged fetch, then fetches only the ±window PCM slice around the clicked marker and wraps it in a fresh WAV header client-side) rather than blob-loading whole sides, since vinyl side WAVs can be very large. Headless run: UI unverified in a browser, left to a human.
