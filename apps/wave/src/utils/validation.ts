@@ -185,4 +185,32 @@ export const digitizationSchemas = {
   search: z.object({
     q: z.string().min(1),
   }),
+
+  splitPlan: z.object({
+    noise: z.number().optional(),
+    minSilence: z.number().positive().optional(),
+    tolerance: z.number().positive().optional(),
+    manualCuts: z
+      .record(z.string(), z.array(z.number().nonnegative()))
+      .optional(),
+  }),
+
+  splitApply: z.object({
+    sides: z
+      .array(
+        z.object({
+          side: z.string().min(1),
+          tracks: z
+            .array(
+              z.object({
+                fileSlug: z.string().min(1),
+                start: z.number().nonnegative(),
+                end: z.number().nonnegative(),
+              }),
+            )
+            .min(1),
+        }),
+      )
+      .min(1),
+  }),
 };

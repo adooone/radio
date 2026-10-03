@@ -123,7 +123,7 @@ through wave (CORS already allows admin origins).
       (URL input + search picker) and a `data.json` editor form (edit-in-place
       of the user-owned fields; nothing ever re-fetches silently).
       run: 15m6s · 160 in · 57.1k out · sonnet-5 · sess:3eb1e31c-efe8-415e-be04-e2b8616b6de5
-- [ ] Phase 4 — Split engine: analysis, peaks, plan, apply
+- [x] Phase 4 — Split engine: analysis, peaks, plan, apply
       `splitService.ts`: decode each `side-*.wav` once via ffmpeg to 8 kHz
       mono PCM; compute silence intervals (−40 dB / 1.0 s defaults,
       tunable), waveform peaks (min/max per ~50 ms bucket, cached JSON next
@@ -137,6 +137,7 @@ through wave (CORS already allows admin origins).
       (stream-copy cuts to `a1-….wav` etc., abort if any target non-empty),
       plus `GET .../:slug/audio/:file` with Range support for auditioning.
       Test the planner against a real digitized record's side wavs.
+      run: 9m45s · 170 in · 52.1k out · sonnet-5 · sess:a724e48c-4e5d-479e-bc2c-a55c81e03d3a
 - [ ] Phase 5 — Split review UI: waveform with cut markers
       Admin draft detail: per-side waveform rendered from peaks, cut markers
       (kind-coded: gap / refined / expected / manual) that can be dragged,

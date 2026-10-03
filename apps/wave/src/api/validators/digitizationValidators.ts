@@ -13,4 +13,12 @@ export const digitizationValidators = {
   get searchValidator() {
     return zValidator('query', digitizationSchemas.search);
   },
+
+  get splitPlanValidator() {
+    return zValidator('json', digitizationSchemas.splitPlan);
+  },
+
+  get splitApplyValidator() {
+    return zValidator('json', digitizationSchemas.splitApply);
+  },
 };
