@@ -87,7 +87,7 @@ Vercel but talks to wave over REST at `VITE_API_URL`, so all new endpoints go
 through wave (CORS already allows admin origins).
 
 ### Phases
-- [ ] Phase 1 — Wave foundation: inbox drafts API
+- [x] Phase 1 — Wave foundation: inbox drafts API
       Add `MEDIA_INBOX_PATH` + `DISCOGS_TOKEN` to `apps/wave/src/utils/env.ts`
       (+ `.env*`, docs). Extend `packages/types/src/index.ts`: complete
       `AlbumDataJson` (discogs block, catalog_number, country, released,
@@ -98,6 +98,7 @@ through wave (CORS already allows admin origins).
       `GET /api/digitization/drafts` + `GET /api/digitization/drafts/:slug`
       (auth + admin). Serve draft cover preview. Unit-test stage derivation
       with fixture folders.
+      run: 18m41s · 62 in · 8.2k out · sonnet-5 · sess:b7416d62-3b2f-433a-869b-b2136a3be849
 - [ ] Phase 2 — Admin digitization page: draft list
       New feature `apps/admin/src/features/digitization/` with
       `digitization-page.tsx`: grid/list of drafts with cover, artist/title,
@@ -166,4 +167,5 @@ through wave (CORS already allows admin origins).
       touching validation.
 
 ### Thread
-- [ ] 2026-10-03 [question] [agent] Run-all parked on phase 1 ("Phase 1 — Wave foundation: inbox drafts API") — the agent needs a decision: Failed to authenticate: OAuth session expired and could not be refreshed
+- [x] 2026-10-03 [question] [agent] Run-all parked on phase 1 ("Phase 1 — Wave foundation: inbox drafts API") — the agent needs a decision: Failed to authenticate: OAuth session expired and could not be refreshed
+- [x] 2026-10-03 [decision] [agent] Resumed and finished phase 1: the OAuth failure was a transient session issue, not a product decision — the prior run had already implemented env vars, types, `inboxService.ts`, routes/handlers, and tests correctly; this run verified them (check-types, biome, unit tests all pass) and checked off the phase.
