@@ -99,7 +99,7 @@ through wave (CORS already allows admin origins).
       (auth + admin). Serve draft cover preview. Unit-test stage derivation
       with fixture folders.
       run: 18m41s · 62 in · 8.2k out · sonnet-5 · sess:b7416d62-3b2f-433a-869b-b2136a3be849
-- [ ] Phase 2 — Admin digitization page: draft list
+- [x] Phase 2 — Admin digitization page: draft list
       New feature `apps/admin/src/features/digitization/` with
       `digitization-page.tsx`: grid/list of drafts with cover, artist/title,
       stage badge, side/track counts. New `digitization-api.ts` module +
@@ -108,6 +108,7 @@ through wave (CORS already allows admin origins).
       `bottom-navigation.tsx` («Оцифровка»). Refresh action re-scans the
       inbox. Follow CODE_STYLE_GUIDE (named exports, styles-object Tailwind,
       barrels).
+      run: 12m39s · 42 in · 6.1k out · sonnet-5 · sess:3eb1e31c-efe8-415e-be04-e2b8616b6de5
 - [ ] Phase 3 — Discogs metadata: fetch, search, edit
       Port `vinyl_meta.py` to `discogsService.ts`: release-URL/id parsing
       (incl. locale segments), `GET /releases/:id` + `GET /masters/:id`
