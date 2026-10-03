@@ -2,10 +2,16 @@
 id: IDEA-2
 title: Vinyl digitization pipeline in admin
 type: feat
-status: planned
-tags: [admin, wave, audio, digitization, vinyl]
+status: in-progress
 created: 2026-08-26
 updated: 2026-08-26
+tags:
+  - admin
+  - wave
+  - audio
+  - digitization
+  - vinyl
+order: 1
 ---
 
 Bring the capabilities of the external `vinyl-radio-tools` repo
@@ -81,7 +87,6 @@ Vercel but talks to wave over REST at `VITE_API_URL`, so all new endpoints go
 through wave (CORS already allows admin origins).
 
 ### Phases
-
 - [ ] Phase 1 — Wave foundation: inbox drafts API
       Add `MEDIA_INBOX_PATH` + `DISCOGS_TOKEN` to `apps/wave/src/utils/env.ts`
       (+ `.env*`, docs). Extend `packages/types/src/index.ts`: complete
@@ -93,7 +98,6 @@ through wave (CORS already allows admin origins).
       `GET /api/digitization/drafts` + `GET /api/digitization/drafts/:slug`
       (auth + admin). Serve draft cover preview. Unit-test stage derivation
       with fixture folders.
-
 - [ ] Phase 2 — Admin digitization page: draft list
       New feature `apps/admin/src/features/digitization/` with
       `digitization-page.tsx`: grid/list of drafts with cover, artist/title,
@@ -103,7 +107,6 @@ through wave (CORS already allows admin origins).
       `bottom-navigation.tsx` («Оцифровка»). Refresh action re-scans the
       inbox. Follow CODE_STYLE_GUIDE (named exports, styles-object Tailwind,
       barrels).
-
 - [ ] Phase 3 — Discogs metadata: fetch, search, edit
       Port `vinyl_meta.py` to `discogsService.ts`: release-URL/id parsing
       (incl. locale segments), `GET /releases/:id` + `GET /masters/:id`
@@ -117,7 +120,6 @@ through wave (CORS already allows admin origins).
       `GET /api/digitization/discogs/search?q=`. Admin: metadata modal
       (URL input + search picker) and a `data.json` editor form (edit-in-place
       of the user-owned fields; nothing ever re-fetches silently).
-
 - [ ] Phase 4 — Split engine: analysis, peaks, plan, apply
       `splitService.ts`: decode each `side-*.wav` once via ffmpeg to 8 kHz
       mono PCM; compute silence intervals (−40 dB / 1.0 s defaults,
@@ -132,7 +134,6 @@ through wave (CORS already allows admin origins).
       (stream-copy cuts to `a1-….wav` etc., abort if any target non-empty),
       plus `GET .../:slug/audio/:file` with Range support for auditioning.
       Test the planner against a real digitized record's side wavs.
-
 - [ ] Phase 5 — Split review UI: waveform with cut markers
       Admin draft detail: per-side waveform rendered from peaks, cut markers
       (kind-coded: gap / refined / expected / manual) that can be dragged,
@@ -142,7 +143,6 @@ through wave (CORS already allows admin origins).
       around a marker via the Range endpoint; confirm button («Cut tracks» /
       «Cut anyway» when warned). Manual markers are sent as overrides to the
       plan/apply endpoints — this replaces the old vinyl-titles manual flow.
-
 - [ ] Phase 6 — Encode, publish, jobs
       `jobService.ts`: minimal in-memory job registry (id, kind, status,
       progress lines, result), `GET /api/digitization/jobs/:id`.
@@ -154,7 +154,6 @@ through wave (CORS already allows admin origins).
       `syncMediaToDatabase` → draft shows «on air». Admin: publish button
       with job progress (poll), errors surfaced in a log panel. Verify
       nginx serves the new album and the collection page picks it up.
-
 - [ ] Phase 7 — Lifecycle polish, cleanup, docs
       Draft cleanup action (delete raw side wavs and/or whole inbox folder
       after publish — explicit, confirmed, never automatic). Guard rails
@@ -166,31 +165,5 @@ through wave (CORS already allows admin origins).
       the Mac). Fix the known zod-schema lag for album vinyl fields while
       touching validation.
 
-### Notes
-
-- **Decision (2026-08-26):** Side WAVs reach the server by plain rsync/scp
-  into `MEDIA_INBOX_PATH` — no browser upload. This matches the current
-  habit (`vinyl-upload`), avoids multi-hundred-MB uploads through the admin
-  SPA, and keeps wave free of multipart streaming for now.
-- **Decision (2026-08-26):** Drafts have no DB representation; they are
-  derived from the inbox filesystem on scan, and `syncMediaToDatabase`
-  remains the only write path into the albums/songs tables. Keeps one
-  source of truth per lifecycle stage (inbox = files, library = DB+files).
-- **Decision (2026-08-26):** Port the split algorithm parameters verbatim
-  (−40 dB/1.0 s silencedetect, 25 s tolerance, mid-gap cuts, −30 dB/10 dB
-  RMS-refine thresholds, 0.5 s edge padding) — they are field-proven; only
-  the execution strategy changes (single decode, in-process analysis).
-- **Decision (2026-08-26):** `data.json` stays the user-owned source of
-  truth: seeded once from Discogs, edited in the admin form, copied verbatim
-  into the published folder. No silent re-fetching.
-- **Question (2026-08-26):** After publish, should the inbox folder (raw
-  side + track wavs, several hundred MB per record) be kept as an archive on
-  the server, or is manual cleanup via the Phase 7 action enough? Depends on
-  server disk headroom.
-- **Question (2026-08-26):** Should drafts also surface inside the existing
-  Collection page (e.g. a «Чернетки» tab) instead of / in addition to the
-  dedicated `/digitization` page? Plan assumes a dedicated page; cheap to
-  revisit after Phase 2.
-- **Question (2026-08-26):** Is AAC 256k/48 kHz still the desired target
-  format, or is this the moment to also keep lossless (FLAC) alongside m4a?
-  Nginx + scanner currently allow `.m4a` only; adding formats touches both.
+### Thread
+- [ ] 2026-10-03 [question] [agent] Run-all parked on phase 1 ("Phase 1 — Wave foundation: inbox drafts API") — the agent needs a decision: Failed to authenticate: OAuth session expired and could not be refreshed
