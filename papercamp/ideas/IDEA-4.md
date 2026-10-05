@@ -101,6 +101,7 @@ none planned.
       Run `pm2 delete radio.telegram`, install and configure `pm2-logrotate`
       (`max_size 10M`, `retain 7`, `compress true`), and document both in the
       wave README beside the existing pm2 instructions.
+      run: 2m30s · 34 in · 3k out · sonnet-5 · sess:eb1108bf-6896-4615-895b-bf3b952b99c0
 - [ ] Phase 7 — Verify nothing Telegram remains and close IDEA-3
       Grep the repo for `telegram`, run typecheck, lint and tests, confirm
       wave and admin still build, and mark [[IDEA-3]] dropped.
