@@ -97,7 +97,7 @@ none planned.
       Cover the listed pages plus anything a repo-wide search turns up, such
       as `docs/api/README.md`.
       run: 6m15s · 148 in · 19.8k out · sonnet-5 · sess:837c8043-4e00-439a-90a3-778d3a16f5c3
-- [ ] Phase 6 — Clean up the machine and record it
+- [x] Phase 6 — Clean up the machine and record it
       Run `pm2 delete radio.telegram`, install and configure `pm2-logrotate`
       (`max_size 10M`, `retain 7`, `compress true`), and document both in the
       wave README beside the existing pm2 instructions.

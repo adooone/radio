@@ -68,6 +68,17 @@ bun run dev
 
 PM2 process names: `radio.wave`
 
+The `radio.telegram` app was deleted from pm2 (`pm2 delete radio.telegram`)
+when Telegram streaming was removed. Log rotation for the remaining pm2
+apps is handled by the `pm2-logrotate` module (`pm2 install pm2-logrotate`),
+configured with `max_size 10M`, `retain 7`, `compress true`:
+
+```bash
+pm2 set pm2-logrotate:max_size 10M
+pm2 set pm2-logrotate:retain 7
+pm2 set pm2-logrotate:compress true
+```
+
 ## Architecture
 
 ### Core
