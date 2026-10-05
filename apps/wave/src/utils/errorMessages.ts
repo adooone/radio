@@ -43,24 +43,6 @@ export const ERROR_MESSAGES = {
 
   // Stream Services
   STREAM: {
-    TELEGRAM: {
-      ALREADY_RUNNING:
-        'Telegram stream is already running. Use restart to restart the stream.',
-      NOT_RUNNING:
-        'Telegram stream is not running. Use start to start the stream.',
-      START_SUCCESS: 'Telegram stream started successfully via PM2',
-      STOP_SUCCESS: 'Telegram stream stopped successfully via PM2',
-      RESTART_SUCCESS: 'Telegram stream restarted successfully via PM2',
-      START_FAILED: 'Telegram stream failed to start',
-      STOP_FAILED: 'Telegram stream failed to stop',
-      RESTART_FAILED: 'Telegram stream failed to restart',
-      RTMP_DEPENDENCY:
-        'RTMP server is not running. Please start the RTMP server first.',
-      DAEMON_WAITING:
-        'daemon started but is waiting for RTMP server to become available',
-      CONFIG_UPDATED_SUCCESS: 'Telegram configuration updated successfully',
-      CONFIG_UPDATE_FAILED: 'Telegram configuration update failed',
-    },
     RTMP: {
       ALREADY_RUNNING: 'RTMP server is already running',
       ALREADY_STOPPED: 'RTMP server is already stopped',
@@ -78,7 +60,7 @@ export const ERROR_MESSAGES = {
   // Monitoring Services
   MONITORING: {
     UNKNOWN_SERVICE: (service: string) =>
-      `Unknown service: ${service}. Supported services: telegram, rtmp, wave`,
+      `Unknown service: ${service}. Supported services: rtmp, wave`,
     LOGS_FETCH_FAILED: 'Failed to fetch logs',
     STATS_FETCH_FAILED: 'Failed to fetch service statistics',
     HEALTH_CHECK_FAILED: 'Health check failed',
@@ -130,7 +112,6 @@ export type ResourceErrorKey = keyof typeof ERROR_MESSAGES.RESOURCE;
 export type AccountErrorKey = keyof typeof ERROR_MESSAGES.ACCOUNT;
 export type CollectionErrorKey = keyof typeof ERROR_MESSAGES.COLLECTION;
 export type StreamErrorKey = keyof typeof ERROR_MESSAGES.STREAM;
-export type TelegramErrorKey = keyof typeof ERROR_MESSAGES.STREAM.TELEGRAM;
 export type RtmpErrorKey = keyof typeof ERROR_MESSAGES.STREAM.RTMP;
 export type MonitoringErrorKey = keyof typeof ERROR_MESSAGES.MONITORING;
 export type ValidationErrorKey = keyof typeof ERROR_MESSAGES.VALIDATION;
@@ -150,7 +131,6 @@ export const getErrorMessage = {
     const message = ERROR_MESSAGES.COLLECTION[key];
     return typeof message === 'function' ? message(arg || '') : message;
   },
-  telegram: (key: TelegramErrorKey) => ERROR_MESSAGES.STREAM.TELEGRAM[key],
   rtmp: (key: RtmpErrorKey) => ERROR_MESSAGES.STREAM.RTMP[key],
   monitoring: (key: MonitoringErrorKey, arg?: string) => {
     const message = ERROR_MESSAGES.MONITORING[key];
@@ -185,9 +165,6 @@ export const SUCCESS_MESSAGES = {
     ITEMS_REORDERED: 'Collection items reordered successfully',
   },
   STREAM: {
-    TELEGRAM_START: 'Telegram stream started successfully',
-    TELEGRAM_STOP: 'Telegram stream stopped successfully',
-    TELEGRAM_RESTART: 'Telegram stream restarted successfully',
     RTMP_START: 'RTMP server started successfully',
     RTMP_STOP: 'RTMP server stopped successfully',
     RTMP_RESTART: 'RTMP server restarted successfully',

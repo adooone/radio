@@ -1,37 +1,17 @@
 import { exec } from 'node:child_process';
-import { existsSync } from 'node:fs';
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
 import { promisify } from 'node:util';
 import type { LogData, LogEntry } from '@radio/types';
 import { getErrorMessage } from '../../utils/errorMessages';
-import type {
-  MonitoringData,
-  RtmpServiceStats,
-  SystemHealth,
-  TelegramServiceStats,
-} from './types';
+import type { MonitoringData, RtmpServiceStats, SystemHealth } from './types';
 
 const execAsync = promisify(exec);
 
 export class MonitoringService {
-  private dataDir = process.env.DATA_DIR || './data';
-  private telegramStatusFile = join(
-    this.dataDir,
-    'telegram-stream-status.json',
-  );
-  private telegramConfigFile = join(this.dataDir, 'telegram-config.json');
-
   async getSystemHealth(): Promise<SystemHealth> {
-    const [telegramStats, rtmpStats] = await Promise.allSettled([
-      this.getTelegramServiceStats(),
-      this.getRtmpServiceStats(),
-    ]);
+    const rtmpStats = await this.getRtmpServiceStats();
 
     return {
-      telegram:
-        telegramStats.status === 'fulfilled' ? telegramStats.value : null,
-      rtmp: rtmpStats.status === 'fulfilled' ? rtmpStats.value : null,
+      rtmp: rtmpStats,
       timestamp: new Date().toISOString(),
     };
   }
@@ -41,59 +21,11 @@ export class MonitoringService {
 
     return {
       services: {
-        telegram: systemHealth.telegram,
         rtmp: systemHealth.rtmp,
       },
       timestamp: systemHealth.timestamp,
       uptime: process.uptime(),
     };
-  }
-
-  async getTelegramServiceStats(): Promise<TelegramServiceStats | null> {
-    try {
-      // Get PM2 process info
-      const pm2Info = await this.getTelegramPM2Info();
-
-      // Get daemon status from file
-      const daemonStatus = await this.getTelegramDaemonStatus();
-
-      // Get masked stream key
-      const streamKey = await this.getMaskedStreamKey();
-
-      return {
-        isRunning: pm2Info.isRunning || daemonStatus?.status === 'running',
-        pm2Status:
-          pm2Info.isRunning &&
-          pm2Info.pid &&
-          pm2Info.status &&
-          pm2Info.cpu !== null &&
-          pm2Info.memory !== null &&
-          pm2Info.uptime !== null
-            ? {
-                pid: pm2Info.pid,
-                status: pm2Info.status,
-                cpu: pm2Info.cpu,
-                memory: pm2Info.memory,
-                uptime: pm2Info.uptime,
-              }
-            : null,
-        daemonStatus: daemonStatus
-          ? {
-              status: daemonStatus.status,
-              pid: daemonStatus.pid,
-              ffmpegPid: daemonStatus.ffmpegPid,
-              restartAttempts: daemonStatus.restartAttempts,
-              lastUpdate: daemonStatus.timestamp,
-              streamHealth: daemonStatus.streamHealth,
-            }
-          : null,
-        lastHealthCheck: new Date().toISOString(),
-        streamKey,
-      };
-    } catch (error) {
-      console.error('Error getting Telegram service stats:', error);
-      return null;
-    }
   }
 
   async getRtmpServiceStats(): Promise<RtmpServiceStats | null> {
@@ -134,92 +66,6 @@ export class MonitoringService {
       };
     } catch (error) {
       console.error('Error getting RTMP service stats:', error);
-      return null;
-    }
-  }
-
-  private async getTelegramPM2Info(): Promise<{
-    isRunning: boolean;
-    pid: number | null;
-    status: string | null;
-    cpu: number | null;
-    memory: number | null;
-    uptime: number | null;
-  }> {
-    try {
-      const { stdout } = await execAsync('pm2 jlist');
-      const processes = JSON.parse(stdout) as Array<{
-        name: string;
-        pid?: number;
-        pm2_env?: {
-          status?: string;
-          pm_uptime?: number;
-        };
-        monit?: {
-          cpu?: number;
-          memory?: number;
-        };
-      }>;
-      const telegramProcess = processes.find(
-        (p) => p.name === 'radio.telegram',
-      );
-
-      if (!telegramProcess) {
-        return {
-          isRunning: false,
-          pid: null,
-          status: null,
-          cpu: null,
-          memory: null,
-          uptime: null,
-        };
-      }
-
-      return {
-        isRunning: telegramProcess.pm2_env?.status === 'online',
-        pid: telegramProcess.pid || null,
-        status: telegramProcess.pm2_env?.status || null,
-        cpu: telegramProcess.monit?.cpu || null,
-        memory: telegramProcess.monit?.memory || null,
-        uptime: telegramProcess.pm2_env?.pm_uptime || null,
-      };
-    } catch (error) {
-      return {
-        isRunning: false,
-        pid: null,
-        status: null,
-        cpu: null,
-        memory: null,
-        uptime: null,
-      };
-    }
-  }
-
-  private async getTelegramDaemonStatus(): Promise<{
-    status: 'initializing' | 'running' | 'stopped' | 'error';
-    pid: number | null;
-    timestamp: string | null;
-    ffmpegPid: number | null;
-    restartAttempts: number;
-    details?: unknown;
-    streamHealth?: {
-      isConnected: boolean;
-      lastConnectionTime: string | null;
-      totalFramesSent: number;
-      currentBitrate: number;
-      connectionErrors: number;
-      lastHealthCheck: string | null;
-    };
-  } | null> {
-    try {
-      if (!existsSync(this.telegramStatusFile)) {
-        return null;
-      }
-
-      const statusData = await readFile(this.telegramStatusFile, 'utf-8');
-      return JSON.parse(statusData);
-    } catch (error) {
-      console.error('Error reading telegram daemon status:', error);
       return null;
     }
   }
@@ -429,11 +275,6 @@ export class MonitoringService {
     try {
       const logEntries: LogEntry[] = [];
 
-      if (source === 'all' || source === 'telegram') {
-        const telegramLogs = await this.getServiceLogs('telegram', lines);
-        logEntries.push(...telegramLogs.entries);
-      }
-
       if (source === 'all' || source === 'rtmp') {
         const rtmpLogs = await this.getServiceLogs('rtmp', lines);
         logEntries.push(...rtmpLogs.entries);
@@ -472,9 +313,6 @@ export class MonitoringService {
       let logEntries: LogEntry[] = [];
 
       switch (service) {
-        case 'telegram':
-          logEntries = await this.getTelegramLogs(lines);
-          break;
         case 'rtmp':
           logEntries = await this.getRtmpLogs(lines);
           break;
@@ -501,32 +339,6 @@ export class MonitoringService {
         source: service,
         lastUpdated: new Date().toISOString(),
       };
-    }
-  }
-
-  private async getTelegramLogs(lines: number): Promise<LogEntry[]> {
-    try {
-      // Get logs from both stdout and stderr files to ensure chronological ordering
-      // PM2 separates logs into different files, so we need to combine them
-      const [stdoutResult, stderrResult] = await Promise.allSettled([
-        execAsync(`pm2 logs radio.telegram --lines ${lines} --nostream --out`),
-        execAsync(`pm2 logs radio.telegram --lines ${lines} --nostream --err`),
-      ]);
-
-      let combinedLogs = '';
-
-      if (stdoutResult.status === 'fulfilled') {
-        combinedLogs += stdoutResult.value.stdout;
-      }
-
-      if (stderrResult.status === 'fulfilled') {
-        combinedLogs += stderrResult.value.stdout;
-      }
-
-      return this.parsePM2Logs(combinedLogs, 'telegram');
-    } catch (error) {
-      console.error('Error getting Telegram logs:', error);
-      return [];
     }
   }
 
@@ -594,22 +406,22 @@ export class MonitoringService {
         let message = '';
         let serviceAndLevel = '';
 
-        // Format 1: 9|radio.te | 2025-09-07 13:12:24 +00:00: [2025-09-07T13:12:24.164Z] TELEGRAM-DAEMON INFO: message
+        // Format 1: 9|radio.wa | 2025-09-07 13:12:24 +00:00: [2025-09-07T13:12:24.164Z] WAVE-SERVICE INFO: message
         match = cleanLine.match(
           /^\d+\|[^|]+\| (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} [+-]\d{2}:\d{2}): \[([^\]]+)\] ([^:]+): ([^:]+): (.+)$/,
         );
         if (match) {
           [, timestamp, , serviceAndLevel, , message] = match;
-          // Extract level from serviceAndLevel (e.g., "TELEGRAM-DAEMON WARNING" -> "WARNING")
+          // Extract level from serviceAndLevel (e.g., "WAVE-SERVICE WARNING" -> "WARNING")
           level = serviceAndLevel.split(' ').pop() || 'info';
         } else {
-          // Format 2: 2025-09-07 13:11:14 +00:00: [2025-09-07T13:11:14.154Z] TELEGRAM-DAEMON INFO: message (without PM2 prefix)
+          // Format 2: 2025-09-07 13:11:14 +00:00: [2025-09-07T13:11:14.154Z] WAVE-SERVICE INFO: message (without PM2 prefix)
           match = cleanLine.match(
             /^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} [+-]\d{2}:\d{2}): \[([^\]]+)\] ([^:]+): ([^:]+): (.+)$/,
           );
           if (match) {
             [, timestamp, , serviceAndLevel, , message] = match;
-            // Extract level from serviceAndLevel (e.g., "TELEGRAM-DAEMON WARNING" -> "WARNING")
+            // Extract level from serviceAndLevel (e.g., "WAVE-SERVICE WARNING" -> "WARNING")
             level = serviceAndLevel.split(' ').pop() || 'info';
           } else {
             // Format 3: [timestamp] [level] message (original format)
@@ -751,33 +563,6 @@ export class MonitoringService {
     // Remove ANSI escape sequences (color codes, etc.)
     const escapeChar = String.fromCharCode(27);
     return str.replace(new RegExp(`${escapeChar}\\[[0-9;]*m`, 'g'), '');
-  }
-
-  private async getMaskedStreamKey(): Promise<string | undefined> {
-    try {
-      if (!existsSync(this.telegramConfigFile)) {
-        return undefined;
-      }
-
-      const configData = await readFile(this.telegramConfigFile, 'utf-8');
-      const config = JSON.parse(configData);
-
-      if (!config.streamKey || typeof config.streamKey !== 'string') {
-        return undefined;
-      }
-
-      const streamKey = config.streamKey;
-      if (streamKey.length <= 4) {
-        return streamKey; // If key is too short, return as is
-      }
-
-      // Show compact format: "••••••••c-Q" instead of "**********************c-Q"
-      const lastFour = streamKey.slice(-4);
-      return `••••••••${lastFour}`;
-    } catch (error) {
-      console.error('Error reading telegram config for stream key:', error);
-      return undefined;
-    }
   }
 }
 

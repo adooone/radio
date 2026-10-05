@@ -73,11 +73,12 @@ none planned.
       `/telegram/*` stream routes, the monitoring `/telegram` route and
       handler, and their tests and mocks.
       run: 16m26s · 64 in · 10.8k out · sonnet-5 · sess:0a70bdeb-00ae-48bc-928f-ed3fedfac36e
-- [ ] Phase 2 — Strip Telegram branches from wave and shared types
+- [x] Phase 2 — Strip Telegram branches from wave and shared types
       Clean `streamService.ts`, `monitoringService.ts`, `errorHandler.ts`,
       `errorMessages.ts`, `serviceResponse.ts` and the streaming/monitoring
       types, and drop `TelegramServiceStats`, `TelegramStreamConfig` and the
       monitoring snapshot's `telegram` field from `packages/types`.
+      run: 5m44s · 124 in · 22.2k out · sonnet-5 · sess:0a70bdeb-00ae-48bc-928f-ed3fedfac36e
 - [ ] Phase 3 — Remove Telegram from wave process config and files
       Drop the five `telegram*` package scripts, the `radio.telegram` app in
       `ecosystem.config.js`, the Telegram branches of `stream-manager.sh`,

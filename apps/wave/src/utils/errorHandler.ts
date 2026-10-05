@@ -70,10 +70,6 @@ export const ErrorHandler = {
       }
 
       // Handle service-specific errors
-      if (error.message.includes('Telegram stream')) {
-        return ResponseHelper.error(c, error.message, 500);
-      }
-
       if (error.message.includes('RTMP server')) {
         return ResponseHelper.error(c, error.message, 500);
       }

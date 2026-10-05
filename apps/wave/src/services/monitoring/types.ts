@@ -1,33 +1,3 @@
-export interface StreamHealth {
-  isConnected: boolean;
-  lastConnectionTime: string | null;
-  totalFramesSent: number;
-  currentBitrate: number;
-  connectionErrors: number;
-  lastHealthCheck: string | null;
-}
-
-export interface TelegramServiceStats {
-  isRunning: boolean;
-  pm2Status: {
-    pid: number;
-    status: string;
-    cpu: number;
-    memory: number;
-    uptime: number;
-  } | null;
-  daemonStatus: {
-    status: 'initializing' | 'running' | 'stopped' | 'error';
-    pid: number | null;
-    ffmpegPid: number | null;
-    restartAttempts: number;
-    lastUpdate: string | null;
-    streamHealth?: StreamHealth;
-  } | null;
-  lastHealthCheck: string;
-  streamKey?: string; // Masked stream key for identification
-}
-
 export interface RtmpServiceStats {
   isRunning: boolean;
   containerName: string;
@@ -58,14 +28,12 @@ export interface RtmpServiceStats {
 }
 
 export interface SystemHealth {
-  telegram: TelegramServiceStats | null;
   rtmp: RtmpServiceStats | null;
   timestamp: string;
 }
 
 export interface MonitoringData {
   services: {
-    telegram: TelegramServiceStats | null;
     rtmp: RtmpServiceStats | null;
   };
   timestamp: string;

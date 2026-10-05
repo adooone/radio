@@ -30,21 +30,12 @@ export const monitoringHandlers = {
     return withErrorHandling(async (c: Context) => {
       const service = c.req.param('service');
 
-      if (service === 'telegram') {
-        const data = await monitoringService.getTelegramServiceStats();
-        return ResponseHelper.success(c, data);
-      }
-
       if (service === 'rtmp') {
         const data = await monitoringService.getRtmpServiceStats();
         return ResponseHelper.success(c, data);
       }
 
-      return ResponseHelper.error(
-        c,
-        'Invalid service. Use "telegram" or "rtmp"',
-        400,
-      );
+      return ResponseHelper.error(c, 'Invalid service. Use "rtmp"', 400);
     });
   },
 

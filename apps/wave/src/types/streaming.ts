@@ -1,9 +1,3 @@
-export interface TelegramStreamConfig {
-  rtmpUrl: string;
-  streamKey: string;
-  inputUrl: string;
-}
-
 export interface ApiResponse<T> {
   success?: boolean;
   message?: string;
