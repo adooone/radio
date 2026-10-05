@@ -7,11 +7,6 @@ monitoringRoutes.get('/', monitoringHandlers.getMonitoringDataHandler);
 
 monitoringRoutes.get('/health', monitoringHandlers.getSystemHealthHandler);
 
-monitoringRoutes.get(
-  '/telegram',
-  monitoringHandlers.getTelegramServiceStatsHandler,
-);
-
 monitoringRoutes.get('/rtmp', monitoringHandlers.getRtmpServiceStatsHandler);
 
 monitoringRoutes.get(

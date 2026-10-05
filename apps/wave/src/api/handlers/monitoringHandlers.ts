@@ -19,13 +19,6 @@ export const monitoringHandlers = {
     });
   },
 
-  get getTelegramServiceStatsHandler() {
-    return withErrorHandling(async (c: Context) => {
-      const data = await monitoringService.getTelegramServiceStats();
-      return ResponseHelper.success(c, data);
-    });
-  },
-
   get getRtmpServiceStatsHandler() {
     return withErrorHandling(async (c: Context) => {
       const data = await monitoringService.getRtmpServiceStats();
