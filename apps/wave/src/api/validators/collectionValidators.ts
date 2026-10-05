@@ -1,5 +1,5 @@
-import { zValidator } from '@hono/zod-validator';
 import { collectionSchemas } from '@/utils/validation';
+import { zValidator } from '@hono/zod-validator';
 
 export const collectionValidators = {
   get createValidator() {

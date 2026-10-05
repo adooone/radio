@@ -16,7 +16,10 @@ interface NowPlayingStore {
   duration: number;
   loop: boolean;
 
-  playTrack: (track: NowPlayingTrack | NowPlayingTrack[], startIndex?: number) => void;
+  playTrack: (
+    track: NowPlayingTrack | NowPlayingTrack[],
+    startIndex?: number,
+  ) => void;
   togglePlayPause: () => void;
   pause: () => void;
   stop: () => void;
@@ -56,7 +59,12 @@ export const useNowPlayingStore = create<NowPlayingStore>()((set, get) => {
 
     el.src = src;
     el.load();
-    set({ currentTrack: track, currentIndex: index, currentTime: 0, duration: 0 });
+    set({
+      currentTrack: track,
+      currentIndex: index,
+      currentTime: 0,
+      duration: 0,
+    });
     el.play().catch((error) => {
       console.error('Failed to play track:', error);
       set({ isPlaying: false });
@@ -77,11 +85,11 @@ export const useNowPlayingStore = create<NowPlayingStore>()((set, get) => {
 
   el.addEventListener('ended', () => {
     const { playlist, currentIndex, loop } = get();
-    
+
     // If we have a playlist, try to play the next track
     if (playlist && playlist.length > 0) {
       const nextIndex = currentIndex + 1;
-      
+
       if (nextIndex < playlist.length) {
         // Play next track
         playTrackByIndex(nextIndex);
@@ -117,12 +125,12 @@ export const useNowPlayingStore = create<NowPlayingStore>()((set, get) => {
 
     playTrack: (trackOrPlaylist, startIndex = 0) => {
       const el = getAudio();
-      
+
       // Check if it's an array (playlist) or single track
       const isPlaylist = Array.isArray(trackOrPlaylist);
       const playlist = isPlaylist ? trackOrPlaylist : [trackOrPlaylist];
       const index = isPlaylist ? startIndex : 0;
-      
+
       if (playlist.length === 0) {
         return;
       }
@@ -163,13 +171,13 @@ export const useNowPlayingStore = create<NowPlayingStore>()((set, get) => {
       el.pause();
       el.currentTime = 0;
       el.src = '';
-      set({ 
-        currentTrack: null, 
+      set({
+        currentTrack: null,
         playlist: [],
         currentIndex: -1,
-        isPlaying: false, 
-        currentTime: 0, 
-        duration: 0 
+        isPlaying: false,
+        currentTime: 0,
+        duration: 0,
       });
     },
 

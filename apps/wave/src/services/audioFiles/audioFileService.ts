@@ -1,11 +1,11 @@
-import { existsSync, unlinkSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, unlinkSync } from 'node:fs';
 import {
-  findAudioFileById,
   deleteAudioFile as deleteAudioFileFromDb,
+  findAudioFileById,
 } from '@/db/collections/audioFiles';
-import { authService } from '../auth';
-import { getErrorMessage } from '@/utils/errorMessages';
 import { formatDurationFromString } from '@/utils/audioMetadata';
+import { getErrorMessage } from '@/utils/errorMessages';
+import { authService } from '../auth';
 
 export class AudioFileService {
   private getMimeType(format: string): string {

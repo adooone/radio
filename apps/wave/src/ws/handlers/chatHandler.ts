@@ -1,11 +1,11 @@
 import type { ServerWebSocket } from 'bun';
+import { addMessage } from '../../utils/chatStore';
 import type {
   ChatPayload,
-  JoinPayload,
   ColorUpdatePayload,
+  JoinPayload,
   WebSocketData,
 } from '../types';
-import { addMessage } from '../../utils/chatStore';
 import { clientStore } from '../utils/clientStore';
 
 function setUserNickname(

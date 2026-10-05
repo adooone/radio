@@ -1,16 +1,16 @@
-import bcrypt from 'bcryptjs';
 import {
-  findAccountById,
-  findAccountByEmail,
-  findAccountByUsername,
-  createAccount,
-  updateAccount,
-  deleteAccount,
-  createSession,
-  findSessionByToken,
   type NewAccountData,
+  createAccount,
+  createSession,
+  deleteAccount,
+  findAccountByEmail,
+  findAccountById,
+  findAccountByUsername,
+  findSessionByToken,
+  updateAccount,
 } from '@/db/accounts/index';
 import { getErrorMessage } from '@/utils/errorMessages';
+import bcrypt from 'bcryptjs';
 
 export class AccountService {
   async register(data: {

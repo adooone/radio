@@ -1,15 +1,16 @@
-import { Hono } from 'hono';
-import { cors } from 'hono/cors';
-import { env } from '@/utils/env';
 import {
   accountsRoutes,
-  collectionsRoutes,
-  audioFilesRoutes,
+  adminRoutes,
   albumsRoutes,
+  audioFilesRoutes,
+  collectionsRoutes,
+  digitizationRoutes,
   monitoringRoutes,
   streamRoutes,
-  adminRoutes,
 } from '@/api';
+import { env } from '@/utils/env';
+import { Hono } from 'hono';
+import { cors } from 'hono/cors';
 import { startWsServer } from './ws/server';
 
 const app = new Hono();
@@ -45,6 +46,7 @@ app.route('/api/collections', collectionsRoutes);
 app.route('/api/audio-files', audioFilesRoutes);
 app.route('/api/albums', albumsRoutes);
 app.route('/api/admin', adminRoutes);
+app.route('/api/digitization', digitizationRoutes);
 
 Bun.serve({
   fetch: app.fetch,

@@ -79,4 +79,3 @@ export const setMockResponse = (
 export const simulateCommandFailure = (command: string, error: string) => {
   mockResponses[command] = { stdout: '', stderr: error };
 };
-

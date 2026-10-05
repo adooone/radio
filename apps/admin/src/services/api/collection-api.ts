@@ -1,5 +1,5 @@
+import type { AudioFile, Collection, CollectionItem } from '@radio/types';
 import { waveApiClient } from './clients/http-client';
-import type { Collection, AudioFile, CollectionItem } from '@radio/types';
 
 type ApiResponse<T> = {
   success: boolean;

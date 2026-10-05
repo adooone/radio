@@ -127,7 +127,17 @@ See [API Documentation](../../docs/api/README.md) for the full reference.
 ```env
 PORT=6870
 SOCKET_PORT=6871
+MEDIA_ROOT_PATH=/var/www/p-sound
+MEDIA_BASE_URL=/media/p-sound
+MEDIA_INBOX_PATH=/var/www/p-sound-inbox
+DISCOGS_TOKEN=
 ```
+
+`MEDIA_INBOX_PATH` is where recorded vinyl side WAVs land for the
+digitization pipeline (see `src/services/digitization/`), separate from
+`MEDIA_ROOT_PATH` where published albums are served from. `DISCOGS_TOKEN`
+is optional — release lookups by URL/id work without it, but it's required
+for Discogs search and cover-image download.
 
 ## File Storage
 

@@ -1,20 +1,20 @@
 import {
+  type NewCollectionData,
+  type NewCollectionItemData,
+  addToCollection,
+  createCollection,
+  deleteCollection,
   findCollectionById,
   findCollectionsByOwner,
   findPublicCollections,
-  createCollection,
-  updateCollection,
-  deleteCollection,
-  addToCollection,
-  removeFromCollection,
   getCollectionItems,
+  removeFromCollection,
   reorderItems,
-  type NewCollectionData,
-  type NewCollectionItemData,
+  updateCollection,
 } from '@/db/collections/index';
-import { authService } from '../auth';
-import { getErrorMessage } from '@/utils/errorMessages';
 import { formatDurationFromString } from '@/utils/audioMetadata';
+import { getErrorMessage } from '@/utils/errorMessages';
+import { authService } from '../auth';
 
 export class CollectionService {
   async getPublicCollections(limit: number, offset: number) {

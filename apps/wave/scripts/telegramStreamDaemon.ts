@@ -1,8 +1,8 @@
 #!/usr/bin/env bun
 
-import { spawn, type ChildProcess } from 'node:child_process';
-import { readFile, writeFile } from 'node:fs/promises';
+import { type ChildProcess, spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
+import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { TelegramStreamConfig } from '../src/types/streaming';
 

@@ -1,6 +1,6 @@
+import clsx from 'clsx';
 import { useEffect, useRef } from 'react';
 import type { RefObject } from 'react';
-import clsx from 'clsx';
 
 interface VideoPlayerProps {
   videoRef: RefObject<HTMLVideoElement>;

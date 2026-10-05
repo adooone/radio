@@ -1,5 +1,5 @@
-import { waveApiClient } from './clients/http-client';
 import type { Album, Song } from '@radio/types';
+import { waveApiClient } from './clients/http-client';
 
 type ApiResponse<T> = {
   success: boolean;
@@ -133,10 +133,7 @@ export const albumApi = {
     return response.data.data.photos;
   },
 
-  getAlbumPhoto: async (
-    id: number,
-    filename: string,
-  ): Promise<Blob> => {
+  getAlbumPhoto: async (id: number, filename: string): Promise<Blob> => {
     const response = await waveApiClient.get(
       `/api/albums/${id}/photos/${encodeURIComponent(filename)}`,
       { responseType: 'blob' },

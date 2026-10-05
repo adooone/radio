@@ -1,5 +1,5 @@
-import type React from 'react';
 import clsx from 'clsx';
+import type React from 'react';
 
 interface InlineServiceAlertProps {
   type: 'warning' | 'error' | 'info' | 'success';

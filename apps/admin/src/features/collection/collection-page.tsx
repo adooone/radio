@@ -1,16 +1,16 @@
+import { PageLayout, Panel, VinylTabs } from '@dendelion/mojo-ui';
+import type { Collection } from '@radio/types';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { PageLayout, VinylTabs, Panel } from '@dendelion/mojo-ui';
 import {
   CollectionContent,
-  CollectionSidebar,
   CollectionModals,
+  CollectionSidebar,
 } from './components';
 import {
   CompactAlbumList,
   CompactAlbumListHeader,
 } from './components/content/albums';
-import type { Collection } from '@radio/types';
 import { useCollectionStore } from './store/collection-store';
 
 export const CollectionPage = () => {

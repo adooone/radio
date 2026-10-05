@@ -1,7 +1,7 @@
+import type { Notification } from '@/stores/notification-store';
+import clsx from 'clsx';
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import clsx from 'clsx';
-import type { Notification } from '@/stores/notification-store';
 
 interface NotificationToastProps {
   notification: Notification;

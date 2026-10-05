@@ -1,6 +1,6 @@
+import { eq } from 'drizzle-orm';
 import { db } from '../db';
 import { accounts } from '../schema';
-import { eq } from 'drizzle-orm';
 
 type NewAccountData = {
   username: string;

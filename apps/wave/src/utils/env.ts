@@ -22,6 +22,8 @@ export const env = {
   dbFileName: process.env.DB_FILE_NAME || 'data/wave.sqlite',
   mediaRootPath: getRequiredEnv('MEDIA_ROOT_PATH'),
   mediaBaseUrl: getRequiredEnv('MEDIA_BASE_URL'),
+  mediaInboxPath: getRequiredEnv('MEDIA_INBOX_PATH'),
+  discogsToken: process.env.DISCOGS_TOKEN || undefined,
 };
 
 function getRequiredEnv(name: string): string {

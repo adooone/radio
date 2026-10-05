@@ -1,11 +1,11 @@
-import { Hono } from 'hono';
 import { albumHandlers } from '@/api/handlers/albumHandlers';
 import { songHandlers } from '@/api/handlers/songHandlers';
 import {
   albumValidators,
   songValidators,
 } from '@/api/validators/albumValidators';
-import { authMiddleware, adminMiddleware } from '@/services/auth';
+import { adminMiddleware, authMiddleware } from '@/services/auth';
+import { Hono } from 'hono';
 
 type Variables = {
   accountId: number;

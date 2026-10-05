@@ -15,15 +15,19 @@ export const authMiddleware = async (
   }
 
   const token = authHeader.substring(7);
-  
+
   try {
     const accountId = await accountService.validateSession(token);
     c.set('accountId', accountId);
     await next();
   } catch (error) {
-    return c.json({ 
-      success: false, 
-      error: error instanceof Error ? error.message : 'Invalid or expired token' 
-    }, 401);
+    return c.json(
+      {
+        success: false,
+        error:
+          error instanceof Error ? error.message : 'Invalid or expired token',
+      },
+      401,
+    );
   }
 };

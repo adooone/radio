@@ -1,5 +1,5 @@
-import { AlbumSearch } from './album-search';
 import { useCollectionStore } from '@/features/collection/store/collection-store';
+import { AlbumSearch } from './album-search';
 
 export const SearchBar = () => {
   const { searchQuery, setSearchQuery } = useCollectionStore();

@@ -1,6 +1,6 @@
+import { and, asc, eq } from 'drizzle-orm';
 import { db } from '../db';
-import { collectionItems, audioFiles } from '../schema';
-import { eq, and, asc } from 'drizzle-orm';
+import { audioFiles, collectionItems } from '../schema';
 
 type NewCollectionItemData = {
   collectionId: number;

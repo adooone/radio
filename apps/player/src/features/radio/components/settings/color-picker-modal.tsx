@@ -1,7 +1,7 @@
-import clsx from 'clsx';
-import { useState, useEffect } from 'react';
+import { Button, CloseButton } from '@/components/ui';
 import { useUserColor } from '@/features/radio/hooks/use-user-color';
-import { CloseButton, Button } from '@/components/ui';
+import clsx from 'clsx';
+import { useEffect, useState } from 'react';
 
 interface ColorPickerModalProps {
   isOpen: boolean;

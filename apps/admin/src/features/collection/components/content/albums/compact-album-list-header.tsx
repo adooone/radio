@@ -1,11 +1,11 @@
 import { useCollectionStore } from '@/features/collection/store/collection-store';
 import {
+  ArrowDownIcon,
+  ArrowUpIcon,
   IconButton,
   Popup,
   PopupItem,
   SortIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
 } from '@dendelion/mojo-ui';
 
 export const CompactAlbumListHeader = () => {

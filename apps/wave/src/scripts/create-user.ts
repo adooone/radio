@@ -1,7 +1,7 @@
 import 'dotenv/config';
+import readline from 'node:readline';
 import { createAccount, findAccountByUsername } from '@/db/accounts';
 import bcrypt from 'bcryptjs';
-import readline from 'node:readline';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -24,7 +24,9 @@ const createUser = async () => {
 
     const username = await prompt('Username: ');
     const password = await prompt('Password (min 8 characters): ');
-    const emailInput = await prompt('Email (or press Enter for username@wave.local): ');
+    const emailInput = await prompt(
+      'Email (or press Enter for username@wave.local): ',
+    );
 
     const email = emailInput || `${username}@wave.local`;
 

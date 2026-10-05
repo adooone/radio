@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import clsx from 'clsx';
-import { PageLayout, StatsCard, Button } from '@dendelion/mojo-ui';
-import { sharedStyles } from '@dendelion/mojo-ui/styles';
 import { useUsers } from '@/services/api/hooks/use-user-management';
-import { UserList, CreateUserModal } from './components';
+import { Button, PageLayout, StatsCard } from '@dendelion/mojo-ui';
+import { sharedStyles } from '@dendelion/mojo-ui/styles';
+import clsx from 'clsx';
+import { useState } from 'react';
+import { CreateUserModal, UserList } from './components';
 
 export const UsersPage = () => {
   const { data: users } = useUsers();

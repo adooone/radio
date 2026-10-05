@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import { soundService } from '@/services/sound';
+import { useEffect, useState } from 'react';
 
 export const useDetailedSound = () => {
   const [messageSounds, setMessageSounds] = useState(

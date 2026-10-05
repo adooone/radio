@@ -1,5 +1,5 @@
-import { AlbumCard } from './album-card';
 import type { Album } from '@radio/types';
+import { AlbumCard } from './album-card';
 
 type AlbumGridProps = {
   albums: Album[];
@@ -19,4 +19,3 @@ export const AlbumGrid = ({ albums, onAlbumClick }: AlbumGridProps) => {
     </div>
   );
 };
-

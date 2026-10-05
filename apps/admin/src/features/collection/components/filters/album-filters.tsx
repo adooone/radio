@@ -1,9 +1,9 @@
-import type { Album } from '@radio/types';
 import type {
   AlbumFilters,
   SortField,
   SortOrder,
 } from '@/features/collection/utils/album-helpers';
+import type { Album } from '@radio/types';
 
 type AlbumFiltersProps = {
   albums: Album[];

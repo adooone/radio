@@ -1,7 +1,7 @@
 import type { Context } from 'hono';
 import { z } from 'zod';
-import { ResponseHelper } from './response';
 import { getErrorMessage } from './errorMessages';
+import { ResponseHelper } from './response';
 
 export const ErrorHandler = {
   handle(error: unknown, c: Context) {
@@ -94,6 +94,63 @@ export const ErrorHandler = {
       // Handle collection-specific errors
       if (error.message.includes('Collection with ID')) {
         return ResponseHelper.notFound(c, error.message);
+      }
+
+      // Handle digitization/Discogs-specific errors
+      if (error.message === 'data.json already exists') {
+        return ResponseHelper.conflict(
+          c,
+          'data.json already exists — pass force to overwrite',
+        );
+      }
+
+      if (error.message.startsWith('Could not parse a Discogs release id')) {
+        return ResponseHelper.error(c, error.message, 400);
+      }
+
+      if (error.message === 'Discogs search requires DISCOGS_TOKEN') {
+        return ResponseHelper.error(c, error.message, 400);
+      }
+
+      if (error.message.startsWith('Discogs API error')) {
+        return ResponseHelper.error(c, error.message, 502);
+      }
+
+      if (error.message.endsWith('already exists and is not empty')) {
+        return ResponseHelper.conflict(c, error.message);
+      }
+
+      if (error.message.endsWith('job is already running for this draft')) {
+        return ResponseHelper.conflict(c, error.message);
+      }
+
+      if (error.message.startsWith('Missing recording:')) {
+        return ResponseHelper.notFound(c, error.message);
+      }
+
+      if (error.message.startsWith('No side recordings found')) {
+        return ResponseHelper.notFound(c, error.message);
+      }
+
+      if (
+        error.message === 'data.json has no usable tracklist' ||
+        error.message.includes('found only') ||
+        error.message.includes('computed cut points are out of order') ||
+        error.message.startsWith('Invalid side:') ||
+        error.message.startsWith('Invalid filename:') ||
+        error.message.startsWith('Invalid cut range') ||
+        error.message.startsWith('Invalid draft slug') ||
+        error.message.includes('need exactly') ||
+        error.message.includes('manual cut points must lie within')
+      ) {
+        return ResponseHelper.error(c, error.message, 400);
+      }
+
+      if (
+        error.message ===
+        'Cannot clean up a draft that has not been published yet'
+      ) {
+        return ResponseHelper.conflict(c, error.message);
       }
 
       // Generic error handling

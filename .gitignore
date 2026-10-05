@@ -136,3 +136,14 @@ dist
 .DS_Store
 
 data/
+papercamp/.pairing.json
+papercamp/.task-logs/
+papercamp/tasks.log
+papercamp/notifications.log
+papercamp/pr-reviews.json
+papercamp/pr-map.json
+papercamp/night.json
+papercamp/run-order.md
+
+# Vite ephemeral build artifacts
+*.timestamp-*.mjs

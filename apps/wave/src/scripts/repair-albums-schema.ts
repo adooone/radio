@@ -14,14 +14,18 @@ console.log('🔧 Repairing albums schema...\n');
 try {
   // Check if albums_new exists (from partial migration)
   const tables = db
-    .query("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('albums', 'albums_new')")
+    .query(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name IN ('albums', 'albums_new')",
+    )
     .all() as { name: string }[];
 
   const hasAlbums = tables.some((t) => t.name === 'albums');
   const hasAlbumsNew = tables.some((t) => t.name === 'albums_new');
 
   if (!hasAlbumsNew) {
-    console.log('✅ No orphan albums_new table - schema may already be correct.');
+    console.log(
+      '✅ No orphan albums_new table - schema may already be correct.',
+    );
     process.exit(0);
   }
 

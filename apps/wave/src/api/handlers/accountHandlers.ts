@@ -1,8 +1,8 @@
-import type { Context } from 'hono';
+import { accountService } from '@/services/accounts/accountService';
 import { ResponseHelper } from '@/utils/response';
 import { withErrorHandling } from '@/utils/routeHandler';
-import { accountService } from '@/services/accounts/accountService';
 import { commonSchemas } from '@/utils/validation';
+import type { Context } from 'hono';
 
 export const accountHandlers = {
   get registerHandler() {

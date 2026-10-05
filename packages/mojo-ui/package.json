@@ -22,10 +22,7 @@
       "require": "./src/styles/index.ts"
     }
   },
-  "files": [
-    "dist",
-    "tailwind.ts"
-  ],
+  "files": ["dist", "tailwind.ts"],
   "scripts": {
     "build": "vite build",
     "dev": "vite",
@@ -33,13 +30,7 @@
     "lint": "biome check ./src",
     "lint:fix": "biome check ./src --write"
   },
-  "keywords": [
-    "react",
-    "components",
-    "ui",
-    "retro",
-    "mojo"
-  ],
+  "keywords": ["react", "components", "ui", "retro", "mojo"],
   "author": "Radio Team",
   "license": "MIT",
   "peerDependencies": {

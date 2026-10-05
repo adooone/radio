@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import clsx from 'clsx';
-import { Input } from '@dendelion/mojo-ui';
 import { useLogin } from '@/services/api/hooks/use-auth';
 import { useAuthStore } from '@/stores/auth-store';
 import { sharedStyles } from '@/styles/shared-styles';
+import { Input } from '@dendelion/mojo-ui';
+import clsx from 'clsx';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 export const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -59,7 +59,9 @@ export const LoginPage = () => {
             label="Username"
             type="text"
             value={username}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setUsername(e.target.value)
+            }
             placeholder="Enter your username"
             required
           />
@@ -69,7 +71,9 @@ export const LoginPage = () => {
             label="Password"
             type={showPassword ? 'text' : 'password'}
             value={password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
             placeholder="Enter your password"
             required
             rightElement={

@@ -1,6 +1,6 @@
+import { desc, eq } from 'drizzle-orm';
 import { db } from '../db';
 import { collections } from '../schema';
-import { eq, desc } from 'drizzle-orm';
 
 type NewCollectionData = {
   name: string;

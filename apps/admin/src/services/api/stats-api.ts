@@ -1,5 +1,5 @@
-import { waveApiClient } from './clients/http-client';
 import type { ApiResponse } from '@radio/types';
+import { waveApiClient } from './clients/http-client';
 
 export interface StatsResponse {
   totals: {
@@ -34,9 +34,8 @@ export interface StatsResponse {
 
 export const statsApi = {
   getStats: async (): Promise<StatsResponse> => {
-    const response = await waveApiClient.get<ApiResponse<StatsResponse>>(
-      '/api/admin/stats',
-    );
+    const response =
+      await waveApiClient.get<ApiResponse<StatsResponse>>('/api/admin/stats');
 
     if (!response.data.success || !response.data.data) {
       throw new Error(response.data.error || 'Failed to fetch stats');

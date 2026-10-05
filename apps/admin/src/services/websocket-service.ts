@@ -1,5 +1,5 @@
-import { useNotificationStore } from '@/stores/notification-store';
 import { queryClient } from '@/services/api/clients/query-client';
+import { useNotificationStore } from '@/stores/notification-store';
 
 interface WebSocketMessage {
   type: 'notification' | 'system_status' | 'stream_event';

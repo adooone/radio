@@ -1,36 +1,36 @@
-import { join, extname, resolve, relative } from 'node:path';
 import {
   existsSync,
   mkdirSync,
-  writeFileSync,
-  unlinkSync,
   readFileSync,
   readdirSync,
   statSync,
+  unlinkSync,
+  writeFileSync,
 } from 'node:fs';
+import { extname, join, relative, resolve } from 'node:path';
 import {
+  type NewAlbumData,
+  createAlbum,
+  deleteAlbum,
   findAlbumById,
   findAlbumsByOwner,
   findPublicAlbums,
   findPublicAlbumsWithFilters,
-  createAlbum,
   updateAlbum,
-  deleteAlbum,
   updateAlbumCover,
-  type NewAlbumData,
 } from '@/db/albums/albums';
 import { findSongsByAlbum } from '@/db/albums/songs';
-import { authService } from '../auth';
-import { getErrorMessage } from '@/utils/errorMessages';
-import { env } from '@/utils/env';
 import { formatDurationFromString } from '@/utils/audioMetadata';
+import { env } from '@/utils/env';
+import { getErrorMessage } from '@/utils/errorMessages';
 import type {
-  RecordingDetails,
-  ReleaseInfo,
   PersonnelItem,
   Production,
+  RecordingDetails,
+  ReleaseInfo,
   Visuals,
 } from '@radio/types';
+import { authService } from '../auth';
 
 function parseAlbumJsonFields<T extends Record<string, unknown>>(album: T) {
   const a = album as T & {
@@ -100,9 +100,7 @@ export class AlbumService {
   ]);
 
   private isImageFile(filename: string): boolean {
-    return AlbumService.IMAGE_EXTENSIONS.has(
-      extname(filename).toLowerCase(),
-    );
+    return AlbumService.IMAGE_EXTENSIONS.has(extname(filename).toLowerCase());
   }
 
   private collectImagesFromDir(dirPath: string, prefix: string): string[] {

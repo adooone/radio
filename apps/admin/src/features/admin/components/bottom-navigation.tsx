@@ -1,6 +1,6 @@
-import { Link } from '@tanstack/react-router';
 import { NavigationIsland } from '@dendelion/mojo-ui';
-import { RadioLogo, NowPlaying, UserMenu } from './';
+import { Link } from '@tanstack/react-router';
+import { NowPlaying, RadioLogo, UserMenu } from './';
 
 interface BottomNavigationProps {
   currentRoute: string;
@@ -12,6 +12,7 @@ export const BottomNavigation = ({ currentRoute }: BottomNavigationProps) => {
     { path: '/collection', label: 'Колекція' },
     { path: '/users', label: 'Користувачі' },
     { path: '/stream-control', label: 'Стрім' },
+    { path: '/digitization', label: 'Оцифровка' },
   ];
 
   return (

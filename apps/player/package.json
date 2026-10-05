@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "biome lint --error-on-warnings ./src",
     "lint:write": "biome lint --write ./src",
-    "test": "vitest",
+    "test": "vitest run --passWithNoTests",
     "build": "vite build",
     "dev": "vite --host",
     "preview": "vite preview",

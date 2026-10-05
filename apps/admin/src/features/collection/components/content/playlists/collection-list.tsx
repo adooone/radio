@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import clsx from 'clsx';
-import { motion } from 'framer-motion';
 import { useDeleteCollection, useUserCollections } from '@/services/api';
 import type { Collection } from '@radio/types';
+import clsx from 'clsx';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 type CollectionListProps = {
   onCollectionClick: (collection: Collection) => void;
@@ -96,11 +96,11 @@ export const CollectionList = ({ onCollectionClick }: CollectionListProps) => {
             <h3 className="font-medium text-gray-200 truncate">
               {collection.name}
             </h3>
-              {collection.description && (
+            {collection.description && (
               <p className="text-sm text-gray-400 truncate mt-1">
-                  {collection.description}
-                </p>
-              )}
+                {collection.description}
+              </p>
+            )}
             <div className="flex items-center gap-2 mt-1 flex-wrap">
               <span
                 className={`text-xs px-2 py-0.5 rounded ${
@@ -110,27 +110,27 @@ export const CollectionList = ({ onCollectionClick }: CollectionListProps) => {
                 }`}
               >
                 {collection.isPublic ? 'Public' : 'Private'}
-                </span>
-              </div>
+              </span>
             </div>
+          </div>
 
           <div className="flex flex-col items-end gap-1 text-xs text-gray-500 whitespace-nowrap">
             <span>{new Date(collection.createdAt).toLocaleDateString()}</span>
           </div>
 
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleDelete(collection.id, collection.name);
-              }}
-              disabled={deletingId === collection.id}
-              className={clsx(
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDelete(collection.id, collection.name);
+            }}
+            disabled={deletingId === collection.id}
+            className={clsx(
               'p-2 text-gray-400 hover:text-red-400 hover:bg-red-900/20 rounded transition-colors',
-                deletingId === collection.id && 'opacity-50 cursor-not-allowed',
-              )}
+              deletingId === collection.id && 'opacity-50 cursor-not-allowed',
+            )}
             aria-label="Delete collection"
-            >
+          >
             {deletingId === collection.id ? (
               <span className="text-xs">...</span>
             ) : (
@@ -149,7 +149,7 @@ export const CollectionList = ({ onCollectionClick }: CollectionListProps) => {
                 />
               </svg>
             )}
-            </button>
+          </button>
         </motion.div>
       ))}
     </motion.div>

@@ -1,5 +1,5 @@
-import { readdirSync, statSync, existsSync, readFileSync } from 'node:fs';
-import { join, basename, extname } from 'node:path';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { basename, extname, join } from 'node:path';
 import type { AlbumDataJson } from '@radio/types';
 
 const FOLDER_PATTERN = /^(.+?)_(.+)$/;
@@ -98,7 +98,11 @@ export function scanMediaDirectory(
     let cover: string | undefined;
     const imgDirPath = join(entryPath, 'img');
     const coverPath = join(imgDirPath, 'cover.webp');
-    if (existsSync(imgDirPath) && statSync(imgDirPath).isDirectory() && existsSync(coverPath)) {
+    if (
+      existsSync(imgDirPath) &&
+      statSync(imgDirPath).isDirectory() &&
+      existsSync(coverPath)
+    ) {
       cover = 'img/cover.webp';
     }
 

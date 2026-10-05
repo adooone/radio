@@ -12,4 +12,4 @@ export interface ChatData {
     description: string;
     version: string;
   };
-} 
+}

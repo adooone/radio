@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { type AlbumWithSongs, albumApi } from '@/services/api/album-api';
+import type { Album } from '@radio/types';
+import { useEffect, useState } from 'react';
+import { AlbumDetailModal } from './components/album-detail-modal';
 import { AlbumGrid } from './components/album-grid';
 import { FilterBar } from './components/filter-bar';
-import { AlbumDetailModal } from './components/album-detail-modal';
-import { albumApi, type AlbumWithSongs } from '@/services/api/album-api';
-import type { Album } from '@radio/types';
 
 export const CollectionLayout = () => {
   const [albums, setAlbums] = useState<Album[]>([]);

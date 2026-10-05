@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
 import { useUploadCoverArt } from '@/services/api';
+import { useRef, useState } from 'react';
 
 type CoverUploadProps = {
   albumId: number;
@@ -127,4 +127,3 @@ export const CoverUpload = ({ albumId, onSuccess }: CoverUploadProps) => {
     </div>
   );
 };
-

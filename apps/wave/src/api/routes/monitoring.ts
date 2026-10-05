@@ -1,5 +1,5 @@
-import { Hono } from 'hono';
 import { monitoringHandlers } from '@/api/handlers/monitoringHandlers';
+import { Hono } from 'hono';
 
 const monitoringRoutes = new Hono();
 

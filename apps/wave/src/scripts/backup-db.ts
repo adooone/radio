@@ -1,12 +1,12 @@
+import { writeFileSync } from 'node:fs';
 import { db } from '@/db';
 import {
   accounts,
-  collections,
   audioFiles,
   collectionItems,
+  collections,
   sessions,
 } from '@/db/schema';
-import { writeFileSync } from 'node:fs';
 
 const backupDatabase = async () => {
   try {

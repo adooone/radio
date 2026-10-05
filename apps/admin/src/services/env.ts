@@ -21,8 +21,7 @@ function getDefaultSocketUrl(): string {
   return 'ws://localhost:6871';
 }
 
-export const apiUrl =
-  import.meta.env.VITE_API_URL || getDefaultApiUrl();
+export const apiUrl = import.meta.env.VITE_API_URL || getDefaultApiUrl();
 export const socketUrl =
   import.meta.env.VITE_SOCKET_URL || getDefaultSocketUrl();
 

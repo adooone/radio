@@ -1,4 +1,4 @@
-import { getErrorMessage, SUCCESS_MESSAGES } from './errorMessages';
+import { SUCCESS_MESSAGES, getErrorMessage } from './errorMessages';
 
 export interface ServiceResponse<T = unknown> {
   success: boolean;

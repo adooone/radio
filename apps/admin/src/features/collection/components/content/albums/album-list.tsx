@@ -1,16 +1,16 @@
-import { useMemo, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { AlbumListSkeleton } from './list/album-list-skeleton';
-import { AlbumListEmpty } from './list/album-list-empty';
-import { AlbumListItem } from './list/album-list-item';
-import { AlbumListHeaderRow } from './list/album-list-header-row';
-import type { Album } from '@radio/types';
+import { useCollectionData } from '@/features/collection/hooks';
+import { useCollectionStore } from '@/features/collection/store/collection-store';
 import {
   filterAlbums,
   sortAlbums,
 } from '@/features/collection/utils/album-helpers';
-import { useCollectionStore } from '@/features/collection/store/collection-store';
-import { useCollectionData } from '@/features/collection/hooks';
+import type { Album } from '@radio/types';
+import { motion } from 'framer-motion';
+import { useMemo, useRef } from 'react';
+import { AlbumListEmpty } from './list/album-list-empty';
+import { AlbumListHeaderRow } from './list/album-list-header-row';
+import { AlbumListItem } from './list/album-list-item';
+import { AlbumListSkeleton } from './list/album-list-skeleton';
 
 export const AlbumList = () => {
   const { searchQuery, filters, sortBy, sortOrder, setSelectedAlbum } =

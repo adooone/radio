@@ -1,7 +1,7 @@
-import { useState, useRef, useCallback } from 'react';
-import type { ChatInputProps } from './types';
-import clsx from 'clsx';
 import { Button } from '@/components/ui';
+import clsx from 'clsx';
+import { useCallback, useRef, useState } from 'react';
+import type { ChatInputProps } from './types';
 
 export const ChatInput = ({ onSend }: ChatInputProps) => {
   const [message, setMessage] = useState('');

@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { useAlbum, useDeleteAlbum } from '@/services/api';
 import { AddSongModal } from '@/features/collection/components/modals/albums';
-import { AlbumDetailLoading } from './album-detail-loading';
+import { useAlbum, useDeleteAlbum } from '@/services/api';
+import type { Album } from '@radio/types';
+import { useState } from 'react';
+import { AlbumSongsSection } from '../songs';
+import { AlbumActions } from './album-actions';
 import { AlbumCover } from './album-cover';
 import { AlbumCoverUpload } from './album-cover-upload';
-import { AlbumMetadata } from './album-metadata';
-import { AlbumActions } from './album-actions';
-import { AlbumSongsSection } from '../songs';
-import { AlbumPhotosSection } from './album-photos-section';
+import { AlbumDetailLoading } from './album-detail-loading';
 import { AlbumEditForm } from './album-edit-form';
-import type { Album } from '@radio/types';
+import { AlbumMetadata } from './album-metadata';
+import { AlbumPhotosSection } from './album-photos-section';
 
 type AlbumDetailProps = {
   album: Album;

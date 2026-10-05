@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useAuthStore } from '@/stores/auth-store';
 import { useLogout } from '@/services/api/hooks/use-auth';
+import { useAuthStore } from '@/stores/auth-store';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
 
 export const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);

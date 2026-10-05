@@ -1,5 +1,5 @@
+import { Button, Card, StatsGrid, StatusIndicator } from '@dendelion/mojo-ui';
 import type { RtmpServiceStats } from '@radio/types';
-import { Card, Button, StatusIndicator, StatsGrid } from '@dendelion/mojo-ui';
 import { InlineServiceAlert } from './inline-service-alert';
 
 interface StatItem {
@@ -9,9 +9,9 @@ interface StatItem {
   highlight?: boolean;
 }
 import {
+  useRestartRtmpServer,
   useStartRtmpServer,
   useStopRtmpServer,
-  useRestartRtmpServer,
 } from '@/services/api/hooks/use-stream-control';
 
 interface RtmpServiceCardProps {

@@ -52,4 +52,3 @@ export const clearMockFiles = () => {
     delete mockFiles[key];
   }
 };
-

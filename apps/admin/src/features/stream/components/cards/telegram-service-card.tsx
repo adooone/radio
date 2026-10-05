@@ -1,6 +1,6 @@
+import { Button, Card, StatsGrid, StatusIndicator } from '@dendelion/mojo-ui';
+import type { RtmpServiceStats, TelegramServiceStats } from '@radio/types';
 import type { UseMutationResult } from '@tanstack/react-query';
-import type { TelegramServiceStats, RtmpServiceStats } from '@radio/types';
-import { Card, Button, StatusIndicator, StatsGrid } from '@dendelion/mojo-ui';
 import { InlineServiceAlert } from './inline-service-alert';
 
 interface StatItem {
@@ -9,13 +9,13 @@ interface StatItem {
   suffix?: string;
   highlight?: boolean;
 }
+import { useNotificationMutations } from '@/hooks/use-notification-mutations';
 import {
-  useStartTelegramStream,
-  useStopTelegramStream,
   useRestartTelegramStream,
   useStartRtmpServer,
+  useStartTelegramStream,
+  useStopTelegramStream,
 } from '@/services/api/hooks/use-stream-control';
-import { useNotificationMutations } from '@/hooks/use-notification-mutations';
 
 interface TelegramServiceCardProps {
   stats: TelegramServiceStats | null;

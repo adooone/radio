@@ -11,7 +11,9 @@ const DB_PATH = join(process.cwd(), env.dbFileName);
 
 const restoreFromLatest = () => {
   if (!existsSync(BACKUP_DIR)) {
-    console.error('❌ No backups found. Run db:migrate first to create backups.');
+    console.error(
+      '❌ No backups found. Run db:migrate first to create backups.',
+    );
     process.exit(1);
   }
 

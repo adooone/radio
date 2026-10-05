@@ -1,5 +1,5 @@
-import { useEffect, useState, useCallback } from 'react';
 import { subscribe } from '@/services/socket';
+import { useCallback, useEffect, useState } from 'react';
 
 export interface User {
   nickname: string;

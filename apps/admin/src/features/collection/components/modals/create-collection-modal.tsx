@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import clsx from 'clsx';
-import { Modal, Input, Textarea, Checkbox } from '@dendelion/mojo-ui';
 import { useCreateCollection } from '@/services/api';
 import { sharedStyles } from '@/styles/shared-styles';
+import { Checkbox, Input, Modal, Textarea } from '@dendelion/mojo-ui';
+import clsx from 'clsx';
+import { useState } from 'react';
 
 type CreateCollectionModalProps = {
   isOpen: boolean;
@@ -64,7 +64,9 @@ export const CreateCollectionModal = ({
           label="Collection Name *"
           type="text"
           value={name}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setName(e.target.value)
+          }
           placeholder="Enter collection name"
           required
         />
@@ -73,7 +75,9 @@ export const CreateCollectionModal = ({
           id="description"
           label="Description"
           value={description}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            setDescription(e.target.value)
+          }
           rows={3}
           placeholder="Optional description"
         />
@@ -82,7 +86,9 @@ export const CreateCollectionModal = ({
           id="isPublic"
           label="Make this collection public"
           checked={isPublic}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsPublic(e.target.checked)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setIsPublic(e.target.checked)
+          }
         />
 
         <div className="flex gap-3 pt-4 justify-center">

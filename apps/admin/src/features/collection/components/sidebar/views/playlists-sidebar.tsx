@@ -1,6 +1,6 @@
+import { useCollectionStore } from '@/features/collection/store/collection-store';
 import { CollectionStats } from '../stats/collection-stats';
 import { CollectionActions } from './actions';
-import { useCollectionStore } from '@/features/collection/store/collection-store';
 
 type PlaylistsSidebarProps = {
   totalCount: number;

@@ -1,8 +1,8 @@
 import type { Collection } from '@radio/types';
 import { useCollectionStore } from '../../store/collection-store';
-import { CreateCollectionModal, CreateAlbumModal, DetailModal } from './index';
-import { CollectionDetail } from '../content/playlists';
 import { AlbumDetail } from '../content/albums';
+import { CollectionDetail } from '../content/playlists';
+import { CreateAlbumModal, CreateCollectionModal, DetailModal } from './index';
 
 type CollectionModalsProps = {
   selectedCollection: Collection | null;

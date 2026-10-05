@@ -1,7 +1,7 @@
-import { Hono } from 'hono';
 import { accountHandlers } from '@/api/handlers/accountHandlers';
 import { accountValidators } from '@/api/validators/accountValidators';
 import { authMiddleware } from '@/services/auth';
+import { Hono } from 'hono';
 
 type Variables = {
   accountId: number;

@@ -1,6 +1,6 @@
 import { formatDuration } from '@/utils/format-duration';
-import clsx from 'clsx';
 import { CircularProgress } from '@dendelion/mojo-ui';
+import clsx from 'clsx';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import { SpindleHole } from './spindle-hole';
 import { WidgetSkeleton } from './widget-skeleton';

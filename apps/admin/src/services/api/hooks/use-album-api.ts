@@ -49,7 +49,10 @@ export const albumPhotosKeys = {
   list: (albumId: number) => [...albumPhotosKeys.all, albumId] as const,
 };
 
-export const useAlbumPhotos = (albumId: number, options?: { enabled?: boolean }) => {
+export const useAlbumPhotos = (
+  albumId: number,
+  options?: { enabled?: boolean },
+) => {
   return useQuery({
     queryKey: albumPhotosKeys.list(albumId),
     queryFn: () => albumApi.getAlbumPhotos(albumId),

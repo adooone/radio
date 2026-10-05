@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import {
-  initializeWebSocket,
-  getWebSocketService,
-} from '@/services/websocket-service';
 import { socketUrl } from '@/services/env';
+import {
+  getWebSocketService,
+  initializeWebSocket,
+} from '@/services/websocket-service';
+import { useEffect, useState } from 'react';
 
 interface UseWebSocketOptions {
   url?: string;

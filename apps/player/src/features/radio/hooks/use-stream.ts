@@ -1,6 +1,6 @@
+import { streamUrl } from '@/services/env';
 import Hls from 'hls.js';
 import { useEffect, useRef, useState } from 'react';
-import { streamUrl } from '@/services/env';
 
 export const useStream = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);

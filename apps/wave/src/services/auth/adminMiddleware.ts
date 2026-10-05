@@ -1,5 +1,5 @@
-import type { Context, Next } from 'hono';
 import { findAccountById } from '@/db/accounts/accounts';
+import type { Context, Next } from 'hono';
 
 type Variables = {
   accountId: number;

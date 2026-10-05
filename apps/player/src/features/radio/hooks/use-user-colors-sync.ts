@@ -1,6 +1,6 @@
-import { useEffect, useCallback } from 'react';
 import { subscribe } from '@/services/socket';
 import { useUserColorsStore } from '@/stores/user-colors-store';
+import { useCallback, useEffect } from 'react';
 
 interface UserColorUpdatedMessage {
   type: 'user_color_updated';

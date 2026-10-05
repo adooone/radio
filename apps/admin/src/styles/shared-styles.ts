@@ -1,6 +1,6 @@
 /**
  * Admin App-Specific Styles
- * 
+ *
  * Vinyl-style buttons and other app-specific styling.
  * Glassmorphism patterns have been moved to @dendelion/mojo-ui.
  */

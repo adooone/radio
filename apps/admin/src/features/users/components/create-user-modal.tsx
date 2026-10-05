@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import clsx from 'clsx';
-import { Input, Select } from '@dendelion/mojo-ui';
-import { sharedStyles } from '@/styles/shared-styles';
 import { useCreateUser } from '@/services/api/hooks/use-user-management';
+import { sharedStyles } from '@/styles/shared-styles';
+import { Input, Select } from '@dendelion/mojo-ui';
+import clsx from 'clsx';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
 
 type CreateUserModalProps = {
   isOpen: boolean;
@@ -85,7 +85,9 @@ export const CreateUserModal = ({
                 label="Username *"
                 type="text"
                 value={username}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setUsername(e.target.value)
+                }
                 placeholder="Enter username"
                 required
               />
@@ -95,7 +97,9 @@ export const CreateUserModal = ({
                 label="Email Address *"
                 type="email"
                 value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setEmail(e.target.value)
+                }
                 placeholder="Enter email address"
                 required
               />
@@ -105,7 +109,9 @@ export const CreateUserModal = ({
                 label="Password *"
                 type="password"
                 value={password}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setPassword(e.target.value)
+                }
                 placeholder="Enter password"
                 required
               />
@@ -114,7 +120,9 @@ export const CreateUserModal = ({
                 id="role"
                 label="Role"
                 value={role}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRole(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  setRole(e.target.value)
+                }
                 options={[
                   { value: 'user', label: 'User' },
                   { value: 'admin', label: 'Administrator' },

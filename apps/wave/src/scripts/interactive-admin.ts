@@ -5,8 +5,8 @@ import {
   findAccountByUsername,
 } from '@/db/accounts';
 import { accounts } from '@/db/schema';
-import { eq } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
+import { eq } from 'drizzle-orm';
 
 // Simple prompt function for Bun using readline
 import readline from 'node:readline';

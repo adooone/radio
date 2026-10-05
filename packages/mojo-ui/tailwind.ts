@@ -10,7 +10,13 @@ export const mojoPreset = {
         display: ['Tiny5', 'sans-serif'],
         sans: ['KyivType Sans', 'sans'],
         serif: ['KyivType Serif', 'serif'],
-        mono: ['JetBrains Mono', 'Consolas', 'Monaco', 'Courier New', 'monospace'],
+        mono: [
+          'JetBrains Mono',
+          'Consolas',
+          'Monaco',
+          'Courier New',
+          'monospace',
+        ],
       },
       colors: {
         moss: {
@@ -88,7 +94,8 @@ export const mojoPreset = {
         light: '1px 1px 2px rgba(255, 255, 255, 0.8)',
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(ellipse at center, var(--tw-gradient-stops))',
+        'gradient-radial':
+          'radial-gradient(ellipse at center, var(--tw-gradient-stops))',
       },
     },
   },

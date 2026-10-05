@@ -1,11 +1,11 @@
+import type { RtmpServerConfig, TelegramStreamConfig } from '@radio/types';
 import {
+  type UseQueryOptions,
   useMutation,
   useQuery,
   useQueryClient,
-  type UseQueryOptions,
 } from '@tanstack/react-query';
 import { streamControlApi } from '../stream-control-api';
-import type { TelegramStreamConfig, RtmpServerConfig } from '@radio/types';
 
 // Telegram Stream Hooks
 export const useTelegramConfig = (

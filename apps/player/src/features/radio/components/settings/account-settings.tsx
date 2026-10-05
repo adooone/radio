@@ -1,12 +1,12 @@
-import clsx from 'clsx';
-import { useState } from 'react';
+import { Button, CloseButton, ToggleButton } from '@/components/ui';
 import { useSound } from '@/features/radio/hooks';
 import { useDetailedSound } from '@/features/radio/hooks/use-detailed-sound';
-import { useUserList } from '@/features/radio/hooks/use-user-list';
 import { useUserColor } from '@/features/radio/hooks/use-user-color';
+import { useUserList } from '@/features/radio/hooks/use-user-list';
 import { getSocket } from '@/services/socket';
+import clsx from 'clsx';
+import { useState } from 'react';
 import { ColorPickerModal } from './color-picker-modal';
-import { CloseButton, Button, ToggleButton } from '@/components/ui';
 
 interface AccountSettingsProps {
   isOpen: boolean;

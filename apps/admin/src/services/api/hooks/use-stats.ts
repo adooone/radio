@@ -1,5 +1,5 @@
-import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
-import { statsApi, type StatsResponse } from '../stats-api';
+import { type UseQueryOptions, useQuery } from '@tanstack/react-query';
+import { type StatsResponse, statsApi } from '../stats-api';
 
 export const useStats = (
   options?: Omit<UseQueryOptions<StatsResponse>, 'queryKey' | 'queryFn'>,

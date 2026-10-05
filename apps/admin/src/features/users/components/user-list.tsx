@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import clsx from 'clsx';
-import { sharedStyles } from '@dendelion/mojo-ui/styles';
 import {
   useDeleteUser,
   useUpdateUser,
 } from '@/services/api/hooks/use-user-management';
+import { sharedStyles } from '@dendelion/mojo-ui/styles';
+import clsx from 'clsx';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 type User = {
   id: number;

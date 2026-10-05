@@ -1,6 +1,6 @@
+import { RadioLayout } from '@/features';
 import { createRoute } from '@tanstack/react-router';
 import { Root } from './root';
-import { RadioLayout } from '@/features';
 
 const Home = () => {
   return <RadioLayout />;

@@ -14,7 +14,7 @@ module.exports = {
       merge_logs: true,
       log_file_max_size: '10M',
       log_file_backups: 0,
-      disable_logs: false
+      disable_logs: false,
     },
     {
       name: 'radio.telegram',
@@ -25,10 +25,10 @@ module.exports = {
       watch: false,
       max_memory_restart: '500M',
       env: {
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
       },
       env_development: {
-        NODE_ENV: 'development'
+        NODE_ENV: 'development',
       },
       kill_timeout: 10000,
       wait_ready: false,
@@ -45,7 +45,7 @@ module.exports = {
       merge_logs: true,
       log_file_max_size: '10M',
       log_file_backups: 0,
-      disable_logs: false
-    }
+      disable_logs: false,
+    },
   ],
 };

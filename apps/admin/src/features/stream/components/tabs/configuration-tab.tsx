@@ -1,7 +1,7 @@
-import type React from 'react';
-import clsx from 'clsx';
 import { sharedStyles } from '@dendelion/mojo-ui/styles';
-import { TelegramConfigCard, RtmpConfigCard } from '../cards';
+import clsx from 'clsx';
+import type React from 'react';
+import { RtmpConfigCard, TelegramConfigCard } from '../cards';
 
 export const ConfigurationTab: React.FC = () => {
   return (

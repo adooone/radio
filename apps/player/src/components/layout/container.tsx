@@ -1,6 +1,6 @@
 import { classes } from '@/styles';
-import type { PropsWithChildren } from 'react';
 import clsx from 'clsx';
+import type { PropsWithChildren } from 'react';
 
 interface ContainerProps extends PropsWithChildren {
   /** Makes the container take full height and width */

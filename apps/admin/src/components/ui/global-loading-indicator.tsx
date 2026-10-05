@@ -1,6 +1,6 @@
-import type React from 'react';
-import clsx from 'clsx';
 import { useNotificationStore } from '@/stores/notification-store';
+import clsx from 'clsx';
+import type React from 'react';
 
 export const GlobalLoadingIndicator: React.FC = () => {
   const { loadingStates } = useNotificationStore();

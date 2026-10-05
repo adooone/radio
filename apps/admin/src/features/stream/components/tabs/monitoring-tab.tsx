@@ -1,8 +1,8 @@
-import clsx from 'clsx';
 import { StatsCard } from '@dendelion/mojo-ui';
 import { sharedStyles } from '@dendelion/mojo-ui/styles';
-import { TelegramServiceCard, RtmpServiceCard } from '../cards';
 import type { MonitoringData } from '@radio/types';
+import clsx from 'clsx';
+import { RtmpServiceCard, TelegramServiceCard } from '../cards';
 
 interface MonitoringTabProps {
   monitoring: MonitoringData | undefined;

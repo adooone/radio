@@ -10,8 +10,3 @@ export default defineConfig({
     url: env.dbFileName,
   },
 });
-
-
-
-
-

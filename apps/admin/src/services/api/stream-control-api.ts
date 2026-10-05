@@ -1,9 +1,9 @@
-import { waveApiClient } from './clients/http-client';
 import type {
+  RtmpServerConfig,
   StreamControlResponse,
   TelegramStreamConfig,
-  RtmpServerConfig,
 } from '@radio/types';
+import { waveApiClient } from './clients/http-client';
 
 export const streamControlApi = {
   // Telegram Stream Control

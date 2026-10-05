@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Modal, Input, Textarea, Checkbox } from '@dendelion/mojo-ui';
 import { useCreateAlbum } from '@/services/api';
 import { albumApi } from '@/services/api/album-api';
+import { Checkbox, Input, Modal, Textarea } from '@dendelion/mojo-ui';
+import { useState } from 'react';
 import { TagEditor } from '../../shared';
 
 type CreateAlbumModalProps = {
@@ -174,7 +174,9 @@ export const CreateAlbumModal = ({
             <Input
               label="Album Title"
               value={title}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setTitle(e.target.value)
+              }
               required
               placeholder="Enter album title"
             />
@@ -182,7 +184,9 @@ export const CreateAlbumModal = ({
             <Input
               label="Artist"
               value={artist}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setArtist(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setArtist(e.target.value)
+              }
               required
               placeholder="Enter artist name"
             />
@@ -191,7 +195,9 @@ export const CreateAlbumModal = ({
               label="Year"
               type="number"
               value={year}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setYear(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setYear(e.target.value)
+              }
               placeholder="1900-2100"
               min="1900"
               max="2100"
@@ -202,7 +208,9 @@ export const CreateAlbumModal = ({
         <Textarea
           label="Description"
           value={description}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            setDescription(e.target.value)
+          }
           placeholder="Enter album description"
           rows={3}
         />
@@ -212,7 +220,9 @@ export const CreateAlbumModal = ({
         <Checkbox
           label="Make this album public"
           checked={isPublic}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsPublic(e.target.checked)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setIsPublic(e.target.checked)
+          }
         />
 
         <div className="flex gap-3 pt-4">
