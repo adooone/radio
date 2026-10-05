@@ -79,11 +79,12 @@ none planned.
       types, and drop `TelegramServiceStats`, `TelegramStreamConfig` and the
       monitoring snapshot's `telegram` field from `packages/types`.
       run: 5m44s · 124 in · 22.2k out · sonnet-5 · sess:0a70bdeb-00ae-48bc-928f-ed3fedfac36e
-- [ ] Phase 3 — Remove Telegram from wave process config and files
+- [x] Phase 3 — Remove Telegram from wave process config and files
       Drop the five `telegram*` package scripts, the `radio.telegram` app in
       `ecosystem.config.js`, the Telegram branches of `stream-manager.sh`,
       and `data/telegram-stream-status.json` plus the
       `logs/telegram-stream*.log` paths.
+      run: 2m14s · 38 in · 6k out · sonnet-5 · sess:837c8043-4e00-439a-90a3-778d3a16f5c3
 - [ ] Phase 4 — Remove Telegram from the admin stream feature
       Delete the two Telegram cards and their index entries, unhook them
       from `configuration-tab.tsx` and `monitoring-tab.tsx`, drop the
