@@ -28,14 +28,6 @@ export interface WebsiteStats {
   averageViewTime: number;
 }
 
-export interface TelegramHealth {
-  isConnected: boolean;
-  lastMessageTime: string | null;
-  totalMessagesSent: number;
-  connectionErrors: number;
-  lastHealthCheck: string;
-}
-
 export interface PM2Status {
   pid: number;
   status: string;
@@ -50,16 +42,6 @@ export interface DaemonStatus {
   lastUpdate: string;
 }
 
-export interface TelegramStreamStatus {
-  isRunning: boolean;
-  status?: string;
-  error?: string;
-  message?: string;
-  pm2Status?: {
-    daemonStatus?: DaemonStatus;
-  };
-}
-
 export interface ServiceStatus {
   isRunning: boolean;
   status?: string;
@@ -69,9 +51,6 @@ export interface ServiceStatus {
 
 export interface MonitoringDashboard {
   services: {
-    telegram: {
-      health: TelegramHealth | null;
-    };
     rtmp: {
       stats: RtmpStats | null;
     };

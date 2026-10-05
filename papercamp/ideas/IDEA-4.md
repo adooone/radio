@@ -85,13 +85,14 @@ none planned.
       and `data/telegram-stream-status.json` plus the
       `logs/telegram-stream*.log` paths.
       run: 2m14s · 38 in · 6k out · sonnet-5 · sess:837c8043-4e00-439a-90a3-778d3a16f5c3
-- [ ] Phase 4 — Remove Telegram from the admin stream feature
+- [x] Phase 4 — Remove Telegram from the admin stream feature
       Delete the two Telegram cards and their index entries, unhook them
       from `configuration-tab.tsx` and `monitoring-tab.tsx`, drop the
       Telegram log from `logs-card.tsx`, and clear the Telegram calls,
       hooks, types and events from `stream-control-api.ts`,
       `use-stream-control.ts`, `streaming/types.ts` and
       `websocket-service.ts`.
+      run: 3m14s · 74 in · 12.3k out · sonnet-5 · sess:837c8043-4e00-439a-90a3-778d3a16f5c3
 - [ ] Phase 5 — Remove the Telegram sections from the docs
       Cover the listed pages plus anything a repo-wide search turns up, such
       as `docs/api/README.md`.

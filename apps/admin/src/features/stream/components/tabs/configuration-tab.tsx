@@ -1,7 +1,7 @@
 import { sharedStyles } from '@dendelion/mojo-ui/styles';
 import clsx from 'clsx';
 import type React from 'react';
-import { RtmpConfigCard, TelegramConfigCard } from '../cards';
+import { RtmpConfigCard } from '../cards';
 
 export const ConfigurationTab: React.FC = () => {
   return (
@@ -12,7 +12,6 @@ export const ConfigurationTab: React.FC = () => {
           Stream Configuration
         </h2>
         <div className={clsx(sharedStyles.serviceGrid)}>
-          <TelegramConfigCard />
           <RtmpConfigCard />
         </div>
       </div>

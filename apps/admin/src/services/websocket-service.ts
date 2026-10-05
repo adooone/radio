@@ -15,7 +15,7 @@ interface SystemNotification {
 }
 
 interface StreamEvent {
-  service: 'telegram' | 'rtmp';
+  service: 'rtmp';
   event: 'started' | 'stopped' | 'error' | 'connected' | 'disconnected';
   message?: string;
 }
@@ -127,7 +127,6 @@ class WebSocketService {
     const { addNotification } = useNotificationStore.getState();
 
     const serviceNames = {
-      telegram: 'Telegram Stream',
       rtmp: 'RTMP Server',
     };
 
