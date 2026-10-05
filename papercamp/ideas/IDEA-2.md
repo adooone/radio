@@ -4,7 +4,7 @@ title: Vinyl digitization pipeline in admin
 type: feat
 status: review
 created: 2026-08-26
-updated: 2026-08-26
+updated: 2026-10-05
 tags:
   - admin
   - wave
@@ -171,6 +171,7 @@ through wave (CORS already allows admin origins).
       the Mac). Fix the known zod-schema lag for album vinyl fields while
       touching validation.
       run: 11m7s · 232 in · 46.1k out · sonnet-5 · sess:aedb920b-d129-4c33-976d-77e4959e413b
+- [x] [manual] Add permissions allowlist for agent tool access
 
 ### Thread
 - [x] 2026-10-03 [question] [agent] Run-all parked on phase 1 ("Phase 1 — Wave foundation: inbox drafts API") — the agent needs a decision: Failed to authenticate: OAuth session expired and could not be refreshed

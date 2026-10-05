@@ -11,5 +11,44 @@
         ]
       }
     ]
+  },
+  "permissions": {
+    "allow": [
+      "Edit(src/**)",
+      "Write(src/**)",
+      "Edit(app/**)",
+      "Write(app/**)",
+      "Edit(scripts/**)",
+      "Write(scripts/**)",
+      "Edit(papercamp/**)",
+      "Write(papercamp/**)",
+      "Edit(*.json)",
+      "Write(*.json)",
+      "Edit(*.ts)",
+      "Write(*.ts)",
+      "Edit(*.tsx)",
+      "Write(*.tsx)",
+      "Edit(*.md)",
+      "Write(*.md)",
+      "Edit(*.config.*)",
+      "Write(*.config.*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(ls*)",
+      "Bash(cat*)",
+      "Bash(wc*)",
+      "Bash(pnpm run *)",
+      "Bash(pnpm test*)",
+      "Bash(pnpm install*)",
+      "Bash(pnpm view *)",
+      "Bash(pnpm pack*)",
+      "Bash(pnpm ls*)",
+      "Bash(npx tsc*)",
+      "Bash(npx biome check*)",
+      "Bash(npx vitest*)",
+      "Bash(npx jest*)",
+      "Bash(npx expo *)"
+    ]
   }
 }
