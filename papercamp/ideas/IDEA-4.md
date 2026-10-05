@@ -105,3 +105,4 @@ none planned.
 - [x] Phase 7 — Verify nothing Telegram remains and close IDEA-3
       Grep the repo for `telegram`, run typecheck, lint and tests, confirm
       wave and admin still build, and mark [[IDEA-3]] dropped.
+      run: 1m59s · 28 in · 2.6k out · sonnet-5 · sess:eb1108bf-6896-4615-895b-bf3b952b99c0
