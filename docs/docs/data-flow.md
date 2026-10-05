@@ -12,8 +12,6 @@ The Radio Streaming Platform uses a combination of synchronous and asynchronous 
 
 ```
 Audio Source → RTMP Server → HLS Stream → Frontend Player
-     ↓              ↓            ↓
-Telegram Stream → Telegram → Telegram Channel
      ↓
 Wave Backend → Admin Panel (Management)
 ```
@@ -22,9 +20,7 @@ Wave Backend → Admin Panel (Management)
 1. **Audio Input**: External audio source (file, stream, microphone)
 2. **RTMP Processing**: Docker-based RTMP server processes audio
 3. **HLS Generation**: RTMP server generates HLS segments
-4. **Stream Distribution**: 
-   - HLS stream to player apps
-   - Telegram stream to Telegram channels
+4. **Stream Distribution**: HLS stream to player apps
 5. **Management**: Wave backend coordinates all operations
 6. **Monitoring**: Admin panel provides real-time management
 
@@ -72,7 +68,6 @@ Response ← JSON Response ← Service Response ← Data Response
 #### Service Communication
 - **StreamingService**: Main orchestrator
 - **AudioTrackService**: Track management
-- **TelegramStreamService**: Telegram integration
 - **RtmpService**: RTMP server management
 
 ### 2. Admin Panel Data Flow
@@ -211,7 +206,6 @@ Health Response ← Status Aggregation ← Component Status ← System Component
 - **API Health**: HTTP endpoint availability
 - **Stream Health**: Streaming system status
 - **RTMP Health**: RTMP server status
-- **Telegram Health**: Telegram stream status
 
 ### 2. Metrics Collection
 

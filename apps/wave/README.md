@@ -56,7 +56,6 @@ bun run dev
 | Script | Description |
 |--------|-------------|
 | `bun run rtmp` | Start RTMP Docker container |
-| `bun run telegram` | Start Telegram stream daemon |
 
 ### PM2 (Production)
 
@@ -66,10 +65,8 @@ bun run dev
 | `bun run pm2:stop` | Stop all services |
 | `bun run pm2:restart` | Restart all services |
 | `bun run pm2:logs` | View PM2 logs |
-| `bun run telegram:start` | Start Telegram daemon via PM2 |
-| `bun run telegram:stop` | Stop Telegram daemon |
 
-PM2 process names: `radio.wave`, `radio.telegram`
+PM2 process names: `radio.wave`
 
 ## Architecture
 
@@ -120,7 +117,7 @@ See [API Documentation](../../docs/api/README.md) for the full reference.
 - `POST /api/audio-files/upload` - File uploads
 - `GET/POST /api/collections` - Playlist management
 - `GET /api/monitoring/` - System monitoring
-- `/api/stream/*` - RTMP and Telegram control
+- `/api/stream/*` - RTMP control
 
 ## Environment Variables
 

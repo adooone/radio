@@ -82,11 +82,6 @@ for the full reference.
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `POST` | `/telegram/start` | Start Telegram stream |
-| `POST` | `/telegram/stop` | Stop Telegram stream |
-| `POST` | `/telegram/restart` | Restart Telegram stream |
-| `GET` | `/telegram/config` | Get Telegram configuration |
-| `PUT` | `/telegram/config` | Update Telegram configuration |
 | `POST` | `/rtmp/start` | Start RTMP server |
 | `POST` | `/rtmp/stop` | Stop RTMP server |
 | `POST` | `/rtmp/restart` | Restart RTMP server |
@@ -99,7 +94,6 @@ for the full reference.
 |--------|----------|-------------|
 | `GET` | `/` | Get complete monitoring data |
 | `GET` | `/health` | System health overview |
-| `GET` | `/telegram` | Telegram service statistics |
 | `GET` | `/rtmp` | RTMP service statistics |
 | `GET` | `/metrics/:service` | Metrics for specific service |
 | `GET` | `/logs` | System logs |

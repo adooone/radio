@@ -11,7 +11,6 @@ Monorepo containing a full-featured radio streaming platform:
 - **Admin Panel** - Web-based control interface for stream and collection management
 - **Player** - Public-facing radio player with chat
 - **Backend API** - RESTful API with WebSocket support
-- **Telegram Integration** - Stream to Telegram channels
 - **RTMP Server** - Docker-based streaming infrastructure
 
 ## Project Structure
@@ -56,7 +55,7 @@ radio/
 - Bun 1.2.9+
 - pnpm 10.8.0+
 - Docker (for RTMP server)
-- FFmpeg (for Telegram streaming)
+- FFmpeg (for audio streaming to the RTMP server)
 
 ### Installation
 
@@ -97,9 +96,6 @@ pnpm build
 
 # Start backend with PM2
 pnpm wave:start
-
-# Start Telegram stream daemon
-pnpm --filter @radio/wave telegram:start
 ```
 
 ## Documentation

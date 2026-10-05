@@ -1,14 +1,13 @@
 # 📡 Streaming Setup Guide
 
-Complete guide for setting up OBS streaming with Telegram integration.
+Complete guide for setting up OBS streaming to the RTMP server.
 
 ## 🎯 Overview
 
 This guide covers:
 1. **OBS Configuration** - Setting up OBS to stream to the RTMP server
-2. **Telegram Setup** - Configuring Telegram streaming
-3. **Service Management** - Starting and monitoring all services
-4. **Troubleshooting** - Common issues and solutions
+2. **Service Management** - Starting and monitoring all services
+3. **Troubleshooting** - Common issues and solutions
 
 ## 🎥 OBS Configuration
 
@@ -48,30 +47,6 @@ Download and install OBS Studio from [https://obsproject.com/](https://obsprojec
 3. Add **Audio Output Capture** for desktop audio
 4. Add **Media Source** for music files/playlists
 
-## 📱 Telegram Integration
-
-### 1. Get Telegram Stream Key
-1. Open Telegram app
-2. Create a new channel or use existing one
-3. Go to channel settings → **Go Live**
-4. Copy the **RTMP URL** and **Stream Key**
-
-### 2. Configure Telegram Settings
-Update the configuration via API:
-
-```bash
-curl -X PUT http://localhost:6870/api/stream/telegram/config \
-  -H "Content-Type: application/json" \
-  -d '{
-    "rtmpUrl": "rtmps://dc4-1.rtmp.t.me/s/",
-    "streamKey": "YOUR_TELEGRAM_STREAM_KEY",
-    "inputUrl": "rtmp://localhost:1935/live/test"
-  }'
-```
-
-### 3. Stream Configuration
-The Telegram stream now uses direct audio passthrough (`-c:a copy`) for minimal CPU usage and maximum quality preservation.
-
 ## 🚀 Service Management
 
 ### 1. Start Services in Order
@@ -91,15 +66,6 @@ curl -X POST http://localhost:6870/api/stream/rtmp/start
 pnpm wave:dev
 # Or for production
 pnpm wave:start
-```
-
-#### Start Telegram Stream
-```bash
-# Via API (recommended)
-curl -X POST http://localhost:6870/api/stream/telegram/start
-
-# Or via PM2 directly
-pm2 start radio.telegram
 ```
 
 ### 2. Verify Services
@@ -123,7 +89,6 @@ curl http://localhost:6870/health
 │ id │ name               │ mode    │ ↺    │ status    │ cpu      │ memory   │
 ├────┼────────────────────┼─────────┼──────┼───────────┼──────────┼──────────┤
 │ 0  │ radio.wave         │ fork    │ 0    │ online    │ 0%       │ 4.3mb    │
-│ 1  │ radio.telegram     │ fork    │ 0    │ online    │ 0%       │ 4.2mb    │
 └────┴────────────────────┴─────────┴──────┴───────────┴──────────┴──────────┘
 
 # Docker Status
@@ -141,18 +106,12 @@ curl -X POST http://localhost:6870/api/stream/rtmp/start
 # 2. Wait for server to be ready (check Docker logs)
 docker logs rtmp-server
 
-# 3. Start Telegram stream
-curl -X POST http://localhost:6870/api/stream/telegram/start
-
-# 4. Start OBS streaming
+# 3. Start OBS streaming
 # Click "Start Streaming" in OBS Studio
 ```
 
 ### 2. Monitor Streaming
 ```bash
-# Check Telegram stream logs
-pm2 logs radio.telegram --lines 20
-
 # Check RTMP server logs
 docker logs rtmp-server --tail 20
 
@@ -162,20 +121,12 @@ pm2 logs radio.wave --lines 20
 
 ### 3. Stream Status Indicators
 
-#### Healthy Stream
-```bash
-# Telegram daemon logs should show:
-✅ Successfully connected to Telegram RTMP server
-FFmpeg stderr: frame= 1234 fps=25 q=23.0 size=1234kB time=00:01:23.45 bitrate=128.0kbits/s
-```
-
 #### Connection Issues
 ```bash
 # Error indicators:
 ❌ Connection refused
-❌ Network is unreachable  
+❌ Network is unreachable
 ❌ Input/output error
-❌ FFmpeg spawn error: ENOENT
 ```
 
 ## 🛠️ Admin Panel
@@ -188,8 +139,7 @@ FFmpeg stderr: frame= 1234 fps=25 q=23.0 size=1234kB time=00:01:23.45 bitrate=12
 
 ### Available Controls
 - **RTMP Server**: Start/Stop/Restart
-- **Telegram Stream**: Start/Stop
-- **Configuration**: Update Telegram settings
+- **Configuration**: Update RTMP settings
 - **Monitoring**: Real-time status and logs
 
 ## 🚨 Troubleshooting
@@ -223,22 +173,6 @@ docker logs rtmp-server
 
 # Restart RTMP server if needed
 curl -X POST http://localhost:6870/api/stream/rtmp/restart
-```
-
-#### Telegram Stream Not Working
-**Error**: Telegram daemon keeps restarting
-
-**Solution**:
-```bash
-# Check Telegram stream logs
-pm2 logs radio.telegram --lines 50
-
-# Common fixes:
-# 1. Verify FFmpeg is installed
-# 2. Check RTMP server is running
-# 3. Verify Telegram stream key is correct
-# 4. Restart Telegram service
-pm2 restart radio.telegram
 ```
 
 #### Port Already in Use
@@ -283,11 +217,11 @@ curl http://localhost:8069/hls/stream.m3u8
 #### Log Analysis
 ```bash
 # Follow logs in real-time
-pm2 logs radio.telegram --lines 0 --raw
+pm2 logs radio.wave --lines 0 --raw
 docker logs -f rtmp-server
 
 # Search for errors
-pm2 logs radio.telegram | grep -i error
+pm2 logs radio.wave | grep -i error
 docker logs rtmp-server 2>&1 | grep -i error
 ```
 

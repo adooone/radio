@@ -140,96 +140,6 @@ PUT /api/stream/rtmp/config
 }
 ```
 
-## 📡 Telegram Integration
-
-### Start Telegram Stream
-Start streaming to Telegram via PM2 daemon.
-
-```http
-POST /api/stream/telegram/start
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "message": "Telegram stream started successfully"
-}
-```
-
-### Stop Telegram Stream
-Stop the Telegram stream.
-
-```http
-POST /api/stream/telegram/stop
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "message": "Telegram stream stopped successfully"
-}
-```
-
-### Restart Telegram Stream
-Restart the Telegram stream.
-
-```http
-POST /api/stream/telegram/restart
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "message": "Telegram stream restarted successfully"
-}
-```
-
-### Get Telegram Configuration
-Get the current Telegram streaming configuration.
-
-```http
-GET /api/stream/telegram/config
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "config": {
-    "rtmpUrl": "rtmps://dc4-1.rtmp.t.me/s/",
-    "streamKey": "your-telegram-stream-key",
-    "inputUrl": "rtmp://localhost:1935/live/test"
-  }
-}
-```
-
-### Update Telegram Configuration
-Update the Telegram streaming configuration.
-
-```http
-PUT /api/stream/telegram/config
-```
-
-**Request Body:**
-```json
-{
-  "rtmpUrl": "rtmps://dc4-1.rtmp.t.me/s/",
-  "streamKey": "new-telegram-stream-key",
-  "inputUrl": "rtmp://localhost:1935/live/test"
-}
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "message": "Telegram configuration updated successfully"
-}
-```
-
 ## 📊 Monitoring Endpoints
 
 ### Get All Monitoring Data
@@ -248,11 +158,6 @@ GET /api/monitoring/
       "uptime": 3600,
       "memory": { "used": 512, "total": 1024 },
       "cpu": { "usage": 25.5 }
-    },
-    "telegram": {
-      "status": "running",
-      "uptime": 1800,
-      "lastError": null
     },
     "rtmp": {
       "status": "running",
@@ -279,26 +184,6 @@ GET /api/monitoring/health
     "uptime": 3600,
     "memory": { "used": 512, "total": 1024 },
     "cpu": { "usage": 25.5 }
-  }
-}
-```
-
-### Get Telegram Service Statistics
-Get detailed statistics for the Telegram service.
-
-```http
-GET /api/monitoring/telegram
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "data": {
-    "status": "running",
-    "uptime": 1800,
-    "lastError": null,
-    "restartCount": 0
   }
 }
 ```
@@ -331,7 +216,7 @@ GET /api/monitoring/metrics/{service}
 ```
 
 **Parameters:**
-- `service`: Either `telegram` or `rtmp`
+- `service`: `rtmp`
 
 **Response:**
 ```json
@@ -353,7 +238,7 @@ GET /api/monitoring/logs?source=all&lines=100
 ```
 
 **Query Parameters:**
-- `source`: Log source (`all`, `telegram`, `rtmp`, `wave`)
+- `source`: Log source (`all`, `rtmp`, `wave`)
 - `lines`: Number of lines to return (default: 100)
 
 **Response:**
@@ -381,7 +266,7 @@ GET /api/monitoring/logs/{service}?lines=100
 ```
 
 **Parameters:**
-- `service`: Service name (`telegram`, `rtmp`, `wave`)
+- `service`: Service name (`rtmp`, `wave`)
 
 **Query Parameters:**
 - `lines`: Number of lines to return (default: 100)
@@ -461,11 +346,6 @@ ws.onmessage = (event) => {
 curl -X POST http://localhost:6870/api/stream/rtmp/start
 ```
 
-#### Start Telegram Stream
-```bash
-curl -X POST http://localhost:6870/api/stream/telegram/start
-```
-
 #### Get Monitoring Data
 ```bash
 curl http://localhost:6870/api/monitoring/
@@ -474,17 +354,6 @@ curl http://localhost:6870/api/monitoring/
 #### Get System Health
 ```bash
 curl http://localhost:6870/api/monitoring/health
-```
-
-#### Update Telegram Configuration
-```bash
-curl -X PUT http://localhost:6870/api/stream/telegram/config \
-  -H "Content-Type: application/json" \
-  -d '{
-    "rtmpUrl": "rtmps://dc4-1.rtmp.t.me/s/",
-    "streamKey": "your-new-stream-key",
-    "inputUrl": "rtmp://localhost:1935/live/test"
-  }'
 ```
 
 ### JavaScript/TypeScript Example
@@ -521,19 +390,6 @@ class StreamingAPI {
 
   async getRtmpConfig() {
     return this.request('/api/stream/rtmp/config');
-  }
-
-  // Telegram operations
-  async startTelegramStream() {
-    return this.request('/api/stream/telegram/start', { method: 'POST' });
-  }
-
-  async stopTelegramStream() {
-    return this.request('/api/stream/telegram/stop', { method: 'POST' });
-  }
-
-  async getTelegramConfig() {
-    return this.request('/api/stream/telegram/config');
   }
 
   // Monitoring operations

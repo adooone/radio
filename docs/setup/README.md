@@ -9,7 +9,7 @@
 | pnpm | 10.8.0+ | Package manager |
 | Docker | Latest | RTMP server container |
 | PM2 | Latest | Production process management |
-| FFmpeg | Latest | Telegram streaming |
+| FFmpeg | Latest | Audio streaming to the RTMP server |
 
 ## Installation
 
@@ -140,9 +140,6 @@ pnpm build
 # Start Wave backend
 pnpm wave:start
 
-# Start Telegram stream daemon
-pnpm --filter @radio/wave telegram:start
-
 # Check status
 pm2 status
 
@@ -155,7 +152,6 @@ pm2 logs
 | Process | Name | Description |
 |---------|------|-------------|
 | Wave Backend | `radio.wave` | Main API server |
-| Telegram Daemon | `radio.telegram` | Telegram stream relay |
 
 ## Troubleshooting
 
@@ -172,7 +168,7 @@ sudo lsof -i :8069  # HLS Output
 
 ### FFmpeg Not Found
 
-Required for Telegram streaming:
+Required for audio streaming to the RTMP server:
 
 ```bash
 # Ubuntu/Debian
@@ -189,6 +185,5 @@ ffmpeg -version
 
 1. Docker (RTMP server)
 2. Wave Backend (API server)
-3. Telegram Daemon (requires Wave + RTMP)
-4. Admin Panel (requires Wave)
-5. Player (requires Wave)
+3. Admin Panel (requires Wave)
+4. Player (requires Wave)
