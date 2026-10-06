@@ -2,9 +2,9 @@
 id: IDEA-2
 title: Vinyl digitization pipeline in admin
 type: feat
-status: review
+status: done
 created: 2026-08-26
-updated: 2026-10-05
+updated: 2026-10-06
 tags:
   - admin
   - wave
