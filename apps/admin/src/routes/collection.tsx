@@ -1,6 +1,6 @@
 import { createRoute } from '@tanstack/react-router';
-import { Root } from './root';
 import { CollectionPage } from '../features';
+import { Root } from './root';
 
 export const collectionRoute = createRoute({
   getParentRoute: () => Root,

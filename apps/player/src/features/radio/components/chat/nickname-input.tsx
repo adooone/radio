@@ -1,7 +1,7 @@
+import { Button } from '@/components/ui';
 import clsx from 'clsx';
 import { useState } from 'react';
 import type { NicknameInputProps } from './types';
-import { Button } from '@/components/ui';
 
 export const NicknameInput = ({
   initialNickname,

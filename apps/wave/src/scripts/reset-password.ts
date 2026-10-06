@@ -1,8 +1,8 @@
+import readline from 'node:readline';
 import { db } from '@/db';
 import { accounts } from '@/db/schema';
-import { eq } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
-import readline from 'node:readline';
+import { eq } from 'drizzle-orm';
 
 const rl = readline.createInterface({
   input: process.stdin,

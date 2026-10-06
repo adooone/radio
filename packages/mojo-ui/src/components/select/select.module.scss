@@ -1,0 +1,136 @@
+@use '../../styles' as *;
+@use 'sass:map';
+
+.container {
+  width: 100%;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(217, 219, 209);
+  margin-bottom: 0.5rem;
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+
+  &.small {
+    height: map.get($sizes, small, 'height');
+    border-radius: map.get($sizes, small, 'border-radius');
+  }
+
+  &.medium {
+    height: map.get($sizes, medium, 'height');
+    border-radius: map.get($sizes, medium, 'border-radius');
+  }
+
+  &.large {
+    height: map.get($sizes, large, 'height');
+    border-radius: map.get($sizes, large, 'border-radius');
+  }
+
+  &.error {
+    .field {
+      border-color: rgba(255, 80, 80, 0.5);
+      box-shadow: $input-shadow-inset, 0 0 12px rgba(255, 80, 80, 0.2);
+    }
+  }
+}
+
+.baseLayer {
+  @include soft-base-layer;
+  z-index: 1;
+}
+
+.baseLayerSmall {
+  border-radius: map.get($sizes, small, 'border-radius');
+}
+
+.baseLayerMedium {
+  border-radius: map.get($sizes, medium, 'border-radius');
+}
+
+.baseLayerLarge {
+  border-radius: map.get($sizes, large, 'border-radius');
+}
+
+.field {
+  @include input-field;
+  z-index: 2;
+
+  &:has(select:focus) {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: $input-shadow-inset, 0 0 12px rgba(255, 255, 255, 0.08);
+  }
+}
+
+.fieldSmall {
+  inset: map.get($sizes, small, 'inset');
+  border-radius: map.get($sizes, small, 'border-radius');
+}
+
+.fieldMedium {
+  inset: map.get($sizes, medium, 'inset');
+  border-radius: map.get($sizes, medium, 'border-radius');
+}
+
+.fieldLarge {
+  inset: map.get($sizes, large, 'inset');
+  border-radius: map.get($sizes, large, 'border-radius');
+}
+
+.select {
+  @include input-content;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgb(238, 237, 234);
+  transition: $transition-smooth;
+  z-index: 3;
+  cursor: pointer;
+  appearance: none;
+
+  // Custom dropdown arrow
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='rgb(217, 219, 209)' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  // Style the options
+  option {
+    background: rgb(42, 42, 42);
+    color: rgb(238, 237, 234);
+    padding: 8px;
+  }
+
+  &.small {
+    padding: map.get($sizes, small, 'padding');
+    padding-right: 40px;
+  }
+
+  &.medium {
+    padding: map.get($sizes, medium, 'padding');
+    padding-right: 44px;
+  }
+
+  &.large {
+    padding: map.get($sizes, large, 'padding');
+    padding-right: 48px;
+  }
+}
+
+.errorText {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: rgb(248 113 113);
+}

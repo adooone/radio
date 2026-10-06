@@ -1,15 +1,15 @@
-import { useMemo, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { AlbumListSkeleton } from './list/album-list-skeleton';
-import { AlbumListEmpty } from './list/album-list-empty';
-import { CompactAlbumListItem } from './list/compact-album-list-item';
-import type { Album } from '@radio/types';
+import { useCollectionData } from '@/features/collection/hooks';
+import { useCollectionStore } from '@/features/collection/store/collection-store';
 import {
   filterAlbums,
   sortAlbums,
 } from '@/features/collection/utils/album-helpers';
-import { useCollectionStore } from '@/features/collection/store/collection-store';
-import { useCollectionData } from '@/features/collection/hooks';
+import type { Album } from '@radio/types';
+import { motion } from 'framer-motion';
+import { useMemo, useRef } from 'react';
+import { AlbumListEmpty } from './list/album-list-empty';
+import { AlbumListSkeleton } from './list/album-list-skeleton';
+import { CompactAlbumListItem } from './list/compact-album-list-item';
 
 export const CompactAlbumList = () => {
   const {

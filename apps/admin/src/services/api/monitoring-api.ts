@@ -1,5 +1,5 @@
+import type { ApiResponse, LogData, MonitoringData } from '@radio/types';
 import { waveApiClient } from './clients/http-client';
-import type { ApiResponse, MonitoringData, LogData } from '@radio/types';
 
 export const monitoringApi = {
   getMonitoringData: async (): Promise<MonitoringData> => {

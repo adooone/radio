@@ -1,7 +1,7 @@
 import { db } from '@/db/db';
 import { albums, songs } from '@/db/schema';
-import { sql, count, sum, desc, isNull, eq, and, or } from 'drizzle-orm';
 import { parseDurationToSeconds } from '@/utils/audioMetadata';
+import { and, count, desc, eq, isNull, or, sql, sum } from 'drizzle-orm';
 
 export interface StatsResponse {
   totals: {
@@ -75,7 +75,10 @@ export class StatsService {
 
     // Get all song durations and sum them in application code
     // (SQLite doesn't have great string parsing, so we'll do it in JS)
-    const allSongs = await db.select({ duration: songs.duration }).from(songs).all();
+    const allSongs = await db
+      .select({ duration: songs.duration })
+      .from(songs)
+      .all();
 
     const totalDuration = allSongs.reduce((acc, song) => {
       return acc + parseDurationToSeconds(song.duration);
@@ -247,9 +250,7 @@ export class StatsService {
       })
       .from(albums)
       .orderBy(
-        desc(
-          sql`COALESCE(${albums.digitizationDate}, ${albums.createdAt})`,
-        ),
+        desc(sql`COALESCE(${albums.digitizationDate}, ${albums.createdAt})`),
       )
       .limit(5)
       .all();

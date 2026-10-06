@@ -1,5 +1,5 @@
-import { useNotificationStore } from '@/stores/notification-store';
 import { queryClient } from '@/services/api/clients/query-client';
+import { useNotificationStore } from '@/stores/notification-store';
 
 interface WebSocketMessage {
   type: 'notification' | 'system_status' | 'stream_event';
@@ -15,7 +15,7 @@ interface SystemNotification {
 }
 
 interface StreamEvent {
-  service: 'telegram' | 'rtmp';
+  service: 'rtmp';
   event: 'started' | 'stopped' | 'error' | 'connected' | 'disconnected';
   message?: string;
 }
@@ -127,7 +127,6 @@ class WebSocketService {
     const { addNotification } = useNotificationStore.getState();
 
     const serviceNames = {
-      telegram: 'Telegram Stream',
       rtmp: 'RTMP Server',
     };
 

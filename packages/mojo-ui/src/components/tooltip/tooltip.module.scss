@@ -1,0 +1,122 @@
+@use '../../styles' as *;
+
+.trigger {
+  position: relative;
+  display: inline-flex;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: $z-tooltip;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: $color-text-primary;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: $radius-md;
+  box-shadow: $shadow-lg, 0 0 20px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+  pointer-events: none;
+  max-width: 250px;
+  white-space: nowrap;
+
+  &.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  // Placement variants
+  &.top {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.95) translateY(-8px);
+    margin-bottom: 8px;
+
+    &.visible {
+      transform: translateX(-50%) scale(1) translateY(0);
+    }
+  }
+
+  &.bottom {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.95) translateY(8px);
+    margin-top: 8px;
+
+    &.visible {
+      transform: translateX(-50%) scale(1) translateY(0);
+    }
+  }
+
+  &.left {
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%) scale(0.95) translateX(-8px);
+    margin-right: 8px;
+
+    &.visible {
+      transform: translateY(-50%) scale(1) translateX(0);
+    }
+  }
+
+  &.right {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%) scale(0.95) translateX(8px);
+    margin-left: 8px;
+
+    &.visible {
+      transform: translateY(-50%) scale(1) translateX(0);
+    }
+  }
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.arrow {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(30, 30, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: rotate(45deg);
+
+  &.arrowtop {
+    bottom: -4px;
+    left: 50%;
+    margin-left: -4px;
+    border-top: none;
+    border-left: none;
+  }
+
+  &.arrowbottom {
+    top: -4px;
+    left: 50%;
+    margin-left: -4px;
+    border-bottom: none;
+    border-right: none;
+  }
+
+  &.arrowleft {
+    right: -4px;
+    top: 50%;
+    margin-top: -4px;
+    border-bottom: none;
+    border-left: none;
+  }
+
+  &.arrowright {
+    left: -4px;
+    top: 50%;
+    margin-top: -4px;
+    border-top: none;
+    border-right: none;
+  }
+}

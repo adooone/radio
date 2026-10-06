@@ -1,6 +1,6 @@
+import { desc, eq, lt } from 'drizzle-orm';
 import { db } from '../db';
 import { sessions } from '../schema';
-import { eq, desc, lt } from 'drizzle-orm';
 
 type NewSessionData = {
   accountId: number;

@@ -1,13 +1,12 @@
-import type React from 'react';
-import { useStream } from './hooks/useStream';
 import clsx from 'clsx';
-import { Chat } from './components/chat';
 import { useState } from 'react';
-import { useUserColorsSync } from './hooks/useUserColorsSync';
-import { Header, VideoPlayer, Fallback } from './components/ui';
-import { UserList, AccountSettings } from './components/settings';
+import { Chat } from './components/chat';
+import { AccountSettings, UserList } from './components/settings';
+import { Fallback, Header, VideoPlayer } from './components/ui';
+import { useStream } from './hooks/use-stream';
+import { useUserColorsSync } from './hooks/use-user-colors-sync';
 
-export const RadioLayout: React.FC = () => {
+export const RadioLayout = () => {
   const { videoRef, streamAvailable } = useStream();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);

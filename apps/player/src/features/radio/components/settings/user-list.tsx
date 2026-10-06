@@ -1,10 +1,9 @@
-import type React from 'react';
-import clsx from 'clsx';
-import { useUserList } from '@/features/radio/hooks/useUserList';
-import { StatusIcon } from '../icons/status-icon';
-import { useUserColor } from '../../hooks/useUserColor';
 import { CloseButton } from '@/components/ui';
+import { useUserList } from '@/features/radio/hooks/use-user-list';
+import clsx from 'clsx';
+import { useUserColor } from '../../hooks/use-user-color';
 import { formatRelativeTime } from '../../utils/time';
+import { StatusIcon } from '../icons/status-icon';
 
 interface UserListProps {
   isOpen: boolean;
@@ -12,11 +11,7 @@ interface UserListProps {
   onClose: () => void;
 }
 
-export const UserList: React.FC<UserListProps> = ({
-  isOpen,
-  onClose,
-  nickname,
-}) => {
+export const UserList = ({ isOpen, onClose, nickname }: UserListProps) => {
   const users = useUserList();
   const { getEffectiveColor } = useUserColor();
 

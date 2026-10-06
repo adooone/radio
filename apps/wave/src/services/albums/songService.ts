@@ -1,25 +1,28 @@
 import {
+  type NewSongData,
+  createSong,
+  deleteSong,
   findSongById,
   findSongsByAlbum,
-  createSong,
-  updateSong,
-  deleteSong,
   reorderSongs,
-  type NewSongData,
+  updateSong,
 } from '@/db/albums/songs';
 import { findAudioFileById } from '@/db/collections/audioFiles';
+import { formatDurationFromString } from '@/utils/audioMetadata';
+import { env } from '@/utils/env';
+import { getErrorMessage } from '@/utils/errorMessages';
 import { authService } from '../auth';
 import { albumService } from './albumService';
-import { getErrorMessage } from '@/utils/errorMessages';
-import { env } from '@/utils/env';
-import { formatDurationFromString } from '@/utils/audioMetadata';
 
 export class SongService {
   /**
    * Computes audioUrl dynamically for tracks based on MEDIA_BASE_URL, album folderSlug, and track fileSlug.
    * Format: ${MEDIA_BASE_URL}/${folderSlug}/${fileSlug}.m4a
    */
-  private computeAudioUrl(folderSlug: string | null, fileSlug: string | null): string | null {
+  private computeAudioUrl(
+    folderSlug: string | null,
+    fileSlug: string | null,
+  ): string | null {
     if (!folderSlug || !fileSlug) {
       return null;
     }
@@ -39,7 +42,7 @@ export class SongService {
   async getSongsByAlbum(albumId: number) {
     const album = await albumService.getAlbumById(albumId);
     const songs = await findSongsByAlbum(albumId);
-    
+
     // Add computed audioUrl and format duration for each song
     return songs.map((song) => ({
       ...song,
@@ -108,4 +111,3 @@ export class SongService {
 }
 
 export const songService = new SongService();
-

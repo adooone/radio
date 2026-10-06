@@ -1,32 +1,38 @@
-import { db } from '../db/db';
-import { albums, songs, audioFiles, accounts } from '../db/schema';
 import { eq } from 'drizzle-orm';
+import { db } from '../db/db';
+import { accounts, albums, audioFiles, songs } from '../db/schema';
 
 console.log('🧪 Testing Albums and Songs Schema...\n');
 
 const testAlbumsSchema = async () => {
   try {
     console.log('📊 Checking tables exist...');
-    
+
     const existingAccounts = db.select().from(accounts).limit(1).all();
     console.log(`✅ Accounts table: ${existingAccounts.length} records found`);
-    
+
     const existingAudioFiles = db.select().from(audioFiles).limit(1).all();
-    console.log(`✅ Audio files table: ${existingAudioFiles.length} records found`);
-    
+    console.log(
+      `✅ Audio files table: ${existingAudioFiles.length} records found`,
+    );
+
     const existingAlbums = db.select().from(albums).limit(1).all();
     console.log(`✅ Albums table: ${existingAlbums.length} records found`);
-    
+
     const existingSongs = db.select().from(songs).limit(1).all();
     console.log(`✅ Songs table: ${existingSongs.length} records found\n`);
 
     if (existingAccounts.length === 0) {
-      console.log('⚠️  No accounts found. Please create an account first using `bun run admin`');
+      console.log(
+        '⚠️  No accounts found. Please create an account first using `bun run admin`',
+      );
       return;
     }
 
     const testAccount = existingAccounts[0];
-    console.log(`📝 Using test account: ${testAccount.username} (ID: ${testAccount.id})\n`);
+    console.log(
+      `📝 Using test account: ${testAccount.username} (ID: ${testAccount.id})\n`,
+    );
 
     console.log('🎵 Creating test album...');
     const albumResult = db
@@ -47,8 +53,10 @@ const testAlbumsSchema = async () => {
 
     if (existingAudioFiles.length > 0) {
       const testAudioFile = existingAudioFiles[0];
-      console.log(`\n🎼 Creating test song with audio file ID: ${testAudioFile.id}...`);
-      
+      console.log(
+        `\n🎼 Creating test song with audio file ID: ${testAudioFile.id}...`,
+      );
+
       const songResult = db
         .insert(songs)
         .values({
@@ -65,7 +73,9 @@ const testAlbumsSchema = async () => {
 
       console.log(`✅ Song created with ID: ${songResult.id}`);
     } else {
-      console.log('\n⚠️  No audio files found. Upload an audio file to test song creation.');
+      console.log(
+        '\n⚠️  No audio files found. Upload an audio file to test song creation.',
+      );
     }
 
     console.log('\n🔍 Verifying album data...');
@@ -95,4 +105,3 @@ const testAlbumsSchema = async () => {
 };
 
 testAlbumsSchema();
-

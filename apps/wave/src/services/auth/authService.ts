@@ -1,6 +1,6 @@
-import type { Context, Next } from 'hono';
-import { findSessionByToken } from '@/db/accounts/index';
 import { findAccountById } from '@/db/accounts/accounts';
+import { findSessionByToken } from '@/db/accounts/index';
+import type { Context, Next } from 'hono';
 
 type Variables = {
   accountId: number;

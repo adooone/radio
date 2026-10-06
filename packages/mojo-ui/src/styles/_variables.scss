@@ -66,16 +66,10 @@ $soft-base-gradient: linear-gradient(145deg,
 
 $lamp-base-color: #1a1a1a;
 
-$shadow-base: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 $shadow-soft: 0 4px 8px -2px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-$shadow-lamp-base: 1px 1px 2px rgba(0, 0, 0, 0.2), 3px 3px 2px rgba(0, 0, 0, 0.05),
-  2px 2px 8px rgba(0, 0, 0, 0.2);
+// Note: Shadow variables moved to _tokens.scss
 
-$shadow-frosted-inner: inset 5px 2px 5px 2px rgba(0, 0, 0, 0.2),
-  inset -1px 3px 6px 1px rgba(255, 255, 255, 0.6);
 
-$shadow-frosted-inner-subtle: inset 5px 2px 5px 2px rgba(0, 0, 0, 0.1),
-  inset -1px 3px 6px 1px rgba(255, 255, 255, 0.2);
 
 $input-field-gradient: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 100%);
 $input-border: 1px solid rgba(255, 255, 255, 0.08);

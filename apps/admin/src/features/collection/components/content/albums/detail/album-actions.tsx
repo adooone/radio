@@ -1,4 +1,4 @@
-import { Button } from '@radio/mojo-ui';
+import { Button } from '@dendelion/mojo-ui';
 
 type AlbumActionsProps = {
   onEdit: () => void;

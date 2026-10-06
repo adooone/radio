@@ -1,0 +1,203 @@
+@use '../../styles' as *;
+
+.container {
+  width: 100%;
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(217, 219, 209);
+}
+
+.value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #47f57d;
+  font-family: $font-family-mono;
+  text-shadow: 0 0 8px rgba(71, 245, 125, 0.4);
+  min-width: 3rem;
+  text-align: right;
+}
+
+.trackWrapper {
+  position: relative;
+  cursor: pointer;
+  padding: 0.75rem 0;
+
+  // Size variants
+  &.small {
+    .track {
+      height: 6px;
+    }
+
+    .thumb {
+      width: 16px;
+      height: 16px;
+      margin-top: -5px;
+    }
+  }
+
+  &.medium {
+    .track {
+      height: 8px;
+    }
+
+    .thumb {
+      width: 20px;
+      height: 20px;
+      margin-top: -6px;
+    }
+  }
+
+  &.large {
+    .track {
+      height: 10px;
+    }
+
+    .thumb {
+      width: 24px;
+      height: 24px;
+      margin-top: -7px;
+    }
+  }
+}
+
+.track {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background: $input-field-gradient;
+  border: $input-border;
+  border-radius: $radius-full;
+  box-shadow: $input-shadow-inset;
+  overflow: hidden;
+}
+
+.fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, #47f57d 0%, #6fce8c 100%);
+  border-radius: $radius-full;
+  box-shadow: 0 0 10px rgba(71, 245, 125, 0.3);
+  transition: width 50ms ease-out;
+}
+
+.thumb {
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #3a3a3a 0%, #2a2a2a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  cursor: grab;
+  transition: transform 150ms ease-out, box-shadow 150ms ease-out;
+  z-index: 2;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    background: #47f57d;
+    box-shadow: 0 0 8px rgba(71, 245, 125, 0.6);
+    opacity: 0.8;
+    transition: opacity 150ms ease-out;
+  }
+
+  &:hover {
+    transform: translateX(-50%) scale(1.1);
+    box-shadow:
+      0 3px 6px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(0, 0, 0, 0.3),
+      0 0 12px rgba(71, 245, 125, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &.dragging {
+    cursor: grabbing;
+    transform: translateX(-50%) scale(1.15);
+    box-shadow:
+      0 4px 8px rgba(0, 0, 0, 0.6),
+      0 0 0 2px rgba(71, 245, 125, 0.3),
+      0 0 20px rgba(71, 245, 125, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+    &::after {
+      opacity: 1;
+      box-shadow: 0 0 12px rgba(71, 245, 125, 0.8);
+    }
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.4),
+      0 0 0 2px rgba(71, 245, 125, 0.4),
+      0 0 15px rgba(71, 245, 125, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+}
+
+// Tick marks for analog feel
+.trackWrapper::before,
+.trackWrapper::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 2px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.trackWrapper::before {
+  left: 0;
+}
+
+.trackWrapper::after {
+  right: 0;
+}
+
+.hiddenInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}

@@ -1,6 +1,6 @@
+import { and, desc, eq } from 'drizzle-orm';
 import { db } from '../db';
-import { songs, audioFiles } from '../schema';
-import { eq, desc, and } from 'drizzle-orm';
+import { audioFiles, songs } from '../schema';
 
 type NewSongData = {
   albumId: number;

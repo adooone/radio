@@ -1,5 +1,5 @@
-import { zValidator } from '@hono/zod-validator';
 import { albumSchemas, songSchemas } from '@/utils/validation';
+import { zValidator } from '@hono/zod-validator';
 
 export const albumValidators = {
   get createValidator() {
@@ -28,4 +28,3 @@ export const songValidators = {
     return zValidator('json', songSchemas.reorder);
   },
 };
-

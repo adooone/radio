@@ -1,61 +1,7 @@
+import type { RtmpServerConfig, StreamControlResponse } from '@radio/types';
 import { waveApiClient } from './clients/http-client';
-import type {
-  StreamControlResponse,
-  TelegramStreamConfig,
-  RtmpServerConfig,
-} from '@radio/types';
 
 export const streamControlApi = {
-  // Telegram Stream Control
-  telegram: {
-    start: async (): Promise<StreamControlResponse> => {
-      const response = await waveApiClient.post<{
-        success: boolean;
-        data: StreamControlResponse;
-      }>('/api/stream/telegram/start');
-      return response.data.data;
-    },
-
-    stop: async (): Promise<StreamControlResponse> => {
-      const response = await waveApiClient.post<{
-        success: boolean;
-        data: StreamControlResponse;
-      }>('/api/stream/telegram/stop');
-      return response.data.data;
-    },
-
-    restart: async (): Promise<StreamControlResponse> => {
-      const response = await waveApiClient.post<{
-        success: boolean;
-        data: StreamControlResponse;
-      }>('/api/stream/telegram/restart');
-      return response.data.data;
-    },
-
-    getConfig: async (): Promise<TelegramStreamConfig> => {
-      const response = await waveApiClient.get<{
-        success: boolean;
-        data: { config: TelegramStreamConfig };
-      }>('/api/stream/telegram/config');
-
-      if (!response.data.success || !response.data.data?.config) {
-        throw new Error('Failed to fetch Telegram config');
-      }
-
-      return response.data.data.config;
-    },
-
-    updateConfig: async (
-      config: Partial<TelegramStreamConfig>,
-    ): Promise<StreamControlResponse> => {
-      const response = await waveApiClient.put<{
-        success: boolean;
-        data: StreamControlResponse;
-      }>('/api/stream/telegram/config', config);
-      return response.data.data;
-    },
-  },
-
   // RTMP Server Control
   rtmp: {
     start: async (): Promise<StreamControlResponse> => {

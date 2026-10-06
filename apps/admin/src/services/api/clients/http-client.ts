@@ -1,5 +1,5 @@
-import axios, { type AxiosInstance } from 'axios';
 import { apiUrl } from '@/services/env';
+import axios, { type AxiosInstance } from 'axios';
 
 const createHttpClient = (baseURL: string): AxiosInstance => {
   const client = axios.create({

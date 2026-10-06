@@ -1,9 +1,9 @@
 import { serve } from 'bun';
 import type { ServerWebSocket } from 'bun';
-import type { WebSocketData, WebSocketServer } from './types';
-import { handleChatMessage } from './handlers/chatHandler';
-import { clientStore } from './utils/clientStore';
 import { getHistory } from '../utils/chatStore';
+import { handleChatMessage } from './handlers/chatHandler';
+import type { WebSocketData, WebSocketServer } from './types';
+import { clientStore } from './utils/clientStore';
 
 // Debounce broadcasts to prevent excessive updates
 let broadcastTimeout: ReturnType<typeof setTimeout> | null = null;

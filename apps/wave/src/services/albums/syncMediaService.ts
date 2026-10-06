@@ -1,24 +1,21 @@
 import { join } from 'node:path';
 import {
+  createAlbum,
   findAlbumByFolderSlug,
   findAlbumsWithFolderSlug,
-  createAlbum,
   updateAlbum,
 } from '@/db/albums/albums';
 import {
-  findSongByAlbumAndFileSlug,
   createSong,
+  findSongByAlbumAndFileSlug,
   updateSong,
 } from '@/db/albums/songs';
+import { extractDurationFromFile, formatDuration } from '@/utils/audioMetadata';
 import {
+  type ScannedAlbum,
   scanMediaDirectory,
   trackSlugToTitle,
-  type ScannedAlbum,
 } from '@/utils/scanMediaDirectory';
-import {
-  extractDurationFromFile,
-  formatDuration,
-} from '@/utils/audioMetadata';
 
 export interface SyncResult {
   albumsCreated: number;
@@ -107,8 +104,13 @@ function buildAlbumDataFromMetadata(
     isPublic: 0,
     cover: scanned.cover,
     year: m?.recording_year != null ? m.recording_year : undefined,
-    releaseYear: m?.release_info?.issue_year != null ? m.release_info.issue_year : undefined,
-    recordingDetails: m?.recording_details ? JSON.stringify(m.recording_details) : undefined,
+    releaseYear:
+      m?.release_info?.issue_year != null
+        ? m.release_info.issue_year
+        : undefined,
+    recordingDetails: m?.recording_details
+      ? JSON.stringify(m.recording_details)
+      : undefined,
     releaseInfo: m?.release_info ? JSON.stringify(m.release_info) : undefined,
     personnel: m?.personnel ? JSON.stringify(m.personnel) : undefined,
     production: m?.production ? JSON.stringify(m.production) : undefined,
@@ -139,13 +141,17 @@ async function syncAlbum(
       updateData.title = m.album_title ?? existing.title;
       updateData.artist = m.artist ?? existing.artist;
       if (m.recording_year != null) updateData.year = m.recording_year;
-      if (m.release_info?.issue_year != null) updateData.releaseYear = m.release_info.issue_year;
-      if (m.recording_details) updateData.recordingDetails = JSON.stringify(m.recording_details);
-      if (m.release_info) updateData.releaseInfo = JSON.stringify(m.release_info);
+      if (m.release_info?.issue_year != null)
+        updateData.releaseYear = m.release_info.issue_year;
+      if (m.recording_details)
+        updateData.recordingDetails = JSON.stringify(m.recording_details);
+      if (m.release_info)
+        updateData.releaseInfo = JSON.stringify(m.release_info);
       if (m.personnel) updateData.personnel = JSON.stringify(m.personnel);
       if (m.production) updateData.production = JSON.stringify(m.production);
       if (m.visuals) updateData.visuals = JSON.stringify(m.visuals);
-      if (m.additional_info != null) updateData.additionalInfo = m.additional_info;
+      if (m.additional_info != null)
+        updateData.additionalInfo = m.additional_info;
     }
     if (Object.keys(updateData).length > 0) {
       await updateAlbum(existing.id, updateData);
@@ -154,7 +160,9 @@ async function syncAlbum(
     return existing.id;
   }
 
-  const albumId = await createAlbum(buildAlbumDataFromMetadata(scanned, ownerId));
+  const albumId = await createAlbum(
+    buildAlbumDataFromMetadata(scanned, ownerId),
+  );
   result.albumsCreated++;
   return albumId;
 }
@@ -182,7 +190,9 @@ async function syncTracks(
   for (let i = 0; i < scanned.tracks.length; i++) {
     const track = scanned.tracks[i];
     const existing = await findSongByAlbumAndFileSlug(albumId, track.fileSlug);
-    const match = tracklist ? findTracklistMatch(track.fileSlug, tracklist) : undefined;
+    const match = tracklist
+      ? findTracklistMatch(track.fileSlug, tracklist)
+      : undefined;
     const title = match?.title ?? trackSlugToTitle(track.fileSlug);
     const position = match?.position ?? undefined;
 
@@ -203,7 +213,11 @@ async function syncTracks(
     }
 
     if (existing) {
-      const updateData: { duration?: string; title?: string; position?: string } = {};
+      const updateData: {
+        duration?: string;
+        title?: string;
+        position?: string;
+      } = {};
       if (duration) updateData.duration = duration;
       if (match) {
         updateData.title = match.title;

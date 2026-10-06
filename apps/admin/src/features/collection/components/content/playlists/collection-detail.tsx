@@ -1,10 +1,10 @@
-import { motion } from 'framer-motion';
 import {
+  collectionApi,
   useCollection,
   useRemoveItemFromCollection,
-  collectionApi,
 } from '@/services/api';
 import type { Collection } from '@radio/types';
+import { motion } from 'framer-motion';
 
 type CollectionDetailProps = {
   collection: Collection;

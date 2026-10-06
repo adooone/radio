@@ -1,4 +1,2 @@
+import '@dendelion/mojo-ui/index.css';
 import './tailwind.css';
-import './autofill.css';
-
-export * as classes from './classes';

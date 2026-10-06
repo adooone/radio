@@ -1,30 +1,30 @@
-@use '../../styles/variables' as *;
+@use '../../styles' as *;
 
 .panel {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 12px;
-  border-radius: 12px;
-  background: #1e1e1e;
+  padding: $space-3;
+  border-radius: $radius-md;
+  background: $color-bg-base;
   box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.03),
-    inset -2px -2px 6px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.5),
+    inset -2px -2px 6px rgba(0, 0, 0, 0.4), $shadow-lg,
     0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .closeButton {
   flex-shrink: 0;
-  margin-right: 12px;
+  margin-right: $space-3;
 }
 
 
 .panel.panelPlain {
   padding: 0;
-  border-radius: 24px;
+  border-radius: $radius-xl;
   background: rgba(28, 25, 23, 0.3);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid $color-border-strong;
   box-shadow: none;
   overflow: hidden;
 }
@@ -38,8 +38,8 @@
 .baseLayer {
   position: absolute;
   inset: 0;
-  border-radius: 24px;
-  background: $soft-base-gradient;
+  border-radius: $radius-xl;
+  background: $gradient-metal-soft;
   box-shadow: $shadow-base;
   z-index: 1;
 }
@@ -48,20 +48,20 @@
   position: absolute;
   inset: 4.5px;
   border-radius: 19.5px;
-  background: #1e1e1e;
-  border: $input-border;
+  background: $color-bg-base;
+  border: $color-border-subtle;
   z-index: 2;
 }
 
 .header {
-  padding: 16px;
+  padding: $space-4;
   z-index: 2;
   background: rgba(20, 20, 20, 0.6);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid $color-border-default;
   position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: $space-3;
   flex-shrink: 0;
 }
 
@@ -73,23 +73,23 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: $space-1;
   min-width: 0;
 }
 
 .title {
   margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-  color: #ffffff;
-  line-height: 1.2;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  line-height: $line-height-snug;
 }
 
 .subtitle {
   margin: 0;
-  font-size: 14px;
-  color: #a0a0a0;
-  line-height: 1.4;
+  font-size: $font-size-base;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
 }
 
 .content {
@@ -97,8 +97,8 @@
   z-index: 2;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
-  padding: 8px;
+  gap: $space-4;
+  padding: $space-2;
   align-items: stretch;
   width: 100%;
   min-width: 0;
@@ -163,8 +163,8 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 12px;
+  gap: $space-6;
+  padding: $space-3;
   width: 100%;
   min-width: 0;
 }
@@ -197,10 +197,10 @@
 
 .sectionBorder {
   position: relative;
-  border: 1px solid #383838;
-  border-radius: 8px;
-  padding: 24px;
-  background: #1e1e1e;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-sm;
+  padding: $space-6;
+  background: $color-bg-base;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -221,50 +221,50 @@
 
 .sectionTitle {
   position: absolute;
-  top: -12px;
-  left: 16px;
-  background: #1e1e1e;
-  padding: 0 8px;
+  top: -$space-3;
+  left: $space-4;
+  background: $color-bg-base;
+  padding: 0 $space-2;
   z-index: 1;
 }
 
 .sectionTitleText {
-  font-size: 12px;
-  font-weight: 600;
-  color: #a0a0a0;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-secondary;
+  text-transform: $text-transform-uppercase;
+  letter-spacing: $letter-spacing-wider;
 }
 
 .sectionTitlePlain {
-  padding: 24px 24px 16px 24px;
+  padding: $space-6 $space-6 $space-4 $space-6;
   z-index: 1;
   margin-bottom: 0;
   background: rgba(20, 20, 20, 0.4);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid $color-border-subtle;
+  box-shadow: $shadow-sm;
   flex-shrink: 0;
 }
 
 .sectionTitleTextPlain {
-  font-size: 20px;
-  font-weight: 600;
-  color: #ffffff;
-  text-transform: none;
-  letter-spacing: normal;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  text-transform: $text-transform-normal;
+  letter-spacing: $letter-spacing-normal;
 }
 
 .sectionHeader {
-  padding: 16px;
+  padding: $space-4;
   z-index: 1;
   width: 100%;
   background: rgba(20, 20, 20, 0.4);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid $color-border-subtle;
   flex-shrink: 0;
 }
 
 .sectionContent {
-  padding-top: 8px;
+  padding-top: $space-2;
   width: 100%;
   box-sizing: border-box;
   flex: 1;
@@ -274,7 +274,7 @@
 }
 
 .sectionContentPlain {
-  padding: 24px;
+  padding: $space-6;
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;

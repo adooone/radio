@@ -1,6 +1,6 @@
-import { Button } from '@radio/mojo-ui';
-import { SongList } from './song-list';
+import { Button } from '@dendelion/mojo-ui';
 import type { Song } from '@radio/types';
+import { SongList } from './song-list';
 
 type AlbumSongsSectionProps = {
   albumId: number;

@@ -1,8 +1,8 @@
-import type React from 'react';
-import { useState, useEffect, useRef } from 'react';
 import { useLogs, useServiceLogs } from '@/services/api/hooks/use-monitoring';
-import { sharedStyles } from '@/styles/shared-styles';
+import { sharedStyles } from '@dendelion/mojo-ui/styles';
 import clsx from 'clsx';
+import type React from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface LogsCardProps {
   className?: string;
@@ -16,7 +16,6 @@ const LOG_LEVELS = {
 } as const;
 
 const SOURCE_COLORS = {
-  telegram: 'text-blue-400 bg-blue-400/10',
   rtmp: 'text-green-400 bg-green-400/10',
   wave: 'text-ember bg-ember/10',
 } as const;
@@ -30,10 +29,6 @@ export const LogsCard: React.FC<LogsCardProps> = ({ className }) => {
   const logsContainerRef = useRef<HTMLDivElement>(null);
 
   const { data: allLogs, isLoading: isLoadingAll } = useLogs('all', lines);
-  const { data: telegramLogs, isLoading: isLoadingTelegram } = useServiceLogs(
-    'telegram',
-    lines,
-  );
   const { data: rtmpLogs, isLoading: isLoadingRtmp } = useServiceLogs(
     'rtmp',
     lines,
@@ -45,8 +40,6 @@ export const LogsCard: React.FC<LogsCardProps> = ({ className }) => {
 
   const getCurrentLogs = () => {
     switch (selectedSource) {
-      case 'telegram':
-        return { data: telegramLogs, isLoading: isLoadingTelegram };
       case 'rtmp':
         return { data: rtmpLogs, isLoading: isLoadingRtmp };
       case 'wave':
@@ -101,7 +94,6 @@ export const LogsCard: React.FC<LogsCardProps> = ({ className }) => {
 
   const sources = [
     { id: 'all', label: 'All Services', count: allLogs?.totalLines || 0 },
-    { id: 'telegram', label: 'Telegram', count: telegramLogs?.totalLines || 0 },
     { id: 'rtmp', label: 'RTMP', count: rtmpLogs?.totalLines || 0 },
     { id: 'wave', label: 'Wave', count: waveLogs?.totalLines || 0 },
   ];

@@ -1,6 +1,6 @@
-import type React from 'react';
-import clsx from 'clsx';
 import { useNowPlayingStore } from '@/stores/now-playing-store';
+import clsx from 'clsx';
+import type React from 'react';
 
 interface NowPlayingProps {
   className?: string;
@@ -14,8 +14,14 @@ const formatTime = (seconds: number): string => {
 };
 
 export const NowPlaying: React.FC<NowPlayingProps> = ({ className }) => {
-  const { currentTrack, isPlaying, currentTime, duration, togglePlayPause, stop } =
-    useNowPlayingStore();
+  const {
+    currentTrack,
+    isPlaying,
+    currentTime,
+    duration,
+    togglePlayPause,
+    stop,
+  } = useNowPlayingStore();
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
@@ -108,9 +114,7 @@ export const NowPlaying: React.FC<NowPlayingProps> = ({ className }) => {
       {/* Status dot + stop button */}
       {currentTrack && (
         <div className={clsx(styles.controls)}>
-          {isPlaying && (
-            <div className={clsx(styles.dot)} />
-          )}
+          {isPlaying && <div className={clsx(styles.dot)} />}
           <button
             type="button"
             onClick={stop}
@@ -153,10 +157,10 @@ const styles = {
   meta: ['flex items-center gap-2'],
   artist: ['text-xs text-paper/80 truncate', 'leading-tight', 'max-w-32'],
   time: ['text-xs text-paper/50 tabular-nums', 'leading-tight'],
-  progressBar: [
-    'w-24 h-0.5 rounded-full bg-white/10 overflow-hidden mt-0.5',
+  progressBar: ['w-24 h-0.5 rounded-full bg-white/10 overflow-hidden mt-0.5'],
+  progressFill: [
+    'h-full bg-sun/80 rounded-full transition-[width] duration-200',
   ],
-  progressFill: ['h-full bg-sun/80 rounded-full transition-[width] duration-200'],
   controls: ['flex items-center gap-1.5 ml-1'],
   dot: ['w-2 h-2 rounded-full bg-sun', 'animate-pulse', 'drop-shadow-sm'],
   stopButton: [

@@ -1,10 +1,10 @@
-import { ProgressBar } from '@radio/mojo-ui';
-import { CollectionStats } from '../stats/collection-stats';
-import { CollectionActions } from './actions';
 import { useCollectionStore } from '@/features/collection/store/collection-store';
-import { GenreStats } from '../stats/genre-stats';
 import { useSyncMedia } from '@/services/api';
 import { useNotificationStore } from '@/stores/notification-store';
+import { ProgressBar } from '@dendelion/mojo-ui';
+import { CollectionStats } from '../stats/collection-stats';
+import { GenreStats } from '../stats/genre-stats';
+import { CollectionActions } from './actions';
 
 type AlbumsSidebarProps = {
   genreCounts: Map<string, number>;

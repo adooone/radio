@@ -1,10 +1,10 @@
-import { create } from 'zustand';
-import type { Album } from '@radio/types';
 import type {
   AlbumFilters,
   SortField,
   SortOrder,
 } from '@/features/collection/utils/album-helpers';
+import type { Album } from '@radio/types';
+import { create } from 'zustand';
 
 type CollectionState = {
   activeTab: 'playlists' | 'albums';
@@ -25,7 +25,9 @@ type CollectionState = {
 type CollectionActions = {
   setActiveTab: (tab: 'playlists' | 'albums') => void;
   setSearchQuery: (query: string) => void;
-  setFilters: (filters: AlbumFilters | ((prev: AlbumFilters) => AlbumFilters)) => void;
+  setFilters: (
+    filters: AlbumFilters | ((prev: AlbumFilters) => AlbumFilters),
+  ) => void;
   setSortBy: (sortBy: SortField) => void;
   setSortOrder: (sortOrder: SortOrder) => void;
   setSort: (sortBy: SortField, sortOrder: SortOrder) => void;
@@ -62,15 +64,16 @@ const initialState: CollectionState = {
 export const useCollectionStore = create<CollectionStore>((set) => ({
   ...initialState,
 
-  setActiveTab: (tab) => set({ 
-    activeTab: tab,
-    searchQuery: '',
-    filters: {},
-    sortBy: 'dateAdded',
-    sortOrder: 'desc',
-    showFilters: false,
-    selectedAlbum: null,
-  }),
+  setActiveTab: (tab) =>
+    set({
+      activeTab: tab,
+      searchQuery: '',
+      filters: {},
+      sortBy: 'dateAdded',
+      sortOrder: 'desc',
+      showFilters: false,
+      selectedAlbum: null,
+    }),
 
   setSearchQuery: (query) =>
     set({
@@ -96,7 +99,8 @@ export const useCollectionStore = create<CollectionStore>((set) => ({
 
   setShowFilters: (show) => set({ showFilters: show }),
 
-  toggleShowFilters: () => set((state) => ({ showFilters: !state.showFilters })),
+  toggleShowFilters: () =>
+    set((state) => ({ showFilters: !state.showFilters })),
 
   setSelectedAlbum: (album) => set({ selectedAlbum: album }),
 
@@ -104,7 +108,8 @@ export const useCollectionStore = create<CollectionStore>((set) => ({
 
   setShowEditAlbumModal: (show) => set({ showEditAlbumModal: show }),
 
-  setShowCreateCollectionModal: (show) => set({ showCreateCollectionModal: show }),
+  setShowCreateCollectionModal: (show) =>
+    set({ showCreateCollectionModal: show }),
 
   resetFilters: () =>
     set({
@@ -148,4 +153,3 @@ export const useCollectionStore = create<CollectionStore>((set) => ({
     return hasSearch || hasGenres || hasOtherFilters;
   },
 }));
-

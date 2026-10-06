@@ -1,8 +1,8 @@
-import { Panel } from '@radio/mojo-ui';
-import { PlaylistsSidebar } from './views/playlists-sidebar';
-import { AlbumsSidebar } from './views/albums-sidebar';
-import { useCollectionStore } from '../../store/collection-store';
+import { Panel } from '@dendelion/mojo-ui';
 import { useCollectionData } from '../../hooks';
+import { useCollectionStore } from '../../store/collection-store';
+import { AlbumsSidebar } from './views/albums-sidebar';
+import { PlaylistsSidebar } from './views/playlists-sidebar';
 
 export const CollectionSidebar = () => {
   const { activeTab } = useCollectionStore();

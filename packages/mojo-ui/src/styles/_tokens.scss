@@ -1,0 +1,125 @@
+// ============================================
+// MOJO UI - Design Tokens
+// ============================================
+// Single source of truth for all design values
+// ============================================
+
+// Background Colors
+$color-bg-base: #1e1e1e;
+$color-bg-surface: #2a2a2a;
+$color-bg-elevated: #3a3a3a;
+$color-bg-input: #1a1a1a;
+$color-bg-header: #141414;
+
+// Text Colors  
+$color-text-primary: #ffffff;
+$color-text-secondary: #a0a0a0;
+$color-text-tertiary: #6e6e6e;
+
+// Accent Colors
+$color-accent-success: #47f57d;
+$color-accent-warning: #ffbd30;
+$color-accent-error: #ff5050;
+
+// Border Colors
+$color-border-subtle: rgba(255, 255, 255, 0.08);
+$color-border-default: rgba(255, 255, 255, 0.1);
+$color-border-strong: rgba(255, 255, 255, 0.2);
+
+// Gradients
+$gradient-metal-base: linear-gradient(135deg,
+  #6e6e6e 0%,
+  #41403d 24%,
+  #373633 50%,
+  #1f1f1d 80%,
+  #1f1f1d 100%);
+
+$gradient-metal-wide: linear-gradient(135deg,
+  #6e6e6e 0%,
+  #41403d 24%,
+  #494947 50%,
+  #363636 80%,
+  #363636 100%);
+
+$gradient-metal-soft: linear-gradient(145deg,
+  #3a3a3a 0%,
+  #2f2f2f 50%,
+  #2a2a2a 100%);
+
+$gradient-input: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 100%);
+
+// Typography
+$font-family-primary: 'KyivType Serif', Georgia, serif;
+$font-family-secondary: 'KyivType Sans', system-ui, sans-serif;
+$font-family-display: 'Tiny5', sans-serif;
+$font-family-mono: 'JetBrains Mono', monospace;
+
+$font-size-xs: 0.625rem;
+$font-size-sm: 0.75rem;
+$font-size-base: 0.875rem;
+$font-size-md: 1rem;
+$font-size-lg: 1.25rem;
+$font-size-xl: 1.5rem;
+
+// Font Weights
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Line Height
+$line-height-tight: 1;
+$line-height-snug: 1.25;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.75;
+
+// Letter Spacing
+$letter-spacing-tight: -0.025em;
+$letter-spacing-normal: 0;
+$letter-spacing-wide: 0.05em;
+$letter-spacing-wider: 0.1em;
+
+// Text Transform
+$text-transform-uppercase: uppercase;
+$text-transform-normal: none;
+
+// Spacing
+$space-1: 0.25rem;
+$space-2: 0.5rem;
+$space-3: 0.75rem;
+$space-4: 1rem;
+$space-6: 1.5rem;
+$space-8: 2rem;
+
+// Border Radius
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 16px;
+$radius-xl: 24px;
+$radius-full: 9999px;
+
+// Shadows
+$shadow-sm: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+$shadow-base: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+$shadow-input: inset 3px 3px 6px rgba(0, 0, 0, 0.4), inset -2px -2px 4px rgba(255, 255, 255, 0.05);
+$shadow-frosted-inner: inset 5px 2px 5px 2px rgba(0, 0, 0, 0.2), inset -1px 3px 6px 1px rgba(255, 255, 255, 0.6);
+$shadow-frosted-inner-subtle: inset 5px 2px 5px 2px rgba(0, 0, 0, 0.1), inset -1px 3px 6px 1px rgba(255, 255, 255, 0.2);
+$shadow-lamp-base: 1px 1px 2px rgba(0, 0, 0, 0.2), 3px 3px 2px rgba(0, 0, 0, 0.05), 2px 2px 8px rgba(0, 0, 0, 0.2);
+
+// Transitions
+$transition-fast: 150ms ease-out;
+$transition-base: 200ms ease-out;
+$transition-slow: 300ms ease-out;
+
+// Z-Index Scale
+$z-base: 0;
+$z-dropdown: 100;
+$z-sticky: 200;
+$z-fixed: 300;
+$z-modal-backdrop: 400;
+$z-modal: 500;
+$z-popover: 600;
+$z-tooltip: 700;

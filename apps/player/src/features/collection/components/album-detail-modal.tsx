@@ -1,5 +1,5 @@
+import { type AlbumWithSongs, albumApi } from '@/services/api/album-api';
 import { useEffect } from 'react';
-import { albumApi, type AlbumWithSongs } from '@/services/api/album-api';
 
 type AlbumDetailModalProps = {
   album: AlbumWithSongs;
@@ -26,7 +26,9 @@ export const AlbumDetailModal = ({ album, onClose }: AlbumDetailModalProps) => {
     <div
       className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
       onClick={handleBackdropClick}
-      onKeyDown={(e) => { if (e.key === 'Escape') onClose(); }}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape') onClose();
+      }}
       role="presentation"
     >
       <div className="bg-neutral-900 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden border border-neutral-700">

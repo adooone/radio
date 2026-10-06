@@ -1,7 +1,7 @@
+import { sharedStyles } from '@dendelion/mojo-ui/styles';
+import clsx from 'clsx';
 import type React from 'react';
 import { LogsCard } from '../cards';
-import { sharedStyles } from '@/styles/shared-styles';
-import clsx from 'clsx';
 
 export const LogsTab: React.FC = () => {
   return (

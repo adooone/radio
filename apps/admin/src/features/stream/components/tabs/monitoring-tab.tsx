@@ -1,8 +1,8 @@
-import clsx from 'clsx';
-import { StatsCard } from '@radio/mojo-ui';
-import { sharedStyles } from '@/styles/shared-styles';
-import { TelegramServiceCard, RtmpServiceCard } from '../cards';
+import { StatsCard } from '@dendelion/mojo-ui';
+import { sharedStyles } from '@dendelion/mojo-ui/styles';
 import type { MonitoringData } from '@radio/types';
+import clsx from 'clsx';
+import { RtmpServiceCard } from '../cards';
 
 interface MonitoringTabProps {
   monitoring: MonitoringData | undefined;
@@ -16,20 +16,13 @@ export const MonitoringTab: React.FC<MonitoringTabProps> = ({
   const getStreamOverviewStats = () => {
     if (!monitoring) return [];
 
-    const telegramService = monitoring.services.telegram;
     const rtmpService = monitoring.services.rtmp;
-    const streamHealth = telegramService?.daemonStatus?.streamHealth;
-
-    // Determine telegram status based on daemon status for consistency
-    const telegramStatus = telegramService?.daemonStatus?.status || 'unknown';
-    const telegramRunning =
-      telegramStatus === 'running' || telegramStatus === 'initializing';
     const rtmpRunning = rtmpService?.isRunning || false;
 
-    const totalServices = 2;
-    const runningServices = Number(telegramRunning) + Number(rtmpRunning);
+    const totalServices = 1;
+    const runningServices = Number(rtmpRunning);
 
-    const stats = [
+    return [
       {
         title: 'Services Status',
         value: `${runningServices}/${totalServices} Active`,
@@ -39,38 +32,11 @@ export const MonitoringTab: React.FC<MonitoringTabProps> = ({
         title: 'System Uptime',
         value: formatUptime(monitoring.uptime),
       },
-    ];
-
-    // Add stream health stats if available
-    if (streamHealth) {
-      stats.push(
-        {
-          title: 'Stream Status',
-          value: streamHealth.isConnected ? 'Connected' : 'Disconnected',
-          isOnline: streamHealth.isConnected,
-        },
-        {
-          title: 'Current Bitrate',
-          value: `${streamHealth.currentBitrate} kbps`,
-        },
-        {
-          title: 'Frames Sent',
-          value: streamHealth.totalFramesSent.toString(),
-        },
-        {
-          title: 'Last Update',
-          value: formatTimestamp(monitoring.timestamp),
-        },
-      );
-    } else {
-      // Fallback when no stream health data
-      stats.push({
+      {
         title: 'Last Update',
         value: formatTimestamp(monitoring.timestamp),
-      });
-    }
-
-    return stats;
+      },
+    ];
   };
 
   const formatUptime = (seconds: number) => {
@@ -94,10 +60,6 @@ export const MonitoringTab: React.FC<MonitoringTabProps> = ({
         </h2>
         <div className={clsx(sharedStyles.serviceGrid)}>
           <RtmpServiceCard stats={monitoring?.services.rtmp || null} />
-          <TelegramServiceCard
-            stats={monitoring?.services.telegram || null}
-            rtmpStats={monitoring?.services.rtmp || null}
-          />
         </div>
 
         <div className="grid grid-cols-6 gap-4 mt-10">

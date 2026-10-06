@@ -1,14 +1,14 @@
 import { AlbumSearch } from '@/features/collection/components/filters/album-search';
 import { useCollectionStore } from '@/features/collection/store/collection-store';
 import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  FilterIcon,
   IconButton,
   Popup,
   PopupItem,
   SortIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
-  FilterIcon,
-} from '@radio/mojo-ui';
+} from '@dendelion/mojo-ui';
 
 export const AlbumListHeader = () => {
   const {

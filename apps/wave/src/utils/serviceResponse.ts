@@ -1,4 +1,4 @@
-import { getErrorMessage, SUCCESS_MESSAGES } from './errorMessages';
+import { SUCCESS_MESSAGES, getErrorMessage } from './errorMessages';
 
 export interface ServiceResponse<T = unknown> {
   success: boolean;
@@ -71,51 +71,6 @@ export const ServiceResponseHelper = {
 
   // Stream-related responses
   stream: {
-    telegram: {
-      alreadyRunning: () =>
-        ServiceResponseHelper.error(
-          getErrorMessage.telegram('ALREADY_RUNNING'),
-        ),
-      notRunning: () =>
-        ServiceResponseHelper.error(getErrorMessage.telegram('NOT_RUNNING')),
-      startSuccess: () =>
-        ServiceResponseHelper.success(SUCCESS_MESSAGES.STREAM.TELEGRAM_START),
-      stopSuccess: () =>
-        ServiceResponseHelper.success(SUCCESS_MESSAGES.STREAM.TELEGRAM_STOP),
-      restartSuccess: () =>
-        ServiceResponseHelper.success(SUCCESS_MESSAGES.STREAM.TELEGRAM_RESTART),
-      startFailed: (details?: string) =>
-        ServiceResponseHelper.serviceError('Telegram stream', 'start', details),
-      stopFailed: (details?: string) =>
-        ServiceResponseHelper.serviceError('Telegram stream', 'stop', details),
-      restartFailed: (details?: string) =>
-        ServiceResponseHelper.serviceError(
-          'Telegram stream',
-          'restart',
-          details,
-        ),
-      rtmpDependency: () =>
-        ServiceResponseHelper.error(
-          getErrorMessage.telegram('RTMP_DEPENDENCY'),
-        ),
-      daemonWaiting: () =>
-        ServiceResponseHelper.serviceError(
-          'Telegram stream',
-          'start',
-          getErrorMessage.telegram('DAEMON_WAITING'),
-        ),
-      configUpdated: <T>(config: T) =>
-        ServiceResponseHelper.success(
-          SUCCESS_MESSAGES.STREAM.CONFIG_UPDATED,
-          config,
-        ),
-      configUpdateFailed: (details?: string) =>
-        ServiceResponseHelper.serviceError(
-          'Telegram config',
-          'update',
-          details,
-        ),
-    },
     rtmp: {
       alreadyRunning: () =>
         ServiceResponseHelper.success(getErrorMessage.rtmp('ALREADY_RUNNING')),

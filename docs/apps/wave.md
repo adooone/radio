@@ -32,7 +32,7 @@ src/
 │   ├── auth/             # Authentication
 │   ├── collections/      # Playlist management
 │   ├── monitoring/       # System monitoring
-│   └── stream/           # RTMP + Telegram streaming
+│   └── stream/           # RTMP streaming
 ├── utils/                # Utility functions
 ├── ws/                   # WebSocket server
 ├── scripts/              # Admin and DB management scripts
@@ -46,7 +46,6 @@ src/
 - **Authentication** - JWT-based sessions with role-based access
 - **File Upload** - Audio file handling with metadata extraction
 - **RTMP Control** - Docker container management for RTMP server
-- **Telegram Streaming** - Stream relay to Telegram channels
 - **Monitoring** - System health and service status
 
 ## Database Tables
@@ -69,14 +68,12 @@ Key scripts:
 - `bun run db:migrate` - Run migrations
 - `bun run admin` - Interactive admin creation
 - `bun run rtmp` - Start RTMP server
-- `bun run telegram` - Start Telegram daemon
 
 ## PM2 Processes
 
 | Name | Script | Description |
 |------|--------|-------------|
 | `radio.wave` | `src/index.ts` | Main API server |
-| `radio.telegram` | `scripts/telegramStreamDaemon.ts` | Telegram stream relay |
 
 ## Environment Variables
 

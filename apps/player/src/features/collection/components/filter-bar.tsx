@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import type { Album } from '@radio/types';
+import { useState } from 'react';
 
 type FilterBarProps = {
   filters: {
@@ -88,7 +88,10 @@ export const FilterBar = ({
         <div className="mt-6 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="filter-artist" className="block text-sm font-medium text-neutral-300 mb-2">
+              <label
+                htmlFor="filter-artist"
+                className="block text-sm font-medium text-neutral-300 mb-2"
+              >
                 Artist
               </label>
               <select
@@ -109,7 +112,10 @@ export const FilterBar = ({
             </div>
 
             <div>
-              <label htmlFor="filter-year" className="block text-sm font-medium text-neutral-300 mb-2">
+              <label
+                htmlFor="filter-year"
+                className="block text-sm font-medium text-neutral-300 mb-2"
+              >
                 Year
               </label>
               <select

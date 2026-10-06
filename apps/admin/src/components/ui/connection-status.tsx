@@ -1,6 +1,6 @@
-import type React from 'react';
-import clsx from 'clsx';
 import { useWebSocket } from '@/hooks/use-websocket';
+import clsx from 'clsx';
+import type React from 'react';
 
 export const ConnectionStatus: React.FC = () => {
   const { isConnected, connectionState } = useWebSocket();

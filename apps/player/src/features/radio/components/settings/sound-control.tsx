@@ -1,7 +1,7 @@
-import clsx from 'clsx';
-import { SoundOnIcon, SoundOffIcon } from '../icons/sound-icons';
-import { useSound } from '../../hooks/useSound';
 import { Button } from '@/components/ui';
+import clsx from 'clsx';
+import { useSound } from '../../hooks/use-sound';
+import { SoundOffIcon, SoundOnIcon } from '../icons/sound-icons';
 
 export const SoundControl = () => {
   const { isEnabled, toggle } = useSound();

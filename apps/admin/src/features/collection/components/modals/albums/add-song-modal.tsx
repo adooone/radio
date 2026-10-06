@@ -1,4 +1,4 @@
-import { Modal } from '@radio/mojo-ui';
+import { Modal } from '@dendelion/mojo-ui';
 
 type AddSongModalProps = {
   isOpen: boolean;
@@ -8,10 +8,7 @@ type AddSongModalProps = {
 };
 
 // Songs can only be added via media folder sync, not through the UI
-export const AddSongModal = ({
-  isOpen,
-  onClose,
-}: AddSongModalProps) => {
+export const AddSongModal = ({ isOpen, onClose }: AddSongModalProps) => {
   return (
     <Modal
       isOpen={isOpen}

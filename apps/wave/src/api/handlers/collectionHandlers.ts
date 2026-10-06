@@ -1,9 +1,9 @@
-import type { Context } from 'hono';
+import { authService } from '@/services/auth';
+import { collectionService } from '@/services/collections';
 import { ResponseHelper } from '@/utils/response';
 import { withErrorHandling } from '@/utils/routeHandler';
-import { collectionService } from '@/services/collections';
-import { authService } from '@/services/auth';
 import { commonSchemas } from '@/utils/validation';
+import type { Context } from 'hono';
 
 export const collectionHandlers = {
   get getPublicCollectionsHandler() {

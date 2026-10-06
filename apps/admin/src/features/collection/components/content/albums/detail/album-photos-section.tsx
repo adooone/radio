@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
-import { createPortal } from 'react-dom';
 import { useAlbumPhotos } from '@/services/api';
 import { albumApi } from '@/services/api/album-api';
+import { useCallback, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 type AlbumPhotosSectionProps = {
   albumId: number;
@@ -93,7 +93,10 @@ function PhotoLightbox({
       .getAlbumPhoto(albumId, currentFilename)
       .then((blob) => {
         if (cancelled) return;
-        if (blob.type === 'application/json' || (blob.type && !blob.type.startsWith('image/'))) {
+        if (
+          blob.type === 'application/json' ||
+          (blob.type && !blob.type.startsWith('image/'))
+        ) {
           setError(true);
           return;
         }
@@ -270,7 +273,11 @@ export const AlbumPhotosSection = ({
   albumId,
   folderSlug,
 }: AlbumPhotosSectionProps) => {
-  const { data: photos, isLoading, error } = useAlbumPhotos(albumId, {
+  const {
+    data: photos,
+    isLoading,
+    error,
+  } = useAlbumPhotos(albumId, {
     enabled: !!folderSlug,
   });
   const [lightboxPhoto, setLightboxPhoto] = useState<string | null>(null);

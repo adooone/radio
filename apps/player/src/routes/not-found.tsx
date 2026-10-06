@@ -1,22 +1,17 @@
-import { createRoute } from '@tanstack/react-router';
-import { Root } from './root';
 import { Container } from '@/components/layout';
+import { createRoute } from '@tanstack/react-router';
 import clsx from 'clsx';
+import { Root } from './root';
 
 const NotFound = () => {
   return (
     <Container fog>
-      <h1 className={clsx(styles.title)}>
-        404
-      </h1>
+      <h1 className={clsx(styles.title)}>404</h1>
       <p className={clsx(styles.text)}>
         Ти заблукав у нетрях Полісся... Тут лише мох, жаби і відлуння.
       </p>
 
-      <a
-        href="/home"
-        className={clsx(styles.link)}
-      >
+      <a href="/home" className={clsx(styles.link)}>
         🧭 Повернутись на головну
       </a>
     </Container>

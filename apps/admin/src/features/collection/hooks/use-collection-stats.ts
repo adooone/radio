@@ -1,9 +1,9 @@
-import { useMemo } from 'react';
-import type { Album } from '@radio/types';
 import {
-  extractGenresFromAlbums,
   calculateOverallCompleteness,
+  extractGenresFromAlbums,
 } from '@/features/collection/utils/album-helpers';
+import type { Album } from '@radio/types';
+import { useMemo } from 'react';
 
 export const useCollectionStats = (albums: Album[] | undefined) => {
   const genreCounts = useMemo(() => {
@@ -45,4 +45,3 @@ export const useCollectionStats = (albums: Album[] | undefined) => {
     getCompletenessVariant,
   };
 };
-

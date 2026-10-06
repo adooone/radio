@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-type HttpStatus = 200 | 201 | 400 | 401 | 403 | 404 | 409 | 422 | 500;
+type HttpStatus = 200 | 201 | 400 | 401 | 403 | 404 | 409 | 422 | 500 | 502;
 
 export const ResponseHelper = {
   success<T>(c: Context, data: T, status: HttpStatus = 200) {

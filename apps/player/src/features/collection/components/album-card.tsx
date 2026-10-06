@@ -1,4 +1,3 @@
-import { albumApi } from '@/services/api/album-api';
 import type { Album } from '@radio/types';
 
 type AlbumCardProps = {

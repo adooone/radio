@@ -1,16 +1,11 @@
-import { Hono } from 'hono';
 import { monitoringHandlers } from '@/api/handlers/monitoringHandlers';
+import { Hono } from 'hono';
 
 const monitoringRoutes = new Hono();
 
 monitoringRoutes.get('/', monitoringHandlers.getMonitoringDataHandler);
 
 monitoringRoutes.get('/health', monitoringHandlers.getSystemHealthHandler);
-
-monitoringRoutes.get(
-  '/telegram',
-  monitoringHandlers.getTelegramServiceStatsHandler,
-);
 
 monitoringRoutes.get('/rtmp', monitoringHandlers.getRtmpServiceStatsHandler);
 

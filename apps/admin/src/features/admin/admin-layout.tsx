@@ -1,7 +1,7 @@
-import type React from 'react';
 import { Outlet, useLocation } from '@tanstack/react-router';
-import { BottomNavigation } from './components';
 import clsx from 'clsx';
+import type React from 'react';
+import { BottomNavigation } from './components';
 
 export const AdminLayout: React.FC = () => {
   const location = useLocation();

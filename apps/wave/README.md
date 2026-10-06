@@ -56,7 +56,6 @@ bun run dev
 | Script | Description |
 |--------|-------------|
 | `bun run rtmp` | Start RTMP Docker container |
-| `bun run telegram` | Start Telegram stream daemon |
 
 ### PM2 (Production)
 
@@ -66,10 +65,19 @@ bun run dev
 | `bun run pm2:stop` | Stop all services |
 | `bun run pm2:restart` | Restart all services |
 | `bun run pm2:logs` | View PM2 logs |
-| `bun run telegram:start` | Start Telegram daemon via PM2 |
-| `bun run telegram:stop` | Stop Telegram daemon |
 
-PM2 process names: `radio.wave`, `radio.telegram`
+PM2 process names: `radio.wave`
+
+The `radio.telegram` app was deleted from pm2 (`pm2 delete radio.telegram`)
+when Telegram streaming was removed. Log rotation for the remaining pm2
+apps is handled by the `pm2-logrotate` module (`pm2 install pm2-logrotate`),
+configured with `max_size 10M`, `retain 7`, `compress true`:
+
+```bash
+pm2 set pm2-logrotate:max_size 10M
+pm2 set pm2-logrotate:retain 7
+pm2 set pm2-logrotate:compress true
+```
 
 ## Architecture
 
@@ -120,14 +128,24 @@ See [API Documentation](../../docs/api/README.md) for the full reference.
 - `POST /api/audio-files/upload` - File uploads
 - `GET/POST /api/collections` - Playlist management
 - `GET /api/monitoring/` - System monitoring
-- `/api/stream/*` - RTMP and Telegram control
+- `/api/stream/*` - RTMP control
 
 ## Environment Variables
 
 ```env
 PORT=6870
 SOCKET_PORT=6871
+MEDIA_ROOT_PATH=/var/www/p-sound
+MEDIA_BASE_URL=/media/p-sound
+MEDIA_INBOX_PATH=/var/www/p-sound-inbox
+DISCOGS_TOKEN=
 ```
+
+`MEDIA_INBOX_PATH` is where recorded vinyl side WAVs land for the
+digitization pipeline (see `src/services/digitization/`), separate from
+`MEDIA_ROOT_PATH` where published albums are served from. `DISCOGS_TOKEN`
+is optional — release lookups by URL/id work without it, but it's required
+for Discogs search and cover-image download.
 
 ## File Storage
 

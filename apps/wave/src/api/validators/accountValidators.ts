@@ -1,9 +1,9 @@
-import { zValidator } from '@hono/zod-validator';
 import {
   createAccountSchema,
-  updateAccountSchema,
   loginSchema,
+  updateAccountSchema,
 } from '@/api/schemas';
+import { zValidator } from '@hono/zod-validator';
 
 export const accountValidators = {
   get registerValidator() {

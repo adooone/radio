@@ -1,6 +1,6 @@
+import clsx from 'clsx';
 import type { PropsWithChildren } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import clsx from 'clsx';
 import Footer from './footer';
 
 interface LayoutProps extends PropsWithChildren {

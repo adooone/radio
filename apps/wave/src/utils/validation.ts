@@ -65,6 +65,12 @@ export const albumSchemas = {
     description: z.string().max(1000).optional(),
     tags: z.string().optional(),
     isPublic: z.boolean().optional().default(false),
+    isPublished: z.boolean().optional(),
+    releaseYear: z.number().int().min(1900).max(2100).optional(),
+    rpmSpeed: z.string().max(20).optional(),
+    vinylCondition: z.string().max(50).optional(),
+    digitizationDate: z.string().optional(),
+    equipmentUsed: z.string().max(500).optional(),
   }),
 
   update: z.object({
@@ -74,6 +80,12 @@ export const albumSchemas = {
     description: z.string().max(1000).optional(),
     tags: z.string().optional(),
     isPublic: z.boolean().optional(),
+    isPublished: z.boolean().optional(),
+    releaseYear: z.number().int().min(1900).max(2100).optional(),
+    rpmSpeed: z.string().max(20).optional(),
+    vinylCondition: z.string().max(50).optional(),
+    digitizationDate: z.string().optional(),
+    equipmentUsed: z.string().max(500).optional(),
   }),
 
   filter: z.object({
@@ -105,5 +117,129 @@ export const songSchemas = {
         trackNumber: z.number().int().min(1),
       }),
     ),
+  }),
+};
+
+// Passthrough everywhere: data.json is user-owned — unknown keys must survive a save.
+const albumDataJsonSchema = z
+  .object({
+    album_title: z.string().optional(),
+    artist: z.string().optional(),
+    recording_year: z.number().int().optional(),
+    recording_details: z
+      .object({
+        period: z.string().optional(),
+        location: z.string().optional(),
+        exceptions: z.string().optional(),
+      })
+      .passthrough()
+      .optional(),
+    release_info: z
+      .object({
+        label: z.string().optional(),
+        distributor: z.string().optional(),
+        catalog_number: z.string().optional(),
+        country: z.string().optional(),
+        issue_year: z.number().int().optional(),
+        released: z.string().optional(),
+        format: z.string().optional(),
+        phonographic_copyright: z.string().optional(),
+      })
+      .passthrough()
+      .optional(),
+    discogs: z
+      .object({
+        release_id: z.number().int().optional(),
+        master_id: z.number().int().nullable().optional(),
+        url: z.string().optional(),
+      })
+      .passthrough()
+      .optional(),
+    tracklist: z
+      .array(
+        z
+          .object({
+            position: z.string(),
+            title: z.string(),
+            duration: z.string().optional(),
+          })
+          .passthrough(),
+      )
+      .optional(),
+    personnel: z
+      .array(
+        z
+          .object({
+            name: z.string(),
+            roles: z.array(z.string()),
+          })
+          .passthrough(),
+      )
+      .optional(),
+    production: z
+      .object({
+        engineer: z.string().optional(),
+        producers: z.array(z.string()).optional(),
+        coordination: z.string().optional(),
+        thanks: z.string().optional(),
+        mastering: z.string().optional(),
+      })
+      .passthrough()
+      .optional(),
+    visuals: z
+      .object({
+        photography: z.array(z.string()).optional(),
+        design: z.string().optional(),
+        sleeve_printing: z.string().optional(),
+      })
+      .passthrough()
+      .optional(),
+    additional_info: z.string().optional(),
+  })
+  .passthrough();
+
+export const digitizationSchemas = {
+  fetchMetadata: z.object({
+    release: z.string().min(1),
+    force: z.boolean().optional(),
+  }),
+
+  updateMetadata: albumDataJsonSchema,
+
+  search: z.object({
+    q: z.string().min(1),
+  }),
+
+  splitPlan: z.object({
+    noise: z.number().optional(),
+    minSilence: z.number().positive().optional(),
+    tolerance: z.number().positive().optional(),
+    manualCuts: z
+      .record(z.string(), z.array(z.number().nonnegative()))
+      .optional(),
+  }),
+
+  splitApply: z.object({
+    sides: z
+      .array(
+        z.object({
+          side: z.string().min(1),
+          tracks: z
+            .array(
+              z.object({
+                fileSlug: z.string().min(1),
+                start: z.number().nonnegative(),
+                end: z.number().nonnegative(),
+              }),
+            )
+            .min(1),
+        }),
+      )
+      .min(1),
+  }),
+
+  cleanup: z.object({
+    target: z.enum(['sides', 'folder']),
+    confirm: z.literal(true),
   }),
 };

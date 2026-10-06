@@ -1,6 +1,6 @@
-import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
+import type { LogData, MonitoringData } from '@radio/types';
+import { type UseQueryOptions, useQuery } from '@tanstack/react-query';
 import { monitoringApi } from '../monitoring-api';
-import type { MonitoringData, LogData } from '@radio/types';
 
 // Main monitoring hook - single request every 10 seconds for all monitoring data
 export const useMonitoringData = (

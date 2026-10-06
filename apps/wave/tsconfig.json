@@ -11,5 +11,5 @@
       "@radio/types": ["../../packages/types/src"]
     }
   },
-  "include": ["src", "scripts/telegramStreamDaemon.ts"]
+  "include": ["src"]
 }

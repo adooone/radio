@@ -1,10 +1,10 @@
-import clsx from 'clsx';
-import { PageLayout, VinylTabs } from '@radio/mojo-ui';
-import { sharedStyles } from '@/styles/shared-styles';
-import { useMonitoringData } from '@/services/api/hooks';
 import { useWebSocket } from '@/hooks/use-websocket';
-import { MonitoringTab, ConfigurationTab, LogsTab } from './components';
+import { useMonitoringData } from '@/services/api/hooks';
+import { PageLayout, VinylTabs } from '@dendelion/mojo-ui';
+import { sharedStyles } from '@dendelion/mojo-ui/styles';
+import clsx from 'clsx';
 import { useState } from 'react';
+import { ConfigurationTab, LogsTab, MonitoringTab } from './components';
 
 export const StreamControlPage = () => {
   const { data: monitoring, isLoading, error } = useMonitoringData();

@@ -1,8 +1,8 @@
 import type {
-  RecordingDetails,
-  ReleaseInfo,
   PersonnelItem,
   Production,
+  RecordingDetails,
+  ReleaseInfo,
   Visuals,
 } from '@radio/types';
 
@@ -68,9 +68,7 @@ export const AlbumMetadata = ({
           </span>
         )}
       </div>
-      {description && (
-        <p className="text-gray-300 mt-3">{description}</p>
-      )}
+      {description && <p className="text-gray-300 mt-3">{description}</p>}
 
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-2 mt-3">
@@ -90,7 +88,9 @@ export const AlbumMetadata = ({
           recordingDetails.location ||
           recordingDetails.exceptions) && (
           <MetadataBlock title="Recording">
-            {recordingDetails.period && <p>Period: {recordingDetails.period}</p>}
+            {recordingDetails.period && (
+              <p>Period: {recordingDetails.period}</p>
+            )}
             {recordingDetails.location && (
               <p>Location: {recordingDetails.location}</p>
             )}
@@ -140,9 +140,7 @@ export const AlbumMetadata = ({
             {production.coordination && (
               <p>Coordination: {production.coordination}</p>
             )}
-            {production.mastering && (
-              <p>Mastering: {production.mastering}</p>
-            )}
+            {production.mastering && <p>Mastering: {production.mastering}</p>}
             {production.thanks && <p className="italic">{production.thanks}</p>}
           </MetadataBlock>
         )}
@@ -175,9 +173,10 @@ export const AlbumMetadata = ({
         !visuals &&
         !additionalInfo && (
           <p className="mt-4 text-sm text-gray-500 italic">
-            Add a <code className="px-1 py-0.5 rounded bg-gray-700">data.json</code>{' '}
-            file to this album folder and run Sync to display personnel, production,
-            and other metadata.
+            Add a{' '}
+            <code className="px-1 py-0.5 rounded bg-gray-700">data.json</code>{' '}
+            file to this album folder and run Sync to display personnel,
+            production, and other metadata.
           </p>
         )}
 

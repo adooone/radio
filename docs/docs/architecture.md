@@ -21,12 +21,6 @@ The Radio Streaming Platform is a distributed system designed for high-performan
                     │   (Docker)      │
                     │   Port: 1935    │
                     └─────────────────┘
-                                 │
-                    ┌─────────────────┐
-                    │   Telegram      │
-                    │   Streaming     │
-                    │   (FFmpeg)      │
-                    └─────────────────┘
 ```
 
 ## 🏗️ Component Architecture
@@ -40,7 +34,6 @@ The Wave backend is the central orchestrator that manages all streaming operatio
 Wave Backend
 ├── StreamingService (Orchestrator)
 │   ├── AudioTrackService (Track Management)
-│   ├── TelegramStreamService (Telegram Integration)
 │   └── RtmpService (RTMP Management)
 ├── API Routes (Hono Framework)
 │   ├── Streaming Endpoints
@@ -54,7 +47,7 @@ Wave Backend
 - **Stream Orchestration**: Coordinates all streaming operations
 - **API Management**: Provides RESTful API endpoints
 - **Real-time Communication**: WebSocket server for live updates
-- **Process Management**: Manages external processes (RTMP, Telegram)
+- **Process Management**: Manages external processes (RTMP)
 - **Data Persistence**: Manages configuration and track data
 - **Error Handling**: Centralized error management and recovery
 
@@ -83,7 +76,7 @@ Admin Panel
 - **Real-time Monitoring**: Live status updates every 5 seconds
 - **Stream Management**: Complete control over streaming operations
 - **Track Management**: Add, edit, delete audio tracks
-- **Server Management**: RTMP and Telegram server controls
+- **Server Management**: RTMP server controls
 - **Error Handling**: Comprehensive error reporting and recovery
 
 ### 3. Frontend (Public Interface)
@@ -116,8 +109,6 @@ Frontend
 
 ```
 Audio Source → RTMP Server → HLS Stream → Frontend Player
-     ↓              ↓            ↓
-Telegram Stream → Telegram → Telegram Channel
      ↓
 Wave Backend → Admin Panel (Management)
 ```
@@ -126,9 +117,7 @@ Wave Backend → Admin Panel (Management)
 1. **Audio Input**: External audio source (file, stream, microphone)
 2. **RTMP Processing**: Docker-based RTMP server processes audio
 3. **HLS Generation**: RTMP server generates HLS segments
-4. **Stream Distribution**: 
-   - HLS stream to player apps
-   - Telegram stream to Telegram channels
+4. **Stream Distribution**: HLS stream to player apps
 5. **Management**: Wave backend coordinates all operations
 6. **Monitoring**: Admin panel provides real-time management
 
@@ -171,14 +160,13 @@ Status Update → Broadcast → Client Update → UI Refresh
 ```
 data/
 ├── audio-tracks.json      # Audio track database
-├── streaming-config.json  # Streaming configuration
-└── telegram-config.json   # Telegram configuration
+└── streaming-config.json  # Streaming configuration
 ```
 
 #### In-memory Storage
 - **Current Status**: Real-time streaming status
 - **Active Connections**: WebSocket connections
-- **Process States**: RTMP and Telegram process states
+- **Process States**: RTMP process states
 - **Cache**: Frequently accessed data
 
 ### 2. Data Models
@@ -204,16 +192,6 @@ interface StreamingStatus {
   listeners: number;    // Current listener count
   error?: string;       // Error message if any
   rtmpStatus?: RtmpServerStatus;
-  telegramStatus?: TelegramStreamStatus;
-}
-```
-
-#### Configuration
-```typescript
-interface TelegramStreamConfig {
-  rtmpUrl: string;      // Telegram RTMP URL
-  streamKey: string;    // Telegram stream key
-  inputUrl: string;     // Input stream URL
 }
 ```
 
@@ -233,11 +211,6 @@ Each major functionality is encapsulated in a dedicated service:
 - **Responsibilities**: CRUD operations, playlist logic, now playing
 - **Storage**: JSON file-based storage
 
-#### TelegramStreamService
-- **Purpose**: Telegram streaming integration
-- **Responsibilities**: Process management, configuration, status monitoring
-- **Integration**: PM2 process management
-
 #### RtmpService
 - **Purpose**: RTMP server management
 - **Responsibilities**: Docker container control, status monitoring
@@ -248,7 +221,6 @@ Each major functionality is encapsulated in a dedicated service:
 ```
 StreamingService
     ├── AudioTrackService (Track operations)
-    ├── TelegramStreamService (Telegram streaming)
     └── RtmpService (RTMP management)
 ```
 
@@ -277,18 +249,17 @@ Docker (RTMP Server)
     ↓
 Wave Backend (API + WebSocket)
     ↓
-┌─────────────────┬─────────────────┐
-│  Admin Panel    │  Telegram       │
-│  (Port 3001)    │  Daemon (PM2)   │
-└─────────────────┴─────────────────┘
-    ↓                    ↓
-Player (Port 3030)  Telegram Stream
+┌─────────────────┐
+│  Admin Panel    │
+│  (Port 3001)    │
+└─────────────────┘
+    ↓
+Player (Port 3030)
 ```
 
 ### 3. Critical Dependencies
-- **FFmpeg**: Required for Telegram streaming (must be in PATH)
 - **Docker**: Required for RTMP server container
-- **PM2**: Required for Telegram daemon process management
+- **PM2**: Required for process management
 
 ### 2. CORS Configuration
 
@@ -348,16 +319,6 @@ Production Server
   instances: 1,
   env_production: { PORT: 6970, SOCKET_PORT: 6971 }
 }
-
-// Telegram Stream Process
-{
-  name: 'radio.telegram',
-  script: 'scripts/telegramStreamDaemon.ts',
-  interpreter: 'bun',
-  instances: 1,
-  autorestart: false,
-  max_memory_restart: '500M'
-}
 ```
 
 ## 📊 Monitoring & Observability
@@ -367,7 +328,6 @@ Production Server
 - **API Health**: `/health` endpoint
 - **Stream Status**: `/api/streaming/status`
 - **RTMP Status**: `/api/streaming/rtmp/status`
-- **Telegram Status**: `/api/streaming/telegram/status`
 
 ### 2. Logging Strategy
 

@@ -1,0 +1,54 @@
+@use '../../styles' as *;
+
+.skeleton {
+  display: block;
+  background: linear-gradient(
+    90deg,
+    rgba($color-bg-surface, 0.8) 25%,
+    rgba($color-bg-elevated, 0.9) 50%,
+    rgba($color-bg-surface, 0.8) 75%
+  );
+  background-size: 200% 100%;
+  border-radius: $radius-sm;
+}
+
+.text {
+  border-radius: $radius-sm;
+  height: 1em;
+  margin-bottom: $space-2;
+}
+
+.rectangular {
+  border-radius: $radius-md;
+}
+
+.circular {
+  border-radius: $radius-full;
+}
+
+.animated {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.textLine {
+  margin-bottom: $space-2;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

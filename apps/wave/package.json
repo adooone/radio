@@ -24,18 +24,11 @@
     "repair-db": "bun src/scripts/repair-albums-schema.ts",
     "seed-data-json": "bun scripts/seed-data-json.ts",
     "rtmp": "./scripts/start-rtmp.sh",
-    "telegram": "bun scripts/telegramStreamDaemon.ts",
     "pm2:start": "pm2 start ecosystem.config.js --env production",
     "pm2:dev": "pm2 start ecosystem.config.js --env development",
     "pm2:stop": "pm2 stop ecosystem.config.js",
     "pm2:restart": "pm2 restart ecosystem.config.js",
-    "pm2:logs": "pm2 logs",
-    "telegram:start": "pm2 start ecosystem.config.js --only radio.telegram --env production",
-    "telegram:stop": "pm2 stop radio.telegram",
-    "telegram:restart": "pm2 restart radio.telegram",
-    "telegram:status": "pm2 status radio.telegram",
-    "telegram:logs": "pm2 logs radio.telegram",
-    "telegram:monit": "pm2 monit radio.telegram"
+    "pm2:logs": "pm2 logs"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.7.2",
@@ -49,6 +42,7 @@
     "hono": "^4.7.6",
     "music-metadata": "^8.1.4",
     "node-media-server": "^4.0.18",
+    "sharp": "^0.33.5",
     "ws": "^8.18.2",
     "xml-js": "^1.6.11",
     "zod": "^3.24.2"

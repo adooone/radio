@@ -1,7 +1,7 @@
+import readline from 'node:readline';
 import { db } from '@/db';
 import { accounts } from '@/db/schema';
 import { eq, like } from 'drizzle-orm';
-import readline from 'node:readline';
 
 const rl = readline.createInterface({
   input: process.stdin,

@@ -144,6 +144,109 @@ Body: {
 Response: { success: true, message: "Songs reordered successfully" }
 ```
 
+## Digitization API (Admin only)
+
+Base path: `/api/digitization`. Every endpoint requires `Authorization: Bearer
+<token>` for an admin account. Drafts are derived from `band-slug_album-slug`
+folders under `MEDIA_INBOX_PATH` — there is no database row until publish.
+See `apps/wave/src/services/digitization/` and
+`papercamp/ideas/IDEA-2.md` for the full design.
+
+### List Drafts
+```
+GET /digitization/drafts
+Response: { success: true, data: DigitizationDraft[] }
+```
+
+### Get Draft
+```
+GET /digitization/drafts/:slug
+Response: { success: true, data: DigitizationDraft }
+Errors: 400 for a malformed slug, 404 if no matching inbox folder exists
+```
+
+### Get Draft Cover
+```
+GET /digitization/drafts/:slug/cover
+Response: Image file (raw cover before encode, or img/cover.webp after)
+```
+
+### Fetch Metadata from Discogs
+```
+POST /digitization/drafts/:slug/metadata
+Body: { release: string (URL or release id), force?: boolean }
+Response: { success: true, data: AlbumDataJson }
+Errors: 409 if data.json already exists and force is not set
+```
+
+### Update Metadata (manual edit)
+```
+PUT /digitization/drafts/:slug/metadata
+Body: AlbumDataJson
+Response: { success: true, data: AlbumDataJson }
+```
+
+### Search Discogs
+```
+GET /digitization/discogs/search?q=
+Response: { success: true, data: DiscogsSearchResult[] }
+Errors: 400 if DISCOGS_TOKEN is not configured
+```
+
+### Plan Split
+```
+POST /digitization/drafts/:slug/split/plan
+Body: {
+  noise?: number, minSilence?: number, tolerance?: number,
+  manualCuts?: Record<sideLetter, number[]>
+}
+Response: { success: true, data: DigitizationSplitPlanResult }
+```
+
+### Apply Split
+```
+POST /digitization/drafts/:slug/split/apply
+Body: { sides: DigitizationSplitApplySide[] }
+Response: { success: true, data: { written: string[] } }
+Errors: 409 if a target track file already exists and is non-empty,
+404 if a side recording is missing
+```
+
+### Get Draft Audio (Range)
+```
+GET /digitization/drafts/:slug/audio/:file
+Headers: Range: bytes=<start>-<end> (optional)
+Response: audio/wav, 206 Partial Content when Range is sent
+```
+
+### Publish Draft
+```
+POST /digitization/drafts/:slug/publish
+Response: { success: true, data: DigitizationJob }
+Starts a background job: encodes cut tracks to m4a + cover to webp under
+MEDIA_ROOT_PATH, then runs the sync-media importer. Poll GET /jobs/:id.
+```
+
+### Clean Up Draft (explicit, never automatic)
+```
+POST /digitization/drafts/:slug/cleanup
+Body: { target: "sides" | "folder", confirm: true }
+Response: { success: true, data: { deletedFiles: string[] } }
+       or { success: true, data: { deletedFolder: true } }
+Errors: 409 if the draft has not been published yet (encodedCount === 0)
+```
+Deletes the raw `side-*.wav` recordings (`target: "sides"`) or the entire
+inbox folder (`target: "folder"`) of an already-published draft. `confirm`
+must be the literal `true` — this never runs automatically, and only ever
+on a draft that is already on air.
+
+### Get Job
+```
+GET /digitization/jobs/:id
+Response: { success: true, data: DigitizationJob }
+Errors: 404 if the job id is unknown (job history is in-memory, lost on restart)
+```
+
 ## Data Models
 
 ### Album

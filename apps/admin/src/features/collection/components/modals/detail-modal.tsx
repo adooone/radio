@@ -1,5 +1,5 @@
+import { Modal } from '@dendelion/mojo-ui';
 import type { ReactNode } from 'react';
-import { Modal } from '@radio/mojo-ui';
 
 type DetailModalProps = {
   title: string;

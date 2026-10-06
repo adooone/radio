@@ -31,6 +31,9 @@ jobs:
         with:
           bun-version: latest
 
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
+
       - name: Type check
         run: |
           echo "🔍 Type checking Wave backend..."

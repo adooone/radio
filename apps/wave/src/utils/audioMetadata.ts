@@ -1,5 +1,5 @@
-import { parseFile } from 'music-metadata';
 import { existsSync } from 'node:fs';
+import { parseFile } from 'music-metadata';
 
 /**
  * Extract duration in seconds from an audio file

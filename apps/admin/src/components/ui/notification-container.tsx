@@ -1,6 +1,6 @@
+import { useNotificationStore } from '@/stores/notification-store';
 import type React from 'react';
 import { createPortal } from 'react-dom';
-import { useNotificationStore } from '@/stores/notification-store';
 import { NotificationToast } from './notification-toast';
 
 export const NotificationContainer: React.FC = () => {

@@ -1,6 +1,6 @@
+import { CollectionLayout } from '@/features/collection';
 import { createRoute } from '@tanstack/react-router';
 import { Root } from './root';
-import { CollectionLayout } from '@/features/collection';
 
 const Collection = () => {
   return <CollectionLayout />;
@@ -11,4 +11,3 @@ export const collectionRoute = createRoute({
   path: '/collection',
   component: Collection,
 });
-

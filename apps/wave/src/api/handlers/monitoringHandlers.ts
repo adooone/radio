@@ -1,8 +1,8 @@
-import type { Context } from 'hono';
+import { monitoringService } from '@/services/monitoring/monitoringService';
 import { ResponseHelper } from '@/utils/response';
 import { withErrorHandling } from '@/utils/routeHandler';
-import { monitoringService } from '@/services/monitoring/monitoringService';
 import { commonSchemas } from '@/utils/validation';
+import type { Context } from 'hono';
 
 export const monitoringHandlers = {
   get getMonitoringDataHandler() {
@@ -19,13 +19,6 @@ export const monitoringHandlers = {
     });
   },
 
-  get getTelegramServiceStatsHandler() {
-    return withErrorHandling(async (c: Context) => {
-      const data = await monitoringService.getTelegramServiceStats();
-      return ResponseHelper.success(c, data);
-    });
-  },
-
   get getRtmpServiceStatsHandler() {
     return withErrorHandling(async (c: Context) => {
       const data = await monitoringService.getRtmpServiceStats();
@@ -37,21 +30,12 @@ export const monitoringHandlers = {
     return withErrorHandling(async (c: Context) => {
       const service = c.req.param('service');
 
-      if (service === 'telegram') {
-        const data = await monitoringService.getTelegramServiceStats();
-        return ResponseHelper.success(c, data);
-      }
-
       if (service === 'rtmp') {
         const data = await monitoringService.getRtmpServiceStats();
         return ResponseHelper.success(c, data);
       }
 
-      return ResponseHelper.error(
-        c,
-        'Invalid service. Use "telegram" or "rtmp"',
-        400,
-      );
+      return ResponseHelper.error(c, 'Invalid service. Use "rtmp"', 400);
     });
   },
 
