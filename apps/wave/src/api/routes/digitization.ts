@@ -13,7 +13,34 @@ digitizationRoutes.use('*', authMiddleware, adminMiddleware);
 
 digitizationRoutes.get('/drafts', digitizationHandlers.listDraftsHandler);
 
+digitizationRoutes.post(
+  '/drafts',
+  digitizationValidators.createDraftValidator,
+  digitizationHandlers.createDraftHandler,
+);
+
 digitizationRoutes.get('/drafts/:slug', digitizationHandlers.getDraftHandler);
+
+digitizationRoutes.post(
+  '/drafts/:slug/uploads',
+  digitizationValidators.uploadInitValidator,
+  digitizationHandlers.initUploadHandler,
+);
+
+digitizationRoutes.put(
+  '/drafts/:slug/uploads/:uploadId/chunks/:n',
+  digitizationHandlers.putUploadChunkHandler,
+);
+
+digitizationRoutes.get(
+  '/drafts/:slug/uploads/:uploadId/status',
+  digitizationHandlers.getUploadStatusHandler,
+);
+
+digitizationRoutes.post(
+  '/drafts/:slug/uploads/:uploadId/complete',
+  digitizationHandlers.completeUploadHandler,
+);
 
 digitizationRoutes.get(
   '/drafts/:slug/cover',

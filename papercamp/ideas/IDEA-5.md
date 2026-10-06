@@ -3,8 +3,13 @@ id: IDEA-5
 title: In-app upload of side recordings
 type: feat
 status: planned
-tags: [admin, wave, digitization, upload, pwa]
 created: 2026-10-06
+tags:
+  - admin
+  - wave
+  - digitization
+  - upload
+  - pwa
 ---
 
 Remove the last terminal step from the digitization flow: instead of rsyncing side WAVs into /var/www/p-sound-inbox, the admin (opened as an installed PWA on the Mac) uploads them itself. The user records and exports sides in Logic Pro, then drags the record folder onto the Оцифровка page — or picks it via a remembered folder handle — and the files stream to the server inbox with progress, pause/resume and retry. Builds directly on IDEA-2: once the WAVs land in the inbox, the existing draft pipeline (metadata, split, encode, publish) takes over unchanged.
@@ -27,8 +32,7 @@ Remove the last terminal step from the digitization flow: instead of rsyncing si
   side, size cap (~2 GB/file).
 
 ### Phases
-
-- [ ] Phase 1 — Wave: draft creation + chunked resumable upload API
+- [x] Phase 1 — Wave: draft creation + chunked resumable upload API
       `POST /api/digitization/drafts` (artist + album or raw slug →
       validated folder under MEDIA_INBOX_PATH). Upload session endpoints
       under `/api/digitization/drafts/:slug/uploads`: init (filename,
@@ -38,7 +42,7 @@ Remove the last terminal step from the digitization flow: instead of rsyncing si
       refuse non-empty target). Session TTL cleanup of stale part files.
       Tests: happy path, resume after missing chunk, overwrite refusal,
       traversal/filename rejection, size cap.
-
+      run: 19m29s · 134 in · 31.3k out · sonnet-5 · sess:f1f13863-db61-4acc-8c11-992aa8c320d6
 - [ ] Phase 2 — Admin: new-record form + upload manager
       «Новий запис» on the digitization page: artist/album inputs with a
       live slug preview → creates the draft. Drop zone + file picker
@@ -50,7 +54,6 @@ Remove the last terminal step from the digitization flow: instead of rsyncing si
       digitization-api/hooks layering; per-request timeouts for chunk
       PUTs; no global-state uploads lost on tab close without a warning
       (beforeunload guard while uploading).
-
 - [ ] Phase 3 — Desktop feel: PWA polish + remembered Radio folder
       Verify/polish the PWA manifest (name, icons, standalone display)
       so «Встановити застосунок» gives a Dock app. Where the File System

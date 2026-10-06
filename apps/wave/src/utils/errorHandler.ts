@@ -136,10 +136,18 @@ export const ErrorHandler = {
         error.message.startsWith('Invalid filename:') ||
         error.message.startsWith('Invalid cut range') ||
         error.message.startsWith('Invalid draft slug') ||
+        error.message.startsWith('Could not derive a valid slug') ||
+        error.message.startsWith('Invalid upload size:') ||
+        error.message.startsWith('Invalid chunk size:') ||
+        error.message.startsWith('Invalid chunk index:') ||
         error.message.includes('need exactly') ||
         error.message.includes('manual cut points must lie within')
       ) {
         return ResponseHelper.error(c, error.message, 400);
+      }
+
+      if (error.message.startsWith('Upload incomplete:')) {
+        return ResponseHelper.conflict(c, error.message);
       }
 
       if (

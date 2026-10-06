@@ -422,6 +422,16 @@ export interface DigitizationSplitApplyResult {
   written: string[];
 }
 
+/** A chunked resumable upload session for one `side-x.wav`. */
+export interface DigitizationUploadSession {
+  uploadId: string;
+  filename: string;
+  size: number;
+  chunkSize: number;
+  totalChunks: number;
+  receivedChunks: number[];
+}
+
 export type DigitizationJobKind = 'split' | 'encode' | 'publish';
 export type DigitizationJobStatus = 'pending' | 'running' | 'success' | 'error';
 

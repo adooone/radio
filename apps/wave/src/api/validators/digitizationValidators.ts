@@ -2,6 +2,14 @@ import { digitizationSchemas } from '@/utils/validation';
 import { zValidator } from '@hono/zod-validator';
 
 export const digitizationValidators = {
+  get createDraftValidator() {
+    return zValidator('json', digitizationSchemas.createDraft);
+  },
+
+  get uploadInitValidator() {
+    return zValidator('json', digitizationSchemas.uploadInit);
+  },
+
   get fetchMetadataValidator() {
     return zValidator('json', digitizationSchemas.fetchMetadata);
   },

@@ -10,6 +10,7 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
+  createDraft,
   deleteDraftFolder,
   deleteDraftSideWavs,
   getDraft,
@@ -235,6 +236,46 @@ describe('inboxService', () => {
     expect(() => getDraftCover(inboxPath, '../../etc_passwd')).toThrow(
       'Invalid draft slug',
     );
+  });
+
+  describe('createDraft', () => {
+    it('derives a slug from artist and album and creates the folder', () => {
+      const draft = createDraft(inboxPath, mediaRootPath, {
+        artist: 'Jethro Tull',
+        album: 'Aqualung',
+      });
+
+      expect(draft.slug).toBe('jethro-tull_aqualung');
+      expect(existsSync(join(inboxPath, 'jethro-tull_aqualung'))).toBe(true);
+      expect(draft.stage).toBe('awaiting-sides');
+    });
+
+    it('accepts a raw slug directly', () => {
+      const draft = createDraft(inboxPath, mediaRootPath, {
+        slug: 'some-band_some-album',
+      });
+
+      expect(draft.slug).toBe('some-band_some-album');
+    });
+
+    it('is idempotent when the folder already exists', () => {
+      createDraft(inboxPath, mediaRootPath, { slug: 'some-band_some-album' });
+      writeFileSync(
+        join(inboxPath, 'some-band_some-album', 'side-a.wav'),
+        'content',
+      );
+
+      const draft = createDraft(inboxPath, mediaRootPath, {
+        slug: 'some-band_some-album',
+      });
+      expect(draft.sides).toEqual(['side-a.wav']);
+    });
+
+    it('rejects a malformed raw slug', () => {
+      expect(() =>
+        createDraft(inboxPath, mediaRootPath, { slug: '../../etc_passwd' }),
+      ).toThrow('Invalid draft slug');
+    });
   });
 
   describe('cleanup', () => {

@@ -18,6 +18,7 @@ import type {
   TracklistItem,
 } from '@radio/types';
 import { readMetadata, resolveDraftFolder } from './inboxService';
+import { slugify } from './slug';
 
 const SAMPLE_RATE = 8000;
 const PEAK_BUCKET_MS = 50;
@@ -344,23 +345,6 @@ function parseDuration(text: string): number | undefined {
     seconds = seconds * 60 + Number(part);
   }
   return seconds;
-}
-
-function stripCombiningMarks(text: string): string {
-  return Array.from(text)
-    .filter((char) => {
-      const codePoint = char.codePointAt(0) ?? 0;
-      return codePoint < 0x0300 || codePoint > 0x036f;
-    })
-    .join('');
-}
-
-function slugify(text: string): string {
-  return stripCombiningMarks(text.normalize('NFKD'))
-    .toLowerCase()
-    .replace(/&/g, ' and ')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 }
 
 function trackFilename(track: SideTrack): string {

@@ -1,5 +1,6 @@
 import {
   existsSync,
+  mkdirSync,
   readFileSync,
   readdirSync,
   rmSync,
@@ -13,6 +14,7 @@ import type {
   DigitizationDraft,
   DigitizationStage,
 } from '@radio/types';
+import { slugify } from './slug';
 
 const DRAFT_FOLDER_PATTERN = /^[a-z0-9-]+_[a-z0-9-]+$/;
 const DATA_JSON = 'data.json';
@@ -215,6 +217,42 @@ export function getDraft(
   slug: string,
 ): DigitizationDraft {
   resolveDraftFolder(inboxPath, slug);
+  return buildDraft(inboxPath, mediaRootPath, slug);
+}
+
+/** Builds a `band-slug_album-slug` folder name from free-text artist/album, or validates a raw slug. */
+export function deriveDraftSlug(input: {
+  slug?: string;
+  artist?: string;
+  album?: string;
+}): string {
+  if (input.slug) {
+    if (!DRAFT_FOLDER_PATTERN.test(input.slug)) {
+      throw new Error(
+        `Invalid draft slug "${input.slug}" — expected band-slug_album-slug (lowercase letters, digits, hyphens)`,
+      );
+    }
+    return input.slug;
+  }
+  const artistSlug = slugify(input.artist ?? '');
+  const albumSlug = slugify(input.album ?? '');
+  const slug = `${artistSlug}_${albumSlug}`;
+  if (!DRAFT_FOLDER_PATTERN.test(slug)) {
+    throw new Error(
+      `Could not derive a valid slug from artist "${input.artist}" and album "${input.album}"`,
+    );
+  }
+  return slug;
+}
+
+/** Creates (or reuses) the inbox folder for a draft and returns it as a derived draft. */
+export function createDraft(
+  inboxPath: string,
+  mediaRootPath: string,
+  input: { slug?: string; artist?: string; album?: string },
+): DigitizationDraft {
+  const slug = deriveDraftSlug(input);
+  mkdirSync(join(inboxPath, slug), { recursive: true });
   return buildDraft(inboxPath, mediaRootPath, slug);
 }
 

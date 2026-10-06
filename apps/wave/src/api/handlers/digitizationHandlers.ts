@@ -1,6 +1,8 @@
 import { syncMediaToDatabase } from '@/services/albums';
 import {
   applySplits,
+  completeUpload,
+  createDraft,
   deleteDraftFolder,
   deleteDraftSideWavs,
   encodeDraft,
@@ -8,11 +10,14 @@ import {
   getDraft,
   getDraftCover,
   getJob,
+  getUploadStatus,
+  initUpload,
   listDrafts,
   planSplits,
   resolveDraftAudioPath,
   runJob,
   searchReleases,
+  writeChunk,
   writeDraftMetadata,
 } from '@/services/digitization';
 import { env } from '@/utils/env';
@@ -48,6 +53,59 @@ export const digitizationHandlers = {
     return withErrorHandling(async (c: Context) => {
       const drafts = listDrafts(env.mediaInboxPath, env.mediaRootPath);
       return ResponseHelper.success(c, drafts);
+    });
+  },
+
+  get createDraftHandler() {
+    return withErrorHandling(async (c: Context) => {
+      const input = digitizationSchemas.createDraft.parse(await c.req.json());
+      const draft = createDraft(env.mediaInboxPath, env.mediaRootPath, input);
+      return ResponseHelper.created(c, draft);
+    });
+  },
+
+  get initUploadHandler() {
+    return withErrorHandling(async (c: Context) => {
+      const slug = c.req.param('slug');
+      const { filename, size, chunkSize } =
+        digitizationSchemas.uploadInit.parse(await c.req.json());
+      const session = initUpload(
+        env.mediaInboxPath,
+        slug,
+        filename,
+        size,
+        chunkSize,
+      );
+      return ResponseHelper.created(c, session);
+    });
+  },
+
+  get putUploadChunkHandler() {
+    return withErrorHandling(async (c: Context) => {
+      const slug = c.req.param('slug');
+      const uploadId = c.req.param('uploadId');
+      const chunkIndex = Number.parseInt(c.req.param('n'), 10);
+      const data = Buffer.from(await c.req.arrayBuffer());
+      writeChunk(env.mediaInboxPath, slug, uploadId, chunkIndex, data);
+      return ResponseHelper.success(c, { received: chunkIndex });
+    });
+  },
+
+  get getUploadStatusHandler() {
+    return withErrorHandling(async (c: Context) => {
+      const slug = c.req.param('slug');
+      const uploadId = c.req.param('uploadId');
+      const session = getUploadStatus(env.mediaInboxPath, slug, uploadId);
+      return ResponseHelper.success(c, session);
+    });
+  },
+
+  get completeUploadHandler() {
+    return withErrorHandling(async (c: Context) => {
+      const slug = c.req.param('slug');
+      const uploadId = c.req.param('uploadId');
+      const result = completeUpload(env.mediaInboxPath, slug, uploadId);
+      return ResponseHelper.success(c, result);
     });
   },
 

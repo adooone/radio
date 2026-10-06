@@ -199,6 +199,17 @@ const albumDataJsonSchema = z
   .passthrough();
 
 export const digitizationSchemas = {
+  createDraft: z.union([
+    z.object({ slug: z.string().min(1) }),
+    z.object({ artist: z.string().min(1), album: z.string().min(1) }),
+  ]),
+
+  uploadInit: z.object({
+    filename: z.string().min(1),
+    size: z.number().int().positive(),
+    chunkSize: z.number().int().positive(),
+  }),
+
   fetchMetadata: z.object({
     release: z.string().min(1),
     force: z.boolean().optional(),
