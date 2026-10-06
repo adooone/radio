@@ -2,13 +2,15 @@
 id: IDEA-4
 title: Remove Telegram streaming entirely
 type: chore
-status: review
+status: done
 created: 2026-09-09
+updated: 2026-10-06
 tags:
   - wave
   - admin
   - telegram
   - cleanup
+order: 1
 ---
 
 The Telegram stream daemon has cost this server more than it ever
