@@ -41,6 +41,17 @@ export const useDigitizationDraft = (slug: string) => {
   });
 };
 
+export const useCreateDraft = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: digitizationApi.createDraft,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: digitizationKeys.drafts() });
+    },
+  });
+};
+
 export const useDraftCover = (slug: string, hasCover: boolean) => {
   return useQuery({
     queryKey: digitizationKeys.cover(slug),

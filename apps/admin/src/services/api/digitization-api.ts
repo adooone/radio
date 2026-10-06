@@ -5,6 +5,7 @@ import type {
   DigitizationSplitApplyResult,
   DigitizationSplitApplySide,
   DigitizationSplitPlanResult,
+  DigitizationUploadSession,
   DiscogsSearchResult,
 } from '@radio/types';
 import { waveApiClient } from './clients/http-client';
@@ -16,6 +17,16 @@ type ApiResponse<T> = {
 };
 
 const SPLIT_TIMEOUT_MS = 180000;
+const CHUNK_UPLOAD_TIMEOUT_MS = 60000;
+
+export type CreateDraftInput =
+  | { slug: string }
+  | { artist: string; album: string };
+
+export type UploadChunkOptions = {
+  signal?: AbortSignal;
+  onUploadProgress?: (uploadedBytes: number) => void;
+};
 
 export type FetchDraftMetadataParams = {
   slug: string;
@@ -43,6 +54,65 @@ export const digitizationApi = {
     const response = await waveApiClient.get<ApiResponse<DigitizationDraft>>(
       `/api/digitization/drafts/${slug}`,
     );
+    return response.data.data;
+  },
+
+  createDraft: async (input: CreateDraftInput): Promise<DigitizationDraft> => {
+    const response = await waveApiClient.post<ApiResponse<DigitizationDraft>>(
+      '/api/digitization/drafts',
+      input,
+    );
+    return response.data.data;
+  },
+
+  initUpload: async (
+    slug: string,
+    body: { filename: string; size: number; chunkSize: number },
+  ): Promise<DigitizationUploadSession> => {
+    const response = await waveApiClient.post<
+      ApiResponse<DigitizationUploadSession>
+    >(`/api/digitization/drafts/${slug}/uploads`, body);
+    return response.data.data;
+  },
+
+  getUploadStatus: async (
+    slug: string,
+    uploadId: string,
+  ): Promise<DigitizationUploadSession> => {
+    const response = await waveApiClient.get<
+      ApiResponse<DigitizationUploadSession>
+    >(`/api/digitization/drafts/${slug}/uploads/${uploadId}/status`);
+    return response.data.data;
+  },
+
+  uploadChunk: async (
+    slug: string,
+    uploadId: string,
+    chunkIndex: number,
+    chunk: Blob,
+    options: UploadChunkOptions = {},
+  ): Promise<void> => {
+    await waveApiClient.put(
+      `/api/digitization/drafts/${slug}/uploads/${uploadId}/chunks/${chunkIndex}`,
+      chunk,
+      {
+        headers: { 'Content-Type': 'application/octet-stream' },
+        timeout: CHUNK_UPLOAD_TIMEOUT_MS,
+        signal: options.signal,
+        onUploadProgress: options.onUploadProgress
+          ? (event) => options.onUploadProgress?.(event.loaded)
+          : undefined,
+      },
+    );
+  },
+
+  completeUpload: async (
+    slug: string,
+    uploadId: string,
+  ): Promise<{ filename: string; size: number }> => {
+    const response = await waveApiClient.post<
+      ApiResponse<{ filename: string; size: number }>
+    >(`/api/digitization/drafts/${slug}/uploads/${uploadId}/complete`);
     return response.data.data;
   },
 

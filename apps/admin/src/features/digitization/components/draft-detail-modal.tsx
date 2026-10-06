@@ -10,6 +10,7 @@ import { MetadataModal } from './metadata-modal';
 import { PublishSection } from './publish-section';
 import { SplitReviewSection } from './split-review';
 import { getErrorMessage } from './split-review/split-review-utils';
+import { UploadSection } from './upload-section';
 
 type DraftDetailModalProps = {
   slug: string | null;
@@ -58,6 +59,7 @@ export const DraftDetailModal = ({ slug, onClose }: DraftDetailModalProps) => {
             </div>
 
             <div className={clsx(styles.content)}>
+              {draft.stage !== 'on-air' && <UploadSection slug={draft.slug} />}
               {draft.metadata ? (
                 <>
                   <MetadataEditForm

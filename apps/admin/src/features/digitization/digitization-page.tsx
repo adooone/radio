@@ -2,10 +2,11 @@ import { useDigitizationDrafts } from '@/services/api';
 import { Button, PageLayout } from '@dendelion/mojo-ui';
 import clsx from 'clsx';
 import { useState } from 'react';
-import { DraftDetailModal, DraftList } from './components';
+import { CreateDraftModal, DraftDetailModal, DraftList } from './components';
 
 export const DigitizationPage = () => {
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const [isCreating, setIsCreating] = useState(false);
   const {
     data: drafts,
     isLoading,
@@ -18,13 +19,21 @@ export const DigitizationPage = () => {
     <PageLayout
       title="Оцифровка"
       headerRight={
-        <Button
-          variant="gray"
-          size="medium"
-          title={isFetching ? 'Оновлення...' : 'Оновити'}
-          disabled={isFetching}
-          onClick={() => refetch()}
-        />
+        <div className={clsx(styles.headerActions)}>
+          <Button
+            variant="dark"
+            size="medium"
+            title="Новий запис"
+            onClick={() => setIsCreating(true)}
+          />
+          <Button
+            variant="gray"
+            size="medium"
+            title={isFetching ? 'Оновлення...' : 'Оновити'}
+            disabled={isFetching}
+            onClick={() => refetch()}
+          />
+        </div>
       }
     >
       {isError ? (
@@ -49,11 +58,13 @@ export const DigitizationPage = () => {
         slug={selectedSlug}
         onClose={() => setSelectedSlug(null)}
       />
+      {isCreating && <CreateDraftModal onClose={() => setIsCreating(false)} />}
     </PageLayout>
   );
 };
 
 const styles = {
+  headerActions: ['flex items-center gap-2'],
   error: [
     'flex flex-col items-center gap-3 p-8',
     'text-red-400',

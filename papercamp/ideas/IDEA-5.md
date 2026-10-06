@@ -43,7 +43,7 @@ Remove the last terminal step from the digitization flow: instead of rsyncing si
       Tests: happy path, resume after missing chunk, overwrite refusal,
       traversal/filename rejection, size cap.
       run: 19m29s · 134 in · 31.3k out · sonnet-5 · sess:f1f13863-db61-4acc-8c11-992aa8c320d6
-- [ ] Phase 2 — Admin: new-record form + upload manager
+- [x] Phase 2 — Admin: new-record form + upload manager
       «Новий запис» on the digitization page: artist/album inputs with a
       live slug preview → creates the draft. Drop zone + file picker
       accepting multiple `side-*.wav` (drag a whole folder in Chromium;
@@ -54,6 +54,7 @@ Remove the last terminal step from the digitization flow: instead of rsyncing si
       digitization-api/hooks layering; per-request timeouts for chunk
       PUTs; no global-state uploads lost on tab close without a warning
       (beforeunload guard while uploading).
+      run: 9m49s · 150 in · 43.8k out · sonnet-5 · sess:644403f8-68d3-4bf5-94fd-9b492e2eb4c2
 - [ ] Phase 3 — Desktop feel: PWA polish + remembered Radio folder
       Verify/polish the PWA manifest (name, icons, standalone display)
       so «Встановити застосунок» gives a Dock app. Where the File System
