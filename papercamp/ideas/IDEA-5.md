@@ -65,3 +65,24 @@ Remove the last terminal step from the digitization flow: instead of rsyncing si
       update docs/apps/admin.md + setup docs — rsync becomes the
       fallback, not the flow.
       run: 5m13s · 198 in · 48.6k out · sonnet-5 · sess:2515a4d7-fbdb-4b43-904a-5a9b8b86f60f
+
+### Notes
+
+- **Decision (2026-10-06):** Post-review hardening applied before first real
+  use: uploadId validated as UUID before any path join (Hono decodes %2F in
+  route params — confirmed traversal otherwise), meta filename re-checked at
+  complete, chunk listing is size-aware so a truncated part re-sends one
+  chunk instead of killing the session, assembly is async (no event-loop
+  block) and keeps the session on size mismatch, complete gets a 10-minute
+  client timeout, and the upload manager recovers from a 404'd session by
+  checking whether the file actually landed.
+- **Question (2026-10-06):** Cyrillic names slugify to nothing (NFKD does
+  not transliterate), so a record named «ДДТ» cannot be created from the
+  UI. Add a Ukrainian/Cyrillic transliteration table to the shared slugify
+  (wave + admin copies), or add a raw-slug override field to the create
+  modal? Affects any Ukrainian records in the collection.
+- **Trailing (low) from review, fine to batch later:** chunk retry has no
+  automatic backoff (manual «Повторити» only); stale-session pruning runs
+  only on init for the same draft (no boot/global sweep); pause can miss
+  the in-flight chunk and the final complete is not abortable; chunk PUT
+  buffers the body before size checks (bounded by Bun's 128 MB default).

@@ -104,7 +104,7 @@ export const digitizationHandlers = {
     return withErrorHandling(async (c: Context) => {
       const slug = c.req.param('slug');
       const uploadId = c.req.param('uploadId');
-      const result = completeUpload(env.mediaInboxPath, slug, uploadId);
+      const result = await completeUpload(env.mediaInboxPath, slug, uploadId);
       return ResponseHelper.success(c, result);
     });
   },

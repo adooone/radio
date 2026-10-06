@@ -1,17 +1,15 @@
 import { randomUUID } from 'node:crypto';
 import {
-  closeSync,
   existsSync,
   mkdirSync,
-  openSync,
   readFileSync,
   readdirSync,
   renameSync,
   rmSync,
   statSync,
   writeFileSync,
-  writeSync,
 } from 'node:fs';
+import * as fsp from 'node:fs/promises';
 import { join } from 'node:path';
 import type { DigitizationUploadSession } from '@radio/types';
 import { resolveDraftFolder } from './inboxService';
@@ -35,11 +33,18 @@ interface UploadMeta {
   createdAt: string;
 }
 
+const UPLOAD_ID_PATTERN =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+
 function uploadsRootFor(folderPath: string): string {
   return join(folderPath, UPLOADS_DIR);
 }
 
 function sessionDirFor(folderPath: string, uploadId: string): string {
+  // The id is a path segment — anything but our own UUIDs must never reach join().
+  if (!UPLOAD_ID_PATTERN.test(uploadId)) {
+    throw new Error('Not found');
+  }
   return join(uploadsRootFor(folderPath), uploadId);
 }
 
@@ -59,7 +64,7 @@ function readMeta(sessionDir: string): UploadMeta {
   return JSON.parse(readFileSync(metaPath, 'utf-8')) as UploadMeta;
 }
 
-function listReceivedChunks(sessionDir: string): number[] {
+function listReceivedChunks(sessionDir: string, meta: UploadMeta): number[] {
   let entries: string[];
   try {
     entries = readdirSync(sessionDir);
@@ -69,7 +74,19 @@ function listReceivedChunks(sessionDir: string): number[] {
   return entries
     .filter((entry) => entry.endsWith(PART_SUFFIX))
     .map((entry) => Number.parseInt(entry.slice(0, -PART_SUFFIX.length), 10))
-    .filter((n) => Number.isInteger(n))
+    .filter((n) => Number.isInteger(n) && n >= 0 && n < meta.totalChunks)
+    .filter((n) => {
+      // A truncated part (crash, disk full) counts as missing, so the
+      // client re-uploads that one chunk instead of failing at complete.
+      try {
+        return (
+          statSync(partPathFor(sessionDir, n)).size ===
+          expectedChunkSize(meta, n)
+        );
+      } catch {
+        return false;
+      }
+    })
     .sort((a, b) => a - b);
 }
 
@@ -115,7 +132,7 @@ function toUploadSession(
     size: meta.size,
     chunkSize: meta.chunkSize,
     totalChunks: meta.totalChunks,
-    receivedChunks: listReceivedChunks(sessionDir),
+    receivedChunks: listReceivedChunks(sessionDir, meta),
   };
 }
 
@@ -212,15 +229,19 @@ export function getUploadStatus(
 }
 
 /** Verifies every chunk arrived, assembles them in order, and atomically renames onto the side file. */
-export function completeUpload(
+export async function completeUpload(
   inboxPath: string,
   slug: string,
   uploadId: string,
-): { filename: string; size: number } {
+): Promise<{ filename: string; size: number }> {
   const folderPath = resolveDraftFolder(inboxPath, slug);
   const sessionDir = sessionDirFor(folderPath, uploadId);
   const meta = readMeta(sessionDir);
-  const received = listReceivedChunks(sessionDir);
+  // Trust nothing read back from disk that steers the rename target.
+  if (!SIDE_FILENAME_PATTERN.test(meta.filename)) {
+    throw new Error('Not found');
+  }
+  const received = listReceivedChunks(sessionDir, meta);
   if (received.length !== meta.totalChunks) {
     const missing = Array.from(
       { length: meta.totalChunks },
@@ -231,20 +252,24 @@ export function completeUpload(
 
   refuseNonEmptyTarget(folderPath, meta.filename);
 
+  // Assembly is chunk-at-a-time and async so a 2 GB file never blocks
+  // the event loop for the whole copy.
   const assembledPath = join(sessionDir, ASSEMBLED_FILE);
-  const fd = openSync(assembledPath, 'w');
+  const handle = await fsp.open(assembledPath, 'w');
   let totalWritten = 0;
   try {
     for (let chunkIndex = 0; chunkIndex < meta.totalChunks; chunkIndex++) {
-      const chunk = readFileSync(partPathFor(sessionDir, chunkIndex));
-      writeSync(fd, chunk);
+      const chunk = await fsp.readFile(partPathFor(sessionDir, chunkIndex));
+      await handle.write(chunk);
       totalWritten += chunk.length;
     }
   } finally {
-    closeSync(fd);
+    await handle.close();
   }
   if (totalWritten !== meta.size) {
-    rmSync(sessionDir, { recursive: true, force: true });
+    // Keep the session — the size-checked chunk listing will name the bad
+    // parts as missing, so the client re-sends those instead of 2 GB.
+    rmSync(assembledPath, { force: true });
     throw new Error(
       `Upload incomplete: assembled ${totalWritten} bytes, expected ${meta.size}`,
     );

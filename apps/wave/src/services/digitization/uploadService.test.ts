@@ -41,7 +41,7 @@ describe('uploadService', () => {
     rmSync(inboxPath, { recursive: true, force: true });
   });
 
-  it('completes a happy-path upload across multiple chunks', () => {
+  it('completes a happy-path upload across multiple chunks', async () => {
     const size = CHUNK_SIZE * 2 + 100;
     const session = initUpload(inboxPath, slug, 'side-a.wav', size, CHUNK_SIZE);
     expect(session.totalChunks).toBe(3);
@@ -51,7 +51,7 @@ describe('uploadService', () => {
     writeChunk(inboxPath, slug, session.uploadId, 1, chunkOf(CHUNK_SIZE, 2));
     writeChunk(inboxPath, slug, session.uploadId, 2, chunkOf(100, 3));
 
-    const result = completeUpload(inboxPath, slug, session.uploadId);
+    const result = await completeUpload(inboxPath, slug, session.uploadId);
     expect(result).toEqual({ filename: 'side-a.wav', size });
 
     const written = readFileSync(join(inboxPath, slug, 'side-a.wav'));
@@ -61,13 +61,13 @@ describe('uploadService', () => {
     expect(written[CHUNK_SIZE * 2]).toBe(3);
   });
 
-  it('allows resuming after a missing chunk is detected via status', () => {
+  it('allows resuming after a missing chunk is detected via status', async () => {
     const size = CHUNK_SIZE * 2;
     const session = initUpload(inboxPath, slug, 'side-a.wav', size, CHUNK_SIZE);
 
     writeChunk(inboxPath, slug, session.uploadId, 0, chunkOf(CHUNK_SIZE, 1));
 
-    expect(() => completeUpload(inboxPath, slug, session.uploadId)).toThrow(
+    expect(completeUpload(inboxPath, slug, session.uploadId)).rejects.toThrow(
       'Upload incomplete',
     );
 
@@ -75,11 +75,11 @@ describe('uploadService', () => {
     expect(status.receivedChunks).toEqual([0]);
 
     writeChunk(inboxPath, slug, session.uploadId, 1, chunkOf(CHUNK_SIZE, 2));
-    const result = completeUpload(inboxPath, slug, session.uploadId);
+    const result = await completeUpload(inboxPath, slug, session.uploadId);
     expect(result.size).toBe(size);
   });
 
-  it('refuses to init or complete onto a non-empty existing side file', () => {
+  it('refuses to init or complete onto a non-empty existing side file', async () => {
     writeFileSync(join(inboxPath, slug, 'side-a.wav'), 'already here');
 
     expect(() =>
@@ -136,7 +136,7 @@ describe('uploadService', () => {
     ).toThrow('Invalid chunk index');
   });
 
-  it('does not leave an upload session directory behind after completion', () => {
+  it('does not leave an upload session directory behind after completion', async () => {
     const session = initUpload(
       inboxPath,
       slug,
@@ -145,10 +145,47 @@ describe('uploadService', () => {
       CHUNK_SIZE,
     );
     writeChunk(inboxPath, slug, session.uploadId, 0, chunkOf(CHUNK_SIZE, 1));
-    completeUpload(inboxPath, slug, session.uploadId);
+    await completeUpload(inboxPath, slug, session.uploadId);
 
     expect(
       existsSync(join(inboxPath, slug, '.uploads', session.uploadId)),
     ).toBe(false);
+  });
+
+  it('rejects a non-UUID uploadId before any path is built', () => {
+    expect(() =>
+      getUploadStatus(inboxPath, slug, '../../other_x/.uploads/abc'),
+    ).toThrow('Not found');
+    expect(() =>
+      writeChunk(inboxPath, slug, '..%2Fabc', 0, Buffer.alloc(1)),
+    ).toThrow('Not found');
+    expect(completeUpload(inboxPath, slug, 'not-a-uuid')).rejects.toThrow(
+      'Not found',
+    );
+  });
+
+  it('reports a truncated part as missing so only that chunk is re-sent', async () => {
+    const size = CHUNK_SIZE * 2;
+    const session = initUpload(inboxPath, slug, 'side-a.wav', size, CHUNK_SIZE);
+    writeChunk(inboxPath, slug, session.uploadId, 0, chunkOf(CHUNK_SIZE, 1));
+    writeChunk(inboxPath, slug, session.uploadId, 1, chunkOf(CHUNK_SIZE, 2));
+
+    // Simulate a crash mid-write: truncate part 1 on disk.
+    writeFileSync(
+      join(inboxPath, slug, '.uploads', session.uploadId, '1.part'),
+      chunkOf(10, 2),
+    );
+
+    const status = getUploadStatus(inboxPath, slug, session.uploadId);
+    expect(status.receivedChunks).toEqual([0]);
+
+    expect(completeUpload(inboxPath, slug, session.uploadId)).rejects.toThrow(
+      'missing chunks 1',
+    );
+
+    // Re-sending just the bad chunk recovers the session.
+    writeChunk(inboxPath, slug, session.uploadId, 1, chunkOf(CHUNK_SIZE, 2));
+    const result = await completeUpload(inboxPath, slug, session.uploadId);
+    expect(result.size).toBe(size);
   });
 });

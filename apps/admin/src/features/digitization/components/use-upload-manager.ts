@@ -46,15 +46,45 @@ export const useUploadManager = (slug: string) => {
 
       patchTask(taskId, { status: 'uploading', error: undefined });
 
+      const markDone = () => {
+        uploadIdsRef.current.delete(taskId);
+        patchTask(taskId, { status: 'done', uploadedBytes: file.size });
+        queryClient.invalidateQueries({
+          queryKey: digitizationKeys.detail(slug),
+        });
+        queryClient.invalidateQueries({ queryKey: digitizationKeys.drafts() });
+      };
+
       try {
         let uploadId = uploadIdsRef.current.get(taskId);
-        const session = uploadId
-          ? await digitizationApi.getUploadStatus(slug, uploadId)
-          : await digitizationApi.initUpload(slug, {
-              filename: file.name,
-              size: file.size,
-              chunkSize: CHUNK_SIZE,
-            });
+        let session: Awaited<
+          ReturnType<typeof digitizationApi.getUploadStatus>
+        > | null = null;
+        if (uploadId) {
+          try {
+            session = await digitizationApi.getUploadStatus(slug, uploadId);
+          } catch (error) {
+            if (!axios.isAxiosError(error) || error.response?.status !== 404) {
+              throw error;
+            }
+            // The session is gone — a complete that timed out client-side
+            // may still have finished server-side. Check if the file landed.
+            uploadIdsRef.current.delete(taskId);
+            uploadId = undefined;
+            const draft = await digitizationApi.getDraft(slug);
+            if (draft.sides.includes(file.name)) {
+              markDone();
+              return;
+            }
+          }
+        }
+        if (!session) {
+          session = await digitizationApi.initUpload(slug, {
+            filename: file.name,
+            size: file.size,
+            chunkSize: CHUNK_SIZE,
+          });
+        }
         uploadId = session.uploadId;
         uploadIdsRef.current.set(taskId, uploadId);
 
@@ -79,12 +109,7 @@ export const useUploadManager = (slug: string) => {
         }
 
         await digitizationApi.completeUpload(slug, uploadId);
-        uploadIdsRef.current.delete(taskId);
-        patchTask(taskId, { status: 'done', uploadedBytes: file.size });
-        queryClient.invalidateQueries({
-          queryKey: digitizationKeys.detail(slug),
-        });
-        queryClient.invalidateQueries({ queryKey: digitizationKeys.drafts() });
+        markDone();
       } catch (error) {
         if (axios.isCancel(error)) {
           return;
