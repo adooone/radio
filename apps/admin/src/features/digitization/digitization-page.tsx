@@ -2,7 +2,12 @@ import { useDigitizationDrafts } from '@/services/api';
 import { Button, PageLayout } from '@dendelion/mojo-ui';
 import clsx from 'clsx';
 import { useState } from 'react';
-import { CreateDraftModal, DraftDetailModal, DraftList } from './components';
+import {
+  CreateDraftModal,
+  DraftDetailModal,
+  DraftList,
+  RadioFolderPanel,
+} from './components';
 
 export const DigitizationPage = () => {
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
@@ -48,11 +53,14 @@ export const DigitizationPage = () => {
           />
         </div>
       ) : (
-        <DraftList
-          drafts={drafts ?? []}
-          isLoading={isLoading}
-          onSelect={setSelectedSlug}
-        />
+        <>
+          <RadioFolderPanel />
+          <DraftList
+            drafts={drafts ?? []}
+            isLoading={isLoading}
+            onSelect={setSelectedSlug}
+          />
+        </>
       )}
       <DraftDetailModal
         slug={selectedSlug}

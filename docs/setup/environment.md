@@ -31,8 +31,9 @@ directory where recorded vinyl side WAVs land (a `band-slug_album-slug`
 folder per draft) before they're split, encoded, and published into
 `MEDIA_ROOT_PATH` by the admin "Оцифровка" page — see
 [Vinyl Digitization Inbox](./README.md#vinyl-digitization-inbox) for
-provisioning it and an rsync example from a Mac. `DISCOGS_TOKEN` is
-optional, needed only for Discogs search and cover-image download.
+provisioning it; WAVs land there via chunked upload from the admin PWA,
+with rsync from a Mac as a fallback. `DISCOGS_TOKEN` is optional, needed
+only for Discogs search and cover-image download.
 
 ### Admin Panel (`apps/admin/.env`)
 ```env

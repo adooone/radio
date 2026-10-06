@@ -2,7 +2,7 @@
 id: IDEA-5
 title: In-app upload of side recordings
 type: feat
-status: planned
+status: review
 created: 2026-10-06
 tags:
   - admin
@@ -55,7 +55,7 @@ Remove the last terminal step from the digitization flow: instead of rsyncing si
       PUTs; no global-state uploads lost on tab close without a warning
       (beforeunload guard while uploading).
       run: 9m49s · 150 in · 43.8k out · sonnet-5 · sess:644403f8-68d3-4bf5-94fd-9b492e2eb4c2
-- [ ] Phase 3 — Desktop feel: PWA polish + remembered Radio folder
+- [x] Phase 3 — Desktop feel: PWA polish + remembered Radio folder
       Verify/polish the PWA manifest (name, icons, standalone display)
       so «Встановити застосунок» gives a Dock app. Where the File System
       Access API exists: "тека Radio" setting storing a persisted
@@ -64,3 +64,4 @@ Remove the last terminal step from the digitization flow: instead of rsyncing si
       graceful absence on Safari/Firefox (drop zone remains). Docs:
       update docs/apps/admin.md + setup docs — rsync becomes the
       fallback, not the flow.
+      run: 5m13s · 198 in · 48.6k out · sonnet-5 · sess:2515a4d7-fbdb-4b43-904a-5a9b8b86f60f

@@ -1,7 +1,8 @@
 import { Button, ProgressBar } from '@dendelion/mojo-ui';
 import clsx from 'clsx';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { collectDroppedFiles } from './collect-dropped-files';
+import { useBeforeUnloadWhileUploading } from './use-before-unload-while-uploading';
 import { type UploadTask, useUploadManager } from './use-upload-manager';
 
 type UploadSectionProps = {
@@ -15,15 +16,7 @@ export const UploadSection = ({ slug }: UploadSectionProps) => {
   const { tasks, addFiles, pause, resume, retry, isUploading } =
     useUploadManager(slug);
 
-  useEffect(() => {
-    if (!isUploading) return;
-    const handler = (event: BeforeUnloadEvent) => {
-      event.preventDefault();
-      event.returnValue = '';
-    };
-    window.addEventListener('beforeunload', handler);
-    return () => window.removeEventListener('beforeunload', handler);
-  }, [isUploading]);
+  useBeforeUnloadWhileUploading(isUploading);
 
   const handleFiles = (files: File[]) => {
     if (files.length === 0) return;
@@ -81,21 +74,42 @@ export const UploadSection = ({ slug }: UploadSectionProps) => {
       )}
 
       {tasks.length > 0 && (
-        <ul className={clsx(styles.taskList)}>
-          {tasks.map((task) => (
-            <UploadTaskRow
-              key={task.id}
-              task={task}
-              onPause={() => pause(task.id)}
-              onResume={() => resume(task.id)}
-              onRetry={() => retry(task.id)}
-            />
-          ))}
-        </ul>
+        <UploadTaskList
+          tasks={tasks}
+          onPause={pause}
+          onResume={resume}
+          onRetry={retry}
+        />
       )}
     </div>
   );
 };
+
+type UploadTaskListProps = {
+  tasks: UploadTask[];
+  onPause: (taskId: string) => void;
+  onResume: (taskId: string) => void;
+  onRetry: (taskId: string) => void;
+};
+
+export const UploadTaskList = ({
+  tasks,
+  onPause,
+  onResume,
+  onRetry,
+}: UploadTaskListProps) => (
+  <ul className={clsx(styles.taskList)}>
+    {tasks.map((task) => (
+      <UploadTaskRow
+        key={task.id}
+        task={task}
+        onPause={() => onPause(task.id)}
+        onResume={() => onResume(task.id)}
+        onRetry={() => onRetry(task.id)}
+      />
+    ))}
+  </ul>
+);
 
 type UploadTaskRowProps = {
   task: UploadTask;

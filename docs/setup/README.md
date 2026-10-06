@@ -91,19 +91,29 @@ bun run admin       # Interactive admin user creation
 ### Vinyl Digitization Inbox
 
 The admin "Оцифровка" page turns recorded vinyl side WAVs into published
-albums. The only manual step is on the recording machine (e.g. a Mac
-running Logic Pro):
+albums. On the server, create the inbox directory once:
 
 ```bash
-# On the server: create the inbox directory (sibling of MEDIA_ROOT_PATH)
-# and give it write access for the account that rsyncs into it.
 sudo mkdir -p /var/www/p-sound-inbox
 sudo chown "$USER" /var/www/p-sound-inbox
 ```
 
+The intended flow is uploading straight from the admin, installed as a PWA
+on the recording machine (e.g. a Mac running Logic Pro): after bouncing
+`side-a.wav`, `side-b.wav`, ... open the Оцифровка page, create a record
+(artist + album), and drag the files or whole folder onto it — or, in
+Chromium, pick a remembered "тека Radio" folder once and upload any record
+folder found inside it with one click. Uploads are chunked and resumable,
+so a 200-700 MB file survives a dropped connection; no shell access to the
+server is needed. See [Admin Panel docs](../apps/admin.md#vinyl-digitization-upload)
+for the upload UI.
+
+`rsync` remains a fallback for machines that can't run the admin PWA
+(no File System Access API, e.g. Safari/Firefox-only, or no browser at
+all):
+
 ```bash
-# On the Mac, after bouncing side-a.wav, side-b.wav, ... in Logic Pro:
-# the folder must be named band-slug_album-slug (lowercase, hyphens).
+# The folder must be named band-slug_album-slug (lowercase, hyphens).
 mkdir -p ~/Desktop/pink-floyd_the-dark-side-of-the-moon
 # move/export the side WAVs into it, then:
 rsync -avP --progress \
@@ -111,9 +121,9 @@ rsync -avP --progress \
   user@server:/var/www/p-sound-inbox/
 ```
 
-The folder shows up in the admin "Оцифровка" page as a draft once it
-lands — fetch Discogs metadata, review/plan the track split, and publish
-from there. See [`apps/wave/API_ENDPOINTS.md`](../../apps/wave/API_ENDPOINTS.md#digitization-api-admin-only)
+Either way, the folder shows up in the admin "Оцифровка" page as a draft
+once it lands — fetch Discogs metadata, review/plan the track split, and
+publish from there. See [`apps/wave/API_ENDPOINTS.md`](../../apps/wave/API_ENDPOINTS.md#digitization-api-admin-only)
 for the underlying API.
 
 ### RTMP Server

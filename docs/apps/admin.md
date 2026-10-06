@@ -41,11 +41,34 @@ src/
 ## Features
 
 - **Collection Management** - Albums, songs, and playlists with search and filtering
-- **Vinyl Digitization** - Discogs metadata, waveform-based track splitting, encode and publish of recorded vinyl sides from `MEDIA_INBOX_PATH`
+- **Vinyl Digitization** - In-app chunked upload of recorded vinyl sides into `MEDIA_INBOX_PATH` (drag-and-drop, or a remembered "тека Radio" folder in Chromium), Discogs metadata, waveform-based track splitting, encode and publish
 - **Stream Control** - RTMP server management
 - **User Management** - Account creation and role management
 - **Real-time Monitoring** - Service status and system health
-- **PWA Support** - Installable Progressive Web App
+- **PWA Support** - Installable Progressive Web App, installed as a Dock app the Оцифровка workflow is designed around
+
+## Vinyl Digitization Upload
+
+The admin, installed as a PWA («Встановити застосунок» in the browser menu
+gives it a Dock icon), is the digitization workflow's upload client — it
+replaces rsyncing side WAVs into the server inbox. On the Оцифровка page:
+
+- **Drag-and-drop / file picker** - works everywhere; drag the whole record
+  folder in Chromium (recurses into it) or select files directly on
+  Safari/Firefox.
+- **"Тека Radio"** - Chromium only (File System Access API). Pick a folder
+  once and the admin remembers it (the directory handle persists in
+  IndexedDB); the panel lists record folders found inside it
+  (`band-slug_album-slug`, matching the inbox naming convention) with a
+  one-click upload per folder. Absent on Safari/Firefox, where the drop
+  zone remains the only path.
+- Uploads are **chunked and resumable** with progress, pause/resume and
+  retry, so a 200-700 MB side WAV survives a dropped connection.
+
+rsync into `MEDIA_INBOX_PATH` (see
+[Vinyl Digitization Inbox](../setup/README.md#vinyl-digitization-inbox))
+still works as a fallback for machines that can't run the admin PWA, but
+it's no longer the primary flow.
 
 ## Development
 

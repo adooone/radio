@@ -9,5 +9,6 @@ export * from './draft-stage-badge';
 export * from './metadata-edit-form';
 export * from './metadata-modal';
 export * from './publish-section';
+export * from './radio-folder';
 export * from './split-review';
 export * from './upload-section';
