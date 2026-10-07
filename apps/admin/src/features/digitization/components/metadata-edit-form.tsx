@@ -1,8 +1,10 @@
 import { useUpdateDraftMetadata } from '@/services/api';
-import { Button, Input, Textarea } from '@dendelion/mojo-ui';
+import { Button, IconButton, Input, Textarea } from '@dendelion/mojo-ui';
 import type { AlbumDataJson, PersonnelItem, TracklistItem } from '@radio/types';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
+import { TrashIcon } from './radio-folder/icons';
+import { getErrorMessage } from './split-review/split-review-utils';
 
 type MetadataEditFormProps = {
   slug: string;
@@ -319,23 +321,27 @@ export const MetadataEditForm = ({
                 placeholder="3:45"
                 className={clsx(styles.trackDuration)}
               />
-              <Button
+              <IconButton
                 type="button"
                 variant="red"
                 size="small"
-                title="Видалити"
+                aria-label="Видалити трек"
                 onClick={() => removeTrack(index)}
-              />
+              >
+                <TrashIcon />
+              </IconButton>
             </div>
           ))}
         </div>
-        <Button
-          type="button"
-          variant="gray"
-          size="small"
-          title="Додати трек"
-          onClick={addTrack}
-        />
+        <div className={clsx(styles.addAction)}>
+          <Button
+            type="button"
+            variant="gray"
+            size="small"
+            title="Додати трек"
+            onClick={addTrack}
+          />
+        </div>
       </section>
 
       <section className={clsx(styles.section)}>
@@ -360,23 +366,27 @@ export const MetadataEditForm = ({
                 }
                 className={clsx(styles.personRoles)}
               />
-              <Button
+              <IconButton
                 type="button"
                 variant="red"
                 size="small"
-                title="Видалити"
+                aria-label="Видалити учасника"
                 onClick={() => removePerson(index)}
-              />
+              >
+                <TrashIcon />
+              </IconButton>
             </div>
           ))}
         </div>
-        <Button
-          type="button"
-          variant="gray"
-          size="small"
-          title="Додати учасника"
-          onClick={addPerson}
-        />
+        <div className={clsx(styles.addAction)}>
+          <Button
+            type="button"
+            variant="gray"
+            size="small"
+            title="Додати учасника"
+            onClick={addPerson}
+          />
+        </div>
       </section>
 
       <section className={clsx(styles.section)}>
@@ -428,12 +438,20 @@ export const MetadataEditForm = ({
       />
 
       <div className={clsx(styles.actions)}>
+        {updateMetadata.isError && (
+          <p className={clsx(styles.saveError)}>
+            {getErrorMessage(updateMetadata.error)}
+          </p>
+        )}
+        {isDirty && !updateMetadata.isPending && (
+          <p className={clsx(styles.dirtyHint)}>Є незбережені зміни</p>
+        )}
         <Button
           type="submit"
           variant="dark"
           size="medium"
           title={updateMetadata.isPending ? 'Збереження...' : 'Зберегти'}
-          disabled={updateMetadata.isPending}
+          disabled={updateMetadata.isPending || !isDirty}
         />
       </div>
     </form>
@@ -448,12 +466,18 @@ const styles = {
     'text-sm font-display font-semibold text-stone-400 uppercase tracking-wide',
   ],
   list: ['flex flex-col gap-2'],
-  trackRow: ['flex items-end gap-2'],
-  trackPosition: ['w-20'],
-  trackTitle: ['flex-1'],
-  trackDuration: ['w-24'],
-  personRow: ['flex items-end gap-2'],
-  personName: ['w-1/3'],
-  personRoles: ['flex-1'],
-  actions: ['flex justify-end gap-3 pt-2'],
+  trackRow: [
+    'grid grid-cols-[4.5rem_1fr_auto] md:grid-cols-[5rem_1fr_6rem_auto]',
+    'items-end gap-2',
+  ],
+  trackPosition: [''],
+  trackTitle: ['col-span-3 md:col-span-1 row-start-2 md:row-start-auto'],
+  trackDuration: [''],
+  personRow: ['grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] items-end gap-2'],
+  personName: [''],
+  personRoles: [''],
+  addAction: ['max-w-xs'],
+  actions: ['flex items-center justify-end gap-3 pt-2'],
+  dirtyHint: ['text-xs text-amber-400/80'],
+  saveError: ['text-xs text-red-400'],
 } as const;
