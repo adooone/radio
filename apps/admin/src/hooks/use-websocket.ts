@@ -22,10 +22,9 @@ export const useWebSocket = (options: UseWebSocketOptions = {}) => {
   >('disconnected');
 
   useEffect(() => {
-    if (!autoConnect) return;
-
-    // Initialize WebSocket service
-    initializeWebSocket(url);
+    if (autoConnect) {
+      initializeWebSocket(url);
+    }
 
     // Monitor connection state
     const checkConnectionState = () => {

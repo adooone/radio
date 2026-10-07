@@ -1,9 +1,14 @@
 import { useWebSocket } from '@/hooks/use-websocket';
+import { isSocketUrlConfigured } from '@/services/env';
 import clsx from 'clsx';
 import type React from 'react';
 
 export const ConnectionStatus: React.FC = () => {
   const { isConnected, connectionState } = useWebSocket();
+
+  if (!isSocketUrlConfigured) {
+    return null;
+  }
 
   const getStatusColor = () => {
     switch (connectionState) {

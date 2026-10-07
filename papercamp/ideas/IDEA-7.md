@@ -2,7 +2,7 @@
 id: IDEA-7
 title: Draft detail page instead of modal
 type: feat
-status: planned
+status: review
 created: 2026-10-07
 tags:
   - admin
@@ -31,7 +31,7 @@ Open a draft on its own route (/digitization/<slug>) with a smooth transition in
       fade/slide for the rest; respect prefers-reduced-motion. Scroll
       position of the drafts list restored on back.
       run: 5m52s · 74 in · 24.6k out · sonnet-5 · sess:6f7d8b40-ff56-4255-9a48-d6f8dcd53d76
-- [ ] Phase 3 — Review findings batch (2026-10-08 Chrome pass)
+- [x] Phase 3 — Review findings batch (2026-10-08 Chrome pass)
       Fix the stray empty box overlapping the password input on the
       login page; constrain «Отримати метадані з Discogs повторно» to
       content width like the other secondary actions; investigate the
@@ -39,3 +39,4 @@ Open a draft on its own route (/digitization/<slug>) with a smooth transition in
       project to the wave host's TLS WS endpoint (needs nginx/caddy wss
       termination for port 6971 — infra step on the server) or hide the
       indicator when no socket URL is configured.
+      run: 6m14s · 122 in · 21.7k out · sonnet-5 · sess:6f7d8b40-ff56-4255-9a48-d6f8dcd53d76

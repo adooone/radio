@@ -5,6 +5,7 @@ import { Input } from '@dendelion/mojo-ui';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { EyeIcon, EyeOffIcon } from './icons';
 
 export const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -80,9 +81,10 @@ export const LoginPage = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
                 className="text-amber-400/60 hover:text-amber-400 transition-colors"
               >
-                {showPassword ? '👁️' : '👁️‍🗨️'}
+                {showPassword ? <EyeOffIcon /> : <EyeIcon />}
               </button>
             }
           />
