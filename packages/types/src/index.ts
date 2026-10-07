@@ -352,6 +352,8 @@ export interface DigitizationDraft {
   hasCover: boolean;
   sides: string[];
   trackFiles: string[];
+  /** Byte sizes of every non-empty wav in the folder, keyed by filename. */
+  fileSizes: Record<string, number>;
   encodedCount: number;
   stage: DigitizationStage;
   metadata?: AlbumDataJson;

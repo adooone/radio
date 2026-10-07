@@ -83,23 +83,28 @@ export function findDraftCover(folderPath: string): string | undefined {
   return undefined;
 }
 
-function listNonEmptyWavs(folderPath: string): string[] {
+function listNonEmptyWavs(folderPath: string): Record<string, number> {
   let entries: string[];
   try {
     entries = readdirSync(folderPath);
   } catch {
-    return [];
+    return {};
   }
-  return entries
-    .filter((entry) => entry.toLowerCase().endsWith('.wav'))
-    .filter((entry) => {
-      try {
-        return statSync(join(folderPath, entry)).size > 0;
-      } catch {
-        return false;
+  const sizes: Record<string, number> = {};
+  for (const entry of entries.sort()) {
+    if (!entry.toLowerCase().endsWith('.wav')) {
+      continue;
+    }
+    try {
+      const size = statSync(join(folderPath, entry)).size;
+      if (size > 0) {
+        sizes[entry] = size;
       }
-    })
-    .sort();
+    } catch {
+      // unreadable entries count as absent
+    }
+  }
+  return sizes;
 }
 
 function countEncodedTracks(mediaRootPath: string, slug: string): number {
@@ -146,7 +151,8 @@ function buildDraft(
   const folderPath = join(inboxPath, slug);
   const { artistSlug, albumSlug } = splitFolderSlug(slug);
   const metadata = readMetadata(folderPath);
-  const wavs = listNonEmptyWavs(folderPath);
+  const fileSizes = listNonEmptyWavs(folderPath);
+  const wavs = Object.keys(fileSizes);
   const sides = wavs.filter((file) => file.startsWith('side-'));
   const trackFiles = wavs.filter((file) => !file.startsWith('side-'));
   const encodedCount = countEncodedTracks(mediaRootPath, slug);
@@ -167,6 +173,7 @@ function buildDraft(
     hasCover: findDraftCover(folderPath) !== undefined,
     sides,
     trackFiles,
+    fileSizes,
     encodedCount,
     stage: deriveStage(
       sides,
