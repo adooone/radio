@@ -1,14 +1,21 @@
 import { useDraftCover } from '@/services/api';
 import clsx from 'clsx';
+import { motion } from 'framer-motion';
 import { useEffect, useMemo } from 'react';
 
 type DraftCoverProps = {
   slug: string;
   hasCover: boolean;
   title: string;
+  layoutId?: string;
 };
 
-export const DraftCover = ({ slug, hasCover, title }: DraftCoverProps) => {
+export const DraftCover = ({
+  slug,
+  hasCover,
+  title,
+  layoutId,
+}: DraftCoverProps) => {
   const { data: coverBlob } = useDraftCover(slug, hasCover);
 
   const blobUrl = useMemo(
@@ -23,7 +30,7 @@ export const DraftCover = ({ slug, hasCover, title }: DraftCoverProps) => {
   }, [blobUrl]);
 
   return (
-    <div className={clsx(styles.frame)}>
+    <motion.div layoutId={layoutId} className={clsx(styles.frame)}>
       {blobUrl ? (
         <img src={blobUrl} alt={title} className={clsx(styles.image)} />
       ) : (
@@ -46,7 +53,7 @@ export const DraftCover = ({ slug, hasCover, title }: DraftCoverProps) => {
           </svg>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

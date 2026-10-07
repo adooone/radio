@@ -15,6 +15,7 @@ export const DraftCard = ({ draft, onClick }: DraftCardProps) => {
         slug={draft.slug}
         hasCover={draft.hasCover}
         title={draft.title}
+        layoutId={`draft-cover-${draft.slug}`}
       />
 
       <div className={clsx(styles.body)}>

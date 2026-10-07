@@ -25,11 +25,12 @@ Open a draft on its own route (/digitization/<slug>) with a smooth transition in
       Then remove the Modal path entirely (keep MetadataModal and other
       inner dialogs).
       run: 16m1s · 42 in · 4.2k out · sonnet-5 · sess:6f7d8b40-ff56-4255-9a48-d6f8dcd53d76
-- [ ] Phase 2 — Smooth transition
+- [x] Phase 2 — Smooth transition
       Animate card → page with the motion/framer-motion dep already in
       the app: shared layoutId on the card cover and the page cover,
       fade/slide for the rest; respect prefers-reduced-motion. Scroll
       position of the drafts list restored on back.
+      run: 5m52s · 74 in · 24.6k out · sonnet-5 · sess:6f7d8b40-ff56-4255-9a48-d6f8dcd53d76
 - [ ] Phase 3 — Review findings batch (2026-10-08 Chrome pass)
       Fix the stray empty box overlapping the password input on the
       login page; constrain «Отримати метадані з Discogs повторно» to

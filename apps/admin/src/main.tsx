@@ -1,5 +1,6 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider } from '@tanstack/react-router';
+import { MotionConfig } from 'framer-motion';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { AuthGuard } from './components/auth/auth-guard';
@@ -24,10 +25,12 @@ createRoot(rootElement).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthGuard>
-        <RouterProvider router={router} />
-        <NotificationContainer />
-        <GlobalLoadingIndicator />
-        <ConnectionStatus />
+        <MotionConfig reducedMotion="user">
+          <RouterProvider router={router} />
+          <NotificationContainer />
+          <GlobalLoadingIndicator />
+          <ConnectionStatus />
+        </MotionConfig>
       </AuthGuard>
     </QueryClientProvider>
   </StrictMode>,

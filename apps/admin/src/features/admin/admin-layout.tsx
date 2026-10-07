@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from '@tanstack/react-router';
 import clsx from 'clsx';
+import { LayoutGroup } from 'framer-motion';
 import type React from 'react';
 import { BottomNavigation } from './components';
 
@@ -13,8 +14,13 @@ export const AdminLayout: React.FC = () => {
       <div className={clsx(styles.dimOverlay)} />
       <div className={clsx(styles.gradientOverlay)} />
 
-      <div className={clsx(styles.content)}>
-        <Outlet />
+      <div
+        className={clsx(styles.content)}
+        data-scroll-restoration-id="admin-content"
+      >
+        <LayoutGroup>
+          <Outlet />
+        </LayoutGroup>
       </div>
 
       <BottomNavigation currentRoute={currentRoute} />
