@@ -1,16 +1,12 @@
 import { useDigitizationDrafts } from '@/services/api';
 import { Button, PageLayout } from '@dendelion/mojo-ui';
+import { useNavigate } from '@tanstack/react-router';
 import clsx from 'clsx';
 import { useState } from 'react';
-import {
-  CreateDraftModal,
-  DraftDetailModal,
-  DraftList,
-  RadioFolderPanel,
-} from './components';
+import { CreateDraftModal, DraftList, RadioFolderPanel } from './components';
 
 export const DigitizationPage = () => {
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const navigate = useNavigate();
   const [isCreating, setIsCreating] = useState(false);
   const {
     data: drafts,
@@ -58,7 +54,9 @@ export const DigitizationPage = () => {
             <DraftList
               drafts={drafts ?? []}
               isLoading={isLoading}
-              onSelect={setSelectedSlug}
+              onSelect={(slug) =>
+                navigate({ to: '/digitization/$slug', params: { slug } })
+              }
             />
           </div>
           <aside className={clsx(styles.sidebar)}>
@@ -66,10 +64,6 @@ export const DigitizationPage = () => {
           </aside>
         </div>
       )}
-      <DraftDetailModal
-        slug={selectedSlug}
-        onClose={() => setSelectedSlug(null)}
-      />
       {isCreating && <CreateDraftModal onClose={() => setIsCreating(false)} />}
     </PageLayout>
   );

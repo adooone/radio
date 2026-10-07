@@ -1,6 +1,7 @@
 import { createRouter } from '@tanstack/react-router';
 import { collectionRoute } from './routes/collection';
 import { digitizationRoute } from './routes/digitization';
+import { digitizationDetailRoute } from './routes/digitization-detail';
 import { indexRoute } from './routes/index';
 import { Root } from './routes/root';
 import { streamControlRoute } from './routes/stream-control';
@@ -13,7 +14,9 @@ const router = createRouter({
     userManagementRoute,
     streamControlRoute,
     digitizationRoute,
+    digitizationDetailRoute,
   ]),
+  scrollRestoration: true,
 });
 
 export default router;

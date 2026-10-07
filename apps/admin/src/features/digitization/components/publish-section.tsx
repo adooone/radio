@@ -11,9 +11,10 @@ import { getErrorMessage } from './split-review/split-review-utils';
 
 type PublishSectionProps = {
   slug: string;
+  onPublished?: () => void;
 };
 
-export const PublishSection = ({ slug }: PublishSectionProps) => {
+export const PublishSection = ({ slug, onPublished }: PublishSectionProps) => {
   const queryClient = useQueryClient();
   const [jobId, setJobId] = useState<string | null>(null);
   const publishDraft = usePublishDraft();
@@ -25,8 +26,9 @@ export const PublishSection = ({ slug }: PublishSectionProps) => {
         queryKey: digitizationKeys.detail(slug),
       });
       queryClient.invalidateQueries({ queryKey: digitizationKeys.drafts() });
+      onPublished?.();
     }
-  }, [job?.status, queryClient, slug]);
+  }, [job?.status, queryClient, slug, onPublished]);
 
   const handlePublish = async () => {
     try {

@@ -4,6 +4,7 @@ title: Draft detail page instead of modal
 type: feat
 status: review
 created: 2026-10-07
+updated: 2026-10-07
 tags:
   - admin
   - digitization
@@ -40,3 +41,4 @@ Open a draft on its own route (/digitization/<slug>) with a smooth transition in
       termination for port 6971 — infra step on the server) or hide the
       indicator when no socket URL is configured.
       run: 6m14s · 122 in · 21.7k out · sonnet-5 · sess:6f7d8b40-ff56-4255-9a48-d6f8dcd53d76
+- [x] [manual] Replace draft detail modal with a routed page

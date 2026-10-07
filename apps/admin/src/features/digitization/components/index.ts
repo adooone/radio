@@ -2,7 +2,7 @@ export * from './cleanup-section';
 export * from './create-draft-modal';
 export * from './draft-card';
 export * from './draft-cover';
-export * from './draft-detail-modal';
+export * from './draft-detail';
 export * from './draft-list';
 export * from './draft-list-skeleton';
 export * from './draft-stage-badge';
