@@ -2,7 +2,7 @@
 id: IDEA-5
 title: In-app upload of side recordings
 type: feat
-status: review
+status: done
 created: 2026-10-06
 updated: 2026-10-07
 tags:
@@ -11,6 +11,7 @@ tags:
   - digitization
   - upload
   - pwa
+order: 1
 ---
 
 Remove the last terminal step from the digitization flow: instead of rsyncing side WAVs into /var/www/p-sound-inbox, the admin (opened as an installed PWA on the Mac) uploads them itself. The user records and exports sides in Logic Pro, then drags the record folder onto the Оцифровка page — or picks it via a remembered folder handle — and the files stream to the server inbox with progress, pause/resume and retry. Builds directly on IDEA-2: once the WAVs land in the inbox, the existing draft pipeline (metadata, split, encode, publish) takes over unchanged.
