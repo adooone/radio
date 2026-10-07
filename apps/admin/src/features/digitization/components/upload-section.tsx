@@ -1,7 +1,8 @@
-import { Button, ProgressBar } from '@dendelion/mojo-ui';
+import { Button, IconButton, ProgressBar, Tooltip } from '@dendelion/mojo-ui';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
 import { collectDroppedFiles } from './collect-dropped-files';
+import { PauseIcon, PlayIcon, RefreshIcon } from './radio-folder/icons';
 import { useBeforeUnloadWhileUploading } from './use-before-unload-while-uploading';
 import { type UploadTask, useUploadManager } from './use-upload-manager';
 
@@ -90,6 +91,7 @@ type UploadTaskListProps = {
   onPause: (taskId: string) => void;
   onResume: (taskId: string) => void;
   onRetry: (taskId: string) => void;
+  compact?: boolean;
 };
 
 export const UploadTaskList = ({
@@ -97,12 +99,14 @@ export const UploadTaskList = ({
   onPause,
   onResume,
   onRetry,
+  compact,
 }: UploadTaskListProps) => (
   <ul className={clsx(styles.taskList)}>
     {tasks.map((task) => (
       <UploadTaskRow
         key={task.id}
         task={task}
+        compact={compact}
         onPause={() => onPause(task.id)}
         onResume={() => onResume(task.id)}
         onRetry={() => onRetry(task.id)}
@@ -116,6 +120,7 @@ type UploadTaskRowProps = {
   onPause: () => void;
   onResume: () => void;
   onRetry: () => void;
+  compact?: boolean;
 };
 
 const UploadTaskRow = ({
@@ -123,6 +128,7 @@ const UploadTaskRow = ({
   onPause,
   onResume,
   onRetry,
+  compact,
 }: UploadTaskRowProps) => {
   const variant =
     task.status === 'error'
@@ -130,6 +136,61 @@ const UploadTaskRow = ({
       : task.status === 'done'
         ? 'green'
         : 'yellow';
+
+  if (compact) {
+    return (
+      <li className={clsx(styles.taskRowCompact)}>
+        <p className={clsx(styles.taskFilenameCompact)}>{task.filename}</p>
+        <ProgressBar
+          value={task.uploadedBytes}
+          max={task.size}
+          variant={variant}
+          size="small"
+          showLabel={false}
+          className={clsx(styles.progressCompact)}
+        />
+        {task.status === 'uploading' && (
+          <Tooltip content="Пауза">
+            <IconButton
+              type="button"
+              variant="gray"
+              size="small"
+              aria-label="Пауза"
+              onClick={onPause}
+            >
+              <PauseIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+        {task.status === 'paused' && (
+          <Tooltip content="Продовжити">
+            <IconButton
+              type="button"
+              variant="gray"
+              size="small"
+              aria-label="Продовжити"
+              onClick={onResume}
+            >
+              <PlayIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+        {task.status === 'error' && (
+          <Tooltip content={task.error ?? 'Повторити'}>
+            <IconButton
+              type="button"
+              variant="gray"
+              size="small"
+              aria-label="Повторити"
+              onClick={onRetry}
+            >
+              <RefreshIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+      </li>
+    );
+  }
 
   return (
     <li className={clsx(styles.taskRow)}>
@@ -188,4 +249,7 @@ const styles = {
   taskList: ['flex flex-col gap-3'],
   taskRow: ['flex flex-col gap-1'],
   taskActions: ['flex justify-end gap-2'],
+  taskRowCompact: ['flex items-center gap-2'],
+  taskFilenameCompact: ['text-xs text-gray-400 truncate max-w-[6rem]'],
+  progressCompact: ['flex-1'],
 } as const;

@@ -1,18 +1,21 @@
 import { useCreateDraft } from '@/services/api';
-import { Button } from '@dendelion/mojo-ui';
+import { Badge, IconButton, Tooltip } from '@dendelion/mojo-ui';
+import type { DigitizationDraft } from '@radio/types';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { getErrorMessage } from '../split-review/split-review-utils';
 import { UploadTaskList } from '../upload-section';
 import { useBeforeUnloadWhileUploading } from '../use-before-unload-while-uploading';
 import { useUploadManager } from '../use-upload-manager';
+import { UploadIcon } from './icons';
 import type { RadioFolder } from './scan-radio-folder';
 
 type RadioFolderCardProps = {
   folder: RadioFolder;
+  draft?: DigitizationDraft;
 };
 
-export const RadioFolderCard = ({ folder }: RadioFolderCardProps) => {
+export const RadioFolderCard = ({ folder, draft }: RadioFolderCardProps) => {
   const [started, setStarted] = useState(false);
   const [createError, setCreateError] = useState<string | null>(null);
   const createDraft = useCreateDraft();
@@ -21,13 +24,17 @@ export const RadioFolderCard = ({ folder }: RadioFolderCardProps) => {
 
   useBeforeUnloadWhileUploading(isUploading);
 
+  const missingEntries = draft
+    ? folder.files.filter((entry) => !draft.sides.includes(entry.name))
+    : folder.files;
+
   const handleUpload = async () => {
     setStarted(true);
     setCreateError(null);
     try {
-      await createDraft.mutateAsync({ slug: folder.slug });
+      if (!draft) await createDraft.mutateAsync({ slug: folder.slug });
       const files = await Promise.all(
-        folder.files.map((entry) => entry.handle.getFile()),
+        missingEntries.map((entry) => entry.handle.getFile()),
       );
       addFiles(files);
     } catch (error) {
@@ -36,6 +43,10 @@ export const RadioFolderCard = ({ folder }: RadioFolderCardProps) => {
     }
   };
 
+  const uploadLabel = draft
+    ? `Додати ${missingEntries.length} ${pluralizeFiles(missingEntries.length)}`
+    : 'Завантажити';
+
   return (
     <li className={clsx(styles.card)}>
       <div className={clsx(styles.row)}>
@@ -43,14 +54,21 @@ export const RadioFolderCard = ({ folder }: RadioFolderCardProps) => {
         <p className={clsx(styles.count)}>
           {folder.files.length} {pluralizeFiles(folder.files.length)}
         </p>
-        <Button
-          type="button"
-          variant="dark"
-          size="small"
-          title={started ? 'Завантажується...' : 'Завантажити'}
-          disabled={started || createDraft.isPending}
-          onClick={handleUpload}
-        />
+        {draft && <Badge variant="default">вже у драфтах</Badge>}
+        {missingEntries.length > 0 && (
+          <Tooltip content={started ? 'Завантажується...' : uploadLabel}>
+            <IconButton
+              type="button"
+              variant="dark"
+              size="small"
+              aria-label={uploadLabel}
+              disabled={started || createDraft.isPending}
+              onClick={handleUpload}
+            >
+              <UploadIcon />
+            </IconButton>
+          </Tooltip>
+        )}
       </div>
       {createError && <p className={clsx(styles.error)}>{createError}</p>}
       {tasks.length > 0 && (
@@ -59,6 +77,7 @@ export const RadioFolderCard = ({ folder }: RadioFolderCardProps) => {
           onPause={pause}
           onResume={resume}
           onRetry={retry}
+          compact
         />
       )}
     </li>

@@ -2,7 +2,7 @@
 id: IDEA-6
 title: "Digitization page layout: drafts first"
 type: feat
-status: in-progress
+status: review
 created: 2026-10-07
 tags:
   - admin
@@ -22,7 +22,7 @@ The Оцифровка page is dominated by the Тека Radio panel: the ingest
       sidebar slot shows a short drop-zone/rsync hint instead of
       disappearing. Keep «Новий запис»/«Оновити» in the page header.
       run: 20m2s · 78 in · 8.8k out · sonnet-5 · sess:af423905-f66a-47a6-937a-36055d44ec7b
-- [ ] Phase 2 — Compact folder panel + draft-aware folder rows
+- [x] Phase 2 — Compact folder panel + draft-aware folder rows
       Slim RadioFolderPanel for the sidebar: the three wide header buttons
       become icon buttons with tooltips; folder rows show slug + file count
       with a small upload action; active uploads render as slim progress
@@ -30,6 +30,7 @@ The Оцифровка page is dominated by the Тека Radio panel: the ingest
       («вже у драфтах») instead of a fresh «Завантажити» — upload from
       there only offers missing sides (goes through the existing
       add-sides-to-draft path).
+      run: 5m29s · 112 in · 25.8k out · sonnet-5 · sess:af423905-f66a-47a6-937a-36055d44ec7b
 - [x] Phase 3 — Draft detail: show the uploaded files
       In draft-detail-modal's sidebar, replace the bare «N сторін · M
       треків» counter with an explicit file list: each side-*.wav (and cut
