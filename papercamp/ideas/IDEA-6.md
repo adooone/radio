@@ -39,3 +39,4 @@ The Оцифровка page is dominated by the Тека Radio panel: the ingest
       already exposes sides/trackFiles; add per-file sizes to the draft
       payload if absent. Hint line under the list naming the next step for
       the current stage («Наступний крок: отримати метадані»).
+      run: 34s · 18 in · 1.9k out · sonnet-5 · sess:f0ecb993-46d0-4d4c-a398-e3bdbccbdcbb
