@@ -2,13 +2,15 @@
 id: IDEA-6
 title: "Digitization page layout: drafts first"
 type: feat
-status: review
+status: done
 created: 2026-10-07
+updated: 2026-10-07
 tags:
   - admin
   - digitization
   - ux
   - layout
+order: 1
 ---
 
 The Оцифровка page is dominated by the Тека Radio panel: the ingest tool takes the whole first screen while the drafts — the actual workspace — sit below the fold, and a local folder that is already a draft (e.g. sgt-pepper mid-upload) appears in both lists with no visual distinction. Reorganise to list + sidebar: drafts become the main area, Тека Radio shrinks to a compact ~320px sidebar (icon buttons, slim upload progress rows), and folder rows that match an existing draft show «вже у драфтах» instead of offering a fresh upload. Also close the visibility gap found with Sgt Pepper: uploaded side files are only visible as the «N сторін» counter — the draft detail must list the actual side-*.wav files with sizes so an upload is verifiable at a glance.
