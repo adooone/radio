@@ -17,7 +17,17 @@ export const RadioFolderPanel = () => {
     refresh,
   } = useRadioFolder();
 
-  if (!supported) return null;
+  if (!supported) {
+    return (
+      <div className={clsx(styles.panel)}>
+        <h2 className={clsx(styles.title)}>Тека Radio</h2>
+        <p className={clsx(styles.hint)}>
+          Цей браузер не підтримує доступ до файлової системи. Перетягніть файли
+          у драфт вручну або скопіюйте їх через rsync.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className={clsx(styles.panel)}>
@@ -84,7 +94,7 @@ export const RadioFolderPanel = () => {
 };
 
 const styles = {
-  panel: ['flex flex-col gap-3 p-4 mb-4 rounded-lg border border-gray-700'],
+  panel: ['flex flex-col gap-3 p-4 rounded-lg border border-gray-700'],
   header: ['flex items-start justify-between gap-3 flex-wrap'],
   title: ['font-medium text-gray-200'],
   path: ['text-xs text-gray-500 truncate max-w-[16rem]'],

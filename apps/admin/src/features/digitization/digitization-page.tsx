@@ -53,14 +53,18 @@ export const DigitizationPage = () => {
           />
         </div>
       ) : (
-        <>
-          <RadioFolderPanel />
-          <DraftList
-            drafts={drafts ?? []}
-            isLoading={isLoading}
-            onSelect={setSelectedSlug}
-          />
-        </>
+        <div className={clsx(styles.layout)}>
+          <div className={clsx(styles.main)}>
+            <DraftList
+              drafts={drafts ?? []}
+              isLoading={isLoading}
+              onSelect={setSelectedSlug}
+            />
+          </div>
+          <aside className={clsx(styles.sidebar)}>
+            <RadioFolderPanel />
+          </aside>
+        </div>
       )}
       <DraftDetailModal
         slug={selectedSlug}
@@ -73,6 +77,9 @@ export const DigitizationPage = () => {
 
 const styles = {
   headerActions: ['flex items-center gap-2'],
+  layout: ['flex flex-col lg:flex-row gap-6 items-start'],
+  main: ['min-w-0 flex-1'],
+  sidebar: ['w-full lg:w-80 lg:shrink-0'],
   error: [
     'flex flex-col items-center gap-3 p-8',
     'text-red-400',

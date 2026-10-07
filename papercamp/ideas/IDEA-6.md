@@ -2,7 +2,7 @@
 id: IDEA-6
 title: "Digitization page layout: drafts first"
 type: feat
-status: planned
+status: in-progress
 tags: [admin, digitization, ux, layout]
 created: 2026-10-07
 ---
@@ -11,7 +11,7 @@ The Оцифровка page is dominated by the Тека Radio panel: the ingest
 
 ### Phases
 
-- [ ] Phase 1 — Page layout: drafts main, Тека Radio sidebar
+- [x] Phase 1 — Page layout: drafts main, Тека Radio sidebar
       Restructure digitization-page.tsx into a two-column grid: main area
       (flex-1) = DraftList (cards fit 3-4 across), right sidebar (~320px) =
       RadioFolderPanel. On narrow screens the sidebar stacks BELOW the
@@ -28,7 +28,7 @@ The Оцифровка page is dominated by the Тека Radio panel: the ingest
       there only offers missing sides (goes through the existing
       add-sides-to-draft path).
 
-- [ ] Phase 3 — Draft detail: show the uploaded files
+- [x] Phase 3 — Draft detail: show the uploaded files
       In draft-detail-modal's sidebar, replace the bare «N сторін · M
       треків» counter with an explicit file list: each side-*.wav (and cut
       track files once present) with human-readable size, so a finished

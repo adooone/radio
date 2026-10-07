@@ -36,9 +36,6 @@ export const DraftList = ({ drafts, isLoading, onSelect }: DraftListProps) => {
 };
 
 const styles = {
-  grid: [
-    'grid gap-4',
-    'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5',
-  ],
+  grid: ['grid gap-4', 'grid-cols-2 sm:grid-cols-3 xl:grid-cols-4'],
   empty: ['text-center py-12 text-gray-400'],
 } as const;
