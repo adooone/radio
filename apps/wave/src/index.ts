@@ -51,6 +51,9 @@ app.route('/api/digitization', digitizationRoutes);
 Bun.serve({
   fetch: app.fetch,
   port: env.port,
+  // Bun defaults to 10 s, which kills slow requests mid-transfer — an 8 MB
+  // upload chunk over a home uplink routinely needs longer. 255 is Bun's max.
+  idleTimeout: 255,
 });
 
 startWsServer(env.socketPort);

@@ -17,7 +17,7 @@ type ApiResponse<T> = {
 };
 
 const SPLIT_TIMEOUT_MS = 180000;
-const CHUNK_UPLOAD_TIMEOUT_MS = 60000;
+const CHUNK_UPLOAD_TIMEOUT_MS = 180000;
 // Complete assembles the whole file server-side (up to 2 GB) — far beyond
 // the client's default 10 s timeout.
 const COMPLETE_UPLOAD_TIMEOUT_MS = 600000;
