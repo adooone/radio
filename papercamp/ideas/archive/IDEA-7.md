@@ -2,7 +2,7 @@
 id: IDEA-7
 title: Draft detail page instead of modal
 type: feat
-status: review
+status: done
 created: 2026-10-07
 updated: 2026-10-07
 tags:
@@ -10,6 +10,7 @@ tags:
   - digitization
   - ux
   - routing
+order: 1
 ---
 
 Open a draft on its own route (/digitization/<slug>) with a smooth transition instead of the current Modal — the user explicitly prefers a page, and the live Chrome review (2026-10-08, Sgt Pepper draft) showed the modal is structurally cramped: the bottom navigation island overlaps the modal body, half-hiding the Лейбл field mid-form and burying the apply button of the split flow («Порізати попри попередження») at the bottom. A page gets deep links, browser back, natural scrolling with proper bottom padding like every other page, and room for the waveform. Fold in the remaining visual findings from the same review: a stray empty box floats over the password field on the login page; «Отримати метадані з Discogs повторно» renders as a huge full-width button; and the admin-wide «Offline» pill is real — on pan.adoo.one the socket URL defaults to wss://pan.adoo.one:6871 (the Vercel host, no WS there), so VITE_SOCKET_URL must point at the wave host with a TLS-terminated WS endpoint, or the indicator stays red forever.
