@@ -1,7 +1,7 @@
 import { useLogin } from '@/services/api/hooks/use-auth';
 import { useAuthStore } from '@/stores/auth-store';
 import { sharedStyles } from '@/styles/shared-styles';
-import { Input } from '@dendelion/mojo-ui';
+import { Input } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
@@ -67,27 +67,28 @@ export const LoginPage = () => {
             required
           />
 
-          <Input
-            id="password"
-            label="Password"
-            type={showPassword ? 'text' : 'password'}
-            value={password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setPassword(e.target.value)
-            }
-            placeholder="Enter your password"
-            required
-            rightElement={
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
-                className="text-amber-400/60 hover:text-amber-400 transition-colors"
-              >
-                {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-              </button>
-            }
-          />
+          <div className="relative">
+            <Input
+              id="password"
+              label="Password"
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(e.target.value)
+              }
+              placeholder="Enter your password"
+              required
+              className="relative"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+              className="absolute right-3 top-1/2 translate-y-[-50%] text-amber-400/60 hover:text-amber-400 transition-colors"
+            >
+              {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+            </button>
+          </div>
 
           {login.error && (
             <div className="bg-red-900/50 border border-red-500/50 text-red-300 px-4 py-3 rounded-lg backdrop-blur-sm">

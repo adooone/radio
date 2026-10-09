@@ -1,14 +1,12 @@
-import { AlbumSearch } from '@/features/collection/components/filters/album-search';
-import { useCollectionStore } from '@/features/collection/store/collection-store';
 import {
   ArrowDownIcon,
   ArrowUpIcon,
   FilterIcon,
-  IconButton,
-  Popup,
-  PopupItem,
   SortIcon,
-} from '@dendelion/mojo-ui';
+} from '@/components/icons';
+import { AlbumSearch } from '@/features/collection/components/filters/album-search';
+import { useCollectionStore } from '@/features/collection/store/collection-store';
+import { LampButton, LampIconButton, Menu } from '@dendelion/func-ui';
 
 export const AlbumListHeader = () => {
   const {
@@ -50,48 +48,48 @@ export const AlbumListHeader = () => {
       <div className="flex-1" />
 
       <div className="flex items-center gap-2">
-        <Popup
-          label={currentSortLabel}
-          icon={<SortIcon size={14} />}
-          size="small"
-          variant="yellow"
-          rounded="half"
-          align="right"
-          buttonClassName="max-w-[200px]"
-        >
-          {sortOptions.map((option) => (
-            <PopupItem
-              key={option.value}
-              selected={sortBy === option.value}
-              onClick={() => setSortBy(option.value)}
+        <Menu
+          trigger={
+            <LampButton
+              tone="yellow"
+              size="sm"
+              rounded="half"
+              icon={<SortIcon size={14} />}
+              className="max-w-[200px]"
             >
-              {option.label}
-            </PopupItem>
-          ))}
-        </Popup>
+              {currentSortLabel}
+            </LampButton>
+          }
+          align="end"
+          items={sortOptions.map((option) => ({
+            label: option.label,
+            selected: sortBy === option.value,
+            onSelect: () => setSortBy(option.value),
+          }))}
+        />
 
-        <IconButton
-          variant="dark"
-          size="small"
+        <LampIconButton
+          tone="dark"
+          size="sm"
           onClick={toggleSortOrder}
-          aria-label={sortOrder === 'asc' ? 'За зростанням' : 'За спаданням'}
-        >
-          {sortOrder === 'asc' ? (
-            <ArrowUpIcon size={16} />
-          ) : (
-            <ArrowDownIcon size={16} />
-          )}
-        </IconButton>
+          label={sortOrder === 'asc' ? 'За зростанням' : 'За спаданням'}
+          icon={
+            sortOrder === 'asc' ? (
+              <ArrowUpIcon size={16} />
+            ) : (
+              <ArrowDownIcon size={16} />
+            )
+          }
+        />
 
-        <IconButton
-          variant={hasActiveFilters() && filtersEnabled ? 'yellow' : 'dark'}
-          size="small"
+        <LampIconButton
+          tone={hasActiveFilters() && filtersEnabled ? 'yellow' : 'dark'}
+          size="sm"
           onClick={toggleFiltersEnabled}
           disabled={!hasActiveFilters()}
-          aria-label={filtersEnabled ? 'Вимкнути фільтри' : 'Увімкнути фільтри'}
-        >
-          <FilterIcon size={16} />
-        </IconButton>
+          label={filtersEnabled ? 'Вимкнути фільтри' : 'Увімкнути фільтри'}
+          icon={<FilterIcon size={16} />}
+        />
 
         <div className="w-64">
           <AlbumSearch value={searchQuery} onChange={setSearchQuery} />

@@ -1,4 +1,5 @@
-import { Button, PageLayout } from '@dendelion/mojo-ui';
+import { PageLayout } from '@/components';
+import { LampButton } from '@dendelion/func-ui';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import { DraftDetail } from './components';
 
@@ -11,12 +12,9 @@ export const DraftDetailPage = () => {
     <PageLayout
       title="Драфт"
       headerRight={
-        <Button
-          variant="gray"
-          size="medium"
-          title="← До списку"
-          onClick={backToList}
-        />
+        <LampButton tone="gray" size="md" onClick={backToList}>
+          ← До списку
+        </LampButton>
       }
     >
       <div className="pb-16">

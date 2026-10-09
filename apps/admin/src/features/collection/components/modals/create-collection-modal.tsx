@@ -1,6 +1,6 @@
 import { useCreateCollection } from '@/services/api';
 import { sharedStyles } from '@/styles/shared-styles';
-import { Checkbox, Input, Modal, Textarea } from '@dendelion/mojo-ui';
+import { Checkbox, Input, Modal, Textarea } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { useState } from 'react';
 
@@ -53,10 +53,10 @@ export const CreateCollectionModal = ({
 
   return (
     <Modal
-      isOpen={isOpen}
+      open={isOpen}
       onClose={handleClose}
       title="Create New Collection"
-      maxWidth="max-w-md"
+      size="md"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
@@ -86,9 +86,7 @@ export const CreateCollectionModal = ({
           id="isPublic"
           label="Make this collection public"
           checked={isPublic}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setIsPublic(e.target.checked)
-          }
+          onChange={(e) => setIsPublic(e.target.checked)}
         />
 
         <div className="flex gap-3 pt-4 justify-center">

@@ -9,7 +9,7 @@ Web-based admin interface for managing the radio streaming platform. Built with 
 - **Routing**: TanStack Router
 - **Server State**: TanStack Query
 - **Client State**: Zustand
-- **Styling**: Tailwind CSS + @radio/mojo-ui components
+- **Styling**: Tailwind CSS + @dendelion/func-ui components
 - **Animations**: Framer Motion
 
 ## Architecture
@@ -99,7 +99,7 @@ VITE_SOCKET_URL=ws://localhost:6871
 
 ## Design System
 
-Uses @radio/mojo-ui for retro-styled components (buttons, panels, modals, etc.) combined with Tailwind CSS utilities and custom fonts:
+Uses @dendelion/func-ui, including its lamp family for retro-styled controls (buttons, switches, meters, etc.), combined with Tailwind CSS utilities and custom fonts:
 
 - **Tiny5** - Display font
 - **Montserrat** - Primary sans-serif

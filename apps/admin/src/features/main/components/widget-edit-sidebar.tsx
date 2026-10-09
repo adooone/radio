@@ -1,4 +1,5 @@
-import { Input, Panel, Popup, PopupItem } from '@dendelion/mojo-ui';
+import { Panel } from '@/components';
+import { Input, LampButton, Menu } from '@dendelion/func-ui';
 import type React from 'react';
 import { useWidgetConfigStore } from '../store/widget-config-store';
 import { WIDGET_COLOR_OPTIONS } from '../utils/widget-colors';
@@ -83,7 +84,7 @@ export const WidgetEditSidebar = ({ isOpen }: WidgetEditSidebarProps) => {
                 type="text"
                 value={widget.title}
                 onChange={handleTitleChange}
-                size="small"
+                size="sm"
               />
 
               <div className="grid grid-cols-2 gap-3">
@@ -94,7 +95,7 @@ export const WidgetEditSidebar = ({ isOpen }: WidgetEditSidebarProps) => {
                   max={160}
                   value={widget.radius ?? 112}
                   onChange={handleRadiusChange}
-                  size="small"
+                  size="sm"
                 />
 
                 <Input
@@ -104,7 +105,7 @@ export const WidgetEditSidebar = ({ isOpen }: WidgetEditSidebarProps) => {
                   max={180}
                   value={widget.position.rotation}
                   onChange={handleRotationChange}
-                  size="small"
+                  size="sm"
                 />
               </div>
 
@@ -115,36 +116,33 @@ export const WidgetEditSidebar = ({ isOpen }: WidgetEditSidebarProps) => {
                 max={360}
                 value={widget.titleRotation ?? 0}
                 onChange={handleTitleRotationChange}
-                size="small"
+                size="sm"
               />
 
               <div>
                 <span className="mb-1 block text-xs uppercase tracking-wide text-paper-calm">
                   Color
                 </span>
-                <Popup
-                  label={selectedColorOption.name}
-                  size="small"
-                  variant="dark"
-                  rounded="half"
-                  align="left"
-                >
-                  <PopupItem
-                    selected={!widget.color}
-                    onClick={() => handleColorChange('')}
-                  >
-                    Default (Sun)
-                  </PopupItem>
-                  {WIDGET_COLOR_OPTIONS.map((option) => (
-                    <PopupItem
-                      key={option.name}
-                      selected={widget.color === option.value}
-                      onClick={() => handleColorChange(option.value)}
-                    >
-                      {option.name}
-                    </PopupItem>
-                  ))}
-                </Popup>
+                <Menu
+                  trigger={
+                    <LampButton tone="dark" size="sm" rounded="half">
+                      {selectedColorOption.name}
+                    </LampButton>
+                  }
+                  align="start"
+                  items={[
+                    {
+                      label: 'Default (Sun)',
+                      selected: !widget.color,
+                      onSelect: () => handleColorChange(''),
+                    },
+                    ...WIDGET_COLOR_OPTIONS.map((option) => ({
+                      label: option.name,
+                      selected: widget.color === option.value,
+                      onSelect: () => handleColorChange(option.value),
+                    })),
+                  ]}
+                />
               </div>
             </div>
           </div>

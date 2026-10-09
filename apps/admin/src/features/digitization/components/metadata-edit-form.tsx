@@ -1,5 +1,10 @@
 import { useUpdateDraftMetadata } from '@/services/api';
-import { Button, IconButton, Input, Textarea } from '@dendelion/mojo-ui';
+import {
+  Input,
+  LampButton,
+  LampIconButton,
+  Textarea,
+} from '@dendelion/func-ui';
 import type { AlbumDataJson, PersonnelItem, TracklistItem } from '@radio/types';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
@@ -321,26 +326,21 @@ export const MetadataEditForm = ({
                 placeholder="3:45"
                 className={clsx(styles.trackDuration)}
               />
-              <IconButton
+              <LampIconButton
                 type="button"
-                variant="red"
-                size="small"
-                aria-label="Видалити трек"
+                tone="red"
+                size="sm"
+                label="Видалити трек"
+                icon={<TrashIcon />}
                 onClick={() => removeTrack(index)}
-              >
-                <TrashIcon />
-              </IconButton>
+              />
             </div>
           ))}
         </div>
         <div className={clsx(styles.addAction)}>
-          <Button
-            type="button"
-            variant="gray"
-            size="small"
-            title="Додати трек"
-            onClick={addTrack}
-          />
+          <LampButton type="button" tone="gray" size="sm" onClick={addTrack}>
+            Додати трек
+          </LampButton>
         </div>
       </section>
 
@@ -366,26 +366,21 @@ export const MetadataEditForm = ({
                 }
                 className={clsx(styles.personRoles)}
               />
-              <IconButton
+              <LampIconButton
                 type="button"
-                variant="red"
-                size="small"
-                aria-label="Видалити учасника"
+                tone="red"
+                size="sm"
+                label="Видалити учасника"
+                icon={<TrashIcon />}
                 onClick={() => removePerson(index)}
-              >
-                <TrashIcon />
-              </IconButton>
+              />
             </div>
           ))}
         </div>
         <div className={clsx(styles.addAction)}>
-          <Button
-            type="button"
-            variant="gray"
-            size="small"
-            title="Додати учасника"
-            onClick={addPerson}
-          />
+          <LampButton type="button" tone="gray" size="sm" onClick={addPerson}>
+            Додати учасника
+          </LampButton>
         </div>
       </section>
 
@@ -446,13 +441,14 @@ export const MetadataEditForm = ({
         {isDirty && !updateMetadata.isPending && (
           <p className={clsx(styles.dirtyHint)}>Є незбережені зміни</p>
         )}
-        <Button
+        <LampButton
           type="submit"
-          variant="dark"
-          size="medium"
-          title={updateMetadata.isPending ? 'Збереження...' : 'Зберегти'}
+          tone="dark"
+          size="md"
           disabled={updateMetadata.isPending || !isDirty}
-        />
+        >
+          {updateMetadata.isPending ? 'Збереження...' : 'Зберегти'}
+        </LampButton>
       </div>
     </form>
   );

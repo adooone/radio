@@ -1,4 +1,4 @@
-import { Button } from '@dendelion/mojo-ui';
+import { LampButton } from '@dendelion/func-ui';
 
 type CollectionActionsProps = {
   activeTab: 'playlists' | 'albums';
@@ -18,23 +18,25 @@ export const CollectionActions = ({
   return (
     <div className="w-full flex flex-col gap-2">
       {activeTab === 'albums' && onSyncMedia && (
-        <Button
-          variant="green"
-          size="medium"
-          title={isSyncing ? 'Оновлення...' : 'ОНОВИТИ'}
+        <LampButton
+          tone="green"
+          size="md"
           onClick={onSyncMedia}
           disabled={isSyncing}
           className="w-full"
-        />
+        >
+          {isSyncing ? 'Оновлення...' : 'ОНОВИТИ'}
+        </LampButton>
       )}
       {activeTab === 'playlists' && onCreateCollection ? (
-        <Button
-          variant="green"
-          size="medium"
-          title="Додати плейлист"
+        <LampButton
+          tone="green"
+          size="md"
           onClick={onCreateCollection}
           className="w-full"
-        />
+        >
+          Додати плейлист
+        </LampButton>
       ) : activeTab === 'albums' && onCreateAlbum ? null : null}
     </div>
   );

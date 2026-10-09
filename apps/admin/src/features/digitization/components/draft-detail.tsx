@@ -1,5 +1,5 @@
 import { useDigitizationDraft } from '@/services/api';
-import { Button } from '@dendelion/mojo-ui';
+import { LampButton } from '@dendelion/func-ui';
 import type { DigitizationDraft } from '@radio/types';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
@@ -84,14 +84,15 @@ export const DraftDetail = ({
             {draft.metadata ? (
               <>
                 <MetadataEditForm slug={draft.slug} metadata={draft.metadata} />
-                <Button
+                <LampButton
                   type="button"
-                  variant="gray"
-                  size="small"
-                  title="Отримати метадані з Discogs повторно"
+                  tone="gray"
+                  size="sm"
                   onClick={() => setMetadataModalForce(true)}
                   className="self-start"
-                />
+                >
+                  Отримати метадані з Discogs повторно
+                </LampButton>
                 {draft.sides.length > 0 &&
                   (draft.stage === 'ready-to-encode' ||
                   draft.stage === 'on-air' ? (
@@ -115,13 +116,14 @@ export const DraftDetail = ({
             ) : (
               <div className={clsx(styles.empty)}>
                 <p>У цього драфту ще немає data.json.</p>
-                <Button
+                <LampButton
                   type="button"
-                  variant="dark"
-                  size="medium"
-                  title="Отримати метадані з Discogs"
+                  tone="dark"
+                  size="md"
                   onClick={() => setMetadataModalForce(false)}
-                />
+                >
+                  Отримати метадані з Discogs
+                </LampButton>
               </div>
             )}
           </motion.div>

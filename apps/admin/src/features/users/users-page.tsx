@@ -1,6 +1,7 @@
+import { PageLayout, StatsCard } from '@/components';
 import { useUsers } from '@/services/api/hooks/use-user-management';
-import { Button, PageLayout, StatsCard } from '@dendelion/mojo-ui';
-import { sharedStyles } from '@dendelion/mojo-ui/styles';
+import { sharedStyles } from '@/styles/shared-styles';
+import { LampButton } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { CreateUserModal, UserList } from './components';
@@ -26,14 +27,19 @@ export const UsersPage = () => {
       <div className={clsx(sharedStyles.actionsSection)}>
         <h2 className={clsx(sharedStyles.actionsTitle)}>User Actions</h2>
         <div className={clsx(sharedStyles.actionsGrid)}>
-          <Button
-            variant="green"
-            size="medium"
-            title="Create User"
+          <LampButton
+            tone="green"
+            size="md"
             onClick={() => setShowCreateModal(true)}
-          />
-          <Button variant="yellow" size="medium" title="Export Users" />
-          <Button variant="gray" size="medium" title="User Activity" />
+          >
+            Create User
+          </LampButton>
+          <LampButton tone="yellow" size="md">
+            Export Users
+          </LampButton>
+          <LampButton tone="gray" size="md">
+            User Activity
+          </LampButton>
         </div>
       </div>
 

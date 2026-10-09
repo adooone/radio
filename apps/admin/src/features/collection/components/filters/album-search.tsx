@@ -1,4 +1,4 @@
-import { Input } from '@dendelion/mojo-ui';
+import { Input } from '@dendelion/func-ui';
 import { useEffect, useState } from 'react';
 
 type AlbumSearchProps = {
@@ -31,7 +31,7 @@ export const AlbumSearch = ({ value, onChange }: AlbumSearchProps) => {
       <div className="relative w-full">
         <Input
           type="text"
-          size="small"
+          size="sm"
           value={localValue}
           onChange={(e) => setLocalValue(e.target.value)}
           placeholder="Пошук..."

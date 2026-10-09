@@ -17,7 +17,6 @@ Monorepo for a radio streaming platform featuring live and playlist-based stream
 | Package | Description |
 |---------|-------------|
 | `@radio/types` | Shared TypeScript types (source-only, no build step) |
-| `@radio/mojo-ui` | Retro UI component library (React + SCSS Modules) |
 
 ## Documentation Index
 
@@ -41,9 +40,6 @@ Monorepo for a radio streaming platform featuring live and playlist-based stream
 - [Streaming Setup Guide](docs/streaming-setup.md)
 - [Development Workflows](docs/workflows.md)
 
-### Component Library
-- [Mojo UI](../packages/mojo-ui/README.md) - Retro-styled component library
-
 ## Quick Start
 
 ```bash
@@ -57,7 +53,6 @@ Or individually:
 pnpm wave:dev     # Backend
 pnpm admin:dev    # Admin panel
 pnpm player:dev   # Public player
-pnpm mojo:dev     # Component showcase
 ```
 
 ## Tech Stack
@@ -65,8 +60,8 @@ pnpm mojo:dev     # Component showcase
 - **Runtime**: Bun 1.2.9+, Node.js 22.15+
 - **Backend**: Hono, Drizzle ORM, SQLite, WebSocket
 - **Frontend**: React 18, Vite, TanStack Router & Query
-- **Styling**: Tailwind CSS, SCSS Modules
-- **UI Library**: @radio/mojo-ui
+- **Styling**: Tailwind CSS
+- **UI Library**: @dendelion/func-ui
 - **State**: Zustand (client), React Query (server)
 - **Monorepo**: Turborepo + pnpm workspaces
 - **Linting**: Biome

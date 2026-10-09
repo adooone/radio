@@ -1,5 +1,5 @@
 import { useCleanupDraft } from '@/services/api';
-import { Button } from '@dendelion/mojo-ui';
+import { LampButton } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { getErrorMessage } from './split-review/split-review-utils';
 
@@ -41,22 +41,24 @@ export const CleanupSection = ({
 
   return (
     <div className={clsx(styles.section)}>
-      <Button
+      <LampButton
         type="button"
-        variant="gray"
-        size="small"
-        title="Видалити side-*.wav"
+        tone="gray"
+        size="sm"
         disabled={cleanupDraft.isPending}
         onClick={handleDeleteSides}
-      />
-      <Button
+      >
+        Видалити side-*.wav
+      </LampButton>
+      <LampButton
         type="button"
-        variant="red"
-        size="small"
-        title="Видалити папку інбоксу"
+        tone="red"
+        size="sm"
         disabled={cleanupDraft.isPending}
         onClick={handleDeleteFolder}
-      />
+      >
+        Видалити папку інбоксу
+      </LampButton>
       {cleanupDraft.isError && (
         <p className={clsx(styles.error)}>
           {getErrorMessage(cleanupDraft.error)}

@@ -1,6 +1,6 @@
 import { useCreateUser } from '@/services/api/hooks/use-user-management';
 import { sharedStyles } from '@/styles/shared-styles';
-import { Input, Select } from '@dendelion/mojo-ui';
+import { Input, Select } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
@@ -120,9 +120,7 @@ export const CreateUserModal = ({
                 id="role"
                 label="Role"
                 value={role}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                  setRole(e.target.value)
-                }
+                onChange={(value) => setRole(value)}
                 options={[
                   { value: 'user', label: 'User' },
                   { value: 'admin', label: 'Administrator' },

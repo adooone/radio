@@ -1,4 +1,4 @@
-import { Button } from '@dendelion/mojo-ui';
+import { LampButton } from '@dendelion/func-ui';
 import type { Song } from '@radio/types';
 import { SongList } from './song-list';
 
@@ -17,12 +17,9 @@ export const AlbumSongsSection = ({
     <div className="border-t border-gray-700/50 pt-6">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-200">Songs</h3>
-        <Button
-          variant="yellow"
-          size="small"
-          title="Add Song"
-          onClick={onAddSong}
-        />
+        <LampButton tone="yellow" size="sm" onClick={onAddSong}>
+          Add Song
+        </LampButton>
       </div>
 
       <SongList albumId={albumId} songs={songs || []} />

@@ -26,7 +26,7 @@ pnpm admin:dev
 - TanStack Router (file-based routing)
 - TanStack Query (server state)
 - Zustand (client state)
-- Tailwind CSS + @radio/mojo-ui components
+- Tailwind CSS + @dendelion/func-ui components
 - Framer Motion (animations)
 
 ## Scripts

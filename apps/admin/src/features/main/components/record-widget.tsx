@@ -1,5 +1,5 @@
 import { formatDuration } from '@/utils/format-duration';
-import { CircularProgress } from '@dendelion/mojo-ui';
+import { CircularProgress } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import { SpindleHole } from './spindle-hole';
@@ -72,7 +72,7 @@ export const RecordWidget = ({
         const progressSize = Math.min(radius * 1.07, 120);
         return (
           <CircularProgress
-            percentage={content.percentage}
+            value={content.percentage}
             size={progressSize}
             strokeWidth={6}
             color={accentColor}

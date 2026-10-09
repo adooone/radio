@@ -2,8 +2,8 @@ import {
   useRtmpConfig,
   useUpdateRtmpConfig,
 } from '@/services/api/hooks/use-stream-control';
-import { Button } from '@dendelion/mojo-ui';
-import { sharedStyles } from '@dendelion/mojo-ui/styles';
+import { sharedStyles } from '@/styles/shared-styles';
+import { LampButton } from '@dendelion/func-ui';
 import type { RtmpServerConfig } from '@radio/types';
 import clsx from 'clsx';
 import type React from 'react';
@@ -400,20 +400,22 @@ export const RtmpConfigCard: React.FC = () => {
           {isEditing && (
             <div className="mt-4 pt-3 border-t border-white/10">
               <div className="flex gap-2 justify-center">
-                <Button
-                  variant="green"
-                  size="small"
-                  title="Save"
+                <LampButton
+                  tone="green"
+                  size="sm"
                   onClick={handleSave}
                   disabled={updateConfigMutation.isPending}
-                />
-                <Button
-                  variant="yellow"
-                  size="small"
-                  title="Cancel"
+                >
+                  Save
+                </LampButton>
+                <LampButton
+                  tone="yellow"
+                  size="sm"
                   onClick={handleCancel}
                   disabled={updateConfigMutation.isPending}
-                />
+                >
+                  Cancel
+                </LampButton>
               </div>
             </div>
           )}

@@ -1,5 +1,5 @@
 import { useCreateDraft } from '@/services/api';
-import { Button, Input, Modal } from '@dendelion/mojo-ui';
+import { Input, LampButton, Modal } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { slugify } from './slugify';
@@ -34,7 +34,7 @@ export const CreateDraftModal = ({ onClose }: CreateDraftModalProps) => {
   };
 
   return (
-    <Modal isOpen onClose={onClose} title="Новий запис" maxWidth="max-w-xl">
+    <Modal open onClose={onClose} title="Новий запис" size="md">
       {createdSlug ? (
         <div className={clsx(styles.form)}>
           <p className={clsx(styles.hint)}>
@@ -42,13 +42,9 @@ export const CreateDraftModal = ({ onClose }: CreateDraftModalProps) => {
           </p>
           <UploadSection slug={createdSlug} />
           <div className={clsx(styles.actions)}>
-            <Button
-              type="button"
-              variant="dark"
-              size="medium"
-              title="Готово"
-              onClick={onClose}
-            />
+            <LampButton type="button" tone="dark" size="md" onClick={onClose}>
+              Готово
+            </LampButton>
           </div>
         </div>
       ) : (
@@ -78,22 +74,19 @@ export const CreateDraftModal = ({ onClose }: CreateDraftModalProps) => {
             </p>
           )}
           <div className={clsx(styles.actions)}>
-            <Button
-              type="button"
-              variant="gray"
-              size="medium"
-              title="Скасувати"
-              onClick={onClose}
-            />
-            <Button
+            <LampButton type="button" tone="gray" size="md" onClick={onClose}>
+              Скасувати
+            </LampButton>
+            <LampButton
               type="submit"
-              variant="dark"
-              size="medium"
-              title={createDraft.isPending ? 'Створення...' : 'Створити'}
+              tone="dark"
+              size="md"
               disabled={
                 createDraft.isPending || !artist.trim() || !album.trim()
               }
-            />
+            >
+              {createDraft.isPending ? 'Створення...' : 'Створити'}
+            </LampButton>
           </div>
         </form>
       )}

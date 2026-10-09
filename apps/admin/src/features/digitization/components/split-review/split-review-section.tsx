@@ -1,5 +1,5 @@
 import { useApplySplit, useSplitPlan } from '@/services/api';
-import { Button, Tabs } from '@dendelion/mojo-ui';
+import { LampButton, Tabs } from '@dendelion/func-ui';
 import type { DigitizationSplitApplySide } from '@radio/types';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
@@ -110,7 +110,7 @@ export const SplitReviewSection = ({
     hasTrackFiles;
 
   const tabs = plan.sides.map((side) => ({
-    id: side.side,
+    value: side.side,
     label: sideLetterFromFile(side.side).toUpperCase(),
     content: (
       <SideSplitPanel
@@ -138,7 +138,7 @@ export const SplitReviewSection = ({
         </p>
       )}
 
-      <Tabs tabs={tabs} />
+      <Tabs items={tabs} />
 
       <div className={clsx(styles.confirmRow)}>
         {applySplit.isError && (
@@ -154,20 +154,19 @@ export const SplitReviewSection = ({
             Файли треків вже існують — видаліть їх перед повторним розкроєм.
           </p>
         )}
-        <Button
+        <LampButton
           type="button"
-          variant={hasWarnings ? 'red' : 'dark'}
-          size="medium"
-          title={
-            applySplit.isPending
-              ? 'Розкрій...'
-              : hasWarnings
-                ? 'Розкроїти попри попередження'
-                : 'Розкроїти доріжки'
-          }
+          tone={hasWarnings ? 'red' : 'dark'}
+          size="md"
           disabled={confirmDisabled}
           onClick={handleConfirm}
-        />
+        >
+          {applySplit.isPending
+            ? 'Розкрій...'
+            : hasWarnings
+              ? 'Розкроїти попри попередження'
+              : 'Розкроїти доріжки'}
+        </LampButton>
       </div>
     </div>
   );

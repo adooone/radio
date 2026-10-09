@@ -1,4 +1,4 @@
-import { DataTable, type DataTableColumn } from '@dendelion/mojo-ui';
+import { DataTable, type DataTableColumn } from '@dendelion/func-ui';
 import type { DigitizationTrackPlan } from '@radio/types';
 import { formatSeconds } from './split-review-utils';
 

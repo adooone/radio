@@ -2,7 +2,7 @@ import {
   useDeleteUser,
   useUpdateUser,
 } from '@/services/api/hooks/use-user-management';
-import { sharedStyles } from '@dendelion/mojo-ui/styles';
+import { sharedStyles } from '@/styles/shared-styles';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { useState } from 'react';

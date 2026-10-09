@@ -1,5 +1,5 @@
 import { useDigitizationDrafts } from '@/services/api';
-import { IconButton, Tooltip } from '@dendelion/mojo-ui';
+import { LampIconButton, Tooltip } from '@dendelion/func-ui';
 import type { DigitizationDraft } from '@radio/types';
 import clsx from 'clsx';
 import { useMemo } from 'react';
@@ -50,53 +50,49 @@ export const RadioFolderPanel = () => {
         <div className={clsx(styles.actions)}>
           {handle && permission !== 'granted' && (
             <Tooltip content="Надати доступ">
-              <IconButton
+              <LampIconButton
                 type="button"
-                variant="dark"
-                size="small"
-                aria-label="Надати доступ"
+                tone="dark"
+                size="sm"
+                label="Надати доступ"
+                icon={<KeyIcon />}
                 onClick={grantAccess}
-              >
-                <KeyIcon />
-              </IconButton>
+              />
             </Tooltip>
           )}
           {handle && permission === 'granted' && (
             <Tooltip content={isScanning ? 'Оновлення...' : 'Оновити'}>
-              <IconButton
+              <LampIconButton
                 type="button"
-                variant="gray"
-                size="small"
-                aria-label="Оновити"
+                tone="gray"
+                size="sm"
+                label="Оновити"
+                icon={<RefreshIcon />}
                 disabled={isScanning}
                 onClick={refresh}
-              >
-                <RefreshIcon />
-              </IconButton>
+              />
             </Tooltip>
           )}
           <Tooltip content={handle ? 'Змінити теку' : 'Вибрати теку'}>
-            <IconButton
+            <LampIconButton
               type="button"
-              variant={handle ? 'gray' : 'dark'}
-              size="small"
-              aria-label={handle ? 'Змінити теку' : 'Вибрати теку'}
+              tone={handle ? 'gray' : 'dark'}
+              size="sm"
+              label={handle ? 'Змінити теку' : 'Вибрати теку'}
+              icon={<FolderIcon />}
               onClick={choose}
-            >
-              <FolderIcon />
-            </IconButton>
+            />
           </Tooltip>
           {handle && (
             <Tooltip content="Забути">
-              <IconButton
+              <LampIconButton
                 type="button"
-                variant="gray"
-                size="small"
-                aria-label="Забути"
+                tone="gray"
+                size="sm"
+                label="Забути"
+                icon={<TrashIcon />}
                 onClick={forget}
-              >
-                <TrashIcon />
-              </IconButton>
+              />
             </Tooltip>
           )}
         </div>

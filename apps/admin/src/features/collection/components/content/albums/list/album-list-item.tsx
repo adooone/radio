@@ -1,6 +1,6 @@
 import { useTogglePublished } from '@/services/api';
 import { useNotificationStore } from '@/stores/notification-store';
-import { Switch } from '@dendelion/mojo-ui';
+import { LampSwitch } from '@dendelion/func-ui';
 import type { Album } from '@radio/types';
 import { AlbumCover } from './album-cover';
 
@@ -109,11 +109,11 @@ export const AlbumListItem = ({ album, onClick }: AlbumListItemProps) => {
           <span className="text-[10px] text-gray-500 uppercase tracking-wider">
             {album.isPublic ? 'Public' : 'Hidden'}
           </span>
-          <Switch
-            variant="green"
-            size="small"
+          <LampSwitch
+            tone="green"
+            size="sm"
             checked={!!album.isPublic}
-            onChange={handleTogglePublished}
+            onChange={(event) => handleTogglePublished(event.target.checked)}
             disabled={togglePublished.isPending}
           />
         </div>
