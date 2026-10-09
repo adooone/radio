@@ -1,5 +1,5 @@
-import { StatsCard } from '@dendelion/mojo-ui';
-import { sharedStyles } from '@dendelion/mojo-ui/styles';
+import { StatsCard } from '@/components';
+import { sharedStyles } from '@/styles/shared-styles';
 import type { MonitoringData } from '@radio/types';
 import clsx from 'clsx';
 import { RtmpServiceCard } from '../cards';

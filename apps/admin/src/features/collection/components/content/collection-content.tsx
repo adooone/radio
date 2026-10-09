@@ -1,3 +1,4 @@
+import { Panel } from '@/components';
 import {
   AlbumDetail,
   AlbumList,
@@ -7,7 +8,6 @@ import {
 } from '@/features/collection/components/content/albums';
 import { CollectionList } from '@/features/collection/components/content/playlists';
 import { useCollectionStore } from '@/features/collection/store/collection-store';
-import { Panel } from '@dendelion/mojo-ui';
 import type { Collection } from '@radio/types';
 
 type CollectionContentProps = {

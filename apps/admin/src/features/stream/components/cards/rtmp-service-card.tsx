@@ -1,5 +1,6 @@
+import { StatsGrid } from '@/components';
 import { LampButton, LampStatus } from '@dendelion/func-ui';
-import { Card, StatsGrid } from '@dendelion/mojo-ui';
+import { Card } from '@dendelion/mojo-ui';
 import type { RtmpServiceStats } from '@radio/types';
 import { InlineServiceAlert } from './inline-service-alert';
 

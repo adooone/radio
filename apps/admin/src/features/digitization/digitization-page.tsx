@@ -1,6 +1,6 @@
+import { PageLayout } from '@/components';
 import { useDigitizationDrafts } from '@/services/api';
 import { LampButton } from '@dendelion/func-ui';
-import { PageLayout } from '@dendelion/mojo-ui';
 import { useNavigate } from '@tanstack/react-router';
 import clsx from 'clsx';
 import { useState } from 'react';

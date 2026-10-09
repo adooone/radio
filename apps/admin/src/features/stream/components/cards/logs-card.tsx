@@ -1,5 +1,5 @@
 import { useLogs, useServiceLogs } from '@/services/api/hooks/use-monitoring';
-import { sharedStyles } from '@dendelion/mojo-ui/styles';
+import { sharedStyles } from '@/styles/shared-styles';
 import clsx from 'clsx';
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';

@@ -1,7 +1,7 @@
+import { PageLayout, VinylTabs } from '@/components';
 import { useWebSocket } from '@/hooks/use-websocket';
 import { useMonitoringData } from '@/services/api/hooks';
-import { PageLayout, VinylTabs } from '@dendelion/mojo-ui';
-import { sharedStyles } from '@dendelion/mojo-ui/styles';
+import { sharedStyles } from '@/styles/shared-styles';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { ConfigurationTab, LogsTab, MonitoringTab } from './components';

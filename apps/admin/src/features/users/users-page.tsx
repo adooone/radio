@@ -1,7 +1,7 @@
+import { PageLayout, StatsCard } from '@/components';
 import { useUsers } from '@/services/api/hooks/use-user-management';
+import { sharedStyles } from '@/styles/shared-styles';
 import { LampButton } from '@dendelion/func-ui';
-import { PageLayout, StatsCard } from '@dendelion/mojo-ui';
-import { sharedStyles } from '@dendelion/mojo-ui/styles';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { CreateUserModal, UserList } from './components';

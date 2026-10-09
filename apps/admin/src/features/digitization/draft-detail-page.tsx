@@ -1,5 +1,5 @@
+import { PageLayout } from '@/components';
 import { LampButton } from '@dendelion/func-ui';
-import { PageLayout } from '@dendelion/mojo-ui';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import { DraftDetail } from './components';
 

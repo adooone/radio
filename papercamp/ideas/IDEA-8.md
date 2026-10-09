@@ -96,12 +96,13 @@ The player and wave apps, which have no mojo-ui code. Removing the
       CircularProgress onto the func-ui lamp family: `variant` → `tone`,
       `title` → children, `w-full` → `fullWidth`.
       run: 12m38s · 280 in · 40.8k out · sonnet-5 · sess:dc13115a-c5b2-481b-a98c-01c116a01742
-- [ ] Phase 5 — Replace the layout pieces and shared styles
+- [x] Phase 5 — Replace the layout pieces and shared styles
       Admin-local PageLayout, Panel, StatsGrid, StatsCard, VinylTabs and
       NavigationIsland under `src/components`, the four icons under
       `src/components/icons`, and `sharedStyles` folded into
       `src/styles/shared-styles.ts`, which already holds the admin-only
       vinyl button styles.
+      run: 9m42s · 170 in · 39.2k out · sonnet-5 · sess:7dceeb2a-1f4e-4a6c-8b7c-e5d4463e4baf
 - [ ] Phase 6 — Remove mojo-ui everywhere
       Drop `@dendelion/mojo-ui` and `@radio/mojo-ui` from
       `apps/admin/package.json`, delete `packages/mojo-ui`, remove the
@@ -114,3 +115,4 @@ The player and wave apps, which have no mojo-ui code. Removing the
 - [x] 2026-10-08 [decision] [user] mojo-ui is removed, not kept alongside func-ui; the retro lit controls survive only as func-ui's lamp family.
 - [x] 2026-10-08 [decision] [agent] Layout components with no func-ui counterpart (PageLayout, Panel, StatsGrid, StatsCard, VinylTabs, NavigationIsland) become admin-local rather than func-ui exports: they are radio-specific compositions, and func-ui's own IDEA-6 left exactly this question open.
 - [ ] 2026-10-08 [question] [agent] Do the mojo colour scales stay admin-local in `theme.extend`, or should func-ui's preset adopt them so other dendelion apps share them? Mirrors the question on func-ui IDEA-12; whichever answers first settles both.
+- [ ] 2026-10-09 [question] [agent] `rtmp-service-card.tsx` still imports `Card` from `@dendelion/mojo-ui` with mojo's own `title`/`footer`/`actions` API, which func-ui's `Card` (size/onClick + `Card.Title`/`Card.Body` compound) does not match. The phase 1 audit treated `Card` as a already-compatible direct export needing no work, but the APIs differ — this single call site needs its own prop-shape migration (or an admin-local wrapper) and isn't covered by any phase 1-6 description. Left as `@dendelion/mojo-ui` import for now since it's outside phase 5's scope; needs a decision before phase 6 removes mojo-ui, or build will break.

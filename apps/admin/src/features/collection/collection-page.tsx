@@ -1,4 +1,4 @@
-import { PageLayout, Panel, VinylTabs } from '@dendelion/mojo-ui';
+import { PageLayout, Panel, VinylTabs } from '@/components';
 import type { Collection } from '@radio/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';

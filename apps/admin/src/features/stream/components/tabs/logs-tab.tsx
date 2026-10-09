@@ -1,4 +1,4 @@
-import { sharedStyles } from '@dendelion/mojo-ui/styles';
+import { sharedStyles } from '@/styles/shared-styles';
 import clsx from 'clsx';
 import type React from 'react';
 import { LogsCard } from '../cards';

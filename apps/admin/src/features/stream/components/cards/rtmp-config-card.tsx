@@ -2,8 +2,8 @@ import {
   useRtmpConfig,
   useUpdateRtmpConfig,
 } from '@/services/api/hooks/use-stream-control';
+import { sharedStyles } from '@/styles/shared-styles';
 import { LampButton } from '@dendelion/func-ui';
-import { sharedStyles } from '@dendelion/mojo-ui/styles';
 import type { RtmpServerConfig } from '@radio/types';
 import clsx from 'clsx';
 import type React from 'react';

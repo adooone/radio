@@ -1,4 +1,4 @@
-import { NavigationIsland } from '@dendelion/mojo-ui';
+import { NavigationIsland } from '@/components';
 import { Link } from '@tanstack/react-router';
 import { NowPlaying, RadioLogo, UserMenu } from './';
 

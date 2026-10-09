@@ -1,12 +1,12 @@
-import { AlbumSearch } from '@/features/collection/components/filters/album-search';
-import { useCollectionStore } from '@/features/collection/store/collection-store';
-import { LampButton, LampIconButton, Menu } from '@dendelion/func-ui';
 import {
   ArrowDownIcon,
   ArrowUpIcon,
   FilterIcon,
   SortIcon,
-} from '@dendelion/mojo-ui';
+} from '@/components/icons';
+import { AlbumSearch } from '@/features/collection/components/filters/album-search';
+import { useCollectionStore } from '@/features/collection/store/collection-store';
+import { LampButton, LampIconButton, Menu } from '@dendelion/func-ui';
 
 export const AlbumListHeader = () => {
   const {

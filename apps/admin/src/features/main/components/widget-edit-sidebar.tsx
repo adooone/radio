@@ -1,5 +1,5 @@
+import { Panel } from '@/components';
 import { Input, LampButton, Menu } from '@dendelion/func-ui';
-import { Panel } from '@dendelion/mojo-ui';
 import type React from 'react';
 import { useWidgetConfigStore } from '../store/widget-config-store';
 import { WIDGET_COLOR_OPTIONS } from '../utils/widget-colors';
