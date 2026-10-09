@@ -1,4 +1,4 @@
-import { Modal } from '@dendelion/mojo-ui';
+import { Modal } from '@dendelion/func-ui';
 import type { ReactNode } from 'react';
 
 type DetailModalProps = {
@@ -15,7 +15,7 @@ export const DetailModal = ({
   isOpen,
 }: DetailModalProps) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={title} maxWidth="max-w-4xl">
+    <Modal open={isOpen} onClose={onClose} title={title} size="lg">
       {children}
     </Modal>
   );

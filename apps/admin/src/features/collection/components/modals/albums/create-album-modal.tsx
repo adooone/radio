@@ -1,6 +1,6 @@
 import { useCreateAlbum } from '@/services/api';
 import { albumApi } from '@/services/api/album-api';
-import { Checkbox, Input, Modal, Textarea } from '@dendelion/mojo-ui';
+import { Checkbox, Input, Modal, Textarea } from '@dendelion/func-ui';
 import { useState } from 'react';
 import { TagEditor } from '../../shared';
 
@@ -92,10 +92,10 @@ export const CreateAlbumModal = ({
 
   return (
     <Modal
-      isOpen={isOpen}
+      open={isOpen}
       onClose={handleClose}
       title="Create New Album"
-      maxWidth="max-w-2xl"
+      size="lg"
     >
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="flex gap-6">
@@ -220,9 +220,7 @@ export const CreateAlbumModal = ({
         <Checkbox
           label="Make this album public"
           checked={isPublic}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setIsPublic(e.target.checked)
-          }
+          onChange={(e) => setIsPublic(e.target.checked)}
         />
 
         <div className="flex gap-3 pt-4">

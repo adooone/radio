@@ -1,5 +1,6 @@
 import { useCreateDraft } from '@/services/api';
-import { Badge, IconButton, Tooltip } from '@dendelion/mojo-ui';
+import { Stamp, Tooltip } from '@dendelion/func-ui';
+import { IconButton } from '@dendelion/mojo-ui';
 import type { DigitizationDraft } from '@radio/types';
 import clsx from 'clsx';
 import { useState } from 'react';
@@ -54,7 +55,7 @@ export const RadioFolderCard = ({ folder, draft }: RadioFolderCardProps) => {
         <p className={clsx(styles.count)}>
           {folder.files.length} {pluralizeFiles(folder.files.length)}
         </p>
-        {draft && <Badge variant="default">вже у драфтах</Badge>}
+        {draft && <Stamp variant="neutral">вже у драфтах</Stamp>}
         {missingEntries.length > 0 && (
           <Tooltip content={started ? 'Завантажується...' : uploadLabel}>
             <IconButton

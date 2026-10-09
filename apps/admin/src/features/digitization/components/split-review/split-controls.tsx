@@ -1,4 +1,5 @@
-import { Button, Slider } from '@dendelion/mojo-ui';
+import { Slider } from '@dendelion/func-ui';
+import { Button } from '@dendelion/mojo-ui';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 

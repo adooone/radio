@@ -1,5 +1,6 @@
 import { useCreateDraft } from '@/services/api';
-import { Button, Input, Modal } from '@dendelion/mojo-ui';
+import { Input, Modal } from '@dendelion/func-ui';
+import { Button } from '@dendelion/mojo-ui';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { slugify } from './slugify';
@@ -34,7 +35,7 @@ export const CreateDraftModal = ({ onClose }: CreateDraftModalProps) => {
   };
 
   return (
-    <Modal isOpen onClose={onClose} title="Новий запис" maxWidth="max-w-xl">
+    <Modal open onClose={onClose} title="Новий запис" size="md">
       {createdSlug ? (
         <div className={clsx(styles.form)}>
           <p className={clsx(styles.hint)}>

@@ -85,11 +85,12 @@ The player and wave apps, which have no mojo-ui code. Removing the
       `src/styles/tailwind.css`, and confirm build, typecheck and the dev
       server with both libraries rendering at once.
       run: 3m36s · 58 in · 10.7k out · sonnet-5 · sess:2c1a9fda-8f22-43bb-b77e-a0320b4ba19e
-- [ ] Phase 3 — Swap the forms and overlays
+- [x] Phase 3 — Swap the forms and overlays
       Input, Textarea, Select, Checkbox, Slider, Modal, Tooltip, Tabs,
       DataTable, Badge, Popup/PopupItem onto their func-ui counterparts,
       feature by feature (auth, users, stream, collection, digitization,
       main) so each commit is reviewable in the running app.
+      run: 8m33s · 180 in · 33.8k out · sonnet-5 · sess:b9ba9174-d0e3-4885-9676-0adfcc8e48d2
 - [ ] Phase 4 — Swap the lamp controls
       Button, IconButton, Switch, StatusIndicator, ProgressBar and
       CircularProgress onto the func-ui lamp family: `variant` → `tone`,

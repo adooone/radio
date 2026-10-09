@@ -1,5 +1,6 @@
 import { useDiscogsSearch, useFetchDraftMetadata } from '@/services/api';
-import { Button, Input, Modal } from '@dendelion/mojo-ui';
+import { Input, Modal } from '@dendelion/func-ui';
+import { Button } from '@dendelion/mojo-ui';
 import clsx from 'clsx';
 import { useState } from 'react';
 
@@ -43,10 +44,10 @@ export const MetadataModal = ({ slug, force, onClose }: MetadataModalProps) => {
 
   return (
     <Modal
-      isOpen
+      open
       onClose={onClose}
       title={force ? 'Замінити метадані' : 'Отримати метадані з Discogs'}
-      maxWidth="max-w-xl"
+      size="md"
     >
       <div className={clsx(styles.tabs)}>
         <button

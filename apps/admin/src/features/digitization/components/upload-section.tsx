@@ -1,4 +1,5 @@
-import { Button, IconButton, ProgressBar, Tooltip } from '@dendelion/mojo-ui';
+import { Tooltip } from '@dendelion/func-ui';
+import { Button, IconButton, ProgressBar } from '@dendelion/mojo-ui';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
 import { collectDroppedFiles } from './collect-dropped-files';

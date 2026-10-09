@@ -1,5 +1,6 @@
 import { useDigitizationDrafts } from '@/services/api';
-import { IconButton, Tooltip } from '@dendelion/mojo-ui';
+import { Tooltip } from '@dendelion/func-ui';
+import { IconButton } from '@dendelion/mojo-ui';
 import type { DigitizationDraft } from '@radio/types';
 import clsx from 'clsx';
 import { useMemo } from 'react';

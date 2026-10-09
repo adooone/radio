@@ -1,10 +1,10 @@
 import { useCollectionStore } from '@/features/collection/store/collection-store';
+import { Menu } from '@dendelion/func-ui';
 import {
   ArrowDownIcon,
   ArrowUpIcon,
+  Button,
   IconButton,
-  Popup,
-  PopupItem,
   SortIcon,
 } from '@dendelion/mojo-ui';
 
@@ -38,25 +38,25 @@ export const CompactAlbumListHeader = () => {
       <div className="flex-1" />
 
       <div className="flex items-center gap-2">
-        <Popup
-          label={currentSortLabel}
-          icon={<SortIcon size={14} />}
-          size="small"
-          variant="dark"
-          rounded="half"
-          align="right"
-          buttonClassName="max-w-[200px]"
-        >
-          {sortOptions.map((option) => (
-            <PopupItem
-              key={option.value}
-              selected={sortBy === option.value}
-              onClick={() => setSortBy(option.value)}
+        <Menu
+          trigger={
+            <Button
+              variant="dark"
+              size="small"
+              rounded="half"
+              icon={<SortIcon size={14} />}
+              className="max-w-[200px]"
             >
-              {option.label}
-            </PopupItem>
-          ))}
-        </Popup>
+              {currentSortLabel}
+            </Button>
+          }
+          align="end"
+          items={sortOptions.map((option) => ({
+            label: option.label,
+            selected: sortBy === option.value,
+            onSelect: () => setSortBy(option.value),
+          }))}
+        />
 
         <IconButton
           variant="dark"

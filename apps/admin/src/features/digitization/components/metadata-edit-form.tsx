@@ -1,5 +1,6 @@
 import { useUpdateDraftMetadata } from '@/services/api';
-import { Button, IconButton, Input, Textarea } from '@dendelion/mojo-ui';
+import { Input, Textarea } from '@dendelion/func-ui';
+import { Button, IconButton } from '@dendelion/mojo-ui';
 import type { AlbumDataJson, PersonnelItem, TracklistItem } from '@radio/types';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';

@@ -1,4 +1,4 @@
-import { Modal } from '@dendelion/mojo-ui';
+import { Modal } from '@dendelion/func-ui';
 
 type AddSongModalProps = {
   isOpen: boolean;
@@ -10,12 +10,7 @@ type AddSongModalProps = {
 // Songs can only be added via media folder sync, not through the UI
 export const AddSongModal = ({ isOpen, onClose }: AddSongModalProps) => {
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title="Add Song to Album"
-      maxWidth="max-w-md"
-    >
+    <Modal open={isOpen} onClose={onClose} title="Add Song to Album" size="sm">
       <div className="space-y-4">
         <p className="text-gray-300">
           Songs can only be added to albums through the media folder sync

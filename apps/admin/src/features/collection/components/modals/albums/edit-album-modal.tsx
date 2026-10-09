@@ -1,5 +1,5 @@
 import { useUpdateAlbum } from '@/services/api';
-import { Checkbox, Input, Modal, Select, Textarea } from '@dendelion/mojo-ui';
+import { Checkbox, Input, Modal, Select, Textarea } from '@dendelion/func-ui';
 import type { Album } from '@radio/types';
 import { useEffect, useState } from 'react';
 import { TagEditor } from '../../shared';
@@ -99,12 +99,7 @@ export const EditAlbumModal = ({
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title="Edit Album"
-      maxWidth="max-w-lg"
-    >
+    <Modal open={isOpen} onClose={onClose} title="Edit Album" size="md">
       <form
         onSubmit={handleSubmit}
         className="space-y-4 max-h-[70vh] overflow-y-auto pr-1"
@@ -156,9 +151,7 @@ export const EditAlbumModal = ({
         <Checkbox
           label="Make this album public"
           checked={isPublic}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setIsPublic(e.target.checked)
-          }
+          onChange={(e) => setIsPublic(e.target.checked)}
         />
 
         {/* Vinyl Metadata Section */}
@@ -184,9 +177,7 @@ export const EditAlbumModal = ({
               <Select
                 label="RPM Speed"
                 value={rpmSpeed}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                  setRpmSpeed(e.target.value)
-                }
+                onChange={setRpmSpeed}
                 options={RPM_OPTIONS}
               />
             </div>
@@ -194,9 +185,7 @@ export const EditAlbumModal = ({
             <Select
               label="Vinyl Condition"
               value={vinylCondition}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                setVinylCondition(e.target.value)
-              }
+              onChange={setVinylCondition}
               options={CONDITION_OPTIONS}
             />
 
