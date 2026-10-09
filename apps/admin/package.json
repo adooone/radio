@@ -12,6 +12,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@dendelion/func-ui": "^0.3.0",
     "@dendelion/mojo-ui": "^0.1.2",
     "@fontsource-variable/montserrat": "^5.1.0",
     "@fontsource/jetbrains-mono": "^5.2.8",

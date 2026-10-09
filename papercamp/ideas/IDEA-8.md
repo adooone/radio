@@ -77,13 +77,14 @@ The player and wave apps, which have no mojo-ui code. Removing the
       Badge variants), and the exact Tailwind colour and font utilities in
       use so nothing is dropped in phase 2.
       run: 20m31s · 116 in · 22.1k out · sonnet-5 · sess:2c1a9fda-8f22-43bb-b77e-a0320b4ba19e
-- [ ] Phase 2 — Wire func-ui beside mojo-ui
+- [x] Phase 2 — Wire func-ui beside mojo-ui
       Add `@dendelion/func-ui@^0.3.0`, import its `dist/index.css` next to
       mojo's in `src/styles/index.ts`, switch `tailwind.config.js` to
       `funcPreset` with the mojo colour scales and font families carried
       in `theme.extend`, move the KyivType `@font-face` rules into
       `src/styles/tailwind.css`, and confirm build, typecheck and the dev
       server with both libraries rendering at once.
+      run: 3m36s · 58 in · 10.7k out · sonnet-5 · sess:2c1a9fda-8f22-43bb-b77e-a0320b4ba19e
 - [ ] Phase 3 — Swap the forms and overlays
       Input, Textarea, Select, Checkbox, Slider, Modal, Tooltip, Tabs,
       DataTable, Badge, Popup/PopupItem onto their func-ui counterparts,
