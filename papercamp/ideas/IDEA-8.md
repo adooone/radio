@@ -2,7 +2,7 @@
 id: IDEA-8
 title: Migrate admin from mojo-ui to func-ui and remove mojo-ui
 type: feat
-status: planned
+status: review
 created: 2026-10-08
 tags:
   - admin
@@ -103,16 +103,18 @@ The player and wave apps, which have no mojo-ui code. Removing the
       `src/styles/shared-styles.ts`, which already holds the admin-only
       vinyl button styles.
       run: 9m42s · 170 in · 39.2k out · sonnet-5 · sess:7dceeb2a-1f4e-4a6c-8b7c-e5d4463e4baf
-- [ ] Phase 6 — Remove mojo-ui everywhere
+- [x] Phase 6 — Remove mojo-ui everywhere
       Drop `@dendelion/mojo-ui` and `@radio/mojo-ui` from
       `apps/admin/package.json`, delete `packages/mojo-ui`, remove the
       `ui:dev` / `mojo:dev` root scripts and the `mojoPreset` import,
       update the four docs pages, run build, lint, tests and a Chrome pass
       over every admin route, then grep the repo for `mojo` to prove
       nothing remains.
+      run: 4m55s · 148 in · 15.3k out · sonnet-5 · sess:e93a8846-5a15-40a1-a7fa-38aafe95dce9
 
 ### Thread
 - [x] 2026-10-08 [decision] [user] mojo-ui is removed, not kept alongside func-ui; the retro lit controls survive only as func-ui's lamp family.
 - [x] 2026-10-08 [decision] [agent] Layout components with no func-ui counterpart (PageLayout, Panel, StatsGrid, StatsCard, VinylTabs, NavigationIsland) become admin-local rather than func-ui exports: they are radio-specific compositions, and func-ui's own IDEA-6 left exactly this question open.
 - [ ] 2026-10-08 [question] [agent] Do the mojo colour scales stay admin-local in `theme.extend`, or should func-ui's preset adopt them so other dendelion apps share them? Mirrors the question on func-ui IDEA-12; whichever answers first settles both.
-- [ ] 2026-10-09 [question] [agent] `rtmp-service-card.tsx` still imports `Card` from `@dendelion/mojo-ui` with mojo's own `title`/`footer`/`actions` API, which func-ui's `Card` (size/onClick + `Card.Title`/`Card.Body` compound) does not match. The phase 1 audit treated `Card` as a already-compatible direct export needing no work, but the APIs differ — this single call site needs its own prop-shape migration (or an admin-local wrapper) and isn't covered by any phase 1-6 description. Left as `@dendelion/mojo-ui` import for now since it's outside phase 5's scope; needs a decision before phase 6 removes mojo-ui, or build will break.
+- [x] 2026-10-09 [question] [agent] `rtmp-service-card.tsx` still imports `Card` from `@dendelion/mojo-ui` with mojo's own `title`/`footer`/`actions` API, which func-ui's `Card` (size/onClick + `Card.Title`/`Card.Body` compound) does not match. The phase 1 audit treated `Card` as a already-compatible direct export needing no work, but the APIs differ — this single call site needs its own prop-shape migration (or an admin-local wrapper) and isn't covered by any phase 1-6 description. Left as `@dendelion/mojo-ui` import for now since it's outside phase 5's scope; needs a decision before phase 6 removes mojo-ui, or build will break.
+- [x] 2026-10-09 [decision] [agent] Resolved the `rtmp-service-card.tsx` `Card` gap by dropping the mojo `Card` wrapper entirely: the card now uses the same `sharedStyles.statsCard` div + custom header pattern its sibling `rtmp-config-card.tsx` already uses (no func-ui/mojo `Card` either way), with the status pill and action buttons moved into that header/footer by hand. No admin-local `Card` wrapper needed since this was the only call site.

@@ -22,8 +22,7 @@ radio/
 │   ├── admin/           # Admin panel (React + Vite)
 │   └── player/          # Public player (React + Vite + HLS.js)
 ├── packages/
-│   ├── types/           # Shared TypeScript types
-│   └── mojo-ui/         # Retro UI component library (React + SCSS)
+│   └── types/           # Shared TypeScript types
 ├── docs/                # Documentation
 │   ├── setup/           # Setup and deployment guides
 │   ├── api/             # API documentation
@@ -39,8 +38,8 @@ radio/
 | Runtime | Bun 1.2.9+, Node.js 22.15+ |
 | Backend | Hono, Drizzle ORM, SQLite, WebSocket |
 | Frontend | React 18, Vite, TanStack Router & Query |
-| Styling | Tailwind CSS, SCSS Modules |
-| UI Library | @radio/mojo-ui (retro-styled components) |
+| Styling | Tailwind CSS |
+| UI Library | @dendelion/func-ui (retro-styled components) |
 | State | Zustand (client), React Query (server) |
 | Monorepo | Turborepo + pnpm workspaces |
 | Linting | Biome |
@@ -75,7 +74,6 @@ pnpm dev
 pnpm wave:dev     # Backend API (port 6870)
 pnpm admin:dev    # Admin panel (port 3001)
 pnpm player:dev   # Public player (port 3030)
-pnpm mojo:dev     # Component showcase (port 3010)
 ```
 
 ### Environment Setup
@@ -105,7 +103,6 @@ pnpm wave:start
 - [Wave Backend](../apps/wave/README.md)
 - [Admin Panel](../apps/admin/README.md)
 - [Player](../apps/player/README.md)
-- [Mojo UI](../packages/mojo-ui/README.md)
 
 ## License
 

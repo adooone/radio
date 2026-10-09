@@ -1,7 +1,8 @@
 import { StatsGrid } from '@/components';
+import { sharedStyles } from '@/styles/shared-styles';
 import { LampButton, LampStatus } from '@dendelion/func-ui';
-import { Card } from '@dendelion/mojo-ui';
 import type { RtmpServiceStats } from '@radio/types';
+import clsx from 'clsx';
 import { InlineServiceAlert } from './inline-service-alert';
 
 interface StatItem {
@@ -207,39 +208,12 @@ export const RtmpServiceCard: React.FC<RtmpServiceCardProps> = ({ stats }) => {
     : 'stopped';
 
   return (
-    <Card
-      title="RTMP Server"
-      footer={<LampStatus status={statusValue} />}
-      actions={[
-        {
-          label: isRunning ? 'Stop' : 'Start',
-          variant: isRunning ? ('yellow' as const) : ('green' as const),
-          onClick: () => {
-            if (isRunning) {
-              stopMutation.mutate();
-            } else {
-              startMutation.mutate();
-            }
-          },
-          disabled: isLoading,
-        },
-        {
-          label: 'Restart',
-          variant: 'gray' as const,
-          onClick: () => restartMutation.mutate(),
-          disabled: isLoading,
-        },
-      ].map((action) => (
-        <LampButton
-          key={action.label}
-          tone={action.variant}
-          onClick={action.onClick}
-          disabled={action.disabled}
-        >
-          {action.label}
-        </LampButton>
-      ))}
-    >
+    <div className={clsx(sharedStyles.statsCard, 'flex flex-col')}>
+      <div className="mb-4 flex items-center justify-between border-b border-white/20 pb-3">
+        <h3 className={clsx(sharedStyles.statsTitle, 'mb-0')}>RTMP Server</h3>
+        <LampStatus status={statusValue} />
+      </div>
+
       <StatsGrid stats={getServiceStats()} columns={2} />
       {serviceAlert && (
         <div className="mt-3">
@@ -250,6 +224,38 @@ export const RtmpServiceCard: React.FC<RtmpServiceCardProps> = ({ stats }) => {
           />
         </div>
       )}
-    </Card>
+
+      <div className="mt-4 flex justify-center gap-2 border-t border-white/10 pt-3">
+        {[
+          {
+            label: isRunning ? 'Stop' : 'Start',
+            tone: isRunning ? ('yellow' as const) : ('green' as const),
+            onClick: () => {
+              if (isRunning) {
+                stopMutation.mutate();
+              } else {
+                startMutation.mutate();
+              }
+            },
+            disabled: isLoading,
+          },
+          {
+            label: 'Restart',
+            tone: 'gray' as const,
+            onClick: () => restartMutation.mutate(),
+            disabled: isLoading,
+          },
+        ].map((action) => (
+          <LampButton
+            key={action.label}
+            tone={action.tone}
+            onClick={action.onClick}
+            disabled={action.disabled}
+          >
+            {action.label}
+          </LampButton>
+        ))}
+      </div>
+    </div>
   );
 };

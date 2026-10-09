@@ -3,11 +3,7 @@ import { funcPreset } from '@dendelion/func-ui/tailwind';
 
 export default {
   presets: [funcPreset],
-  content: [
-    './index.html',
-    './src/**/*.{css,ts,tsx}',
-    './node_modules/@dendelion/mojo-ui/src/**/*.{ts,tsx}',
-  ],
+  content: ['./index.html', './src/**/*.{css,ts,tsx}'],
   theme: {
     extend: {
       fontWeight: {

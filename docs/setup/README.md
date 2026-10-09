@@ -77,7 +77,6 @@ pnpm dev
 pnpm wave:dev     # Backend API (port 6870)
 pnpm admin:dev    # Admin panel (port 3001)
 pnpm player:dev   # Public player (port 3030)
-pnpm mojo:dev     # Component showcase (port 3010)
 ```
 
 ### Database Setup
