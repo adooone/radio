@@ -1,12 +1,10 @@
 import { AlbumSearch } from '@/features/collection/components/filters/album-search';
 import { useCollectionStore } from '@/features/collection/store/collection-store';
-import { Menu } from '@dendelion/func-ui';
+import { LampButton, LampIconButton, Menu } from '@dendelion/func-ui';
 import {
   ArrowDownIcon,
   ArrowUpIcon,
-  Button,
   FilterIcon,
-  IconButton,
   SortIcon,
 } from '@dendelion/mojo-ui';
 
@@ -52,15 +50,15 @@ export const AlbumListHeader = () => {
       <div className="flex items-center gap-2">
         <Menu
           trigger={
-            <Button
-              variant="yellow"
-              size="small"
+            <LampButton
+              tone="yellow"
+              size="sm"
               rounded="half"
               icon={<SortIcon size={14} />}
               className="max-w-[200px]"
             >
               {currentSortLabel}
-            </Button>
+            </LampButton>
           }
           align="end"
           items={sortOptions.map((option) => ({
@@ -70,28 +68,28 @@ export const AlbumListHeader = () => {
           }))}
         />
 
-        <IconButton
-          variant="dark"
-          size="small"
+        <LampIconButton
+          tone="dark"
+          size="sm"
           onClick={toggleSortOrder}
-          aria-label={sortOrder === 'asc' ? 'За зростанням' : 'За спаданням'}
-        >
-          {sortOrder === 'asc' ? (
-            <ArrowUpIcon size={16} />
-          ) : (
-            <ArrowDownIcon size={16} />
-          )}
-        </IconButton>
+          label={sortOrder === 'asc' ? 'За зростанням' : 'За спаданням'}
+          icon={
+            sortOrder === 'asc' ? (
+              <ArrowUpIcon size={16} />
+            ) : (
+              <ArrowDownIcon size={16} />
+            )
+          }
+        />
 
-        <IconButton
-          variant={hasActiveFilters() && filtersEnabled ? 'yellow' : 'dark'}
-          size="small"
+        <LampIconButton
+          tone={hasActiveFilters() && filtersEnabled ? 'yellow' : 'dark'}
+          size="sm"
           onClick={toggleFiltersEnabled}
           disabled={!hasActiveFilters()}
-          aria-label={filtersEnabled ? 'Вимкнути фільтри' : 'Увімкнути фільтри'}
-        >
-          <FilterIcon size={16} />
-        </IconButton>
+          label={filtersEnabled ? 'Вимкнути фільтри' : 'Увімкнути фільтри'}
+          icon={<FilterIcon size={16} />}
+        />
 
         <div className="w-64">
           <AlbumSearch value={searchQuery} onChange={setSearchQuery} />

@@ -1,5 +1,9 @@
-import { Tooltip } from '@dendelion/func-ui';
-import { Button, IconButton, ProgressBar } from '@dendelion/mojo-ui';
+import {
+  LampButton,
+  LampIconButton,
+  LampMeter,
+  Tooltip,
+} from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
 import { collectDroppedFiles } from './collect-dropped-files';
@@ -142,51 +146,48 @@ const UploadTaskRow = ({
     return (
       <li className={clsx(styles.taskRowCompact)}>
         <p className={clsx(styles.taskFilenameCompact)}>{task.filename}</p>
-        <ProgressBar
+        <LampMeter
           value={task.uploadedBytes}
           max={task.size}
-          variant={variant}
-          size="small"
-          showLabel={false}
+          tone={variant}
+          size="sm"
+          showValue={false}
           className={clsx(styles.progressCompact)}
         />
         {task.status === 'uploading' && (
           <Tooltip content="Пауза">
-            <IconButton
+            <LampIconButton
               type="button"
-              variant="gray"
-              size="small"
-              aria-label="Пауза"
+              tone="gray"
+              size="sm"
+              label="Пауза"
+              icon={<PauseIcon />}
               onClick={onPause}
-            >
-              <PauseIcon />
-            </IconButton>
+            />
           </Tooltip>
         )}
         {task.status === 'paused' && (
           <Tooltip content="Продовжити">
-            <IconButton
+            <LampIconButton
               type="button"
-              variant="gray"
-              size="small"
-              aria-label="Продовжити"
+              tone="gray"
+              size="sm"
+              label="Продовжити"
+              icon={<PlayIcon />}
               onClick={onResume}
-            >
-              <PlayIcon />
-            </IconButton>
+            />
           </Tooltip>
         )}
         {task.status === 'error' && (
           <Tooltip content={task.error ?? 'Повторити'}>
-            <IconButton
+            <LampIconButton
               type="button"
-              variant="gray"
-              size="small"
-              aria-label="Повторити"
+              tone="gray"
+              size="sm"
+              label="Повторити"
+              icon={<RefreshIcon />}
               onClick={onRetry}
-            >
-              <RefreshIcon />
-            </IconButton>
+            />
           </Tooltip>
         )}
       </li>
@@ -195,11 +196,11 @@ const UploadTaskRow = ({
 
   return (
     <li className={clsx(styles.taskRow)}>
-      <ProgressBar
+      <LampMeter
         value={task.uploadedBytes}
         max={task.size}
-        variant={variant}
-        size="small"
+        tone={variant}
+        size="sm"
         label={task.filename}
       />
       {task.status === 'error' && (
@@ -207,31 +208,19 @@ const UploadTaskRow = ({
       )}
       <div className={clsx(styles.taskActions)}>
         {task.status === 'uploading' && (
-          <Button
-            type="button"
-            variant="gray"
-            size="small"
-            title="Пауза"
-            onClick={onPause}
-          />
+          <LampButton type="button" tone="gray" size="sm" onClick={onPause}>
+            Пауза
+          </LampButton>
         )}
         {task.status === 'paused' && (
-          <Button
-            type="button"
-            variant="gray"
-            size="small"
-            title="Продовжити"
-            onClick={onResume}
-          />
+          <LampButton type="button" tone="gray" size="sm" onClick={onResume}>
+            Продовжити
+          </LampButton>
         )}
         {task.status === 'error' && (
-          <Button
-            type="button"
-            variant="gray"
-            size="small"
-            title="Повторити"
-            onClick={onRetry}
-          />
+          <LampButton type="button" tone="gray" size="sm" onClick={onRetry}>
+            Повторити
+          </LampButton>
         )}
       </div>
     </li>

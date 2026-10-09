@@ -1,12 +1,6 @@
 import { useCollectionStore } from '@/features/collection/store/collection-store';
-import { Menu } from '@dendelion/func-ui';
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  Button,
-  IconButton,
-  SortIcon,
-} from '@dendelion/mojo-ui';
+import { LampButton, LampIconButton, Menu } from '@dendelion/func-ui';
+import { ArrowDownIcon, ArrowUpIcon, SortIcon } from '@dendelion/mojo-ui';
 
 export const CompactAlbumListHeader = () => {
   const { sortBy, sortOrder, setSortBy, setSortOrder } = useCollectionStore();
@@ -40,15 +34,15 @@ export const CompactAlbumListHeader = () => {
       <div className="flex items-center gap-2">
         <Menu
           trigger={
-            <Button
-              variant="dark"
-              size="small"
+            <LampButton
+              tone="dark"
+              size="sm"
               rounded="half"
               icon={<SortIcon size={14} />}
               className="max-w-[200px]"
             >
               {currentSortLabel}
-            </Button>
+            </LampButton>
           }
           align="end"
           items={sortOptions.map((option) => ({
@@ -58,18 +52,19 @@ export const CompactAlbumListHeader = () => {
           }))}
         />
 
-        <IconButton
-          variant="dark"
-          size="small"
+        <LampIconButton
+          tone="dark"
+          size="sm"
           onClick={toggleSortOrder}
-          aria-label={sortOrder === 'asc' ? 'За зростанням' : 'За спаданням'}
-        >
-          {sortOrder === 'asc' ? (
-            <ArrowUpIcon size={16} />
-          ) : (
-            <ArrowDownIcon size={16} />
-          )}
-        </IconButton>
+          label={sortOrder === 'asc' ? 'За зростанням' : 'За спаданням'}
+          icon={
+            sortOrder === 'asc' ? (
+              <ArrowUpIcon size={16} />
+            ) : (
+              <ArrowDownIcon size={16} />
+            )
+          }
+        />
       </div>
     </div>
   );

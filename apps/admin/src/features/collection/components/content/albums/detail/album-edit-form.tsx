@@ -1,7 +1,12 @@
 import { TagEditor } from '@/features/collection/components/shared';
 import { useUpdateAlbum } from '@/services/api';
-import { Checkbox, Input, Select, Textarea } from '@dendelion/func-ui';
-import { Button } from '@dendelion/mojo-ui';
+import {
+  Checkbox,
+  Input,
+  LampButton,
+  Select,
+  Textarea,
+} from '@dendelion/func-ui';
 import type { Album } from '@radio/types';
 import { useEffect, useState } from 'react';
 
@@ -214,14 +219,15 @@ export const AlbumEditForm = ({
       </div>
 
       <div className="flex gap-3 pt-4">
-        <Button
+        <LampButton
           type="button"
-          variant="gray"
-          size="medium"
-          title="Cancel"
+          tone="gray"
+          size="md"
           onClick={onCancel}
           className="flex-1"
-        />
+        >
+          Cancel
+        </LampButton>
         <button
           type="submit"
           disabled={!title.trim() || !artist.trim() || updateAlbum.isPending}

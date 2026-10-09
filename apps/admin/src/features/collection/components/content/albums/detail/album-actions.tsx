@@ -1,4 +1,4 @@
-import { Button } from '@dendelion/mojo-ui';
+import { LampButton } from '@dendelion/func-ui';
 
 type AlbumActionsProps = {
   onEdit: () => void;
@@ -13,21 +13,18 @@ export const AlbumActions = ({
 }: AlbumActionsProps) => {
   return (
     <div className="flex gap-2 mt-4">
-      <Button
-        variant="yellow"
-        size="small"
-        title="Edit"
-        rounded="half"
-        onClick={onEdit}
-      />
-      <Button
-        variant="red"
-        size="small"
-        title={isDeleting ? 'Deleting...' : 'Delete'}
+      <LampButton tone="yellow" size="sm" rounded="half" onClick={onEdit}>
+        Edit
+      </LampButton>
+      <LampButton
+        tone="red"
+        size="sm"
         rounded="half"
         onClick={onDelete}
         disabled={isDeleting}
-      />
+      >
+        {isDeleting ? 'Deleting...' : 'Delete'}
+      </LampButton>
     </div>
   );
 };

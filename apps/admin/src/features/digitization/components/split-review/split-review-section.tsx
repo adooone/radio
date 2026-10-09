@@ -1,6 +1,5 @@
 import { useApplySplit, useSplitPlan } from '@/services/api';
-import { Tabs } from '@dendelion/func-ui';
-import { Button } from '@dendelion/mojo-ui';
+import { LampButton, Tabs } from '@dendelion/func-ui';
 import type { DigitizationSplitApplySide } from '@radio/types';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
@@ -155,20 +154,19 @@ export const SplitReviewSection = ({
             Файли треків вже існують — видаліть їх перед повторним розкроєм.
           </p>
         )}
-        <Button
+        <LampButton
           type="button"
-          variant={hasWarnings ? 'red' : 'dark'}
-          size="medium"
-          title={
-            applySplit.isPending
-              ? 'Розкрій...'
-              : hasWarnings
-                ? 'Розкроїти попри попередження'
-                : 'Розкроїти доріжки'
-          }
+          tone={hasWarnings ? 'red' : 'dark'}
+          size="md"
           disabled={confirmDisabled}
           onClick={handleConfirm}
-        />
+        >
+          {applySplit.isPending
+            ? 'Розкрій...'
+            : hasWarnings
+              ? 'Розкроїти попри попередження'
+              : 'Розкроїти доріжки'}
+        </LampButton>
       </div>
     </div>
   );

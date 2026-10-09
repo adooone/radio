@@ -1,6 +1,5 @@
 import { useDiscogsSearch, useFetchDraftMetadata } from '@/services/api';
-import { Input, Modal } from '@dendelion/func-ui';
-import { Button } from '@dendelion/mojo-ui';
+import { Input, LampButton, Modal } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { useState } from 'react';
 
@@ -83,22 +82,17 @@ export const MetadataModal = ({ slug, force, onClose }: MetadataModalProps) => {
             </p>
           )}
           <div className={clsx(styles.actions)}>
-            <Button
-              type="button"
-              variant="gray"
-              size="medium"
-              title="Скасувати"
-              onClick={onClose}
-            />
-            <Button
+            <LampButton type="button" tone="gray" size="md" onClick={onClose}>
+              Скасувати
+            </LampButton>
+            <LampButton
               type="submit"
-              variant="dark"
-              size="medium"
-              title={
-                fetchMetadata.isPending ? 'Завантаження...' : 'Завантажити'
-              }
+              tone="dark"
+              size="md"
               disabled={fetchMetadata.isPending || !releaseRef.trim()}
-            />
+            >
+              {fetchMetadata.isPending ? 'Завантаження...' : 'Завантажити'}
+            </LampButton>
           </div>
         </form>
       ) : (
@@ -115,13 +109,14 @@ export const MetadataModal = ({ slug, force, onClose }: MetadataModalProps) => {
               }
               placeholder="jethro tull aqualung"
             />
-            <Button
+            <LampButton
               type="submit"
-              variant="dark"
-              size="medium"
-              title="Шукати"
+              tone="dark"
+              size="md"
               disabled={!query.trim()}
-            />
+            >
+              Шукати
+            </LampButton>
           </form>
 
           {isSearching && <p className={clsx(styles.hint)}>Пошук...</p>}

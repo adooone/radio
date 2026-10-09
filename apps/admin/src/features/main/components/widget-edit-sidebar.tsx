@@ -1,5 +1,5 @@
-import { Input, Menu } from '@dendelion/func-ui';
-import { Button, Panel } from '@dendelion/mojo-ui';
+import { Input, LampButton, Menu } from '@dendelion/func-ui';
+import { Panel } from '@dendelion/mojo-ui';
 import type React from 'react';
 import { useWidgetConfigStore } from '../store/widget-config-store';
 import { WIDGET_COLOR_OPTIONS } from '../utils/widget-colors';
@@ -125,9 +125,9 @@ export const WidgetEditSidebar = ({ isOpen }: WidgetEditSidebarProps) => {
                 </span>
                 <Menu
                   trigger={
-                    <Button variant="dark" size="small" rounded="half">
+                    <LampButton tone="dark" size="sm" rounded="half">
                       {selectedColorOption.name}
-                    </Button>
+                    </LampButton>
                   }
                   align="start"
                   items={[

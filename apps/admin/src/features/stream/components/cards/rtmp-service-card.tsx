@@ -1,4 +1,5 @@
-import { Button, Card, StatsGrid, StatusIndicator } from '@dendelion/mojo-ui';
+import { LampButton, LampStatus } from '@dendelion/func-ui';
+import { Card, StatsGrid } from '@dendelion/mojo-ui';
 import type { RtmpServiceStats } from '@radio/types';
 import { InlineServiceAlert } from './inline-service-alert';
 
@@ -207,7 +208,7 @@ export const RtmpServiceCard: React.FC<RtmpServiceCardProps> = ({ stats }) => {
   return (
     <Card
       title="RTMP Server"
-      footer={<StatusIndicator status={statusValue} />}
+      footer={<LampStatus status={statusValue} />}
       actions={[
         {
           label: isRunning ? 'Stop' : 'Start',
@@ -228,13 +229,14 @@ export const RtmpServiceCard: React.FC<RtmpServiceCardProps> = ({ stats }) => {
           disabled: isLoading,
         },
       ].map((action) => (
-        <Button
+        <LampButton
           key={action.label}
-          variant={action.variant}
-          title={action.label}
+          tone={action.variant}
           onClick={action.onClick}
           disabled={action.disabled}
-        />
+        >
+          {action.label}
+        </LampButton>
       ))}
     >
       <StatsGrid stats={getServiceStats()} columns={2} />

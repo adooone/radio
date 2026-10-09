@@ -1,6 +1,5 @@
 import { useCreateDraft } from '@/services/api';
-import { Stamp, Tooltip } from '@dendelion/func-ui';
-import { IconButton } from '@dendelion/mojo-ui';
+import { LampIconButton, Stamp, Tooltip } from '@dendelion/func-ui';
 import type { DigitizationDraft } from '@radio/types';
 import clsx from 'clsx';
 import { useState } from 'react';
@@ -58,16 +57,15 @@ export const RadioFolderCard = ({ folder, draft }: RadioFolderCardProps) => {
         {draft && <Stamp variant="neutral">вже у драфтах</Stamp>}
         {missingEntries.length > 0 && (
           <Tooltip content={started ? 'Завантажується...' : uploadLabel}>
-            <IconButton
+            <LampIconButton
               type="button"
-              variant="dark"
-              size="small"
-              aria-label={uploadLabel}
+              tone="dark"
+              size="sm"
+              label={uploadLabel}
+              icon={<UploadIcon />}
               disabled={started || createDraft.isPending}
               onClick={handleUpload}
-            >
-              <UploadIcon />
-            </IconButton>
+            />
           </Tooltip>
         )}
       </div>

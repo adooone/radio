@@ -91,7 +91,7 @@ The player and wave apps, which have no mojo-ui code. Removing the
       feature by feature (auth, users, stream, collection, digitization,
       main) so each commit is reviewable in the running app.
       run: 8m33s · 180 in · 33.8k out · sonnet-5 · sess:b9ba9174-d0e3-4885-9676-0adfcc8e48d2
-- [ ] Phase 4 — Swap the lamp controls
+- [x] Phase 4 — Swap the lamp controls
       Button, IconButton, Switch, StatusIndicator, ProgressBar and
       CircularProgress onto the func-ui lamp family: `variant` → `tone`,
       `title` → children, `w-full` → `fullWidth`.

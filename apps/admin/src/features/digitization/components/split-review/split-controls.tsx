@@ -1,5 +1,4 @@
-import { Slider } from '@dendelion/func-ui';
-import { Button } from '@dendelion/mojo-ui';
+import { LampButton, Slider } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 
@@ -59,14 +58,15 @@ export const SplitControls = ({
           setPending((prev) => ({ ...prev, tolerance: value }))
         }
       />
-      <Button
+      <LampButton
         type="button"
-        variant="gray"
-        size="medium"
-        title={isLoading ? 'Аналіз...' : 'Переаналізувати'}
+        tone="gray"
+        size="md"
         disabled={isLoading}
         onClick={() => onReanalyze(pending)}
-      />
+      >
+        {isLoading ? 'Аналіз...' : 'Переаналізувати'}
+      </LampButton>
     </div>
   );
 };

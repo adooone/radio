@@ -1,5 +1,6 @@
 import { useDigitizationDrafts } from '@/services/api';
-import { Button, PageLayout } from '@dendelion/mojo-ui';
+import { LampButton } from '@dendelion/func-ui';
+import { PageLayout } from '@dendelion/mojo-ui';
 import { useNavigate } from '@tanstack/react-router';
 import clsx from 'clsx';
 import { useState } from 'react';
@@ -21,32 +22,31 @@ export const DigitizationPage = () => {
       title="Оцифровка"
       headerRight={
         <div className={clsx(styles.headerActions)}>
-          <Button
-            variant="dark"
-            size="medium"
-            title="Новий запис"
-            onClick={() => setIsCreating(true)}
-          />
-          <Button
-            variant="gray"
-            size="medium"
-            title={isFetching ? 'Оновлення...' : 'Оновити'}
+          <LampButton tone="dark" size="md" onClick={() => setIsCreating(true)}>
+            Новий запис
+          </LampButton>
+          <LampButton
+            tone="gray"
+            size="md"
             disabled={isFetching}
             onClick={() => refetch()}
-          />
+          >
+            {isFetching ? 'Оновлення...' : 'Оновити'}
+          </LampButton>
         </div>
       }
     >
       {isError ? (
         <div className={clsx(styles.error)}>
           <p>Не вдалося завантажити драфти.</p>
-          <Button
-            variant="gray"
-            size="medium"
-            title="Спробувати ще раз"
+          <LampButton
+            tone="gray"
+            size="md"
             disabled={isFetching}
             onClick={() => refetch()}
-          />
+          >
+            Спробувати ще раз
+          </LampButton>
         </div>
       ) : (
         <div className={clsx(styles.layout)}>

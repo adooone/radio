@@ -3,7 +3,7 @@ import {
   useDigitizationJob,
   usePublishDraft,
 } from '@/services/api';
-import { Button } from '@dendelion/mojo-ui';
+import { LampButton } from '@dendelion/func-ui';
 import { useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
@@ -43,14 +43,15 @@ export const PublishSection = ({ slug, onPublished }: PublishSectionProps) => {
 
   return (
     <div className={clsx(styles.section)}>
-      <Button
+      <LampButton
         type="button"
-        variant={job?.status === 'error' ? 'red' : 'dark'}
-        size="medium"
-        title={isRunning ? 'Публікація...' : 'Опублікувати в ефір'}
+        tone={job?.status === 'error' ? 'red' : 'dark'}
+        size="md"
         disabled={isRunning || publishDraft.isPending}
         onClick={handlePublish}
-      />
+      >
+        {isRunning ? 'Публікація...' : 'Опублікувати в ефір'}
+      </LampButton>
 
       {publishDraft.isError && (
         <p className={clsx(styles.error)}>

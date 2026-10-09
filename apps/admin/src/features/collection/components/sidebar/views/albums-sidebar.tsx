@@ -1,7 +1,7 @@
 import { useCollectionStore } from '@/features/collection/store/collection-store';
 import { useSyncMedia } from '@/services/api';
 import { useNotificationStore } from '@/stores/notification-store';
-import { ProgressBar } from '@dendelion/mojo-ui';
+import { LampMeter } from '@dendelion/func-ui';
 import { CollectionStats } from '../stats/collection-stats';
 import { GenreStats } from '../stats/genre-stats';
 import { CollectionActions } from './actions';
@@ -86,13 +86,14 @@ export const AlbumsSidebar = ({
 
       <div>
         <div className="w-full">
-          <ProgressBar
+          <LampMeter
             value={overallCompleteness}
-            variant={getCompletenessVariant(overallCompleteness)}
-            size="medium"
+            tone={getCompletenessVariant(overallCompleteness)}
+            size="md"
             label="Повнота даних"
             lampCount={20}
-            className="w-full pb-4"
+            fullWidth
+            className="pb-4"
           />
           <CollectionStats
             activeTab="albums"
