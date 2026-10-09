@@ -69,13 +69,14 @@ The player and wave apps, which have no mojo-ui code. Removing the
 `@fontsource` imports, which are unrelated to mojo-ui.
 
 ### Phases
-- [ ] Phase 1 — Audit and mapping
+- [x] Phase 1 — Audit and mapping
       Produce `docs/apps/admin-ui-migration.md`: every mojo-ui import in
       `apps/admin/src` mapped to its func-ui export or to an admin-local
       replacement, every prop with no equivalent (Button `title` /
       `rounded`, Select and Input size classes, ProgressBar `lampCount`,
       Badge variants), and the exact Tailwind colour and font utilities in
       use so nothing is dropped in phase 2.
+      run: 20m31s · 116 in · 22.1k out · sonnet-5 · sess:2c1a9fda-8f22-43bb-b77e-a0320b4ba19e
 - [ ] Phase 2 — Wire func-ui beside mojo-ui
       Add `@dendelion/func-ui@^0.3.0`, import its `dist/index.css` next to
       mojo's in `src/styles/index.ts`, switch `tailwind.config.js` to
