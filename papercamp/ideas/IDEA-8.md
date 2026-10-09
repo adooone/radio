@@ -95,6 +95,7 @@ The player and wave apps, which have no mojo-ui code. Removing the
       Button, IconButton, Switch, StatusIndicator, ProgressBar and
       CircularProgress onto the func-ui lamp family: `variant` → `tone`,
       `title` → children, `w-full` → `fullWidth`.
+      run: 12m38s · 280 in · 40.8k out · sonnet-5 · sess:dc13115a-c5b2-481b-a98c-01c116a01742
 - [ ] Phase 5 — Replace the layout pieces and shared styles
       Admin-local PageLayout, Panel, StatsGrid, StatsCard, VinylTabs and
       NavigationIsland under `src/components`, the four icons under
