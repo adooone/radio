@@ -1,12 +1,27 @@
 import { PageLayout } from '@/components';
 import { LampButton } from '@dendelion/func-ui';
-import { useNavigate, useParams } from '@tanstack/react-router';
+import {
+  useCanGoBack,
+  useNavigate,
+  useParams,
+  useRouter,
+} from '@tanstack/react-router';
 import { DraftDetail } from './components';
 
 export const DraftDetailPage = () => {
   const { slug } = useParams({ from: '/digitization/$slug' });
   const navigate = useNavigate();
-  const backToList = () => navigate({ to: '/digitization' });
+  const router = useRouter();
+  const canGoBack = useCanGoBack();
+  // Going back (not pushing) restores the list's scroll position and keeps
+  // the history stack flat; deep links with no history still get a route.
+  const backToList = () => {
+    if (canGoBack) {
+      router.history.back();
+    } else {
+      navigate({ to: '/digitization' });
+    }
+  };
 
   return (
     <PageLayout

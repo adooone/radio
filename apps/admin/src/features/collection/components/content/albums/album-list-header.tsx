@@ -51,6 +51,7 @@ export const AlbumListHeader = () => {
         <Menu
           trigger={
             <LampButton
+              tabIndex={-1}
               tone="yellow"
               size="sm"
               rounded="half"

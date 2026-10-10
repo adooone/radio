@@ -125,7 +125,12 @@ export const WidgetEditSidebar = ({ isOpen }: WidgetEditSidebarProps) => {
                 </span>
                 <Menu
                   trigger={
-                    <LampButton tone="dark" size="sm" rounded="half">
+                    <LampButton
+                      tabIndex={-1}
+                      tone="dark"
+                      size="sm"
+                      rounded="half"
+                    >
                       {selectedColorOption.name}
                     </LampButton>
                   }

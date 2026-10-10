@@ -21,13 +21,14 @@ export const PublishSection = ({ slug, onPublished }: PublishSectionProps) => {
   const { data: job } = useDigitizationJob(jobId);
 
   useEffect(() => {
-    if (job?.status === 'success') {
-      queryClient.invalidateQueries({
-        queryKey: digitizationKeys.detail(slug),
-      });
-      queryClient.invalidateQueries({ queryKey: digitizationKeys.drafts() });
-      onPublished?.();
-    }
+    if (job?.status !== 'success') return;
+    queryClient.invalidateQueries({
+      queryKey: digitizationKeys.detail(slug),
+    });
+    queryClient.invalidateQueries({ queryKey: digitizationKeys.drafts() });
+    // Let «Альбом опубліковано.» and the final job log be seen before leaving.
+    const timer = setTimeout(() => onPublished?.(), 2500);
+    return () => clearTimeout(timer);
   }, [job?.status, queryClient, slug, onPublished]);
 
   const handlePublish = async () => {

@@ -81,7 +81,13 @@ export const NavigationIsland: FC<NavigationIslandProps> = ({
           )}
 
           <div className="flex items-center gap-2">
-            {items.map((item) => renderLink(item, currentPath === item.path))}
+            {items.map((item) =>
+              renderLink(
+                item,
+                currentPath === item.path ||
+                  currentPath.startsWith(`${item.path}/`),
+              ),
+            )}
           </div>
 
           {actions && (
