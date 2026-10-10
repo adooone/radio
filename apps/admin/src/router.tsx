@@ -17,6 +17,9 @@ const router = createRouter({
     digitizationDetailRoute,
   ]),
   scrollRestoration: true,
+  // The layout scrolls an inner div, not window — point forward-navigation
+  // scroll-to-top at it, or pages open pre-scrolled to the previous offset.
+  scrollToTopSelectors: ['[data-scroll-restoration-id="admin-content"]'],
 });
 
 export default router;
