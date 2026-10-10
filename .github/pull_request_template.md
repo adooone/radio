@@ -1,3 +1,4 @@
+<!-- paper-camp draft-pr template v1 -->
 **Idea:** `IDEA-N` — `papercamp/ideas/IDEA-N.md`
 
 _One or two lines on what this idea changes, for whoever reviews it._

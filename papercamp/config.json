@@ -34,7 +34,8 @@
     ],
     "ci": {
       "repo": "croco-dendy/radio",
-      "releasePlease": true
+      "releasePlease": true,
+      "draftPr": true
     }
   },
   "defaultAgents": {
