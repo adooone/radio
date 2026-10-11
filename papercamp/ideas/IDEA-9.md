@@ -93,4 +93,3 @@ The mojo-ui → func-ui migration is functionally clean but visually drifted, ca
   until the first visible frame, v11 time-jumped to the end, so only
   instrumented background-window views ever saw frozen rows. No user
   impact either way.
-EOF_MARKER_NOT_USED = None
