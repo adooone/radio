@@ -22,7 +22,7 @@ The mojo-ui → func-ui migration is functionally clean but visually drifted, ca
       this idea as a note. Verify the Montserrat fix landed (body font no
       longer system default).
 
-- [ ] Phase 2 — Restore the Panel surface and detail header
+- [x] Phase 2 — Restore the Panel surface and detail header
       Port mojo's panel look onto the local Panel component from git
       history (21348e4^:packages/mojo-ui/src/components/panel/
       panel.module.scss): $color-bg-base ground with the double inset
@@ -77,3 +77,20 @@ The mojo-ui → func-ui migration is functionally clean but visually drifted, ca
   8. Already fixed before the audit: Montserrat woff2s now ship (base font
      no longer falls back to system), login-page stray box gone in
      production (present in the old build).
+
+- **Phase 2 shipped (2026-10-11, c1e3481):** framer-motion aligned on
+  12.43.0 (single copy shared with func-ui — removing mojo-ui had dropped
+  its v11 peer pin and two majors were bundling together); KyivType Sans
+  re-asserted as the base family over func-ui's Montserrat html rule;
+  mojo's neumorphic panel surface ported onto the local Panel (ground,
+  double inset relief, on-surface headers — the detail-header complaint);
+  StatsCard rebuilt as the dark bordered tile. Verified in dev against
+  production data and on the production bundle.
+- **Audit corrections:** the "Change Cover always visible" item was a
+  false alarm (the reviewer's own cursor hovered the cover in the
+  screenshot); the "invisible album rows" turned out to be a
+  hidden-window measurement artifact — framer v12 defers animation start
+  until the first visible frame, v11 time-jumped to the end, so only
+  instrumented background-window views ever saw frozen rows. No user
+  impact either way.
+EOF_MARKER_NOT_USED = None
