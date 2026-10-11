@@ -2,8 +2,9 @@
 id: IDEA-8
 title: Migrate admin from mojo-ui to func-ui
 type: feat
-status: review
+status: done
 created: 2026-10-08
+updated: 2026-10-11
 tags:
   - admin
   - migration
