@@ -47,3 +47,10 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+/* func-ui's stylesheet asserts Montserrat at the html level and its import
+   order in the bundle is not guaranteed — re-assert the admin's base family
+   with higher specificity so the app keeps its KyivType face. */
+html body {
+  font-family: "KyivType Sans", system-ui, sans-serif;
+}

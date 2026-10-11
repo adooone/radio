@@ -1,4 +1,3 @@
-import { Glass } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import type { FC } from 'react';
 
@@ -16,7 +15,15 @@ export const StatsCard: FC<StatsCardProps> = ({
   className,
 }) => {
   return (
-    <Glass className={clsx('flex flex-col p-4', className)}>
+    <div
+      className={clsx(
+        // Dark bordered tile like mojo's StatsCard — func-ui Glass renders a
+        // light surface that is illegible on the admin's dark theme.
+        'flex flex-col rounded-xl border border-white/10 bg-[#1e1e1e] p-4',
+        'shadow-[inset_2px_2px_4px_rgba(255,255,255,0.03),inset_-2px_-2px_6px_rgba(0,0,0,0.4)]',
+        className,
+      )}
+    >
       <h3 className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-sun/90">
         {title}
       </h3>
@@ -28,6 +35,6 @@ export const StatsCard: FC<StatsCardProps> = ({
       >
         {value}
       </p>
-    </Glass>
+    </div>
   );
 };

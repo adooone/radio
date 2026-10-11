@@ -2,6 +2,7 @@ import { useDeleteCollection, useUserCollections } from '@/services/api';
 import type { Collection } from '@radio/types';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { useState } from 'react';
 
 type CollectionListProps = {
@@ -56,7 +57,7 @@ export const CollectionList = ({ onCollectionClick }: CollectionListProps) => {
     );
   }
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -66,7 +67,7 @@ export const CollectionList = ({ onCollectionClick }: CollectionListProps) => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,

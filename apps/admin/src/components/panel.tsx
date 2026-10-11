@@ -53,16 +53,18 @@ export const Panel: FC<PanelProps> = ({
     <div
       className={clsx(
         'relative flex flex-col overflow-hidden',
+        // Surfaces ported from mojo's panel.module.scss: #1e1e1e ground with
+        // the double inset relief, 12px radius; plain = 24px glass.
         decorated
-          ? 'rounded-xl border border-white/10 bg-stone-900/60 shadow-2xl'
-          : 'rounded-2xl border border-white/10 bg-stone-900/30 backdrop-blur-2xl',
+          ? 'rounded-xl bg-[#1e1e1e] shadow-[inset_2px_2px_4px_rgba(255,255,255,0.03),inset_-2px_-2px_6px_rgba(0,0,0,0.4),0_10px_15px_-3px_rgba(0,0,0,0.4),0_2px_6px_rgba(0,0,0,0.3)]'
+          : 'rounded-2xl border border-white/20 bg-stone-900/30 backdrop-blur-2xl',
         isSingleSection && 'h-full w-full',
         minHeight,
         className,
       )}
     >
       {(title || subtitle || onClose) && (
-        <div className="relative z-10 flex flex-shrink-0 items-center gap-3 border-b border-white/10 bg-black/40 p-4">
+        <div className="relative z-10 flex flex-shrink-0 items-center gap-3 border-b border-white/10 bg-[rgba(20,20,20,0.6)] p-4">
           {onClose && (
             <LampIconButton
               tone="red"
@@ -114,7 +116,7 @@ export const Panel: FC<PanelProps> = ({
               )}
             >
               {section.header && (
-                <div className="flex-shrink-0 border-b border-white/10 bg-black/40 p-4">
+                <div className="flex-shrink-0 border-b border-white/10 bg-[rgba(20,20,20,0.6)] p-4">
                   {section.header}
                 </div>
               )}
@@ -124,7 +126,7 @@ export const Panel: FC<PanelProps> = ({
                 </span>
               )}
               {!section.header && section.title && !decorated && (
-                <div className="flex-shrink-0 border-b border-white/10 bg-black/40 px-6 py-4">
+                <div className="flex-shrink-0 border-b border-white/10 bg-[rgba(20,20,20,0.6)] px-6 py-4">
                   <span className="text-lg font-semibold text-white">
                     {section.title}
                   </span>

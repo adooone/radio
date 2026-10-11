@@ -6,6 +6,7 @@ import {
 } from '@/features/collection/utils/album-helpers';
 import type { Album } from '@radio/types';
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { useMemo, useRef } from 'react';
 import { AlbumListEmpty } from './list/album-list-empty';
 import { AlbumListHeaderRow } from './list/album-list-header-row';
@@ -103,7 +104,7 @@ export const AlbumList = () => {
   );
 };
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -114,7 +115,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
