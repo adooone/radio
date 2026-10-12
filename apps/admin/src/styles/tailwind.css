@@ -54,3 +54,15 @@ body {
 html body {
   font-family: "KyivType Sans", system-ui, sans-serif;
 }
+
+[class*="input-module__input"],
+[class*="textarea-module__textarea"],
+[class*="select-module__trigger"],
+[class*="chip-module__chip"],
+[class*="stamp-module__stamp"] {
+  border-radius: 9999px;
+}
+
+[class*="modal-module__panel"] {
+  border-radius: 1.5rem;
+}

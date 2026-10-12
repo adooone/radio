@@ -2,7 +2,7 @@
 id: IDEA-9
 title: Visual parity after func-ui migration
 type: fix
-status: in-progress
+status: review
 created: 2026-10-10
 updated: 2026-10-12
 tags:
@@ -34,7 +34,7 @@ The mojo-ui → func-ui migration is functionally clean but visually drifted, ca
       bar. Fix the collection details header alignment specifically (the
       user's report). Apply the same treatment to the other bg-black/40
       headers the Phase 1 audit flags.
-- [ ] Phase 3 — Retro alignment of func-ui primitives
+- [x] Phase 3 — Retro alignment of func-ui primitives
       Depends on func-ui gaining a rounded option (requested as a
       func-ui task: rounded 'full'|'half' on Input, Select, Textarea,
       Modal, Chip/Stamp and friends, mirroring LampButton's prop). Bump
