@@ -42,4 +42,5 @@ The mojo-ui → func-ui migration is functionally clean but visually drifted, ca
       look mojo had, and re-run the Phase 1 checklist to closure. Until
       the dep ships, any local className overrides that get the look
       cheaply may land first and be removed on adoption.
+      run: 22m57s · 146 in · 30.4k out · sonnet-5 · sess:e139f760-5b56-459c-abd8-a8e2ad100ec8
 - [x] [manual] Visual parity after func-ui migration
