@@ -40,6 +40,7 @@ The admin is desktop-only in practice — audited every page in Chrome at 390x84
       bubble first, then stats/airtime/log-health/records), edit mode
       disabled; the desktop canvas stays as is. The widget components
       already render standalone — this is a layout branch, not a rewrite.
+      run: 4m9s · 68 in · 12.8k out · sonnet-5 · sess:137fe6ab-3332-4334-bf9f-71d798a5bed3
 - [ ] Phase 4 — Polish pass and re-audit
       Stream: stat row grid-cols-6 → 2/3/6 responsive, tab pills shrink
       or scroll; digitization draft page and metadata form spot-checked at
