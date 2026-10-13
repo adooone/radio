@@ -58,3 +58,4 @@ The admin is desktop-only in practice — audited every page in Chrome at 390x84
       and a safe-area-inset-bottom offset to NavigationIsland for iOS PWA
       home-indicator clearance. Not re-verified on a real device or
       browser in this run — left to a human.
+      run: 5m16s · 76 in · 11.9k out · sonnet-5 · sess:137fe6ab-3332-4334-bf9f-71d798a5bed3
