@@ -68,7 +68,7 @@ export const NavigationIsland: FC<NavigationIslandProps> = ({
   return (
     <div
       className={clsx(
-        'fixed bottom-6 left-1/2 z-50 w-[calc(100%-2rem)] max-w-fit -translate-x-1/2 sm:w-auto',
+        'fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] left-1/2 z-50 w-[calc(100%-2rem)] max-w-fit -translate-x-1/2 sm:w-auto',
         className,
       )}
     >

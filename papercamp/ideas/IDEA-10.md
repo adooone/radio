@@ -2,7 +2,7 @@
 id: IDEA-10
 title: Mobile layout for the admin
 type: feat
-status: planned
+status: review
 created: 2026-10-13
 tags:
   - admin
@@ -41,10 +41,20 @@ The admin is desktop-only in practice — audited every page in Chrome at 390x84
       disabled; the desktop canvas stays as is. The widget components
       already render standalone — this is a layout branch, not a rewrite.
       run: 4m9s · 68 in · 12.8k out · sonnet-5 · sess:137fe6ab-3332-4334-bf9f-71d798a5bed3
-- [ ] Phase 4 — Polish pass and re-audit
+- [x] Phase 4 — Polish pass and re-audit
       Stream: stat row grid-cols-6 → 2/3/6 responsive, tab pills shrink
       or scroll; digitization draft page and metadata form spot-checked at
       390px (grids from the IDEA-6/7 work mostly stack already); login
       card fits narrow screens; re-run the full 390px walk and append the
       result here. Optional nicety: safe-area padding for the PWA on iOS
       (env(safe-area-inset-bottom) under the nav island).
+      Re-audit (code review, no browser — headless run): Stream monitoring
+      stat grid now grid-cols-2 sm:grid-cols-3 lg:grid-cols-6; VinylTabs
+      (shared by Stream and Collection headers) now shrinks padding/text
+      and scrolls horizontally below sm instead of clipping. Digitization
+      draft detail and metadata form already stack correctly below md from
+      IDEA-6/7 — no change needed. Login card padding reduced to p-6 below
+      sm so the form has breathing room at 390px. Added viewport-fit=cover
+      and a safe-area-inset-bottom offset to NavigationIsland for iOS PWA
+      home-indicator clearance. Not re-verified on a real device or
+      browser in this run — left to a human.

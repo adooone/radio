@@ -62,7 +62,7 @@ export const MonitoringTab: React.FC<MonitoringTabProps> = ({
           <RtmpServiceCard stats={monitoring?.services.rtmp || null} />
         </div>
 
-        <div className="grid grid-cols-6 gap-4 mt-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mt-10">
           {getStreamOverviewStats().map((stat) => (
             <StatsCard
               key={stat.title}
