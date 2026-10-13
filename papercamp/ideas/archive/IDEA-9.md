@@ -2,14 +2,15 @@
 id: IDEA-9
 title: Visual parity after func-ui migration
 type: fix
-status: review
+status: done
 created: 2026-10-10
-updated: 2026-10-12
+updated: 2026-10-13
 tags:
   - admin
   - func-ui
   - design
   - parity
+order: 1
 ---
 
 The mojo-ui → func-ui migration is functionally clean but visually drifted, caught on the live site (2026-10-10): the page base font fell back to system default (func-ui base sets Montserrat Alternates with /fonts/ urls the app did not ship — four woff2 files now added, fixed on main); the local Panel rebuild replaced mojo's neumorphic surface (layered inset shadows, baseLayer/innerField texture, header on the panel surface) with flat bg-black/40 bars, so the collection details header reads as a detached black strip; and func-ui's primitives (Input, Select, Modal, Stamp) are squarer than the admin's retro pill language — mojo rounded nearly everything full. A rounded option is being requested in func-ui to mirror LampButton's rounded prop. Reference for comparison: the last pre-migration deployment is still live at radioadmin-8th3yiwzo-croco-dendy-projects.vercel.app (commit f4fd660), so every screen can be diffed side by side against production.
