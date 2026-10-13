@@ -17,7 +17,7 @@ export const PageLayout: FC<PageLayoutProps> = ({
   return (
     <div className={clsx('w-full min-h-screen', className)}>
       <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col items-start gap-3 mb-4 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
           <h1 className="text-4xl font-bold text-white">{title}</h1>
           {headerRight && <div>{headerRight}</div>}
         </div>

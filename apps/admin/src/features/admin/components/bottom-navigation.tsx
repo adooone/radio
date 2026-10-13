@@ -22,7 +22,7 @@ export const BottomNavigation = ({ currentRoute }: BottomNavigationProps) => {
       logo={
         <>
           <RadioLogo />
-          <NowPlaying />
+          <NowPlaying className="hidden sm:flex" />
         </>
       }
       actions={<UserMenu />}
