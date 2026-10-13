@@ -34,7 +34,7 @@ The admin is desktop-only in practice — audited every page in Chrome at 390x84
       detail component) with its own back affordance; list scroll position
       preserved on return. The playlists tab gets the same treatment.
       run: 7m13s · 106 in · 34k out · sonnet-5 · sess:ad6a8a43-61f3-4f93-8cc0-b65c11e4a345
-- [ ] Phase 3 — Dashboard on mobile
+- [x] Phase 3 — Dashboard on mobile
       Below md, replace the absolutely-positioned draggable widget canvas
       with a static vertical stack of the same widget cards (welcome
       bubble first, then stats/airtime/log-health/records), edit mode

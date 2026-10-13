@@ -57,17 +57,19 @@ const styles = {
   contentArea: [
     'relative w-full max-w-7xl mx-auto',
     'h-full min-h-[600px] py-8',
-    'flex items-center justify-center',
+    'flex flex-col items-center justify-center',
   ],
   welcomeCardWrapper: [
     'relative z-30',
     'flex flex-col justify-center items-center gap-4',
   ],
   content: [
-    'text-center bg-coal-deep/30 backdrop-blur-md rounded-full p-8 sm:p-12 border border-white/20',
+    'text-center bg-coal-deep/30 backdrop-blur-md border border-white/20',
+    'rounded-3xl lg:rounded-full p-6 sm:p-8 lg:p-12',
     'shadow-2xl transition-all duration-500',
     'relative z-30',
-    'w-[min(600px,90vw)] min-h-[400px] h-[min(500px,70vh)]',
+    'w-[90vw] max-w-xl lg:w-[min(600px,90vw)]',
+    'h-auto lg:min-h-[400px] lg:h-[min(500px,70vh)]',
     'flex flex-col justify-center items-center',
     'pointer-events-none',
   ],
