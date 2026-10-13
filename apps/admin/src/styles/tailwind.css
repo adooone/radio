@@ -52,7 +52,7 @@ body {
    order in the bundle is not guaranteed — re-assert the admin's base family
    with higher specificity so the app keeps its KyivType face. */
 html body {
-  font-family: "KyivType Sans", system-ui, sans-serif;
+  font-family: "KyivType Serif", Georgia, serif;
 }
 
 [class*="input-module__input"],
