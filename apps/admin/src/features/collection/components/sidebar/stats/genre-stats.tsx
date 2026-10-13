@@ -23,7 +23,7 @@ export const GenreStats = ({
 
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex gap-2 overflow-x-auto [scrollbar-width:none] lg:flex-wrap lg:overflow-visible [&::-webkit-scrollbar]:hidden">
         {sortedGenres.map(([genre, count]) => {
           const isSelected = selectedSet.has(genre);
           const colorIndex = sortedGenres.findIndex(([g]) => g === genre);
@@ -34,7 +34,7 @@ export const GenreStats = ({
               type="button"
               onClick={() => onGenreClick(genre)}
               className={
-                'group px-2 py-1 rounded-full text-sm font-medium transition-all cursor-pointer'
+                'group flex-shrink-0 px-2 py-1 rounded-full text-sm font-medium transition-all cursor-pointer'
               }
               style={{
                 backgroundColor: isSelected

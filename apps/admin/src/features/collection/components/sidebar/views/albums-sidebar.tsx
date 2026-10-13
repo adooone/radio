@@ -77,7 +77,7 @@ export const AlbumsSidebar = ({
   };
 
   return (
-    <div className="flex flex-col h-full justify-between gap-6 w-full">
+    <div className="flex flex-col h-auto lg:h-full justify-between gap-6 w-full">
       <GenreStats
         genreCounts={genreCounts}
         onGenreClick={handleGenreClick}
@@ -93,7 +93,7 @@ export const AlbumsSidebar = ({
             label="Повнота даних"
             lampCount={20}
             fullWidth
-            className="pb-4"
+            className="hidden pb-4 lg:block"
           />
           <CollectionStats
             activeTab="albums"

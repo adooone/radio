@@ -58,7 +58,7 @@ export const Panel: FC<PanelProps> = ({
         decorated
           ? 'rounded-xl bg-[#1e1e1e] shadow-[inset_2px_2px_4px_rgba(255,255,255,0.03),inset_-2px_-2px_6px_rgba(0,0,0,0.4),0_10px_15px_-3px_rgba(0,0,0,0.4),0_2px_6px_rgba(0,0,0,0.3)]'
           : 'rounded-2xl border border-white/20 bg-stone-900/30 backdrop-blur-2xl',
-        isSingleSection && 'h-full w-full',
+        isSingleSection && 'h-auto w-full lg:h-full',
         minHeight,
         className,
       )}
@@ -96,7 +96,7 @@ export const Panel: FC<PanelProps> = ({
             ? 'flex flex-col gap-6 p-3'
             : clsx('grid grid-cols-1 gap-4 p-2', maxColumnsClass[maxColumns]),
           isSingleSection &&
-            'flex h-full w-full flex-col overflow-hidden !gap-0 !p-0',
+            'flex h-auto w-full flex-col overflow-hidden !gap-0 !p-0 lg:h-full',
         )}
       >
         {sections.map((section) => (
@@ -104,7 +104,7 @@ export const Panel: FC<PanelProps> = ({
             key={section.title}
             className={clsx(
               'relative flex min-w-0 flex-col',
-              isSingleSection && 'h-full w-full flex-1',
+              isSingleSection && 'h-auto w-full flex-1 lg:h-full',
             )}
           >
             <div
@@ -112,7 +112,7 @@ export const Panel: FC<PanelProps> = ({
                 'flex flex-1 flex-col',
                 decorated
                   ? 'rounded-md border border-white/10 bg-black/20 p-6'
-                  : 'h-full w-full',
+                  : 'h-auto w-full lg:h-full',
               )}
             >
               {section.header && (

@@ -13,11 +13,13 @@ import type { Collection } from '@radio/types';
 type CollectionContentProps = {
   onCollectionClick: (collection: Collection) => void;
   showDetail?: boolean;
+  compactOnSelect?: boolean;
 };
 
 export const CollectionContent = ({
   onCollectionClick,
   showDetail = false,
+  compactOnSelect = true,
 }: CollectionContentProps) => {
   const { activeTab, selectedAlbum, setSelectedAlbum } = useCollectionStore();
   const isPlaylistsTab = activeTab === 'playlists';
@@ -33,7 +35,7 @@ export const CollectionContent = ({
         <Panel
           content={<AlbumDetail album={selectedAlbum} />}
           className="flex-1 flex flex-col overflow-hidden h-auto lg:h-full"
-          minHeight="h-full"
+          minHeight="h-auto lg:h-full"
           title={selectedAlbum.title}
           decorated={false}
           onClose={handleCloseDetail}
@@ -43,7 +45,7 @@ export const CollectionContent = ({
   }
 
   // When an album is selected, show compact list instead of regular list
-  const showCompactList = selectedAlbum && !isPlaylistsTab;
+  const showCompactList = selectedAlbum && !isPlaylistsTab && compactOnSelect;
 
   const content = isPlaylistsTab ? (
     <CollectionList onCollectionClick={onCollectionClick} />
@@ -65,7 +67,7 @@ export const CollectionContent = ({
         header={header}
         content={content}
         className="flex-1 flex flex-col overflow-hidden h-auto lg:h-full"
-        minHeight="h-full"
+        minHeight="h-auto lg:h-full"
         decorated={false}
       />
     </div>

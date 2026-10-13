@@ -81,7 +81,7 @@ export const CollectionList = ({ onCollectionClick }: CollectionListProps) => {
 
   return (
     <motion.div
-      className="space-y-3 h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent"
+      className="space-y-3 h-auto overflow-visible lg:h-full lg:overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent"
       variants={containerVariants}
       initial="hidden"
       animate="visible"

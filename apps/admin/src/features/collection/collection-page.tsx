@@ -45,7 +45,8 @@ export const CollectionPage = () => {
         />
       }
     >
-      <div className="relative lg:h-[calc(100vh-12rem)] overflow-visible pb-16">
+      {/* Desktop: fixed-height master-detail layout, sidebar + list sliding to make room for the detail panel */}
+      <div className="relative hidden lg:block lg:h-[calc(100vh-12rem)] overflow-visible pb-16">
         <div
           className="relative h-full"
           style={{
@@ -147,6 +148,27 @@ export const CollectionPage = () => {
           </AnimatePresence>
         </div>
       </div>
+
+      {/* Mobile: stacked, page-scrolling flow. The list stays mounted under a
+          full-screen detail overlay so its scroll position survives the
+          round trip. */}
+      <div className="flex flex-col gap-4 pb-16 lg:hidden">
+        <CollectionSidebar />
+        <CollectionContent
+          onCollectionClick={setSelectedCollection}
+          showDetail={false}
+          compactOnSelect={false}
+        />
+      </div>
+
+      {showAlbumDetail && (
+        <div className="fixed inset-0 z-40 overflow-y-auto bg-stone-950/95 p-4 backdrop-blur-sm lg:hidden">
+          <CollectionContent
+            onCollectionClick={setSelectedCollection}
+            showDetail={true}
+          />
+        </div>
+      )}
 
       <CollectionModals
         selectedCollection={selectedCollection}

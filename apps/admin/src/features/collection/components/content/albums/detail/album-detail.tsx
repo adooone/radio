@@ -64,7 +64,7 @@ export const AlbumDetail = ({ album }: AlbumDetailProps) => {
         </div>
       ) : (
         <>
-          <div className="flex gap-6">
+          <div className="flex flex-col gap-6 sm:flex-row">
             <AlbumCover
               coverUrl={albumWithSongs.coverImageUrl || null}
               albumTitle={albumWithSongs.title}

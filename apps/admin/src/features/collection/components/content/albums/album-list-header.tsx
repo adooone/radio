@@ -40,14 +40,14 @@ export const AlbumListHeader = () => {
     sortOptions.find((opt) => opt.value === sortBy)?.label || 'Назва';
 
   return (
-    <div className="flex items-center gap-3 w-full">
+    <div className="flex flex-wrap items-center gap-3 w-full">
       <h3 className="text-lg font-semibold text-gray-200 whitespace-nowrap ml-3">
         Ваші альбоми
       </h3>
 
-      <div className="flex-1" />
+      <div className="flex-1 hidden sm:block" />
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 flex-wrap">
         <Menu
           trigger={
             <LampButton
@@ -92,7 +92,7 @@ export const AlbumListHeader = () => {
           icon={<FilterIcon size={16} />}
         />
 
-        <div className="w-64">
+        <div className="w-full sm:w-64">
           <AlbumSearch value={searchQuery} onChange={setSearchQuery} />
         </div>
       </div>

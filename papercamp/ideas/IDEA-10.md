@@ -24,7 +24,7 @@ The admin is desktop-only in practice — audited every page in Chrome at 390x84
       so АЛЬБОМИ/ПЛЕЙЛИСТИ and НОВИЙ ЗАПИС/ОНОВИТИ never clip. Verify at
       390px on every route.
       run: 14m13s · 60 in · 9k out · sonnet-5 · sess:ad6a8a43-61f3-4f93-8cc0-b65c11e4a345
-- [ ] Phase 2 — Collection on mobile
+- [x] Phase 2 — Collection on mobile
       Replace the fixed-height two-panel layout below lg with a stacked,
       page-scrolling flow: genre chips as one horizontally scrollable row,
       the stats block collapsed into a compact summary, the album list
@@ -33,6 +33,7 @@ The admin is desktop-only in practice — audited every page in Chrome at 390x84
       opens as a full-screen layer over the list (reuse the existing
       detail component) with its own back affordance; list scroll position
       preserved on return. The playlists tab gets the same treatment.
+      run: 7m13s · 106 in · 34k out · sonnet-5 · sess:ad6a8a43-61f3-4f93-8cc0-b65c11e4a345
 - [ ] Phase 3 — Dashboard on mobile
       Below md, replace the absolutely-positioned draggable widget canvas
       with a static vertical stack of the same widget cards (welcome

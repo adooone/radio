@@ -24,7 +24,7 @@ export const CollectionSidebar = () => {
         };
 
   return (
-    <div className="w-80 flex-shrink-0 flex flex-col gap-4 h-full">
+    <div className="w-full lg:w-80 flex-shrink-0 flex flex-col gap-4 h-auto lg:h-full">
       <Panel
         content={
           <div className="flex flex-col gap-4 lg:h-full">
@@ -49,7 +49,7 @@ export const CollectionSidebar = () => {
           </div>
         }
         className="flex-1 flex flex-col lg:h-full"
-        minHeight="h-full"
+        minHeight="h-auto lg:h-full"
         decorated={false}
       />
     </div>
