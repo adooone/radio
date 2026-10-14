@@ -2,13 +2,15 @@
 id: IDEA-10
 title: Mobile layout for the admin
 type: feat
-status: review
+status: done
 created: 2026-10-13
+updated: 2026-10-14
 tags:
   - admin
   - mobile
   - responsive
   - ux
+order: 1
 ---
 
 The admin is desktop-only in practice — audited every page in Chrome at 390x844 against production (2026-10-13, user confirmed on a real phone). Dashboard: the absolutely-positioned draggable widget canvas overflows both edges, the welcome bubble is clipped mid-word — unusable. Collection: the fixed-height master-detail layout collapses — the filter panel is truncated, the album list panel does not render at all, and the page cannot scroll. Global: the bottom NavigationIsland (min-w-fit pill) is wider than the viewport, so СТРІМ and ОЦИФРОВКА are unreachable, and PageLayout header actions clip on every page (АЛЬБОМИ/ПЛЕЙЛИСТИ tabs, НОВИЙ ЗАПИС/ОНОВИТИ). Mostly fine already: Users (stacked tiles), Digitization (stacks from IDEA-6), Stream (minor: fixed grid-cols-6 stat row and tab pills overflow). Fix order: global chrome first (nav island + page header — improves every page at once), then Collection, then Dashboard, then a polish pass.
