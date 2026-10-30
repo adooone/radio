@@ -10,76 +10,88 @@ tags:
   - design
   - stream
   - hls
+  - chat
 order: 1
 ---
 
-The player at radio.adoo.one is remade from zero as a single listening
-page for the live stream, in the retro-film language of the two sister
-sites (sbjectv.shop and fo.band, sources in ~/dev): a two-ink world —
-`#1C1C1C` ink and `#F0E6D2` cream, with the logo label's `#FF5647` red as
-the only accent — KyivType faces (the woff2 files already sit in
-`apps/player/public/fonts`), one full-viewport composition, and fo.band's
-film overlay adapted over everything: jittering grain tile, canvas-drawn
-scratches and dust, lens vignette, viewfinder gate with corner brackets
-and meter circle, warm cast, passing light leaks, a slow weave of the
-whole frame. The existing lockup (`apps/wave/public/radio-logo.svg` —
-ink-splat record with red label, cream hand-serif ВІНІЛОВЕ РАДІО) is the
-identity; the splat record becomes the central play control and spins
-while on air. hls.js plays the HLS stream from `VITE_STREAM_URL`
-(`https://stream.adoo.one/hls/test.m3u8`), native HLS on Safari; when
-nothing publishes the endpoint 404s, the page says the air is quiet and
-retries on a timer. The old app — chat, sockets, collection page, router,
-PWA plugin, and their dependency tree — is removed with the rewrite;
-whatever returns later returns as its own idea.
+The player at radio.adoo.one is the Puget Sound listening room, planned
+together in conversation (the first photo-based build of 2026-10-30 is
+superseded — its scaffold, HLS engine and film overlay carry over, its
+composition does not). One black screen (`#0A0605` warm near-black) split
+2 : 1 with **no dividers or hairlines** — the left two thirds are the
+radio, the right third is the chat; on portrait phones the halves stack,
+radio above chat. The palette is strict: red `#FF5647` for every shape
+and control (disc, bars, buttons, sliders), warm white `#F5F2EC` for all
+reading text, and red in the logo's italic script only for brand moments
+(the wordmark's script line, the status line). A warm yellow `#FFB84D`
+inset glow lights the red, like the logo's label.
 
-Mid-build the user named the radio **Puget Sound** and gave its design:
-Figma → Laboratory → node 383-884 — the turntable photograph in a dark warm
-room, the splat record with a glowing label, the stencil PUGET SOUND
-wordmark in warm cream and the Vinyl Radio script in red neon, film dust
-over everything. The page is built from that frame's own exports
-(`public/brand/`: photo, dust, five sign SVGs with the glow baked in) and
-its colours: `#191919` room, `#120D05` warm black, `#DFDFD4` cream,
-`#FF5647` label red. fo.band already carries the same brand
-(`assets/puget-sound/` and `puget-sound.tsx` there), so the sites rhyme.
+The radio side is built around a **vinyl box**: the album sleeve of the
+song on air with the red disc half slid out of it. The disc spins while
+playing and audio-reactive bars breathe from its exposed edge — a Web
+Audio analyser taps the real sound where the browser allows, a
+time-driven animation of the same look stands in where it doesn't
+(jsdom, Safari without CORS). Playback is **audio-only**: hls.js feeds a
+hidden `<audio>` element (the stream's video track is ignored), native
+HLS on Safari, offline = 404ing manifest with a 15 s retry. Controls are
+custom-skinned Radix primitives — play, LIVE lamp, volume slider.
+
+The chat is the old player's chat moved over **structurally and
+stylistically intact**, recolored to the new palette: bubble messages
+(own right in a red tint, others left on faint white), uppercase
+nicknames in auto-assigned warm shades with the online status icon, mono
+timestamps, «Чатік» header with the sound toggle, the auto-growing
+«Шо кажеш?» input with the «Ентер» button, and the nickname gate with
+its Ukrainian validation. It speaks to wave's existing WebSocket chat
+(join / chat / listeners / color_update) — zero backend changes.
+
+Nothing tells the player what's on air yet: wave has album covers in its
+DB but no now-playing endpoint. The player defines the contract now — a
+`now_playing` message on the same WebSocket (artist, title, cover) — and
+renders a generic Puget Sound sleeve as the graceful fallback, so it is
+never blocked on the backend. The wave side (endpoint + whatever sets
+it) is its own future idea.
+
+The film overlay from the first build stays on top of everything:
+jittering grain, canvas scratches, vignette, gate, warm cast, light
+leaks, frame weave, stilled by `prefers-reduced-motion`.
 
 ### Phases
-- [x] Phase 1 — Fresh scaffold
-      Empty `apps/player/src` and rebuild on the monorepo's Vite/React/TS
-      with Tailwind v4 (`@tailwindcss/vite`, `@theme` tokens as on the
-      sister sites); hls.js the only runtime extra; `pnpm player:dev`,
-      build, lint, test wired exactly as before; dead deps dropped from
-      package.json.
-- [x] Phase 2 — Stream engine
-      A `use-radio` hook around hls.js (native HLS where supported):
-      idle/loading/live/offline states, offline retry every ~15 s,
-      play/pause, volume and mute, the video element surfaced so the live
-      picture can show. Offline is the HLS manifest 404ing, not an error
-      wall.
-- [x] Phase 3 — Composition and logo
-      Ink page, cream wordmark extracted from the SVG lockup, the splat
-      record as the big central play control — spinning on air, still
-      when quiet — a controls row (volume slider, mute, status line
-      ON AIR / ТИХО), the live video as the full-bleed backdrop while
-      playing; Ukrainian copy throughout.
-- [x] Phase 4 — The film overlay
-      fo.band's camera eye adapted into the player: grain, scratches,
-      vignette, gate, corner brackets, meter circle, warm cast, light
-      leaks, frame weave; strengths on `--film-*` variables;
-      `prefers-reduced-motion` stills it.
-- [x] Phase 5 — Responsive pass and ship
-      390 px layout and safe-area insets, live and offline states checked
-      against the real stream, build, lint and tests green, committed on
-      its own branch with a PR.
+- [x] Phase 1 — Composition
+      Split 2 : 1 layout with no dividers, portrait stacking, the
+      black/red/white palette as `@theme` tokens, text wordmark with the
+      red glow and italic script line.
+- [x] Phase 2 — Vinyl box
+      Sleeve + half-hidden disc on canvas: spin on air, audio-reactive
+      bars via Web Audio analyser with a time-driven fallback,
+      now-playing contract (`now_playing` on the WebSocket) with the
+      generic sleeve fallback.
+- [x] Phase 3 — Audio engine and controls
+      `use-radio` switched from video to a hidden audio element (same
+      states, offline retry, live-edge join); custom controls on Radix
+      primitives: play, LIVE lamp, volume.
+- [x] Phase 4 — Chat
+      Old chat ported into `features/chat`: socket service, bubbles,
+      nicknames with auto colors and status, sounds with the toggle,
+      nickname gate with validation; restyled to the new palette.
+- [x] Phase 5 — Film, responsive, ship
+      Film overlay over the whole page, portrait pass on a real phone
+      width, tests/lint/build green, committed on the branch, PR
+      updated.
 
 ### Out of scope
 
-The wave backend and its `/api` surface — untouched. Chat, the public
-collection page, and PWA installability: removed with the rewrite, each a
-candidate for its own future idea. Vercel project settings (the app keeps
-building to `dist` with the same env names).
+The wave backend — untouched; the now-playing endpoint and its admin or
+toolchain wiring are a future idea. The public collection page and PWA
+installability — each a candidate for its own idea. An audio-only HLS
+rendition on the server (the player ignores the video track for now).
 
 ### Thread
-- [x] 2026-10-30 [decision] [user] Rebuild from zero (task handed from the OBS/stream session): don't carry the old UI over; the stream was verified live and carrying audio, so the player can be tested against the real endpoint.
-- [x] 2026-10-30 [decision] [agent] The earlier uncommitted draft of IDEA-11 (collection reachable/playable) is superseded by this rebuild; its one finding that outlives the old UI — wave's audio stream endpoint advertises ranges but ignores the Range header — can come back as its own idea.
-- [x] 2026-10-30 [decision] [user] The radio is named **Puget Sound** from now on, and its look follows the Figma design (Laboratory → node 383-884): colours from the design and the logo, the vintage feel kept. Status copy stays Ukrainian under the English brand.
-- [x] 2026-10-30 [decision] [agent] Verified headlessly against the live stream (manifest parsed, video decoded and playing, 1466×1000 and 390×844 screenshots match the design); listening on a real device left to the user.
+- [x] 2026-10-30 [decision] [user] Rebuild from zero (task handed from the OBS/stream session); the radio is named **Puget Sound**; its first look followed the Figma frame (Laboratory → 383-884).
+- [x] 2026-10-30 [decision] [user] The first build went ahead of the design conversation and is superseded: plan together first, then build. Scaffold, engine and film overlay are kept; photo/video composition dropped.
+- [x] 2026-10-30 [decision] [user] No photo background and no video — a canvas, animatable visual and audio-only playback. Black background; red the primary color for shapes and elements, with yellow inset glow like the logo; all controls custom, not system defaults.
+- [x] 2026-10-30 [decision] [user] Text is white; red (in the logo's italic font) only for special brand cases. Screen split 2 : 1, radio left, chat right, with no dividers between sections. The song on air shows its album cover as a real vinyl box with the disc half hidden inside. Chat style copied from the previous version; the film overlays kept on top.
+- [x] 2026-10-30 [decision] [agent] No now-playing source exists in wave, so the player defines the WebSocket contract (`now_playing`: artist, title, cover) and falls back to a generic sleeve; the backend endpoint becomes its own idea.
+- [x] 2026-10-30 [decision] [agent] Old chat's zustand color store and picker are not ported — nicknames get auto-assigned warm shades (hash of the name) fitting the strict palette; wave's `color_update` stays unused for now.
+- [x] 2026-10-30 [decision] [agent] Verified headlessly against the dev server: offline state, the solid sleeve hiding the disc's half, portrait stacking at 390 px; tests, lint, types and build green. The air was off during the pass, so live playback and the analyser-driven bars still await a listen with the stream on.
+- [ ] 2026-10-30 [question] [agent] What should set now-playing on the air side — the admin app marking the current album, or the stream toolchain (OBS/digitization) publishing metadata?

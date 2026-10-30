@@ -38,19 +38,19 @@
 }
 
 @theme {
-  /* The Figma frame's colours: the room, its warmest black, the sign's
-     warm white, and the label's red. */
-  --color-ink: #191919;
-  --color-deep: #120d05;
-  --color-cream: #dfdfd4;
+  /* The strict palette (IDEA-11): the page's warm black, a darker backdrop,
+     warm white for reading, the label red, and the glow that lights it. */
+  --color-ink: #0a0605;
+  --color-deep: #050302;
+  --color-cream: #f5f2ec;
   --color-accent: #ff5647;
+  --color-glow: #ffb84d;
   --font-serif: "KyivType Serif", Georgia, serif;
   --font-sans: "KyivType Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
-  /* Whatever shows past the page (a phone's bars, an overscroll) stays the
-     room's warm black. */
+  /* Whatever shows past the page (a phone's bars, an overscroll) stays black. */
   html {
     background: var(--color-deep);
   }
@@ -59,88 +59,64 @@
     /* One screen, nothing to scroll. */
     overflow: hidden;
   }
-
-  /* One design pixel of the 1466 × 1000 Figma frame, as a length. */
-  .stage {
-    --k: min(100vw / 1466, 100vh / 1000);
-  }
 }
 
-/* The hero sign cluster at the Figma frame's size and place: the splat at
-   its left, the wordmark and script to its right (sign.tsx holds the inner
-   geometry). Portrait stacks it instead (classes in player-page.tsx). */
-.hero-cluster {
-  width: calc(1056.3 * var(--k));
-  aspect-ratio: 1056.3 / 269.4;
-  /* The sign hangs a touch below the frame's middle, as in the design. */
-  transform: translateY(calc(42 * var(--k)));
-}
-.hero-splat {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 16.02%;
-}
-.hero-sign {
-  position: absolute;
-  left: 22.89%;
-  top: 2.56%;
-  width: 77.11%;
+/* The split: radio 2, chat 1, no dividers — portrait stacks them instead. */
+.split {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
 }
 @media (orientation: portrait) {
-  .hero-cluster {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 7vw;
-    width: auto;
-    aspect-ratio: auto;
-    transform: none;
+  .split {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 11fr) minmax(0, 9fr);
   }
-  /* relative, not static: both keep containing their absolutely-placed layers. */
-  .hero-splat {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 42vw;
-  }
-  .hero-sign {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 86vw;
-  }
+}
+/* The chat sits last either way; keep its input above a phone's home bar. */
+.split > section:last-child {
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
 }
 
-/* The frame's warm shade, darkening toward the right, from the Figma frame. */
-.room-shade {
-  background: linear-gradient(
-    97.74deg,
-    rgba(0, 0, 0, 0) 20.78%,
-    #120d05 105.31%
-  );
+/* Red text is for brand moments only, and it glows warm like the label. */
+.neon {
+  color: var(--color-accent);
+  text-shadow:
+    0 0 14px rgb(255 160 60 / 0.55),
+    0 0 2px rgb(255 200 90 / 0.8);
+}
+.neon-soft {
+  color: var(--color-accent);
+  text-shadow: 0 0 9px rgb(255 120 60 / 0.45);
 }
 
-/* The neon turned off: the sign unlit while the air is quiet. */
-.sign-off {
-  filter: grayscale(0.35) brightness(0.55);
-  opacity: 0.75;
+/* The sleeve throws its shadow over the disc sliding out of it. */
+.vinyl-sleeve {
+  box-shadow: 10px 0 24px rgb(0 0 0 / 0.6);
 }
 
-/* The record turns at 33⅓ (1.8 s a side-long revolution), about its spindle. */
-.splat-spin {
-  animation: splat-spin 1.8s linear infinite;
-  transform-origin: 47.9% 48.37%;
+/* The play control's quiet burn. */
+.play-btn {
+  box-shadow:
+    0 0 12px rgb(255 86 71 / 0.35),
+    inset 0 0 7px rgb(255 160 60 / 0.25);
 }
-@keyframes splat-spin {
-  to {
-    transform: rotate(360deg);
-  }
+
+/* The volume's lit side and its stone. */
+.vol-range {
+  box-shadow: 0 0 6px rgb(255 86 71 / 0.7);
+}
+.vol-thumb {
+  box-shadow: 0 0 8px rgb(255 120 60 / 0.8);
+}
+.vol-thumb:focus-visible {
+  outline: 1px solid var(--color-cream);
+  outline-offset: 3px;
 }
 
 /* The on-air lamp breathes. */
 .live-dot {
   animation: live-pulse 2.4s ease-in-out infinite;
+  box-shadow: 0 0 8px rgb(255 86 71 / 0.8);
 }
 @keyframes live-pulse {
   0%,
@@ -152,35 +128,10 @@
   }
 }
 
-/* The scrim under the controls, over the picture's lower edge. */
-.scrim {
-  background: linear-gradient(to top, rgb(10 7 2 / 0.78), transparent);
-}
-
-/* The volume: a thin cream line with a cream stone on it. */
-.volume {
-  appearance: none;
-  -webkit-appearance: none;
-  height: 2px;
-  border-radius: 1px;
-  background: color-mix(in srgb, var(--color-cream) 35%, transparent);
-  outline-offset: 6px;
-}
-.volume::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: none;
-  background: var(--color-cream);
-}
-.volume::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: none;
-  background: var(--color-cream);
+/* The chat's scroll: a thin red whisper, no chrome. */
+.chat-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 86 71 / 0.3) transparent;
 }
 
 /*
@@ -387,7 +338,6 @@
 @media (prefers-reduced-motion: reduce) {
   .film-grain,
   .film-leak,
-  .splat-spin,
   .live-dot,
   .stage {
     animation: none;
