@@ -61,10 +61,19 @@
   }
 }
 
-/* The split: radio 2, chat 1, no dividers — portrait stacks them instead. */
+/* The page's breathing room: one gutter, growing with the screen. */
+.stage {
+  --gutter: clamp(2.5rem, 6.4vw, 6rem);
+}
+
+/* The split: radio 2, chat 1, no dividers — the gutters are the separation;
+   portrait stacks the halves instead. */
 .split {
   display: grid;
   grid-template-columns: 2fr 1fr;
+}
+.split > section {
+  padding-inline: var(--gutter);
 }
 @media (orientation: portrait) {
   .split {
@@ -72,21 +81,44 @@
     grid-template-rows: minmax(0, 11fr) minmax(0, 9fr);
   }
 }
-/* The chat sits last either way; keep its input above a phone's home bar. */
+/* The chat sits last either way: the gutter breathes above and below it
+   too, and its input stays above a phone's home bar. */
 .split > section:last-child {
-  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  padding-top: calc(var(--gutter) * 0.8);
+  padding-bottom: calc(var(--gutter) * 0.8 + env(safe-area-inset-bottom, 0px));
 }
 
-/* Red text is for brand moments only, and it glows warm like the label. */
-.neon {
-  color: var(--color-accent);
-  text-shadow:
-    0 0 14px rgb(255 160 60 / 0.55),
-    0 0 2px rgb(255 200 90 / 0.8);
+/* The full lockup — splat record, then the sign — small in the top-left
+   corner; portrait keeps it in the flow so the vinyl box never sits under it. */
+.sign-corner {
+  position: absolute;
+  left: var(--gutter);
+  top: calc(var(--gutter) * 0.8);
+  z-index: 10;
 }
-.neon-soft {
-  color: var(--color-accent);
-  text-shadow: 0 0 9px rgb(255 120 60 / 0.45);
+.sign-lockup {
+  width: clamp(250px, 26vw, 400px);
+}
+@media (orientation: portrait) {
+  .sign-corner {
+    position: static;
+    align-self: flex-start;
+    padding-top: 0.25rem;
+  }
+  .sign-lockup {
+    width: 70vw;
+  }
+}
+
+/* The record turns at 33⅓ (1.8 s a revolution), about its spindle. */
+.splat-spin {
+  animation: splat-spin 1.8s linear infinite;
+  transform-origin: 47.9% 48.37%;
+}
+@keyframes splat-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* The sleeve throws its shadow over the disc sliding out of it. */
@@ -136,16 +168,14 @@
 
 /*
  * Old film over everything (`film-overlay.tsx`): the strengths, then the
- * layers. The frame itself weaves a hair on `.stage`, like film in a gate.
+ * layers.
  */
 :root {
   --film-vignette: 0.3;
-  --film-grain: 0.08;
+  --film-grain: 0.04;
   --film-warm: 0.05;
-  --film-weave: 3px;
   --film-leak: 0.18;
   --film-gate: 0.35;
-  --film-frame: 0.05;
   --film-scratch: 0.08;
 }
 
@@ -202,34 +232,6 @@
   }
   100% {
     transform: translate(0, 0);
-  }
-}
-
-.stage {
-  animation: film-weave 7s ease-in-out infinite;
-}
-
-/* Scaled up a little as well (1.2%: over the weave even on a phone), so the
-   edges never show past the frame as it moves. */
-@keyframes film-weave {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1.012);
-  }
-  27% {
-    transform: translate(var(--film-weave), calc(-0.6 * var(--film-weave)))
-      scale(1.012);
-  }
-  52% {
-    transform: translate(
-        calc(-0.8 * var(--film-weave)),
-        calc(0.7 * var(--film-weave))
-      )
-      scale(1.012);
-  }
-  78% {
-    transform: translate(calc(0.5 * var(--film-weave)), var(--film-weave))
-      scale(1.012);
   }
 }
 
@@ -296,18 +298,6 @@
   }
 }
 
-/* The exposure meter's circle in the middle of the viewfinder. */
-.film-meter {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: clamp(72px, 13vmin, 150px);
-  height: clamp(72px, 13vmin, 150px);
-  border: 15px solid rgb(255 255 255 / var(--film-frame));
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-
 /* The wear of the lens: scratches and dust, light on the dark room. */
 .film-scratches {
   position: absolute;
@@ -327,19 +317,11 @@
     inset 0 0 8px rgb(0 0 0 / calc(0.4 * var(--film-gate)));
 }
 
-.film-frame {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  color: rgb(255 255 255 / var(--film-frame));
-}
-
 @media (prefers-reduced-motion: reduce) {
   .film-grain,
   .film-leak,
   .live-dot,
-  .stage {
+  .splat-spin {
     animation: none;
   }
 }

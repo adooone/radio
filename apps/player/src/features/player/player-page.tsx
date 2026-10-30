@@ -24,7 +24,9 @@ export const PlayerPage = () => {
       <audio ref={audioRef} className="hidden" />
 
       <section className="relative flex min-h-0 flex-col items-center justify-between py-[3.5vmin]">
-        <Wordmark />
+        <header className="sign-corner pointer-events-none select-none">
+          <Wordmark spinning={playing} className="sign-lockup" />
+        </header>
         <div className="min-h-0 w-full flex-1 py-[1.5vmin]">
           <VinylBox
             playing={playing}
@@ -40,7 +42,7 @@ export const PlayerPage = () => {
               {song.artist ? `${song.artist} — ${song.title}` : song.title}
             </p>
           )}
-          <p className="neon-soft text-center font-serif text-[clamp(13px,1.6vw,18px)] italic">
+          <p className="text-center font-serif text-[clamp(13px,1.6vw,18px)] text-cream/80">
             {statusLine(status, playing)}
           </p>
           <Controls

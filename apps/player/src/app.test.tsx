@@ -7,7 +7,7 @@ describe('App', () => {
     // jsdom has neither MSE nor native HLS, so the engine lands on offline.
     render(<App />);
     expect(
-      screen.getByRole('heading', { name: 'PUGET SOUND' }),
+      screen.getByRole('img', { name: 'Puget Sound — Vinyl Radio' }),
     ).toBeInTheDocument();
     expect(await screen.findByText(/ефір тихий/)).toBeInTheDocument();
   });

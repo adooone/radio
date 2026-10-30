@@ -63,8 +63,8 @@ export const Chat = () => {
   };
 
   return (
-    <section className="flex min-h-0 flex-col px-4 py-3">
-      <header className="flex w-full items-center justify-between pb-2">
+    <section className="flex min-h-0 flex-col">
+      <header className="flex w-full items-center justify-between pb-3">
         <button
           type="button"
           onClick={toggle}

@@ -94,33 +94,16 @@ const Scratches = () => {
   return <canvas ref={ref} className="film-scratches" />;
 };
 
-/** The viewfinder's marks: thin brackets in the corners and a faint meter ring in the middle. */
-const Frame = () => (
-  <svg
-    className="film-frame"
-    viewBox="0 0 100 100"
-    preserveAspectRatio="none"
-    aria-hidden="true"
-  >
-    <path
-      d="M2.2 7 V2.2 H6.5 M93.5 2.2 H97.8 V7 M97.8 93 V97.8 H93.5 M6.5 97.8 H2.2 V93"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="square"
-      vectorEffect="non-scaling-stroke"
-    />
-  </svg>
-);
-
 /**
  * Old film over everything, after fo.band's camera eye: a vignette
  * darkening the corners like a lens, grain that jitters a few times a
- * second, a warm cast, light leaks that pass through a corner now and
- * then, the gate of a viewfinder with its soft edge, corner marks and the
- * meter's circle, and the wear of its glass, drawn once. All but the wear
- * are CSS layers composited by the GPU; the strengths are the `--film-*`
- * variables, and the frame's weave lives on `.stage` in the stylesheet.
+ * second (kept gentle, at half its first strength), a warm cast, light
+ * leaks that pass through a corner now and then, the gate's soft edge, and
+ * the wear of the glass, drawn once. (The viewfinder's corner marks and
+ * meter ring were dropped at the user's ask.) All but the wear are CSS
+ * layers composited by the GPU; the strengths are the `--film-*`
+ * variables. (The frame weave and the viewfinder marks were dropped at the
+ * user's ask.)
  */
 export const FilmOverlay = () => {
   const [grain] = useState(grainTile);
@@ -133,8 +116,6 @@ export const FilmOverlay = () => {
       <Scratches />
       <div className="film-vignette" />
       <div className="film-gate" />
-      <Frame />
-      <div className="film-meter" />
     </div>
   );
 };
