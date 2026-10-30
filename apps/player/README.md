@@ -1,73 +1,33 @@
-# @radio/player
+# Puget Sound · Vinyl Radio — player
 
-Public-facing radio player for listeners. Built with React 18, Vite, and HLS.js.
+The public listening page of the vinyl radio, after the Figma design
+(Laboratory → Puget Sound): one dark room — the turntable photograph under
+a warm shade — with the neon sign over it, dressed as old film (grain,
+scratches, light leaks, a camera-eye vignette). The splat record is the
+play control; while the air plays, the live picture fills the frame.
 
-## Quick Start
+## Dev
 
-```bash
-# From monorepo root
+```sh
 pnpm player:dev
-# Open http://localhost:3030
 ```
 
-## Features
+Vite on port 3030, `--host` (reachable as `deimos:3030` over the tailnet).
+`VITE_STREAM_URL` points at the HLS manifest (see `.env.example`);
+nginx-rtmp answers 404 on it while nobody publishes, which the page shows
+as a quiet air and retries every 15 s.
 
-- **HLS Streaming** - HTTP Live Streaming playback via HLS.js
-- **Real-time Chat** - WebSocket-based live chat
-- **Collection Browse** - Browse albums and playlists
-- **Now Playing** - Current track info with live updates
-- **PWA Support** - Installable as a Progressive Web App
-- **Responsive** - Works on desktop and mobile
+## Build
 
-## Tech Stack
-
-- React 18 + TypeScript
-- Vite (dev server and build)
-- TanStack Router (routing)
-- TanStack Query (server state)
-- Zustand (client state)
-- HLS.js (audio streaming)
-- Tailwind CSS
-- Framer Motion (animations)
-
-## Scripts
-
-| Script | Description |
-|--------|-------------|
-| `pnpm dev` | Start dev server (port 3030) |
-| `pnpm build` | Production build |
-| `pnpm preview` | Preview production build |
-| `pnpm test` | Run tests (Vitest) |
-| `pnpm lint` | Lint with Biome |
-| `pnpm check-types` | TypeScript type check |
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── layout/       # Layout, container, footer
-│   └── ui/           # Buttons, toggles
-├── features/
-│   ├── collection/   # Album browsing and detail views
-│   └── radio/        # Player, chat, settings
-├── routes/           # Route definitions
-├── services/
-│   ├── api/          # API clients
-│   └── storage/      # Local storage utilities
-├── stores/           # Zustand stores
-└── styles/           # Global styles
+```sh
+pnpm --filter @radio/player build
 ```
 
-## Environment Variables
+Static output in `dist/`, deployed to Vercel at radio.adoo.one.
 
-```env
-VITE_API_URL=http://localhost:6870
-VITE_SOCKET_URL=ws://localhost:6871
-VITE_STREAM_URL=https://stream.adoo.one/hls/test.m3u8
-VITE_APP_ENV=development
-```
+## Brand assets
 
-## Deployment
-
-Deployed to Vercel. See `vercel.json` for configuration.
+`public/brand/` holds the Figma exports: the background photograph, the
+dust texture, and the sign's SVGs (wordmark, script, splat in three
+layers) with their neon glow baked in. `src/features/player/sign.tsx`
+copies the design's geometry; re-export from Figma if the sign changes.

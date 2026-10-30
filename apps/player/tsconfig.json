@@ -9,8 +9,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@/*": ["src/*"],
-      "@radio/types": ["../../packages/types/src"]
+      "@/*": ["src/*"]
     }
   },
   "include": ["src"],

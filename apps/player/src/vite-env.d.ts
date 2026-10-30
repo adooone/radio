@@ -1,7 +1,6 @@
 /// <reference types="vite/client" />
 
-declare namespace NodeJS {
-  interface ProcessEnv {
-    NODE_ENV: 'development' | 'production';
-  }
+interface ImportMetaEnv {
+  /** The HLS address of the live air. */
+  readonly VITE_STREAM_URL?: string;
 }

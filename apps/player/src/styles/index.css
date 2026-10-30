@@ -1,0 +1,395 @@
+@import "tailwindcss";
+
+/* KyivType, self-hosted (shared with the admin and the sister sites). */
+@font-face {
+  font-family: "KyivType Serif";
+  src: url("/fonts/KyivTypeSerif-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KyivType Serif";
+  src: url("/fonts/KyivTypeSerif-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KyivType Serif";
+  src: url("/fonts/KyivTypeSerif-Bold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KyivType Sans";
+  src: url("/fonts/KyivTypeSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KyivType Sans";
+  src: url("/fonts/KyivTypeSans-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  /* The Figma frame's colours: the room, its warmest black, the sign's
+     warm white, and the label's red. */
+  --color-ink: #191919;
+  --color-deep: #120d05;
+  --color-cream: #dfdfd4;
+  --color-accent: #ff5647;
+  --font-serif: "KyivType Serif", Georgia, serif;
+  --font-sans: "KyivType Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  /* Whatever shows past the page (a phone's bars, an overscroll) stays the
+     room's warm black. */
+  html {
+    background: var(--color-deep);
+  }
+  body {
+    @apply bg-ink font-serif text-cream antialiased;
+    /* One screen, nothing to scroll. */
+    overflow: hidden;
+  }
+
+  /* One design pixel of the 1466 × 1000 Figma frame, as a length. */
+  .stage {
+    --k: min(100vw / 1466, 100vh / 1000);
+  }
+}
+
+/* The hero sign cluster at the Figma frame's size and place: the splat at
+   its left, the wordmark and script to its right (sign.tsx holds the inner
+   geometry). Portrait stacks it instead (classes in player-page.tsx). */
+.hero-cluster {
+  width: calc(1056.3 * var(--k));
+  aspect-ratio: 1056.3 / 269.4;
+  /* The sign hangs a touch below the frame's middle, as in the design. */
+  transform: translateY(calc(42 * var(--k)));
+}
+.hero-splat {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 16.02%;
+}
+.hero-sign {
+  position: absolute;
+  left: 22.89%;
+  top: 2.56%;
+  width: 77.11%;
+}
+@media (orientation: portrait) {
+  .hero-cluster {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7vw;
+    width: auto;
+    aspect-ratio: auto;
+    transform: none;
+  }
+  /* relative, not static: both keep containing their absolutely-placed layers. */
+  .hero-splat {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 42vw;
+  }
+  .hero-sign {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 86vw;
+  }
+}
+
+/* The frame's warm shade, darkening toward the right, from the Figma frame. */
+.room-shade {
+  background: linear-gradient(
+    97.74deg,
+    rgba(0, 0, 0, 0) 20.78%,
+    #120d05 105.31%
+  );
+}
+
+/* The neon turned off: the sign unlit while the air is quiet. */
+.sign-off {
+  filter: grayscale(0.35) brightness(0.55);
+  opacity: 0.75;
+}
+
+/* The record turns at 33⅓ (1.8 s a side-long revolution), about its spindle. */
+.splat-spin {
+  animation: splat-spin 1.8s linear infinite;
+  transform-origin: 47.9% 48.37%;
+}
+@keyframes splat-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* The on-air lamp breathes. */
+.live-dot {
+  animation: live-pulse 2.4s ease-in-out infinite;
+}
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* The scrim under the controls, over the picture's lower edge. */
+.scrim {
+  background: linear-gradient(to top, rgb(10 7 2 / 0.78), transparent);
+}
+
+/* The volume: a thin cream line with a cream stone on it. */
+.volume {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 2px;
+  border-radius: 1px;
+  background: color-mix(in srgb, var(--color-cream) 35%, transparent);
+  outline-offset: 6px;
+}
+.volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-cream);
+}
+.volume::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-cream);
+}
+
+/*
+ * Old film over everything (`film-overlay.tsx`): the strengths, then the
+ * layers. The frame itself weaves a hair on `.stage`, like film in a gate.
+ */
+:root {
+  --film-vignette: 0.3;
+  --film-grain: 0.08;
+  --film-warm: 0.05;
+  --film-weave: 3px;
+  --film-leak: 0.18;
+  --film-gate: 0.35;
+  --film-frame: 0.05;
+  --film-scratch: 0.08;
+}
+
+.film {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.film-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 62% at 50% 50%,
+    transparent 55%,
+    rgb(0 0 0 / var(--film-vignette)) 100%
+  );
+}
+
+.film-warm {
+  position: absolute;
+  inset: 0;
+  background: rgb(255 184 96 / var(--film-warm));
+  mix-blend-mode: multiply;
+}
+
+.film-grain {
+  position: absolute;
+  inset: -64px;
+  background-size: 192px 192px;
+  opacity: var(--film-grain);
+  mix-blend-mode: soft-light;
+  animation: film-grain 0.5s steps(1) infinite;
+  will-change: transform;
+}
+
+@keyframes film-grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-37px, 22px);
+  }
+  40% {
+    transform: translate(19px, -41px);
+  }
+  60% {
+    transform: translate(-11px, -27px);
+  }
+  80% {
+    transform: translate(43px, 13px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.stage {
+  animation: film-weave 7s ease-in-out infinite;
+}
+
+/* Scaled up a little as well (1.2%: over the weave even on a phone), so the
+   edges never show past the frame as it moves. */
+@keyframes film-weave {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1.012);
+  }
+  27% {
+    transform: translate(var(--film-weave), calc(-0.6 * var(--film-weave)))
+      scale(1.012);
+  }
+  52% {
+    transform: translate(
+        calc(-0.8 * var(--film-weave)),
+        calc(0.7 * var(--film-weave))
+      )
+      scale(1.012);
+  }
+  78% {
+    transform: translate(calc(0.5 * var(--film-weave)), var(--film-weave))
+      scale(1.012);
+  }
+}
+
+/* Light leaks: a warm glow that passes through a corner now and then. */
+.film-leak {
+  position: absolute;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(255 170 90 / var(--film-leak)) 0%,
+    rgb(255 120 60 / calc(0.5 * var(--film-leak))) 35%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.film-leak-a {
+  top: -35vmax;
+  right: -30vmax;
+  animation: film-leak-a 24s ease-in-out infinite;
+}
+
+.film-leak-b {
+  bottom: -40vmax;
+  left: -30vmax;
+  animation: film-leak-b 31s ease-in-out infinite 9s;
+}
+
+@keyframes film-leak-a {
+  0%,
+  75%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  84% {
+    opacity: 1;
+    transform: translate(-6vmax, 5vmax);
+  }
+  93% {
+    opacity: 0.4;
+    transform: translate(-12vmax, 9vmax);
+  }
+}
+
+@keyframes film-leak-b {
+  0%,
+  78%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  86% {
+    opacity: 0.8;
+    transform: translate(7vmax, -4vmax);
+  }
+  94% {
+    opacity: 0.3;
+    transform: translate(13vmax, -8vmax);
+  }
+}
+
+/* The exposure meter's circle in the middle of the viewfinder. */
+.film-meter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(72px, 13vmin, 150px);
+  height: clamp(72px, 13vmin, 150px);
+  border: 15px solid rgb(255 255 255 / var(--film-frame));
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* The wear of the lens: scratches and dust, light on the dark room. */
+.film-scratches {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: difference;
+  opacity: var(--film-scratch);
+}
+
+/* The viewfinder's gate: the frame's edge darkens softly all round. */
+.film-gate {
+  position: absolute;
+  inset: 0;
+  box-shadow:
+    inset 0 0 48px rgb(0 0 0 / var(--film-gate)),
+    inset 0 0 8px rgb(0 0 0 / calc(0.4 * var(--film-gate)));
+}
+
+.film-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: rgb(255 255 255 / var(--film-frame));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film-grain,
+  .film-leak,
+  .splat-spin,
+  .live-dot,
+  .stage {
+    animation: none;
+  }
+}
