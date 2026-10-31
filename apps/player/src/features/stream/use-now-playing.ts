@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { subscribe } from '@/lib/socket';
+import { useEffect, useState } from 'react';
 
 export interface NowPlaying {
   artist: string;

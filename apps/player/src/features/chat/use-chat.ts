@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
 import { getSocket, subscribe } from '@/lib/socket';
 import { playSound } from '@/lib/sound';
+import { useCallback, useEffect, useState } from 'react';
 import type { ChatMessage } from './types';
 
 export const useChat = (nickname: string | null) => {

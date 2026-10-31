@@ -4,7 +4,7 @@ title: Admin puts the song on air (now-playing for the player)
 type: feat
 status: planned
 created: 2026-10-30
-updated: 2026-10-30
+updated: 2026-10-31
 tags:
   - wave
   - admin
@@ -64,13 +64,22 @@ and only the WebSocket message keeps the player's `now_playing` name.
   the current state with «Зняти з ефіру» as a card on the stream page
   (`features/stream/components/cards`).
 
+### Out of scope
+
+The stream toolchain path (OBS / digitization publishing metadata with a
+token) — the endpoint's shape leaves room for it, nothing more. The
+player — its contract is fixed and shipped with IDEA-11. Track progress
+or duration on air (the admin's local preview player is unrelated and
+untouched).
+
 ### Phases
-- [ ] Phase 1 — Wave on-air service and REST
+- [x] Phase 1 — Wave on-air service and REST
       `onAirService.ts` with the persisted current value and DB
       resolution (album vs song, artist fallback, absolute cover URL,
       unknown ids refused); `GET`/`PUT`/`DELETE /api/stream/on-air`
       routes (writes auth + admin, zod-validated body). Unit tests:
       resolution, persistence round-trip, refusals.
+      run: 45m34s · 114 in · 22.9k out · sonnet-5 · sess:b8dfcf2a-2ae9-4492-b921-8aa3aaea1b3c
 - [ ] Phase 2 — WebSocket push and join replay
       Broadcast `{ type: 'now_playing', artist, title, cover? }` via
       `clientStore.broadcast` on every set/clear (bare type-only message
@@ -91,22 +100,6 @@ and only the WebSocket message keeps the player's `now_playing` name.
       live and a fresh join gets the current song. Committed on its own
       branch, PR opened.
 
-### Out of scope
-
-The stream toolchain path (OBS / digitization publishing metadata with a
-token) — the endpoint's shape leaves room for it, nothing more. The
-player — its contract is fixed and shipped with IDEA-11. Track progress
-or duration on air (the admin's local preview player is unrelated and
-untouched).
-
 ### Thread
-- [x] 2026-10-30 [decision] [user] The admin app sets now-playing
-      (answering the IDEA-11 open question): wave only relays OBS and
-      cannot see the track; admin has the albums, covers and auth. The
-      endpoint stays callable by the stream toolchain later with a
-      token.
-- [x] 2026-10-30 [decision] [agent] Wave/admin naming is "on air"
-      (`onAirService`, `/api/stream/on-air`, «В ефірі») to avoid the
-      admin app's existing `useNowPlaying`, which is its local preview
-      player; only the WebSocket message keeps the player's
-      `now_playing` contract name.
+- [x] 2026-10-30 [decision] [user] The admin app sets now-playing (answering the IDEA-11 open question): wave only relays OBS and cannot see the track; admin has the albums, covers and auth. The endpoint stays callable by the stream toolchain later with a token.
+- [x] 2026-10-30 [decision] [agent] Wave/admin naming is "on air" (`onAirService`, `/api/stream/on-air`, «В ефірі») to avoid the admin app's existing `useNowPlaying`, which is its local preview player; only the WebSocket message keeps the player's `now_playing` contract name.

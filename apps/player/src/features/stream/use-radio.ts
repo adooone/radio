@@ -1,6 +1,6 @@
+import { streamUrl } from '@/lib/env';
 import Hls from 'hls.js';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { streamUrl } from '@/lib/env';
 import { type RadioStatus, nextStatus } from './radio-state';
 
 /** How long the quiet air rests before the engine knocks on the manifest again. */

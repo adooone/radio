@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
 import type { NowPlaying } from '@/features/stream/use-now-playing';
+import { useEffect, useRef } from 'react';
 
 /** Points along the splat's outline: enough for a smooth, organic edge. */
 const POINTS = 220;

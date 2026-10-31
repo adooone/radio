@@ -1,10 +1,10 @@
-import { LampIconButton, LampMeter } from '@dendelion/func-ui';
 import { ChatInput } from '@/features/chat/chat-input';
 import { ChatBubbleIcon, CollapseIcon } from '@/features/chat/icons';
 import { NicknameInput } from '@/features/chat/nickname-input';
 import type { ChatRoom } from '@/features/chat/use-chat-room';
 import type { NowPlaying } from '@/features/stream/use-now-playing';
 import { useMedia } from '@/lib/use-media';
+import { LampIconButton, LampMeter } from '@dendelion/func-ui';
 import { TrackStrip } from './track-strip';
 
 type ControlIslandProps = {

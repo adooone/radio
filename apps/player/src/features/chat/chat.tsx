@@ -1,6 +1,6 @@
+import { useMedia } from '@/lib/use-media';
 import { LampIconButton } from '@dendelion/func-ui';
 import type { ReactNode } from 'react';
-import { useMedia } from '@/lib/use-media';
 import { ChatBackdrop } from './chat-backdrop';
 import { ChatInput } from './chat-input';
 import { ChatMessages } from './chat-messages';

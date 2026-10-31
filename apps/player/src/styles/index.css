@@ -165,16 +165,12 @@ textarea:focus-visible {
     z-index: 30;
     opacity: 0;
     visibility: hidden;
-    transition:
-      opacity 0.55s ease,
-      visibility 0s linear 0.55s;
+    transition: opacity 0.55s ease, visibility 0s linear 0.55s;
   }
   .chat-view-open {
     opacity: 1;
     visibility: visible;
-    transition:
-      opacity 0.55s ease,
-      visibility 0s;
+    transition: opacity 0.55s ease, visibility 0s;
   }
   .radio-view {
     transition: opacity 0.55s ease;
@@ -213,7 +209,10 @@ textarea:focus-visible {
     padding-top: calc(var(--chat-topbar) + 2.5rem);
     padding-left: 1.5rem;
     padding-bottom: calc(
-      3.5vmin + var(--island-h) + 1rem + env(safe-area-inset-bottom, 0px)
+      3.5vmin +
+      var(--island-h) +
+      1rem +
+      env(safe-area-inset-bottom, 0px)
     );
   }
   /* The bar above the rim while the room is open: the track strip, with
@@ -397,9 +396,8 @@ textarea:focus-visible {
 .film-gate {
   position: absolute;
   inset: 0;
-  box-shadow:
-    inset 0 0 48px rgb(0 0 0 / var(--film-gate)),
-    inset 0 0 8px rgb(0 0 0 / calc(0.4 * var(--film-gate)));
+  box-shadow: inset 0 0 48px rgb(0 0 0 / var(--film-gate)), inset 0 0 8px
+    rgb(0 0 0 / calc(0.4 * var(--film-gate)));
 }
 
 @media (prefers-reduced-motion: reduce) {

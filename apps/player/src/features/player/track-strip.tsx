@@ -1,5 +1,5 @@
-import { LampIconButton, type LampSize } from '@dendelion/func-ui';
 import type { NowPlaying } from '@/features/stream/use-now-playing';
+import { LampIconButton, type LampSize } from '@dendelion/func-ui';
 
 type TrackStripProps = {
   playing: boolean;

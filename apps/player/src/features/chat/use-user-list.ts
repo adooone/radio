@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
 import { subscribe } from '@/lib/socket';
+import { useCallback, useEffect, useState } from 'react';
 import type { User, UserWithStatus } from './types';
 
 const FIVE_MINUTES_MS = 5 * 60 * 1_000;

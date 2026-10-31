@@ -1,10 +1,17 @@
+import { streamHandlers } from '@/api/handlers/streamHandlers';
+import { streamValidators } from '@/api/validators/streamValidators';
+import { adminMiddleware, authMiddleware } from '@/services/auth';
 import { ResponseHelper } from '@/utils/response';
 import { withErrorHandling } from '@/utils/routeHandler';
 import { Hono } from 'hono';
 import { rtmpConfigService } from '../../services/stream/rtmpConfigService';
 import { streamService } from '../../services/stream/streamService';
 
-const streamRoutes = new Hono();
+type Variables = {
+  accountId: number;
+};
+
+const streamRoutes = new Hono<{ Variables: Variables }>();
 
 streamRoutes.post(
   '/rtmp/start',
@@ -45,6 +52,23 @@ streamRoutes.put(
     const result = await rtmpConfigService.updateRtmpConfig(updates);
     return ResponseHelper.success(c, result);
   }),
+);
+
+streamRoutes.get('/on-air', streamHandlers.getOnAirHandler);
+
+streamRoutes.put(
+  '/on-air',
+  authMiddleware,
+  adminMiddleware,
+  streamValidators.setOnAirValidator,
+  streamHandlers.setOnAirHandler,
+);
+
+streamRoutes.delete(
+  '/on-air',
+  authMiddleware,
+  adminMiddleware,
+  streamHandlers.clearOnAirHandler,
 );
 
 export { streamRoutes };
