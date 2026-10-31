@@ -15,7 +15,7 @@ type MessageProps = {
  * with the on-air status mark, the text, a small clock.
  */
 export const Message = ({ message, isSelf, isOnline }: MessageProps) => {
-  const displayNickname = message.nickname || 'Анонім';
+  const displayNickname = message.nickname || 'Anonymous';
   const messageTime = formatTime(message.timestamp);
 
   return (
@@ -37,7 +37,7 @@ export const Message = ({ message, isSelf, isOnline }: MessageProps) => {
             </span>
             <StatusIcon
               className={`size-4 shrink-0 ${isOnline ? 'text-glow' : 'text-cream/25'}`}
-              aria-label={isOnline ? 'Онлайн' : 'Офлайн'}
+              aria-label={isOnline ? 'Online' : 'Offline'}
             />
           </span>
         )}

@@ -2,7 +2,7 @@ import { Chat } from '@/features/chat/chat';
 import { statusLine } from '@/features/stream/radio-state';
 import { useNowPlaying } from '@/features/stream/use-now-playing';
 import { useRadio } from '@/features/stream/use-radio';
-import { Controls } from './controls';
+import { ControlIsland } from './control-island';
 import { VinylBox } from './vinyl-box';
 import { Wordmark } from './wordmark';
 
@@ -36,21 +36,15 @@ export const PlayerPage = () => {
             onToggle={toggle}
           />
         </div>
-        <div className="flex w-full flex-col items-center gap-3 px-6">
-          {song && (
-            <p className="text-center text-[clamp(13px,1.5vw,17px)] text-cream/90">
-              {song.artist ? `${song.artist} — ${song.title}` : song.title}
-            </p>
-          )}
-          <p className="text-center font-serif text-[clamp(13px,1.6vw,18px)] text-cream/80">
-            {statusLine(status, playing)}
-          </p>
-          <Controls
+        <div className="flex w-full justify-center px-6">
+          <ControlIsland
             playing={playing}
             quiet={quiet}
             onToggle={toggle}
             volume={volume}
             onVolume={setVolume}
+            song={song}
+            status={statusLine(status, playing)}
           />
         </div>
       </section>

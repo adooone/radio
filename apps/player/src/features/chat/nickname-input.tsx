@@ -1,3 +1,4 @@
+import { Button } from '@dendelion/func-ui';
 import { type KeyboardEvent, useState } from 'react';
 
 type NicknameInputProps = {
@@ -33,19 +34,21 @@ export const NicknameInput = ({
             onNicknameChange?.();
           }}
           onKeyDown={handleKeyDown}
-          placeholder="Твоє ім'я..."
+          placeholder="Your name…"
           className={`w-full flex-grow rounded bg-transparent p-2 font-sans text-sm text-cream outline-none placeholder:text-cream/35 ${
             error ? 'border border-accent/50 bg-accent/10' : ''
           }`}
         />
-        <button
+        <Button
           type="button"
+          variant="primary"
+          size="sm"
           disabled={!nickInput}
           onClick={handleSetNickname}
-          className="shrink-0 cursor-pointer whitespace-nowrap rounded-xl bg-accent px-4 py-2 font-sans text-sm font-medium text-ink disabled:cursor-default disabled:opacity-50"
+          className="shrink-0 whitespace-nowrap"
         >
-          {nickInput ? 'Погнали' : 'Хочу в чат'}
-        </button>
+          {nickInput ? "Let's go" : 'Join the chat'}
+        </Button>
       </div>
       {error && (
         <p className="rounded-lg border border-accent/20 bg-accent/10 px-3 py-1 text-sm text-accent">

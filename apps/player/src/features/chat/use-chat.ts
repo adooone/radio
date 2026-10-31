@@ -20,7 +20,7 @@ export const useChat = (nickname: string | null) => {
         setMessages((prev) => [
           ...prev,
           {
-            nickname: data.nickname || 'Анонім',
+            nickname: data.nickname || 'Anonymous',
             text: data.text,
             timestamp: data.timestamp ?? new Date().toISOString(),
           },

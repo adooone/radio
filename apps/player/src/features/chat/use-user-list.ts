@@ -10,7 +10,7 @@ const isUserOnline = (lastSeen: string): boolean => {
   return Date.now() - lastSeenDate.getTime() <= FIVE_MINUTES_MS;
 };
 
-/** Who is listening, from wave's `listeners` broadcasts; quiet ones count as Анонім. */
+/** Who is listening, from wave's `listeners` broadcasts; quiet ones count as Anonymous. */
 export const useUserList = (): UserWithStatus[] => {
   const [users, setUsers] = useState<User[]>([]);
 
@@ -21,7 +21,10 @@ export const useUserList = (): UserWithStatus[] => {
       const list: User[] = [...data.users];
       if (typeof data.listeners === 'number' && data.listeners > list.length) {
         for (let i = list.length; i < data.listeners; i++) {
-          list.push({ nickname: 'Анонім', lastSeen: new Date().toISOString() });
+          list.push({
+            nickname: 'Anonymous',
+            lastSeen: new Date().toISOString(),
+          });
         }
       }
       setUsers(list);

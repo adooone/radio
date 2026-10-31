@@ -272,7 +272,7 @@ export const VinylBox = ({
           if (!quiet) onToggle();
         }}
         disabled={quiet}
-        aria-label={playing ? 'Пауза' : 'Слухати ефір'}
+        aria-label={playing ? 'Pause' : 'Listen live'}
         className="vinyl-sleeve absolute cursor-pointer overflow-hidden bg-[#17100c] text-left transition-[filter] duration-700 disabled:cursor-default disabled:brightness-[0.65] disabled:saturate-50"
       >
         {song?.cover ? (
@@ -293,16 +293,11 @@ export const VinylBox = ({
                 </span>
               )}
               <span className="mt-1 block font-serif text-[clamp(10px,1.1vw,14px)] text-cream/55">
-                вінілове радіо · 33⅓
+                vinyl radio · 33⅓
               </span>
             </span>
           </span>
         )}
-        {/* The mouth of the sleeve: a hint of the ring inside. */}
-        <span
-          aria-hidden="true"
-          className="absolute top-[28%] right-[-18%] block aspect-square w-[46%] rounded-full border border-accent/30"
-        />
       </button>
     </div>
   );

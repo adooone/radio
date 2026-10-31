@@ -1,3 +1,4 @@
+import { IconButton } from '@dendelion/func-ui';
 import { useState } from 'react';
 import { getSocket } from '@/lib/socket';
 import { ChatInput } from './chat-input';
@@ -9,7 +10,7 @@ import { useSound } from './use-sound';
 import { useUserList } from './use-user-list';
 
 /**
- * The old player's chat, structurally intact: the «Чатік» header with the
+ * The old player's chat, structurally intact: the chatroom header with the
  * sound toggle, the bubbles, and the nickname gate with its validation —
  * speaking to wave's WebSocket as before.
  */
@@ -27,18 +28,15 @@ export const Chat = () => {
     setNicknameError(null);
 
     if (trimmedName.length < 2) {
-      setNicknameError("Ім'я має бути не менше 2 символів");
+      setNicknameError('The name has to be at least 2 characters');
       return;
     }
     if (trimmedName.length > 20) {
-      setNicknameError("Ім'я має бути не більше 20 символів");
+      setNicknameError('The name has to be at most 20 characters');
       return;
     }
-    if (
-      trimmedName.toLowerCase() === 'анонім' ||
-      trimmedName.toLowerCase() === 'анon'
-    ) {
-      setNicknameError("Це ім'я зарезервоване, спробуй інше");
+    if (['anonymous', 'anon', 'анонім'].includes(trimmedName.toLowerCase())) {
+      setNicknameError('That name is reserved, try another');
       return;
     }
     if (
@@ -46,7 +44,7 @@ export const Chat = () => {
         (user) => user.nickname.toLowerCase() === trimmedName.toLowerCase(),
       )
     ) {
-      setNicknameError("Це ім'я вже зайняте, спробуй інше");
+      setNicknameError('That name is already taken, try another');
       return;
     }
 
@@ -65,16 +63,16 @@ export const Chat = () => {
   return (
     <section className="flex min-h-0 flex-col">
       <header className="flex w-full items-center justify-between pb-3">
-        <button
-          type="button"
+        <IconButton
+          variant="ghost"
+          size="sm"
           onClick={toggle}
-          aria-label={isEnabled ? 'Вимкнути звуки' : 'Увімкнути звуки'}
-          className="cursor-pointer text-cream/60"
-        >
-          {isEnabled ? <SoundOnIcon /> : <SoundOffIcon />}
-        </button>
+          label={isEnabled ? 'Mute chat sounds' : 'Unmute chat sounds'}
+          icon={isEnabled ? <SoundOnIcon /> : <SoundOffIcon />}
+          className="text-cream/60"
+        />
         <h2 className="font-sans text-base font-medium uppercase tracking-wide text-cream/80">
-          Чатік
+          Chatroom
         </h2>
       </header>
 

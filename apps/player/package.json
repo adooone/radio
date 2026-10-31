@@ -12,7 +12,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@radix-ui/react-slider": "^1.2.2",
+    "@dendelion/func-ui": "^0.3.0",
     "hls.js": "^1.6.5",
     "react": "18.3.1",
     "react-dom": "18.3.1"

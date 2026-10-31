@@ -9,17 +9,17 @@ describe('App', () => {
     expect(
       screen.getByRole('img', { name: 'Puget Sound — Vinyl Radio' }),
     ).toBeInTheDocument();
-    expect(await screen.findByText(/ефір тихий/)).toBeInTheDocument();
+    expect(await screen.findByText(/the air is quiet/)).toBeInTheDocument();
   });
 
   it('keeps the chat behind its nickname gate for a new listener', () => {
     render(<App />);
-    expect(screen.getByPlaceholderText("Твоє ім'я...")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Your name…')).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: 'Хочу в чат' }),
+      screen.getByRole('button', { name: 'Join the chat' }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Введи ім'я, щоб побачити чатік"),
+      screen.getByText('Enter a name to see the chat'),
     ).toBeInTheDocument();
   });
 });

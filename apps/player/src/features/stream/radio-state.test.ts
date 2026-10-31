@@ -21,11 +21,11 @@ describe('nextStatus', () => {
 
 describe('statusLine', () => {
   it('speaks the air state', () => {
-    expect(statusLine('loading', false)).toBe('ловимо хвилю…');
-    expect(statusLine('live', false)).toBe('в ефірі — натисни платівку');
-    expect(statusLine('live', true)).toBe('в ефірі');
+    expect(statusLine('loading', false)).toBe('catching the wave…');
+    expect(statusLine('live', false)).toBe('on air — tap the record');
+    expect(statusLine('live', true)).toBe('on air');
     expect(statusLine('offline', false)).toBe(
-      'ефір тихий — платівка відпочиває',
+      'the air is quiet — the record is resting',
     );
   });
 });

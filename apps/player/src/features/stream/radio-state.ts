@@ -25,7 +25,7 @@ export const nextStatus = (
 
 /** The line under the sign, in the air's own words. */
 export const statusLine = (status: RadioStatus, playing: boolean): string => {
-  if (status === 'loading') return 'ловимо хвилю…';
-  if (status === 'offline') return 'ефір тихий — платівка відпочиває';
-  return playing ? 'в ефірі' : 'в ефірі — натисни платівку';
+  if (status === 'loading') return 'catching the wave…';
+  if (status === 'offline') return 'the air is quiet — the record is resting';
+  return playing ? 'on air' : 'on air — tap the record';
 };

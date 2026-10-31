@@ -25,7 +25,7 @@ export const ChatMessages = ({
     return (
       <div className="flex min-h-0 flex-1 items-center justify-center p-4">
         <p className="text-center text-sm text-cream/40">
-          Введи ім'я, щоб побачити чатік
+          Enter a name to see the chat
         </p>
       </div>
     );
@@ -39,7 +39,7 @@ export const ChatMessages = ({
       {messages.length === 0 ? (
         <div className="flex h-full items-center justify-center p-4">
           <p className="text-center text-sm text-cream/40">
-            Поки пусто, будь першим!
+            Nothing here yet — be the first!
           </p>
         </div>
       ) : (

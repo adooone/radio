@@ -1,3 +1,4 @@
+import { Button } from '@dendelion/func-ui';
 import { type FormEvent, type KeyboardEvent, useCallback, useRef, useState } from 'react';
 
 type ChatInputProps = {
@@ -45,16 +46,13 @@ export const ChatInput = ({ onSend }: ChatInputProps) => {
           adjustHeight();
         }}
         onKeyDown={handleKeyDown}
-        placeholder="Шо кажеш?"
+        placeholder="Say something…"
         rows={1}
         className="max-h-[200px] min-h-[38px] w-full flex-grow resize-none overflow-hidden bg-transparent p-2 font-sans text-sm text-cream outline-none placeholder:text-cream/35"
       />
-      <button
-        type="submit"
-        className="shrink-0 cursor-pointer rounded-xl bg-accent px-4 py-2 font-sans text-sm font-medium text-ink"
-      >
-        Ентер
-      </button>
+      <Button type="submit" variant="primary" size="sm" className="shrink-0">
+        Send
+      </Button>
     </form>
   );
 };
