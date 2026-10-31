@@ -24,6 +24,10 @@ export const env = {
   mediaBaseUrl: getRequiredEnv('MEDIA_BASE_URL'),
   mediaInboxPath: getRequiredEnv('MEDIA_INBOX_PATH'),
   discogsToken: process.env.DISCOGS_TOKEN || undefined,
+  // The relay the turntable publishes to and the stream the player plays.
+  streamKey: process.env.STREAM_KEY || 'test',
+  rtmpPublishUrl: process.env.RTMP_PUBLISH_URL || 'rtmp://127.0.0.1:1935/live',
+  rtmpHttpUrl: process.env.RTMP_HTTP_URL || 'http://127.0.0.1:8069',
 };
 
 function getRequiredEnv(name: string): string {

@@ -1,4 +1,4 @@
-import type { OnAirState } from '@radio/types';
+import type { OnAirState, TurntableState } from '@radio/types';
 import { waveApiClient } from './clients/http-client';
 
 type ApiResponse<T> = {
@@ -30,6 +30,18 @@ export const onAirApi = {
 
   clearOnAir: async (): Promise<void> => {
     await waveApiClient.delete<ApiResponse<void>>('/api/stream/on-air');
+  },
+
+  getTurntable: async (): Promise<TurntableState> => {
+    const response = await waveApiClient.get<ApiResponse<TurntableState>>(
+      '/api/stream/turntable',
+    );
+    return response.data.data;
+  },
+
+  /** Stops the sound; the record stays marked on air. */
+  stopTurntable: async (): Promise<void> => {
+    await waveApiClient.delete<ApiResponse<void>>('/api/stream/turntable');
   },
 };
 

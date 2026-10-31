@@ -71,7 +71,11 @@ export class OnAirService {
     this.load();
   }
 
-  async setOnAir(albumId: number, songId?: number): Promise<OnAirState> {
+  async setOnAir(
+    albumId: number,
+    songId?: number,
+    source: OnAirState['source'] = 'admin',
+  ): Promise<OnAirState> {
     const album = await this.deps.getAlbum(albumId);
     if (!album) {
       throw new Error(`Album with ID ${albumId} not found`);
@@ -98,6 +102,7 @@ export class OnAirService {
       title,
       cover: album.coverImageUrl ?? undefined,
       setAt: new Date().toISOString(),
+      source,
     };
     this.persist();
     this.deps.broadcast(formatNowPlayingMessage(this.current));

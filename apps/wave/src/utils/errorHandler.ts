@@ -99,6 +99,9 @@ export const ErrorHandler = {
       ) {
         return ResponseHelper.notFound(c, error.message);
       }
+      if (error.message.startsWith('Nothing to play')) {
+        return ResponseHelper.unprocessableEntity(c, error.message);
+      }
 
       // Handle digitization/Discogs-specific errors
       if (error.message === 'data.json already exists') {

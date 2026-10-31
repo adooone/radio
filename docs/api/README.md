@@ -89,10 +89,13 @@ for the full reference.
 | `PUT` | `/rtmp/config` | Update RTMP configuration |
 | `GET` | `/on-air` | Get the current on-air album/song (public) |
 | `PUT` | `/on-air` | Set the on-air album/song (admin only) |
-| `DELETE` | `/on-air` | Clear the on-air state (admin only) |
+| `DELETE` | `/on-air` | Clear the on-air state and stop the turntable (admin only) |
+| `GET` | `/turntable` | Whether wave is playing a record itself, and whether OBS is live (public) |
+| `DELETE` | `/turntable` | Stop wave's playback, keeping the on-air mark (admin only) |
 
-The on-air endpoints are set by the admin app, not wave itself — wave
-only relays OBS and cannot see the audio content. See
+The on-air state is set by the admin app. When no live publisher holds
+the stream, setting it also makes wave play the record from the library
+into the RTMP relay (the turntable); while OBS is live it only marks. See
 [`apps/wave/API_ENDPOINTS.md`](../../apps/wave/API_ENDPOINTS.md#stream-on-air-api)
 for the full reference.
 

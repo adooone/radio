@@ -71,4 +71,13 @@ streamRoutes.delete(
   streamHandlers.clearOnAirHandler,
 );
 
+streamRoutes.get('/turntable', streamHandlers.getTurntableHandler);
+
+streamRoutes.delete(
+  '/turntable',
+  authMiddleware,
+  adminMiddleware,
+  streamHandlers.stopTurntableHandler,
+);
+
 export { streamRoutes };
