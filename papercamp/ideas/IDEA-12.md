@@ -1,8 +1,8 @@
 ---
 id: IDEA-12
-title: Admin puts the song on air (now-playing for the player)
+title: Admin puts the song on air
 type: feat
-status: in-progress
+status: review
 created: 2026-10-30
 updated: 2026-10-31
 tags:
@@ -112,7 +112,7 @@ untouched).
       context: `.claude/settings.local.json` has `"ask": ["Bash(git commit)", "Bash(git commit *)", "Bash(git push)", "Bash(git push *)"]`. Documentation is written and staged on a new branch, `check-types` and biome are clean; only the commit/PR step is blocked. I reverted the phase-4 checkbox/status edit since the phase isn't actually finished.
 - [x] 2026-10-31 [clarification] Grant commit permission for this session and re-run
 - [x] 2026-10-31 [chat] [agent] Got it — commit permission granted for this session, re-running Phase 4 now.
-- [ ] 2026-10-31 [question] [agent] Run-all parked on phase 4 ("Phase 4 — Docs, checks, ship") — the agent needs a decision: Commit/push are gated to "ask" and this session has no approval channel — how should I finish phase 4?
+- [x] 2026-10-31 [question] [agent] Run-all parked on phase 4 ("Phase 4 — Docs, checks, ship") — the agent needs a decision: Commit/push are gated to "ask" and this session has no approval channel — how should I finish phase 4?
       option: Grant commit permission for this session and re-run — completes the commit + push to existing PR #18
       option: Leave `papercamp/ideas/IDEA-12.md`'s checkbox/status edit staged uncommitted — you commit/push manually
       option: Add a persistent allow rule for `git commit`/`git push` in `.claude/settings.local.json` — removes the gate for future runs too

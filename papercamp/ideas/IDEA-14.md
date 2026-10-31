@@ -1,6 +1,6 @@
 ---
 id: IDEA-14
-title: Two tongues — Ukrainian and English, with a switch
+title: Player speaks Ukrainian and English
 type: feat
 status: planned
 created: 2026-10-31

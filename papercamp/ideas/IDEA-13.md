@@ -1,6 +1,6 @@
 ---
 id: IDEA-13
-title: The room's people and settings, in the chat's own view
+title: Chat's people and settings view
 type: feat
 status: planned
 created: 2026-10-31

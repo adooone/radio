@@ -1,6 +1,6 @@
 ---
 id: IDEA-11
-title: Player rebuilt as the Puget Sound listening page
+title: Puget Sound player rebuild
 type: feat
 status: review
 created: 2026-10-30
