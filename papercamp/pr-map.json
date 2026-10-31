@@ -1,0 +1,12 @@
+{
+  "fetchedAt": 1793473510756,
+  "prs": {
+    "IDEA-8": {
+      "number": 16,
+      "url": "https://github.com/adooone/radio/pull/16",
+      "state": "merged",
+      "headSha": "3f168a920b326e8a04530f6f92a9ffba8a84c383",
+      "headBranch": "feat/idea-8-migrate-admin-from-mojo-ui-to-func-ui"
+    }
+  }
+}

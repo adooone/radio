@@ -92,6 +92,14 @@ export const ErrorHandler = {
         return ResponseHelper.notFound(c, error.message);
       }
 
+      // Handle on-air-specific errors
+      if (
+        error.message.startsWith('Album with ID') ||
+        error.message.startsWith('Song with ID')
+      ) {
+        return ResponseHelper.notFound(c, error.message);
+      }
+
       // Handle digitization/Discogs-specific errors
       if (error.message === 'data.json already exists') {
         return ResponseHelper.conflict(

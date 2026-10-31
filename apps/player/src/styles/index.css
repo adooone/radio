@@ -1,0 +1,409 @@
+/* func-ui ships an unlayered Tailwind v3 build (its own preflight, `body`
+   font, even a `.hidden`). Layered between base and utilities, its
+   components survive this page's preflight (`button { background:
+   transparent; font: inherit }` would strip them from below) while the
+   page's utilities still win above it; the body font is pinned back
+   further down, unlayered. */
+@layer theme, base, func-ui, components, utilities;
+@import "@dendelion/func-ui/dist/index.css" layer(func-ui);
+@import "tailwindcss";
+
+/* KyivType, self-hosted (shared with the admin and the sister sites). */
+@font-face {
+  font-family: "KyivType Serif";
+  src: url("/fonts/KyivTypeSerif-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KyivType Serif";
+  src: url("/fonts/KyivTypeSerif-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KyivType Serif";
+  src: url("/fonts/KyivTypeSerif-Bold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KyivType Sans";
+  src: url("/fonts/KyivTypeSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KyivType Sans";
+  src: url("/fonts/KyivTypeSans-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  /* The strict palette (IDEA-11): the page's warm black, a darker backdrop,
+     warm white for reading, the label red, and the glow that lights it. */
+  --color-ink: #0a0605;
+  --color-deep: #050302;
+  --color-cream: #f5f2ec;
+  --color-accent: #ff5647;
+  --color-glow: #ffb84d;
+  --font-serif: "KyivType Serif", Georgia, serif;
+  --font-sans: "KyivType Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* func-ui, retuned to the room: warm dark ground, cream text and thumbs,
+   the label red for both the accent and the "danger" chips — this palette
+   has one red. Its hardcoded green focus ring is retuned below. */
+:root {
+  --fui-bg: #0a0605;
+  --fui-text: #f5f2ec;
+  --fui-surface: rgb(245 242 236 / 0.08);
+  --fui-accent: #ff5647;
+  --fui-glow: #ffb84d;
+  --fui-danger: #ff5647;
+  --fui-shadow-color: rgb(0 0 0 / 0.85);
+  /* Every lit lamp burns one flat orange-yellow — no gradient — with a
+     warm orange halo. (The components say tone="red"; the glass is amber.) */
+  --fui-lamp-red: #e08b26;
+  --fui-lamp-red-glow: rgb(224 139 38 / 0.5);
+  --fui-lamp-red-glow-strong: rgb(190 110 18 / 0.75);
+}
+
+@layer base {
+  /* Whatever shows past the page (a phone's bars, an overscroll) stays black. */
+  html {
+    background: var(--color-deep);
+  }
+  body {
+    @apply bg-ink font-serif text-cream antialiased;
+    /* One screen, nothing to scroll. */
+    overflow: hidden;
+  }
+}
+
+/* func-ui's body rule sits above the base layer; the page reads KyivType. */
+body {
+  font-family: var(--font-serif);
+}
+
+/* func-ui's focus ring is a hardcoded green; keep keyboard focus red. */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline-color: var(--color-accent) !important;
+}
+
+/* The page's breathing room: one gutter, growing with the screen. */
+.stage {
+  --gutter: clamp(2.5rem, 6.4vw, 6rem);
+  /* The island's height on portrait (md lamps in a py-3 pill), so the chat
+     keeps its messages clear of the docked input. */
+  --island-h: 76px;
+  /* The strip above the chat's rim on portrait, for the track strip. */
+  --chat-topbar: 96px;
+}
+
+/* The island docks over the foot of the radio column — the same grid cell,
+   laid over the section — so on portrait it stays put above both views. */
+.island-dock {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+  justify-self: stretch;
+  position: relative;
+  z-index: 35;
+  display: flex;
+  justify-content: center;
+  padding: 0 calc(var(--gutter) + 1.5rem) 3.5vmin;
+}
+@media (orientation: portrait) {
+  .island-dock {
+    padding: 0 1rem calc(3.5vmin + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* The split: radio 2, chat 1, no dividers — the gutters are the separation;
+   portrait stacks the halves instead. */
+.split {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+.split > section {
+  /* Content never widens a column past its track (the island shrinks instead). */
+  min-width: 0;
+  padding-inline: var(--gutter);
+}
+/* Both rooms are placed by hand: the island dock shares the radio's cell,
+   and explicit items would otherwise shove the auto-placed ones aside. */
+.radio-view {
+  grid-column: 1;
+  grid-row: 1;
+}
+.chat-view {
+  grid-column: 2;
+  grid-row: 1;
+}
+/* Portrait (phones, tablets): the radio is the whole screen, and the chat
+   leaves the grid — it becomes its own view behind the island's chat lamp,
+   crossfading with the radio: the room fades in as the radio fades out
+   (`.radio-view` in player-page.tsx). Once faded out it is hidden outright,
+   so nothing in it can take a tap or the focus. */
+@media (orientation: portrait) {
+  .split {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .chat-view {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.55s ease, visibility 0s linear 0.55s;
+  }
+  .chat-view-open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.55s ease, visibility 0s;
+  }
+  .radio-view {
+    transition: opacity 0.55s ease;
+  }
+  .radio-view-away {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+@media (orientation: portrait) and (prefers-reduced-motion: reduce) {
+  .chat-view,
+  .radio-view {
+    transition: none;
+  }
+}
+/* The chat sits last either way, flush to the screen's edges: its panel
+   takes the column's full height, and the wavy seam marks the boundary. */
+.split > .chat-view {
+  padding: 0;
+}
+
+/* The chat panel holds only the room's spacing — its ground is the canvas
+   slab behind it (`chat-backdrop.tsx`) — with the input held above a
+   phone's home bar. */
+.chat-panel {
+  /* The top matches the lockup's offset and the bottom the radio side's
+     3.5vmin, so the chat header and the input pill sit level with the
+     sign and the controls island. */
+  padding: calc(var(--gutter) * 0.8) 2.5rem
+    calc(3.5vmin + env(safe-area-inset-bottom, 0px)) 3rem;
+}
+@media (orientation: portrait) {
+  .chat-panel {
+    /* Under the track strip's bar and the rim's swing; the messages clear
+       of the input docked in the island's slot at the foot. */
+    padding-top: calc(var(--chat-topbar) + 2.5rem);
+    padding-left: 1.5rem;
+    padding-bottom: calc(
+      3.5vmin +
+      var(--island-h) +
+      1rem +
+      env(safe-area-inset-bottom, 0px)
+    );
+  }
+  /* The bar above the rim while the room is open: the track strip, with
+     the play lamp in hand. (`TOPBAR` in chat-backdrop.tsx matches.) */
+  .chat-topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    height: var(--chat-topbar);
+    align-items: center;
+    gap: 1rem;
+    padding: env(safe-area-inset-top, 0px) 1.5rem 0;
+  }
+}
+
+/* The full lockup — splat record, then the sign — small in the top-left
+   corner; portrait keeps it in the flow so the vinyl box never sits under it. */
+.sign-corner {
+  position: absolute;
+  left: var(--gutter);
+  top: calc(var(--gutter) * 0.8);
+  z-index: 10;
+}
+.sign-lockup {
+  width: clamp(250px, 26vw, 400px);
+}
+@media (orientation: portrait) {
+  /* Centered in the header, with the script moved under the wordmark. */
+  .sign-corner {
+    position: static;
+    align-self: center;
+    padding-top: 2rem;
+  }
+  .sign-lockup {
+    width: clamp(240px, 64vw, 460px);
+  }
+}
+
+/* The record turns at 33⅓ (1.8 s a revolution), about its spindle. */
+.splat-spin {
+  animation: splat-spin 1.8s linear infinite;
+  transform-origin: 47.9% 48.37%;
+}
+@keyframes splat-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* The sleeve throws its shadow over the disc sliding out of it — to the
+   right in the split, upward on portrait where the record rises out. */
+.vinyl-sleeve {
+  box-shadow: 10px 0 24px rgb(0 0 0 / 0.6);
+}
+@media (orientation: portrait) {
+  .vinyl-sleeve {
+    box-shadow: 0 -10px 24px rgb(0 0 0 / 0.6);
+  }
+}
+
+/* The room's warm shade over the turntable photograph, darkening toward
+   the seam, from the first build's Figma frame. */
+.room-shade {
+  background: linear-gradient(
+    97.74deg,
+    rgba(0, 0, 0, 0.25) 20.78%,
+    #120d05 105.31%
+  );
+}
+
+/* The islands float like the admin's navigation island: frosted warm-dark
+   glass under the controls pill and the chat box alike. */
+.control-island {
+  background: rgb(18 11 8 / 0.9);
+  backdrop-filter: blur(24px);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.6);
+}
+
+/* The on-air lamp breathes. */
+.live-dot {
+  animation: live-pulse 2.4s ease-in-out infinite;
+  box-shadow: 0 0 8px rgb(255 86 71 / 0.8);
+}
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* The chat's scroll: a thin red whisper, no chrome. */
+.chat-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 86 71 / 0.3) transparent;
+}
+
+/*
+ * Old film over everything (`film-overlay.tsx`): the strengths, then the
+ * layers.
+ */
+:root {
+  --film-vignette: 0.3;
+  --film-grain: 0.04;
+  --film-warm: 0.05;
+  --film-gate: 0.35;
+  --film-scratch: 0.08;
+}
+
+.film {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.film-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 62% at 50% 50%,
+    transparent 55%,
+    rgb(0 0 0 / var(--film-vignette)) 100%
+  );
+}
+
+.film-warm {
+  position: absolute;
+  inset: 0;
+  background: rgb(255 184 96 / var(--film-warm));
+  mix-blend-mode: multiply;
+}
+
+.film-grain {
+  position: absolute;
+  inset: -64px;
+  background-size: 192px 192px;
+  opacity: var(--film-grain);
+  mix-blend-mode: soft-light;
+  animation: film-grain 0.5s steps(1) infinite;
+  will-change: transform;
+}
+
+@keyframes film-grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-37px, 22px);
+  }
+  40% {
+    transform: translate(19px, -41px);
+  }
+  60% {
+    transform: translate(-11px, -27px);
+  }
+  80% {
+    transform: translate(43px, 13px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* The wear of the lens: scratches and dust, light on the dark room. */
+.film-scratches {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: difference;
+  opacity: var(--film-scratch);
+}
+
+/* The viewfinder's gate: the frame's edge darkens softly all round. */
+.film-gate {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 48px rgb(0 0 0 / var(--film-gate)), inset 0 0 8px
+    rgb(0 0 0 / calc(0.4 * var(--film-gate)));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film-grain,
+  .live-dot,
+  .splat-spin {
+    animation: none;
+  }
+}

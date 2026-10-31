@@ -15,7 +15,8 @@
       "outputs": []
     },
     "test": {
-      "outputs": []
+      "outputs": [],
+      "env": ["MEDIA_ROOT_PATH", "MEDIA_BASE_URL", "MEDIA_INBOX_PATH"]
     }
   }
 }

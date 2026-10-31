@@ -120,6 +120,13 @@ export const songSchemas = {
   }),
 };
 
+export const onAirSchemas = {
+  set: z.object({
+    albumId: z.number().int().positive(),
+    songId: z.number().int().positive().optional(),
+  }),
+};
+
 // Passthrough everywhere: data.json is user-owned — unknown keys must survive a save.
 const albumDataJsonSchema = z
   .object({

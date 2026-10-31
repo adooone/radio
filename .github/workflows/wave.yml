@@ -47,8 +47,15 @@ jobs:
           echo "✅ Wave linting passed!"
 
       - name: Run tests
+        env:
+          # `utils/env` requires these at import, and the on-air tests load it.
+          MEDIA_ROOT_PATH: /tmp/wave-ci/media
+          MEDIA_BASE_URL: /media/p-sound
+          MEDIA_INBOX_PATH: /tmp/wave-ci/inbox
         run: |
           echo "🧪 Running Wave tests..."
+          # db.ts opens data/wave.sqlite at import; the folder is gitignored.
+          mkdir -p apps/wave/data
           pnpm turbo run test --filter=@radio/wave
           echo "✅ Wave tests passed!"
 
