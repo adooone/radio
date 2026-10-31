@@ -99,8 +99,18 @@ textarea:focus-visible {
   outline-color: var(--color-accent) !important;
 }
 
-/* The page's breathing room: one gutter, growing with the screen. */
+/* Whatever shows past the stage is the ink, never the browser's white. */
+html {
+  background: var(--color-ink);
+}
+
+/* The page's breathing room: one gutter, growing with the screen. The stage
+   is pinned to the layout viewport rather than sized in dvh: installed on
+   iOS with a translucent status bar, the dvh units leave out the bar's
+   height, and the page ended that much short of the bottom. */
 .stage {
+  position: fixed;
+  inset: 0;
   --gutter: clamp(2.5rem, 6.4vw, 6rem);
   /* The island's height on portrait (md lamps in a py-3 pill), so the chat
      keeps its messages clear of the docked input. */
@@ -274,6 +284,24 @@ textarea:focus-visible {
     rgba(0, 0, 0, 0.25) 20.78%,
     #120d05 105.31%
   );
+}
+@media (orientation: portrait) {
+  /* The phone's browser and status bars take the page's theme colour (the
+     ink); the photo fades into that same ink at the top and bottom edges,
+     so the bars read as the page continuing rather than as black stripes. */
+  .room-shade {
+    background:
+      linear-gradient(
+        to bottom,
+        var(--color-ink) 0,
+        rgb(10 6 5 / 0.6) 6%,
+        transparent 16%,
+        transparent 84%,
+        rgb(10 6 5 / 0.6) 94%,
+        var(--color-ink) 100%
+      ),
+      linear-gradient(97.74deg, rgba(0, 0, 0, 0.25) 20.78%, #120d05 105.31%);
+  }
 }
 
 /* The islands float like the admin's navigation island: frosted warm-dark
