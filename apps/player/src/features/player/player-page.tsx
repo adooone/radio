@@ -28,7 +28,7 @@ export const PlayerPage = () => {
   const room = useChatRoom();
 
   return (
-    <main className="stage split h-dvh overflow-hidden bg-ink text-cream">
+    <main className="stage split overflow-hidden bg-ink text-cream">
       {/* biome-ignore lint/a11y/useMediaCaption: a live radio stream carries no captions */}
       <audio ref={audioRef} className="hidden" />
 
