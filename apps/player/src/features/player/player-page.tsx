@@ -24,14 +24,25 @@ export const PlayerPage = () => {
       <audio ref={audioRef} className="hidden" />
 
       <section className="relative flex min-h-0 flex-col items-center justify-between py-[3.5vmin]">
-        {/* The room behind the radio: the first build's turntable photograph
-            under its warm shade, below everything on this side. */}
+        {/* The room behind the radio: the old frontend's waiting-room
+            photograph under the warm shade, below everything on this side.
+            Both bleed past the chat's boundary, under its slab, so the rim's
+            swing never uncovers the bare page between them. */}
         <img
           alt=""
-          src="/brand/background.jpg"
-          className="absolute inset-0 size-full -scale-x-100 object-cover"
+          src="/brand/room.jpg"
+          className="absolute top-0 left-0 max-w-none object-cover"
+          style={{
+            objectPosition: '62% 50%',
+            width: 'calc(100% + 32px)',
+            height: 'calc(100% + 32px)',
+          }}
         />
-        <div aria-hidden="true" className="room-shade absolute inset-0" />
+        <div
+          aria-hidden="true"
+          className="room-shade absolute top-0 left-0"
+          style={{ width: 'calc(100% + 32px)', height: 'calc(100% + 32px)' }}
+        />
         <header className="sign-corner pointer-events-none select-none">
           <Wordmark spinning={playing} className="sign-lockup" />
         </header>
