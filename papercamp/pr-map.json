@@ -1,6 +1,15 @@
 {
-  "fetchedAt": 1793482317293,
+  "fetchedAt": 1793483144562,
   "prs": {
+    "IDEA-12": {
+      "number": 18,
+      "url": "https://github.com/adooone/radio/pull/18",
+      "state": "draft",
+      "headSha": "a93b4d23ed3a7a3644def57740b6c545446b6e6e",
+      "headBranch": "feat/idea-12-phase-4-docs-ship",
+      "unresolvedThreadCount": 0,
+      "hasNewCommentsSincePush": true
+    },
     "IDEA-8": {
       "number": 16,
       "url": "https://github.com/adooone/radio/pull/16",
