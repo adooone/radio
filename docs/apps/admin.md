@@ -31,7 +31,7 @@ src/
 │   │   └── store/        # Collection Zustand store
 │   ├── digitization/     # Vinyl digitization pipeline («Оцифровка»)
 │   ├── main/             # Dashboard
-│   ├── stream/           # Stream control (RTMP)
+│   ├── stream/           # Stream control (RTMP, on-air)
 │   └── users/            # User management
 ├── routes/               # TanStack Router routes
 ├── services/api/         # API clients and query hooks
@@ -42,7 +42,7 @@ src/
 
 - **Collection Management** - Albums, songs, and playlists with search and filtering
 - **Vinyl Digitization** - In-app chunked upload of recorded vinyl sides into `MEDIA_INBOX_PATH` (drag-and-drop, or a remembered "тека Radio" folder in Chromium), Discogs metadata, waveform-based track splitting, encode and publish
-- **Stream Control** - RTMP server management
+- **Stream Control** - RTMP server management, and putting an album or song on air («Поставити в ефір» / «Зняти з ефіру»): the player's now-playing sleeve, and — when nobody is streaming live — wave playing the record itself; the «В ефірі» card says whether the sound is from the library or live from OBS, with «Зупинити звук» to stop playback and keep the mark
 - **User Management** - Account creation and role management
 - **Real-time Monitoring** - Service status and system health
 - **PWA Support** - Installable Progressive Web App, installed as a Dock app the Оцифровка workflow is designed around

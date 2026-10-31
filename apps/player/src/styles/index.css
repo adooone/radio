@@ -253,17 +253,6 @@ textarea:focus-visible {
   }
 }
 
-/* The record turns at 33⅓ (1.8 s a revolution), about its spindle. */
-.splat-spin {
-  animation: splat-spin 1.8s linear infinite;
-  transform-origin: 47.9% 48.37%;
-}
-@keyframes splat-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 /* The sleeve throws its shadow over the disc sliding out of it — to the
    right in the split, upward on portrait where the record rises out. */
 .vinyl-sleeve {
@@ -402,8 +391,7 @@ textarea:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
   .film-grain,
-  .live-dot,
-  .splat-spin {
+  .live-dot {
     animation: none;
   }
 }

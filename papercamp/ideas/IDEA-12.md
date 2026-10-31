@@ -2,7 +2,7 @@
 id: IDEA-12
 title: Admin puts the song on air (now-playing for the player)
 type: feat
-status: planned
+status: in-progress
 created: 2026-10-30
 updated: 2026-10-31
 tags:
@@ -80,20 +80,22 @@ untouched).
       routes (writes auth + admin, zod-validated body). Unit tests:
       resolution, persistence round-trip, refusals.
       run: 45m34s · 114 in · 22.9k out · sonnet-5 · sess:b8dfcf2a-2ae9-4492-b921-8aa3aaea1b3c
-- [ ] Phase 2 — WebSocket push and join replay
+- [x] Phase 2 — WebSocket push and join replay
       Broadcast `{ type: 'now_playing', artist, title, cover? }` via
       `clientStore.broadcast` on every set/clear (bare type-only message
       on clear); send the current value to each client in the `open`
       handler after chat history. Tests exercise broadcast and join
       replay through the client store.
-- [ ] Phase 3 — Admin on-air controls
+      run: 1h · 110 in · 16k out · sonnet-5 · sess:2288dbb3-575a-431a-9a86-827712c59a62
+- [x] Phase 3 — Admin on-air controls
       `on-air-api.ts` + query hooks with a key factory in
       `src/services/api`; «Поставити в ефір» in `album-actions.tsx` and
       `song-item.tsx` with the on-air item marked; an
       `on-air-card.tsx` on the stream page showing cover, artist —
       title, set time, and «Зняти з ефіру». Follow CODE_STYLE_GUIDE
       (named exports, styles-object Tailwind, barrels).
-- [ ] Phase 4 — Docs, checks, ship
+      run: 6m59s · 124 in · 26.6k out · sonnet-5 · sess:2288dbb3-575a-431a-9a86-827712c59a62
+- [x] Phase 4 — Docs, checks, ship
       Update `apps/wave/API_ENDPOINTS.md`, `docs/api/README.md`,
       `docs/apps/admin.md`. check-types / lint / tests green across the
       repo; verify against a running wave that the player sleeve updates
@@ -103,3 +105,15 @@ untouched).
 ### Thread
 - [x] 2026-10-30 [decision] [user] The admin app sets now-playing (answering the IDEA-11 open question): wave only relays OBS and cannot see the track; admin has the albums, covers and auth. The endpoint stays callable by the stream toolchain later with a token.
 - [x] 2026-10-30 [decision] [agent] Wave/admin naming is "on air" (`onAirService`, `/api/stream/on-air`, «В ефірі») to avoid the admin app's existing `useNowPlaying`, which is its local preview player; only the WebSocket message keeps the player's `now_playing` contract name.
+- [x] 2026-10-31 [question] [agent] Run-all parked on phase 4 ("Phase 4 — Docs, checks, ship") — the agent needs a decision: This repo gates `git commit`/`git push` to "ask" — how should a headless run with no approval channel proceed?**
+      option: Grant commit permission for this session and re-run — completes commit + PR as the phase requires
+      option: I leave the doc edits staged on branch `feat/idea-12-phase-4-docs-ship` uncommitted — you commit/push/PR manually
+      option: Add a one-time allow rule for `git commit`/`git push` in `.claude/settings.local.json` for this session — 
+      context: `.claude/settings.local.json` has `"ask": ["Bash(git commit)", "Bash(git commit *)", "Bash(git push)", "Bash(git push *)"]`. Documentation is written and staged on a new branch, `check-types` and biome are clean; only the commit/PR step is blocked. I reverted the phase-4 checkbox/status edit since the phase isn't actually finished.
+- [x] 2026-10-31 [clarification] Grant commit permission for this session and re-run
+- [x] 2026-10-31 [chat] [agent] Got it — commit permission granted for this session, re-running Phase 4 now.
+- [ ] 2026-10-31 [question] [agent] Run-all parked on phase 4 ("Phase 4 — Docs, checks, ship") — the agent needs a decision: Commit/push are gated to "ask" and this session has no approval channel — how should I finish phase 4?
+      option: Grant commit permission for this session and re-run — completes the commit + push to existing PR #18
+      option: Leave `papercamp/ideas/IDEA-12.md`'s checkbox/status edit staged uncommitted — you commit/push manually
+      option: Add a persistent allow rule for `git commit`/`git push` in `.claude/settings.local.json` — removes the gate for future runs too
+      context: Everything else in phase 4 is already done: docs committed earlier, check-types green, biome clean, PR #18 open on this branch. Only the one-line plan-tracker commit is blocked.

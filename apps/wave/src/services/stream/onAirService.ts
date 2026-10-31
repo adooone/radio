@@ -2,14 +2,15 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { findSongById } from '@/db/albums/songs';
 import { albumService } from '@/services/albums';
+import { clientStore } from '@/ws/utils/clientStore';
+import type { OnAirState } from '@radio/types';
 
-export interface OnAirState {
-  albumId: number;
-  songId?: number;
-  artist: string;
-  title: string;
-  cover?: string;
-  setAt: string;
+export type { OnAirState };
+
+export function formatNowPlayingMessage(state: OnAirState | null): string {
+  if (!state) return JSON.stringify({ type: 'now_playing' });
+  const { artist, title, cover } = state;
+  return JSON.stringify({ type: 'now_playing', artist, title, cover });
 }
 
 interface AlbumLookup {
@@ -30,10 +31,12 @@ interface OnAirDeps {
   filePath: string;
   getAlbum: (id: number) => Promise<AlbumLookup | null>;
   getSong: (id: number) => Promise<SongLookup | null>;
+  broadcast: (message: string) => void;
 }
 
 const defaultDeps = (): OnAirDeps => ({
   filePath: join(process.cwd(), 'data', 'on-air.json'),
+  broadcast: (message) => clientStore.broadcast(message),
   getAlbum: async (id) => {
     try {
       const album = await albumService.getAlbumById(id);
@@ -68,7 +71,11 @@ export class OnAirService {
     this.load();
   }
 
-  async setOnAir(albumId: number, songId?: number): Promise<OnAirState> {
+  async setOnAir(
+    albumId: number,
+    songId?: number,
+    source: OnAirState['source'] = 'admin',
+  ): Promise<OnAirState> {
     const album = await this.deps.getAlbum(albumId);
     if (!album) {
       throw new Error(`Album with ID ${albumId} not found`);
@@ -95,14 +102,17 @@ export class OnAirService {
       title,
       cover: album.coverImageUrl ?? undefined,
       setAt: new Date().toISOString(),
+      source,
     };
     this.persist();
+    this.deps.broadcast(formatNowPlayingMessage(this.current));
     return this.current;
   }
 
   clearOnAir(): void {
     this.current = null;
     this.persist();
+    this.deps.broadcast(formatNowPlayingMessage(this.current));
   }
 
   getOnAir(): OnAirState | null {

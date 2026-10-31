@@ -280,6 +280,37 @@ export interface StreamControlResponse {
   message: string;
 }
 
+export interface OnAirState {
+  albumId: number;
+  songId?: number;
+  artist: string;
+  title: string;
+  cover?: string;
+  setAt: string;
+  /** Who set it: the admin by hand, or the turntable as it plays. */
+  source?: 'admin' | 'turntable';
+}
+
+export interface TurntableTrack {
+  songId: number;
+  title: string;
+  trackNumber: number;
+  durationSec: number;
+}
+
+/** Wave's own playback of a record into the stream. */
+export interface TurntableState {
+  status: 'idle' | 'playing';
+  /** Someone other than the turntable (OBS) is publishing to the stream. */
+  live: boolean;
+  albumId?: number;
+  songId?: number;
+  /** Index of the current track in `queue`. */
+  position?: number;
+  queue?: TurntableTrack[];
+  startedAt?: string;
+}
+
 export interface ConfigResponse<T> {
   success: boolean;
   config?: T;

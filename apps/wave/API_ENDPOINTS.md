@@ -144,6 +144,105 @@ Body: {
 Response: { success: true, message: "Songs reordered successfully" }
 ```
 
+## Stream On-Air API
+
+The player's "now playing" state, set by the admin app. When nobody is
+streaming live, putting a record on air also *plays* it: wave's
+turntable publishes the library files into the same RTMP relay OBS uses
+(see the Turntable API below). See
+`apps/wave/src/services/stream/onAirService.ts`,
+`apps/wave/src/services/stream/turntableService.ts`,
+`papercamp/ideas/IDEA-12.md` and `papercamp/ideas/IDEA-15.md`.
+
+### Get On-Air State
+```
+GET /stream/on-air
+Response: { success: true, data: OnAirState | null }
+```
+
+### Set On-Air State
+```
+PUT /stream/on-air
+Headers: Authorization: Bearer <token> (admin only)
+Body: { albumId: number, songId?: number }
+Response: { success: true, data: OnAirState }
+Errors: 404 if albumId is unknown, or songId doesn't belong to albumId
+```
+Resolves artist/title from the album, or from the song (with the song's
+artist falling back to the album's) when `songId` is given, and the
+cover from the album's absolute `coverImageUrl`. Broadcasts
+`{ type: 'now_playing', artist, title, cover? }` over the WebSocket and
+persists to `data/on-air.json` so the state survives a wave restart.
+
+With the air free (no live publisher on the stream key), the set also
+starts the turntable: the album from track 1, or from the given song
+onward; the on-air state then follows the track that is sounding. While
+OBS is live the set only marks, as before.
+
+### Clear On-Air State
+```
+DELETE /stream/on-air
+Headers: Authorization: Bearer <token> (admin only)
+Response: { success: true, message: "On-air state cleared successfully" }
+```
+Stops the turntable if it is playing, and broadcasts a bare
+`{ type: 'now_playing' }` (no title clears the player back to the
+generic sleeve).
+
+### OnAirState
+```typescript
+{
+  albumId: number
+  songId?: number
+  artist: string
+  title: string
+  cover?: string  // absolute URL
+  setAt: string  // ISO timestamp
+  source?: 'admin' | 'turntable'  // who set it; a turntable mark is cleared at boot
+}
+```
+
+## Stream Turntable API
+
+Wave's own playback of a record: `ffmpeg` reads the album's `.m4a`
+files from `MEDIA_ROOT_PATH` and publishes them to
+`RTMP_PUBLISH_URL/STREAM_KEY` (defaults `rtmp://127.0.0.1:1935/live`
+and `test`), so the player hears them through the usual HLS. Whether
+someone else is publishing is read from the HLS playlist's
+`Last-Modified` at `RTMP_HTTP_URL/hls/<key>.m3u8` (fresh within 10 s
+means live). Playback is not persisted: a wave restart means silence.
+
+### Get Turntable State
+```
+GET /stream/turntable
+Response: { success: true, data: TurntableState }
+```
+
+### Stop the Turntable
+```
+DELETE /stream/turntable
+Headers: Authorization: Bearer <token> (admin only)
+Response: { success: true, message: "Turntable stopped" | "Turntable was not playing" }
+```
+Stops the sound only; the on-air mark stays (use `DELETE /stream/on-air`
+to clear both).
+
+### TurntableState
+```typescript
+{
+  status: 'idle' | 'playing'
+  live: boolean          // a publisher other than the turntable (OBS) holds the stream
+  albumId?: number
+  songId?: number        // the track sounding now
+  position?: number      // its index in queue
+  queue?: { songId: number; title: string; trackNumber: number; durationSec: number }[]
+  startedAt?: string     // ISO timestamp
+}
+```
+Errors on `PUT /stream/on-air` when playing: 404 for an unknown album or
+song, 422 (`Nothing to play: …`) when the album has no media folder or no
+track files.
+
 ## Digitization API (Admin only)
 
 Base path: `/api/digitization`. Every endpoint requires `Authorization: Bearer

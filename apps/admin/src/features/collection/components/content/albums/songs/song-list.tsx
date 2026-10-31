@@ -1,4 +1,4 @@
-import { useDeleteSong } from '@/services/api';
+import { useDeleteSong, useOnAir, useSetOnAir } from '@/services/api';
 import type { Song } from '@radio/types';
 import { useState } from 'react';
 import { SongItem } from './song-item';
@@ -8,8 +8,10 @@ type SongListProps = {
   songs: (Song & { audioFilePath?: string; audioFileName?: string })[];
 };
 
-export const SongList = ({ songs }: SongListProps) => {
+export const SongList = ({ albumId, songs }: SongListProps) => {
   const deleteSong = useDeleteSong();
+  const { data: onAir } = useOnAir();
+  const setOnAir = useSetOnAir();
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
   const handleDelete = async (songId: number, title: string) => {
@@ -68,6 +70,9 @@ export const SongList = ({ songs }: SongListProps) => {
             playlistIndex={playlistIndex}
             onDelete={handleDelete}
             isDeleting={deletingId === song.id}
+            isOnAir={onAir?.albumId === albumId && onAir.songId === song.id}
+            onSetOnAir={() => setOnAir.mutate({ albumId, songId: song.id })}
+            isSettingOnAir={setOnAir.isPending}
           />
         );
       })}

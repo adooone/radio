@@ -2,7 +2,7 @@ import { StatsCard } from '@/components';
 import { sharedStyles } from '@/styles/shared-styles';
 import type { MonitoringData } from '@radio/types';
 import clsx from 'clsx';
-import { RtmpServiceCard } from '../cards';
+import { OnAirCard, RtmpServiceCard } from '../cards';
 
 interface MonitoringTabProps {
   monitoring: MonitoringData | undefined;
@@ -60,6 +60,7 @@ export const MonitoringTab: React.FC<MonitoringTabProps> = ({
         </h2>
         <div className={clsx(sharedStyles.serviceGrid)}>
           <RtmpServiceCard stats={monitoring?.services.rtmp || null} />
+          <OnAirCard />
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mt-10">
