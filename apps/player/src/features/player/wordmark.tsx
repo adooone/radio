@@ -1,7 +1,5 @@
 type WordmarkProps = {
   className?: string;
-  /** Turn the splat record at 33⅓ while the air plays. */
-  spinning?: boolean;
 };
 
 /**
@@ -14,10 +12,7 @@ type WordmarkProps = {
  * sizes, but with the wordmark and the script each centred, the script
  * under the wordmark.
  */
-export const Wordmark = ({
-  className = '',
-  spinning = false,
-}: WordmarkProps) => (
+export const Wordmark = ({ className = '' }: WordmarkProps) => (
   <div
     role="img"
     aria-label="Puget Sound — Vinyl Radio"
@@ -27,7 +22,7 @@ export const Wordmark = ({
       className="relative w-[15%] shrink-0 portrait:hidden"
       style={{ aspectRatio: '169.2 / 153.1' }}
     >
-      <div className={`absolute inset-0 ${spinning ? 'splat-spin' : ''}`}>
+      <div className="absolute inset-0">
         <div
           className="absolute"
           style={{ inset: '-1.01% -1.45% -1.53% -0.83%' }}

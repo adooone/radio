@@ -14,8 +14,9 @@ const FFT_SIZE = 256;
  * pipeline takes over on Safari. Nothing downloads until the listener presses
  * play; a dead or 404ing manifest turns the status offline, and a timer opens
  * the stream anew, so the page comes back to life by itself when the air
- * returns. On the hls.js path a Web Audio analyser taps the element so the
- * vinyl halo can move with the actual sound.
+ * returns. A pause lifts the needle, and play after it rejoins the air where
+ * it is now — a radio has no "resume". On the hls.js path a Web Audio
+ * analyser taps the element so the vinyl halo can move with the actual sound.
  */
 export const useRadio = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -23,6 +24,7 @@ export const useRadio = () => {
   const analyserRef = useRef<AnalyserNode | null>(null);
   const levelsRef = useRef<Uint8Array | null>(null);
   const wiredRef = useRef(false);
+  const rejoinRef = useRef<() => void>(() => {});
   const [status, setStatus] = useState<RadioStatus>('loading');
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(0.8);
@@ -86,6 +88,13 @@ export const useRadio = () => {
 
       // Neither MSE nor native HLS: the air cannot reach this browser.
       quiet();
+    };
+
+    /** A fresh manifest, so play lands on the live edge, not the buffered past. */
+    rejoinRef.current = () => {
+      window.clearTimeout(retry);
+      close();
+      open();
     };
 
     open();
@@ -157,7 +166,9 @@ export const useRadio = () => {
     if (!audio) return;
     if (audio.paused) {
       wireAnalyser();
-      // Join (and rejoin) at the live edge rather than resuming the past.
+      // startLoad(-1) alone resumes an engine that has already played; only a
+      // reopened stream joins the air where it is now.
+      if (audio.currentTime > 0) rejoinRef.current();
       hlsRef.current?.startLoad(-1);
       audio.play().catch(() => {});
     } else {

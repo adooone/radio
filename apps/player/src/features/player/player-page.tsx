@@ -57,7 +57,7 @@ export const PlayerPage = () => {
           style={{ width: 'calc(100% + 32px)', height: 'calc(100% + 32px)' }}
         />
         <header className="sign-corner pointer-events-none select-none">
-          <Wordmark spinning={playing} className="sign-lockup" />
+          <Wordmark className="sign-lockup" />
         </header>
         {/* Portrait lets the vinyl run the full screen width, past the gutters. */}
         <div className="relative min-h-0 w-full flex-1 py-[1.5vmin] portrait:w-[calc(100%+var(--gutter)*2)]">
