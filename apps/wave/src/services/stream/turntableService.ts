@@ -299,3 +299,12 @@ export const turntableService = new TurntableService();
 if (onAirService.getOnAir()?.source === 'turntable') {
   onAirService.clearOnAir();
 }
+
+// pm2 stops wave with a signal; the needle must not keep publishing alone.
+// Once stopped, the signal is re-raised so the default exit still happens.
+for (const signal of ['SIGINT', 'SIGTERM'] as const) {
+  process.once(signal, () => {
+    turntableService.stop();
+    process.kill(process.pid, signal);
+  });
+}
