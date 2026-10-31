@@ -41,15 +41,17 @@ export const ControlIsland = ({
   song,
   status,
 }: ControlIslandProps) => (
-  <div className="control-island flex max-w-full items-center gap-4 rounded-full border border-cream/10 px-6 py-3">
+  <div className="control-island flex max-w-full items-center gap-4 rounded-full border border-cream/10 py-2 pr-6 pl-2">
     <LampIconButton
       tone={quiet ? 'dark' : 'red'}
-      size="md"
+      size="sm"
       label={playing ? 'Pause' : 'Listen live'}
       icon={playing ? <PauseIcon /> : <PlayIcon />}
       onClick={onToggle}
       disabled={quiet}
-      className="shrink-0 text-cream disabled:cursor-default disabled:opacity-60"
+      className={`shrink-0 disabled:cursor-default disabled:opacity-60 ${
+        quiet ? 'text-cream' : 'text-ink'
+      }`}
     />
     <div className="w-[340px] min-w-0 shrink">
       {song ? (

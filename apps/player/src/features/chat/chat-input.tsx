@@ -1,4 +1,4 @@
-import { Button } from '@dendelion/func-ui';
+import { LampButton } from '@dendelion/func-ui';
 import { type FormEvent, type KeyboardEvent, useCallback, useRef, useState } from 'react';
 
 type ChatInputProps = {
@@ -36,7 +36,7 @@ export const ChatInput = ({ onSend }: ChatInputProps) => {
   return (
     <form
       onSubmit={handleSend}
-      className="flex flex-row items-end gap-2 rounded-2xl border border-accent/25 bg-cream/5 p-2"
+      className="control-island flex flex-row items-end gap-2 rounded-full border border-cream/10 p-2 pl-4"
     >
       <textarea
         ref={textareaRef}
@@ -50,9 +50,9 @@ export const ChatInput = ({ onSend }: ChatInputProps) => {
         rows={1}
         className="max-h-[200px] min-h-[38px] w-full flex-grow resize-none overflow-hidden bg-transparent p-2 font-sans text-sm text-cream outline-none placeholder:text-cream/35"
       />
-      <Button type="submit" variant="primary" size="sm" className="shrink-0">
+      <LampButton type="submit" tone="red" size="sm" className="shrink-0">
         Send
-      </Button>
+      </LampButton>
     </form>
   );
 };

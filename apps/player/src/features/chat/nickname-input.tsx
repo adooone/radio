@@ -1,4 +1,4 @@
-import { Button } from '@dendelion/func-ui';
+import { LampButton } from '@dendelion/func-ui';
 import { type KeyboardEvent, useState } from 'react';
 
 type NicknameInputProps = {
@@ -26,7 +26,7 @@ export const NicknameInput = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex flex-row items-center gap-2 rounded-2xl border border-accent/25 bg-cream/5 p-2">
+      <div className="control-island flex flex-row items-center gap-2 rounded-full border border-cream/10 p-2 pl-4">
         <input
           value={nickInput}
           onChange={(e) => {
@@ -39,16 +39,16 @@ export const NicknameInput = ({
             error ? 'border border-accent/50 bg-accent/10' : ''
           }`}
         />
-        <Button
+        <LampButton
           type="button"
-          variant="primary"
+          tone={nickInput ? 'red' : 'dark'}
           size="sm"
           disabled={!nickInput}
           onClick={handleSetNickname}
           className="shrink-0 whitespace-nowrap"
         >
           {nickInput ? "Let's go" : 'Join the chat'}
-        </Button>
+        </LampButton>
       </div>
       {error && (
         <p className="rounded-lg border border-accent/20 bg-accent/10 px-3 py-1 text-sm text-accent">

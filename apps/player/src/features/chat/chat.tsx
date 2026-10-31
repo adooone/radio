@@ -1,4 +1,4 @@
-import { IconButton } from '@dendelion/func-ui';
+import { LampIconButton } from '@dendelion/func-ui';
 import { useState } from 'react';
 import { getSocket } from '@/lib/socket';
 import { ChatInput } from './chat-input';
@@ -6,6 +6,7 @@ import { ChatMessages } from './chat-messages';
 import { SoundOffIcon, SoundOnIcon } from './icons';
 import { NicknameInput } from './nickname-input';
 import { useChat } from './use-chat';
+import { ChatBackdrop } from './chat-backdrop';
 import { useSound } from './use-sound';
 import { useUserList } from './use-user-list';
 
@@ -61,32 +62,37 @@ export const Chat = () => {
   };
 
   return (
-    <section className="flex min-h-0 flex-col">
-      <header className="flex w-full items-center justify-between pb-3">
-        <IconButton
-          variant="ghost"
-          size="sm"
-          onClick={toggle}
-          label={isEnabled ? 'Mute chat sounds' : 'Unmute chat sounds'}
-          icon={isEnabled ? <SoundOnIcon /> : <SoundOffIcon />}
-          className="text-cream/60"
-        />
-        <h2 className="font-sans text-base font-medium uppercase tracking-wide text-cream/80">
-          Chatroom
-        </h2>
-      </header>
+    <section className="relative flex min-h-0 flex-col">
+      {/* The room's ground, one canvas shape: a darker slab rimmed like the
+          record toward the radio. */}
+      <ChatBackdrop />
+      <div className="chat-panel relative z-10 flex min-h-0 flex-1 flex-col">
+        <header className="flex w-full items-center justify-between pb-3">
+          <LampIconButton
+            tone={isEnabled ? 'red' : 'dark'}
+            size="sm"
+            onClick={toggle}
+            label={isEnabled ? 'Mute chat sounds' : 'Unmute chat sounds'}
+            icon={isEnabled ? <SoundOnIcon /> : <SoundOffIcon />}
+            className={isEnabled ? 'text-ink' : 'text-cream'}
+          />
+          <h2 className="font-serif text-xl font-semibold tracking-wide text-cream/90">
+            Chat
+          </h2>
+        </header>
 
-      <ChatMessages messages={messages} nickname={nickname} users={users} />
+        <ChatMessages messages={messages} nickname={nickname} users={users} />
 
-      {nickname ? (
-        <ChatInput onSend={sendMessage} />
-      ) : (
-        <NicknameInput
-          onSetNickname={handleSetNickname}
-          onNicknameChange={() => setNicknameError(null)}
-          error={nicknameError}
-        />
-      )}
+        {nickname ? (
+          <ChatInput onSend={sendMessage} />
+        ) : (
+          <NicknameInput
+            onSetNickname={handleSetNickname}
+            onNicknameChange={() => setNicknameError(null)}
+            error={nicknameError}
+          />
+        )}
+      </div>
     </section>
   );
 };
