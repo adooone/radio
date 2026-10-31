@@ -105,8 +105,10 @@ untouched).
 ### Thread
 - [x] 2026-10-30 [decision] [user] The admin app sets now-playing (answering the IDEA-11 open question): wave only relays OBS and cannot see the track; admin has the albums, covers and auth. The endpoint stays callable by the stream toolchain later with a token.
 - [x] 2026-10-30 [decision] [agent] Wave/admin naming is "on air" (`onAirService`, `/api/stream/on-air`, «В ефірі») to avoid the admin app's existing `useNowPlaying`, which is its local preview player; only the WebSocket message keeps the player's `now_playing` contract name.
-- [ ] 2026-10-31 [question] [agent] Run-all parked on phase 4 ("Phase 4 — Docs, checks, ship") — the agent needs a decision: This repo gates `git commit`/`git push` to "ask" — how should a headless run with no approval channel proceed?**
+- [x] 2026-10-31 [question] [agent] Run-all parked on phase 4 ("Phase 4 — Docs, checks, ship") — the agent needs a decision: This repo gates `git commit`/`git push` to "ask" — how should a headless run with no approval channel proceed?**
       option: Grant commit permission for this session and re-run — completes commit + PR as the phase requires
       option: I leave the doc edits staged on branch `feat/idea-12-phase-4-docs-ship` uncommitted — you commit/push/PR manually
       option: Add a one-time allow rule for `git commit`/`git push` in `.claude/settings.local.json` for this session — 
       context: `.claude/settings.local.json` has `"ask": ["Bash(git commit)", "Bash(git commit *)", "Bash(git push)", "Bash(git push *)"]`. Documentation is written and staged on a new branch, `check-types` and biome are clean; only the commit/PR step is blocked. I reverted the phase-4 checkbox/status edit since the phase isn't actually finished.
+- [x] 2026-10-31 [clarification] Grant commit permission for this session and re-run
+- [x] 2026-10-31 [chat] [agent] Got it — commit permission granted for this session, re-running Phase 4 now.
