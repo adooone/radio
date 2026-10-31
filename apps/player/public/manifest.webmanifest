@@ -1,0 +1,21 @@
+{
+  "name": "Puget Sound · Vinyl Radio",
+  "short_name": "Puget Sound",
+  "description": "Vinyl radio. Live air from spinning records.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a0605",
+  "theme_color": "#0a0605",
+  "icons": [
+    { "src": "/icons/icon-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512x512.png", "sizes": "512x512", "type": "image/png" },
+    {
+      "src": "/icons/icon-512x512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

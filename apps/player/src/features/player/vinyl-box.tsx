@@ -7,7 +7,7 @@ const TAU = Math.PI * 2;
 
 /**
  * The record is the logo's own splat: this is the outline path from
- * `public/brand/splat-outside.svg` (viewBox 173.052 × 156.967), and the
+ * `features/player/art/splat-outside.svg` (viewBox 173.052 × 156.967), and the
  * colours below are the export's — ink fill, cream border.
  */
 const SPLAT_D =

@@ -234,19 +234,21 @@ textarea:focus-visible {
    corner; portrait keeps it in the flow so the vinyl box never sits under it. */
 .sign-corner {
   position: absolute;
-  left: var(--gutter);
-  top: calc(var(--gutter) * 0.8);
+  left: calc(var(--gutter) + env(safe-area-inset-left, 0px));
+  top: calc(var(--gutter) * 0.8 + env(safe-area-inset-top, 0px));
   z-index: 10;
 }
 .sign-lockup {
   width: clamp(250px, 26vw, 400px);
 }
 @media (orientation: portrait) {
-  /* Centered in the header, with the script moved under the wordmark. */
+  /* Centered in the header, with the script moved under the wordmark;
+     installed on a phone the page runs under the status bar, so the
+     header steps down by the safe-area inset. */
   .sign-corner {
     position: static;
     align-self: center;
-    padding-top: 2rem;
+    padding-top: calc(2rem + env(safe-area-inset-top, 0px));
   }
   .sign-lockup {
     width: clamp(240px, 64vw, 460px);
