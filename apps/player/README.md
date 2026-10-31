@@ -1,73 +1,43 @@
-# @radio/player
+# Puget Sound · Vinyl Radio — player
 
-Public-facing radio player for listeners. Built with React 18, Vite, and HLS.js.
+The public listening page of the vinyl radio, planned together on
+papercamp IDEA-11: one black screen split 2 : 1 with no dividers — the
+radio on the left, the chat on the right (portrait stacks them). The
+palette is strict: red `#FF5647` for shapes and controls, warm white
+`#F5F2EC` for reading text, red italic only for brand moments, all of it
+under the old-film overlay (grain, scratches, light leaks, a camera-eye
+vignette).
 
-## Quick Start
+The centerpiece is the vinyl box: the album sleeve of the song on air
+with the red disc half slid out of it. The disc spins while playing and
+the bars at its edge move with the actual sound (Web Audio analyser on
+the hls.js path; a time-driven swell of the same shape elsewhere).
+Playback is audio-only — the stream's video track is never rendered.
 
-```bash
-# From monorepo root
+## Dev
+
+```sh
 pnpm player:dev
-# Open http://localhost:3030
 ```
 
-## Features
+Vite on port 3030, `--host` (reachable as `deimos:3030` over the tailnet).
+`VITE_STREAM_URL` points at the HLS manifest (see `.env.example`);
+nginx-rtmp answers 404 on it while nobody publishes, which the page shows
+as a quiet air and retries every 15 s. `VITE_SOCKET_URL` points at wave's
+WebSocket (chat and, once the backend announces it, now-playing); unset,
+it guesses `ws://<host>:6871`.
 
-- **HLS Streaming** - HTTP Live Streaming playback via HLS.js
-- **Real-time Chat** - WebSocket-based live chat
-- **Collection Browse** - Browse albums and playlists
-- **Now Playing** - Current track info with live updates
-- **PWA Support** - Installable as a Progressive Web App
-- **Responsive** - Works on desktop and mobile
+## Build
 
-## Tech Stack
-
-- React 18 + TypeScript
-- Vite (dev server and build)
-- TanStack Router (routing)
-- TanStack Query (server state)
-- Zustand (client state)
-- HLS.js (audio streaming)
-- Tailwind CSS
-- Framer Motion (animations)
-
-## Scripts
-
-| Script | Description |
-|--------|-------------|
-| `pnpm dev` | Start dev server (port 3030) |
-| `pnpm build` | Production build |
-| `pnpm preview` | Preview production build |
-| `pnpm test` | Run tests (Vitest) |
-| `pnpm lint` | Lint with Biome |
-| `pnpm check-types` | TypeScript type check |
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── layout/       # Layout, container, footer
-│   └── ui/           # Buttons, toggles
-├── features/
-│   ├── collection/   # Album browsing and detail views
-│   └── radio/        # Player, chat, settings
-├── routes/           # Route definitions
-├── services/
-│   ├── api/          # API clients
-│   └── storage/      # Local storage utilities
-├── stores/           # Zustand stores
-└── styles/           # Global styles
+```sh
+pnpm --filter @radio/player build
 ```
 
-## Environment Variables
+Static output in `dist/`, deployed to Vercel at radio.adoo.one.
 
-```env
-VITE_API_URL=http://localhost:6870
-VITE_SOCKET_URL=ws://localhost:6871
-VITE_STREAM_URL=https://stream.adoo.one/hls/test.m3u8
-VITE_APP_ENV=development
-```
+## Now playing
 
-## Deployment
-
-Deployed to Vercel. See `vercel.json` for configuration.
+Wave has no now-playing source yet. The player listens for a
+`now_playing` message on the WebSocket (`{ type, artist, title, cover }`)
+and shows the house label on the sleeve until one arrives — the backend
+side is its own future idea (see IDEA-11's thread).
