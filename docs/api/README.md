@@ -87,6 +87,14 @@ for the full reference.
 | `POST` | `/rtmp/restart` | Restart RTMP server |
 | `GET` | `/rtmp/config` | Get RTMP configuration |
 | `PUT` | `/rtmp/config` | Update RTMP configuration |
+| `GET` | `/on-air` | Get the current on-air album/song (public) |
+| `PUT` | `/on-air` | Set the on-air album/song (admin only) |
+| `DELETE` | `/on-air` | Clear the on-air state (admin only) |
+
+The on-air endpoints are set by the admin app, not wave itself — wave
+only relays OBS and cannot see the audio content. See
+[`apps/wave/API_ENDPOINTS.md`](../../apps/wave/API_ENDPOINTS.md#stream-on-air-api)
+for the full reference.
 
 ## Monitoring API (`/api/monitoring`)
 
@@ -106,7 +114,7 @@ Connect to `ws://localhost:6871` for real-time updates.
 ### Event Types
 
 - `status_update` - Stream status changes
-- `track_change` - Now playing updates
+- `now_playing` - On-air album/song for the player's sleeve (`{ type: 'now_playing', artist, title, cover? }`; no `title` clears back to the generic sleeve). Sent on every on-air set/clear, and once to a freshly joined client with the current state.
 - `chat_message` - Chat messages
 - `error` - Error notifications
 
@@ -120,7 +128,7 @@ ws.onmessage = (event) => {
   switch (data.type) {
     case 'status_update':
       break;
-    case 'track_change':
+    case 'now_playing':
       break;
     case 'chat_message':
       break;

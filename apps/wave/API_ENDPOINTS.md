@@ -144,6 +144,54 @@ Body: {
 Response: { success: true, message: "Songs reordered successfully" }
 ```
 
+## Stream On-Air API
+
+The player's "now playing" state — set by the admin app, never by wave
+itself (wave only relays OBS and cannot see the audio content). See
+`apps/wave/src/services/stream/onAirService.ts` and
+`papercamp/ideas/IDEA-12.md`.
+
+### Get On-Air State
+```
+GET /stream/on-air
+Response: { success: true, data: OnAirState | null }
+```
+
+### Set On-Air State
+```
+PUT /stream/on-air
+Headers: Authorization: Bearer <token> (admin only)
+Body: { albumId: number, songId?: number }
+Response: { success: true, data: OnAirState }
+Errors: 404 if albumId is unknown, or songId doesn't belong to albumId
+```
+Resolves artist/title from the album, or from the song (with the song's
+artist falling back to the album's) when `songId` is given, and the
+cover from the album's absolute `coverImageUrl`. Broadcasts
+`{ type: 'now_playing', artist, title, cover? }` over the WebSocket and
+persists to `data/on-air.json` so the state survives a wave restart.
+
+### Clear On-Air State
+```
+DELETE /stream/on-air
+Headers: Authorization: Bearer <token> (admin only)
+Response: { success: true, message: "On-air state cleared successfully" }
+```
+Broadcasts a bare `{ type: 'now_playing' }` (no title clears the player
+back to the generic sleeve).
+
+### OnAirState
+```typescript
+{
+  albumId: number
+  songId?: number
+  artist: string
+  title: string
+  cover?: string  // absolute URL
+  setAt: string  // ISO timestamp
+}
+```
+
 ## Digitization API (Admin only)
 
 Base path: `/api/digitization`. Every endpoint requires `Authorization: Bearer
