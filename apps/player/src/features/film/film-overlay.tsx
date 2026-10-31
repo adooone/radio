@@ -97,21 +97,17 @@ const Scratches = () => {
 /**
  * Old film over everything, after fo.band's camera eye: a vignette
  * darkening the corners like a lens, grain that jitters a few times a
- * second (kept gentle, at half its first strength), a warm cast, light
- * leaks that pass through a corner now and then, the gate's soft edge, and
- * the wear of the glass, drawn once. (The viewfinder's corner marks and
- * meter ring were dropped at the user's ask.) All but the wear are CSS
- * layers composited by the GPU; the strengths are the `--film-*`
- * variables. (The frame weave and the viewfinder marks were dropped at the
- * user's ask.)
+ * second (kept gentle, at half its first strength), a warm cast, the
+ * gate's soft edge, and the wear of the glass, drawn once. All but the
+ * wear are CSS layers composited by the GPU; the strengths are the
+ * `--film-*` variables. (The light leaks, the frame weave and the
+ * viewfinder's marks and meter were dropped at the user's ask.)
  */
 export const FilmOverlay = () => {
   const [grain] = useState(grainTile);
   return (
     <div aria-hidden="true" className="film">
       <div className="film-warm" />
-      <div className="film-leak film-leak-a" />
-      <div className="film-leak film-leak-b" />
       <div className="film-grain" style={{ backgroundImage: grain }} />
       <Scratches />
       <div className="film-vignette" />

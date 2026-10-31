@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 
 /** Overhang past the section's edge, so the rim can swing across the seam. */
 const BLEED = 32;
+/** Portrait keeps this much above the rim for the track strip (`--chat-topbar`). */
+const TOPBAR = 96;
 
 /**
  * The chat's ground, drawn whole on canvas underneath the room: a slab
@@ -47,8 +49,10 @@ export const ChatBackdrop = () => {
 
       // The rim rides the section's edge, swinging a little past it both
       // ways — the same slow wave pair the vinyl box runs around the disc.
+      // Portrait holds it below the track strip's bar, fully visible.
+      const base = portrait ? BLEED + TOPBAR : BLEED;
       const edge = (p: number) =>
-        BLEED +
+        base +
         Math.sin(p * 0.006 - t * 1.4) * 7 +
         Math.sin(p * 0.014 - t * 2.1) * 5;
 

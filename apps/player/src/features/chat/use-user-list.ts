@@ -48,5 +48,8 @@ export const useUserList = (): UserWithStatus[] => {
     };
   }, [onMessage]);
 
-  return users.map((user) => ({ ...user, isOnline: isUserOnline(user.lastSeen) }));
+  return users.map((user) => ({
+    ...user,
+    isOnline: isUserOnline(user.lastSeen),
+  }));
 };

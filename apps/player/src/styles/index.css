@@ -102,6 +102,30 @@ textarea:focus-visible {
 /* The page's breathing room: one gutter, growing with the screen. */
 .stage {
   --gutter: clamp(2.5rem, 6.4vw, 6rem);
+  /* The island's height on portrait (md lamps in a py-3 pill), so the chat
+     keeps its messages clear of the docked input. */
+  --island-h: 76px;
+  /* The strip above the chat's rim on portrait, for the track strip. */
+  --chat-topbar: 96px;
+}
+
+/* The island docks over the foot of the radio column — the same grid cell,
+   laid over the section — so on portrait it stays put above both views. */
+.island-dock {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+  justify-self: stretch;
+  position: relative;
+  z-index: 35;
+  display: flex;
+  justify-content: center;
+  padding: 0 calc(var(--gutter) + 1.5rem) 3.5vmin;
+}
+@media (orientation: portrait) {
+  .island-dock {
+    padding: 0 1rem calc(3.5vmin + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 /* The split: radio 2, chat 1, no dividers — the gutters are the separation;
@@ -115,15 +139,60 @@ textarea:focus-visible {
   min-width: 0;
   padding-inline: var(--gutter);
 }
+/* Both rooms are placed by hand: the island dock shares the radio's cell,
+   and explicit items would otherwise shove the auto-placed ones aside. */
+.radio-view {
+  grid-column: 1;
+  grid-row: 1;
+}
+.chat-view {
+  grid-column: 2;
+  grid-row: 1;
+}
+/* Portrait (phones, tablets): the radio is the whole screen, and the chat
+   leaves the grid — it becomes its own view behind the island's chat lamp,
+   crossfading with the radio: the room fades in as the radio fades out
+   (`.radio-view` in player-page.tsx). Once faded out it is hidden outright,
+   so nothing in it can take a tap or the focus. */
 @media (orientation: portrait) {
   .split {
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(0, 11fr) minmax(0, 9fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .chat-view {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.55s ease,
+      visibility 0s linear 0.55s;
+  }
+  .chat-view-open {
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity 0.55s ease,
+      visibility 0s;
+  }
+  .radio-view {
+    transition: opacity 0.55s ease;
+  }
+  .radio-view-away {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+@media (orientation: portrait) and (prefers-reduced-motion: reduce) {
+  .chat-view,
+  .radio-view {
+    transition: none;
   }
 }
 /* The chat sits last either way, flush to the screen's edges: its panel
    takes the column's full height, and the wavy seam marks the boundary. */
-.split > section:last-child {
+.split > .chat-view {
   padding: 0;
 }
 
@@ -139,8 +208,26 @@ textarea:focus-visible {
 }
 @media (orientation: portrait) {
   .chat-panel {
-    padding-top: 2rem;
+    /* Under the track strip's bar and the rim's swing; the messages clear
+       of the input docked in the island's slot at the foot. */
+    padding-top: calc(var(--chat-topbar) + 2.5rem);
     padding-left: 1.5rem;
+    padding-bottom: calc(
+      3.5vmin + var(--island-h) + 1rem + env(safe-area-inset-bottom, 0px)
+    );
+  }
+  /* The bar above the rim while the room is open: the track strip, with
+     the play lamp in hand. (`TOPBAR` in chat-backdrop.tsx matches.) */
+  .chat-topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    height: var(--chat-topbar);
+    align-items: center;
+    gap: 1rem;
+    padding: env(safe-area-inset-top, 0px) 1.5rem 0;
   }
 }
 
@@ -156,13 +243,14 @@ textarea:focus-visible {
   width: clamp(250px, 26vw, 400px);
 }
 @media (orientation: portrait) {
+  /* Centered in the header, with the script moved under the wordmark. */
   .sign-corner {
     position: static;
-    align-self: flex-start;
-    padding-top: 0.25rem;
+    align-self: center;
+    padding-top: 2rem;
   }
   .sign-lockup {
-    width: 70vw;
+    width: clamp(240px, 64vw, 460px);
   }
 }
 
@@ -177,9 +265,15 @@ textarea:focus-visible {
   }
 }
 
-/* The sleeve throws its shadow over the disc sliding out of it. */
+/* The sleeve throws its shadow over the disc sliding out of it — to the
+   right in the split, upward on portrait where the record rises out. */
 .vinyl-sleeve {
   box-shadow: 10px 0 24px rgb(0 0 0 / 0.6);
+}
+@media (orientation: portrait) {
+  .vinyl-sleeve {
+    box-shadow: 0 -10px 24px rgb(0 0 0 / 0.6);
+  }
 }
 
 /* The room's warm shade over the turntable photograph, darkening toward
@@ -229,7 +323,6 @@ textarea:focus-visible {
   --film-vignette: 0.3;
   --film-grain: 0.04;
   --film-warm: 0.05;
-  --film-leak: 0.18;
   --film-gate: 0.35;
   --film-scratch: 0.08;
 }
@@ -290,69 +383,6 @@ textarea:focus-visible {
   }
 }
 
-/* Light leaks: a warm glow that passes through a corner now and then. */
-.film-leak {
-  position: absolute;
-  width: 70vmax;
-  height: 70vmax;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgb(255 170 90 / var(--film-leak)) 0%,
-    rgb(255 120 60 / calc(0.5 * var(--film-leak))) 35%,
-    transparent 70%
-  );
-  mix-blend-mode: screen;
-  opacity: 0;
-  will-change: transform, opacity;
-}
-
-.film-leak-a {
-  top: -35vmax;
-  right: -30vmax;
-  animation: film-leak-a 24s ease-in-out infinite;
-}
-
-.film-leak-b {
-  bottom: -40vmax;
-  left: -30vmax;
-  animation: film-leak-b 31s ease-in-out infinite 9s;
-}
-
-@keyframes film-leak-a {
-  0%,
-  75%,
-  100% {
-    opacity: 0;
-    transform: translate(0, 0);
-  }
-  84% {
-    opacity: 1;
-    transform: translate(-6vmax, 5vmax);
-  }
-  93% {
-    opacity: 0.4;
-    transform: translate(-12vmax, 9vmax);
-  }
-}
-
-@keyframes film-leak-b {
-  0%,
-  78%,
-  100% {
-    opacity: 0;
-    transform: translate(0, 0);
-  }
-  86% {
-    opacity: 0.8;
-    transform: translate(7vmax, -4vmax);
-  }
-  94% {
-    opacity: 0.3;
-    transform: translate(13vmax, -8vmax);
-  }
-}
-
 /* The wear of the lens: scratches and dust, light on the dark room. */
 .film-scratches {
   position: absolute;
@@ -374,7 +404,6 @@ textarea:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
   .film-grain,
-  .film-leak,
   .live-dot,
   .splat-spin {
     animation: none;

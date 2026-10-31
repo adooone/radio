@@ -14,7 +14,13 @@ const SPLAT_D =
   'M23.0068 51.0012C26.9787 41.3408 23.5663 9.3161 44.5603 2.78105C65.5544 -3.75394 73.7737 17.9223 85.981 18.1243C98.1883 18.3262 114.351 2.49692 124.565 6.19074C134.778 9.88464 127.402 25.2274 131.949 28.2707C136.496 31.3141 165.418 27.5004 169.957 48.2424C174.496 68.9835 153.502 68.6997 147.828 79.4967C142.154 90.2936 154.637 111.603 142.154 120.127C129.671 128.651 117.479 127.716 105.84 133.481C94.2003 139.246 82.8599 158.485 61.2986 153.939C39.7374 149.393 44.2844 123.455 37.184 117.57C30.0836 111.685 4.84184 115.013 1.72108 90.2936C-1.39961 65.5739 19.0349 60.6616 23.0068 51.0012Z';
 
 /** The splat's frame in the SVG's own units: the label's centre and the radii. */
-const SPLAT = { width: 173.052, cx: 82.9, cy: 75.93, labelR: 34.95, holeR: 7.7 };
+const SPLAT = {
+  width: 173.052,
+  cx: 82.9,
+  cy: 75.93,
+  labelR: 34.95,
+  holeR: 7.7,
+};
 
 type Sample = { ux: number; uy: number; dist: number; theta: number };
 
@@ -111,7 +117,9 @@ export const VinylBox = ({
     let amp = 0.14;
     let morphPhase = 0;
     let t = 0;
-    const geo = { w: 0, h: 0, cx: 0, cy: 0, r: 0 };
+    // `mirror` flips the splat so its left side shows past the sleeve in the
+    // split; portrait shows its top and keeps the logo's own orientation.
+    const geo = { w: 0, h: 0, cx: 0, cy: 0, r: 0, mirror: true };
 
     const resize = () => {
       const w = box.clientWidth;
@@ -122,28 +130,55 @@ export const VinylBox = ({
       canvas.height = h * dpr;
       ctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      // The sleeve is square; the splat's exposed half trails right of it,
-      // with a sliver of width held back from the screen's edge.
-      const side = Math.min(h * 0.92, (w - 24) / 1.62);
-      const groupWidth = side * 1.58;
-      const sleeveX = (w - groupWidth) / 2;
-      const sleeveY = (h - side) / 2;
+      // The sleeve is square. In the split the record's exposed half trails
+      // right of it (the group reaching 1.04 + 0.44 of a side, plus swell
+      // and border, with a sliver held back from the screen's edge); on
+      // portrait the sleeve sits centred below and the record rises out of
+      // its top.
+      // Either way the group centres on the whole column, not just the
+      // room above the island: aim for the section's midline, held inside
+      // the canvas when the island leaves no slack.
+      const portrait = window.matchMedia('(orientation: portrait)').matches;
+      const sRect = box.closest('section')?.getBoundingClientRect();
+      const bRect = box.getBoundingClientRect();
+      const mid = sRect ? sRect.top + sRect.height / 2 - bRect.top : h / 2;
+      const clamp = (v: number, max: number) => Math.min(Math.max(v, 0), max);
+      let side: number;
+      let sleeveX: number;
+      let sleeveY: number;
+      if (portrait) {
+        side = Math.min(w * 0.8, h / 1.5);
+        const groupHeight = side * 1.48;
+        sleeveX = (w - side) / 2;
+        const groupTop = clamp(mid - groupHeight / 2, h - groupHeight);
+        sleeveY = groupTop + side * 0.48;
+        // The label's centre just clears the sleeve's top edge.
+        geo.cx = sleeveX + side * 0.5;
+        geo.cy = sleeveY - side * 0.04;
+      } else {
+        side = Math.min(h * 0.92, (w - 24) / 1.62);
+        const groupWidth = side * 1.51;
+        sleeveX = (w - groupWidth) / 2;
+        sleeveY = clamp(mid - side / 2, h - side);
+        // The label's centre just clears the sleeve, so the spindle hole shows.
+        geo.cx = sleeveX + side * 1.04;
+        geo.cy = sleeveY + side * 0.5;
+      }
       sleeve.style.left = `${sleeveX}px`;
       sleeve.style.top = `${sleeveY}px`;
       sleeve.style.width = `${side}px`;
       sleeve.style.height = `${side}px`;
       geo.w = w;
       geo.h = h;
-      // The label's centre just clears the sleeve, so the spindle hole shows.
-      geo.cx = sleeveX + side * 1.04;
-      geo.cy = sleeveY + side * 0.5;
       geo.r = side * 0.44;
+      geo.mirror = !portrait;
       if (reduced) draw();
     };
 
     const draw = () => {
       if (!ctx) return;
-      const { w, h, cx, cy, r } = geo;
+      const { w, h, cx, cy, r, mirror } = geo;
+      const flip = mirror ? -1 : 1;
       ctx.clearRect(0, 0, w, h);
 
       // The air leans on the waves: the mean level deepens every lobe.
@@ -170,8 +205,8 @@ export const VinylBox = ({
           0.016 * Math.sin(5 * s.theta - t * 2.1);
         const base = s.dist + (meanDist - s.dist) * round;
         const d = base * scale * (1 + wave * depth);
-        if (i === 0) splat.moveTo(cx - s.ux * d, cy + s.uy * d);
-        else splat.lineTo(cx - s.ux * d, cy + s.uy * d);
+        if (i === 0) splat.moveTo(cx + flip * s.ux * d, cy + s.uy * d);
+        else splat.lineTo(cx + flip * s.ux * d, cy + s.uy * d);
       }
       splat.closePath();
 
@@ -179,16 +214,17 @@ export const VinylBox = ({
       ctx.fill(splat);
 
       // The logo's warm light inside the edge: the SVG's two inner shadows.
-      // The world outside the splat is drawn far off-canvas, so only its
-      // blurred shadow falls into the clipped shape — a band along the rim.
+      // The world outside the splat is filled in place while clipped to the
+      // splat — its own pixels fall outside the clip and vanish, and only
+      // its blurred shadow reaches in: a band along the rim. (Drawn in
+      // place on purpose: GPU canvases cull shapes far off-canvas before
+      // shadowing them, which left a hard-edged cream lobe on phones.)
       ctx.save();
       ctx.clip(splat);
-      const off = w * 2;
       const inverse = new Path2D();
       inverse.rect(cx - r * 2.4, cy - r * 2.4, r * 4.8, r * 4.8);
       inverse.addPath(splat);
-      ctx.translate(-off, 0);
-      ctx.shadowOffsetX = off;
+      ctx.shadowOffsetX = 0;
       ctx.shadowBlur = 8 * scale;
       ctx.fillStyle = '#000000';
       ctx.shadowColor = '#fbeed4';
@@ -197,6 +233,7 @@ export const VinylBox = ({
       ctx.shadowColor = '#e8d7b4';
       ctx.shadowOffsetY = -8 * scale;
       ctx.fill(inverse, 'evenodd');
+      ctx.shadowOffsetY = 0;
       ctx.restore();
 
       ctx.shadowColor = 'rgba(231, 210, 174, 0.4)';
