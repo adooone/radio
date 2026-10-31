@@ -2,7 +2,7 @@
 id: IDEA-15
 title: Wave plays the record itself
 type: feat
-status: review
+status: done
 created: 2026-10-31
 updated: 2026-10-31
 tags:
@@ -109,3 +109,4 @@ HLS. Recording or archiving the air.
 - [x] 2026-10-31 [decision] [agent] "Is OBS live" is read from the HLS playlist's `Last-Modified` (fresh within 10 s), not `/rtmp_stats`: with `worker_processes auto` the stats page is per worker and showed no clients during a publish.
 - [x] 2026-10-31 [decision] [agent] The turntable re-encodes to AAC 192k rather than stream-copying: the concat demuxer is then indifferent to per-file parameters, at trivial CPU for audio.
 - [x] 2026-10-31 [chat] [agent] Verified on deimos against the dev wave and the shared relay: «Поставити в ефір» on Cowboy Bebop OST from "Cat Blues" put 18 tracks on the real `test` key; the public HLS followed, the player lit LIVE with the sleeve and title, and the mark advanced to "Cosmos" 156.9 s later with `source: turntable`. Mark-only behaviour with OBS live is covered by tests, not exercised live (OBS was off).
+- [x] 2026-10-31 [decision] [user] Closed as done after PR #18 merged into main.
