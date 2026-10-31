@@ -1,5 +1,6 @@
 import { collectionApi } from '@/services/api';
 import { useNowPlayingStore } from '@/stores/now-playing-store';
+import { LampStatus } from '@dendelion/func-ui';
 import type { Song } from '@radio/types';
 
 type SongItemProps = {
@@ -8,6 +9,9 @@ type SongItemProps = {
   playlistIndex: number;
   onDelete: (songId: number, title: string) => void;
   isDeleting: boolean;
+  isOnAir: boolean;
+  onSetOnAir: () => void;
+  isSettingOnAir: boolean;
 };
 
 export const SongItem = ({
@@ -16,6 +20,9 @@ export const SongItem = ({
   playlistIndex,
   onDelete,
   isDeleting,
+  isOnAir,
+  onSetOnAir,
+  isSettingOnAir,
 }: SongItemProps) => {
   const { currentTrack, isPlaying, playTrack } = useNowPlayingStore();
 
@@ -95,6 +102,32 @@ export const SongItem = ({
         </div>
 
         <div className="flex items-center gap-2">
+          {isOnAir ? (
+            <LampStatus status="running" label="В ефірі" />
+          ) : (
+            <button
+              type="button"
+              onClick={onSetOnAir}
+              disabled={isSettingOnAir}
+              className="p-2 text-gray-400 hover:text-sun rounded transition-colors disabled:opacity-50"
+              title="Поставити в ефір"
+            >
+              <svg
+                aria-hidden="true"
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
+                />
+              </svg>
+            </button>
+          )}
           <button
             type="button"
             onClick={handleOpenInNewTab}

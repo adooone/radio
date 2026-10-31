@@ -3,15 +3,9 @@ import { dirname, join } from 'node:path';
 import { findSongById } from '@/db/albums/songs';
 import { albumService } from '@/services/albums';
 import { clientStore } from '@/ws/utils/clientStore';
+import type { OnAirState } from '@radio/types';
 
-export interface OnAirState {
-  albumId: number;
-  songId?: number;
-  artist: string;
-  title: string;
-  cover?: string;
-  setAt: string;
-}
+export type { OnAirState };
 
 export function formatNowPlayingMessage(state: OnAirState | null): string {
   if (!state) return JSON.stringify({ type: 'now_playing' });

@@ -280,6 +280,15 @@ export interface StreamControlResponse {
   message: string;
 }
 
+export interface OnAirState {
+  albumId: number;
+  songId?: number;
+  artist: string;
+  title: string;
+  cover?: string;
+  setAt: string;
+}
+
 export interface ConfigResponse<T> {
   success: boolean;
   config?: T;

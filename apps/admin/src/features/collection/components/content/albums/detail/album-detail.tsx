@@ -90,6 +90,7 @@ export const AlbumDetail = ({ album }: AlbumDetailProps) => {
               />
 
               <AlbumActions
+                albumId={albumWithSongs.id}
                 onEdit={() => setIsEditing(true)}
                 onDelete={handleDelete}
                 isDeleting={deleteAlbum.isPending}

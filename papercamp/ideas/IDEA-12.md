@@ -87,13 +87,14 @@ untouched).
       handler after chat history. Tests exercise broadcast and join
       replay through the client store.
       run: 1h · 110 in · 16k out · sonnet-5 · sess:2288dbb3-575a-431a-9a86-827712c59a62
-- [ ] Phase 3 — Admin on-air controls
+- [x] Phase 3 — Admin on-air controls
       `on-air-api.ts` + query hooks with a key factory in
       `src/services/api`; «Поставити в ефір» in `album-actions.tsx` and
       `song-item.tsx` with the on-air item marked; an
       `on-air-card.tsx` on the stream page showing cover, artist —
       title, set time, and «Зняти з ефіру». Follow CODE_STYLE_GUIDE
       (named exports, styles-object Tailwind, barrels).
+      run: 6m59s · 124 in · 26.6k out · sonnet-5 · sess:2288dbb3-575a-431a-9a86-827712c59a62
 - [ ] Phase 4 — Docs, checks, ship
       Update `apps/wave/API_ENDPOINTS.md`, `docs/api/README.md`,
       `docs/apps/admin.md`. check-types / lint / tests green across the
