@@ -54,6 +54,8 @@ jobs:
           MEDIA_INBOX_PATH: /tmp/wave-ci/inbox
         run: |
           echo "🧪 Running Wave tests..."
+          # db.ts opens data/wave.sqlite at import; the folder is gitignored.
+          mkdir -p apps/wave/data
           pnpm turbo run test --filter=@radio/wave
           echo "✅ Wave tests passed!"
 
