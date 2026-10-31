@@ -1,7 +1,7 @@
 import type { ServerWebSocket } from 'bun';
 import type { WebSocketData } from '../types';
 
-class ClientStore {
+export class ClientStore {
   private clients: Set<ServerWebSocket<WebSocketData>> = new Set();
   private lastPongMap: Map<ServerWebSocket<WebSocketData>, number> = new Map();
   private lastActivityMap: Map<ServerWebSocket<WebSocketData>, number> =

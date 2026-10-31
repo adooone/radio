@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { findSongById } from '@/db/albums/songs';
 import { albumService } from '@/services/albums';
+import { clientStore } from '@/ws/utils/clientStore';
 
 export interface OnAirState {
   albumId: number;
@@ -10,6 +11,12 @@ export interface OnAirState {
   title: string;
   cover?: string;
   setAt: string;
+}
+
+export function formatNowPlayingMessage(state: OnAirState | null): string {
+  if (!state) return JSON.stringify({ type: 'now_playing' });
+  const { artist, title, cover } = state;
+  return JSON.stringify({ type: 'now_playing', artist, title, cover });
 }
 
 interface AlbumLookup {
@@ -30,10 +37,12 @@ interface OnAirDeps {
   filePath: string;
   getAlbum: (id: number) => Promise<AlbumLookup | null>;
   getSong: (id: number) => Promise<SongLookup | null>;
+  broadcast: (message: string) => void;
 }
 
 const defaultDeps = (): OnAirDeps => ({
   filePath: join(process.cwd(), 'data', 'on-air.json'),
+  broadcast: (message) => clientStore.broadcast(message),
   getAlbum: async (id) => {
     try {
       const album = await albumService.getAlbumById(id);
@@ -97,12 +106,14 @@ export class OnAirService {
       setAt: new Date().toISOString(),
     };
     this.persist();
+    this.deps.broadcast(formatNowPlayingMessage(this.current));
     return this.current;
   }
 
   clearOnAir(): void {
     this.current = null;
     this.persist();
+    this.deps.broadcast(formatNowPlayingMessage(this.current));
   }
 
   getOnAir(): OnAirState | null {

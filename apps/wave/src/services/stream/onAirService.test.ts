@@ -32,9 +32,13 @@ const OTHER_ALBUM = {
   coverImageUrl: null,
 };
 
-function makeService(filePath: string) {
+function makeService(
+  filePath: string,
+  broadcast: (message: string) => void = () => {},
+) {
   return new OnAirService({
     filePath,
+    broadcast,
     getAlbum: async (id) => {
       if (id === ALBUM.id) return ALBUM;
       if (id === OTHER_ALBUM.id) return OTHER_ALBUM;
@@ -130,5 +134,44 @@ describe('onAirService', () => {
 
     const reloaded = makeService(filePath);
     expect(reloaded.getOnAir()).toBeNull();
+  });
+
+  it('broadcasts the player contract when setting the on-air state', async () => {
+    const messages: string[] = [];
+    const service = makeService(filePath, (message) => messages.push(message));
+    await service.setOnAir(ALBUM.id);
+
+    expect(messages).toEqual([
+      JSON.stringify({
+        type: 'now_playing',
+        artist: ALBUM.artist,
+        title: ALBUM.title,
+        cover: ALBUM.coverImageUrl,
+      }),
+    ]);
+  });
+
+  it('broadcasts a bare now_playing message when clearing the on-air state', async () => {
+    const messages: string[] = [];
+    const service = makeService(filePath, (message) => messages.push(message));
+    await service.setOnAir(ALBUM.id);
+    messages.length = 0;
+    service.clearOnAir();
+
+    expect(messages).toEqual([JSON.stringify({ type: 'now_playing' })]);
+  });
+
+  it('omits the cover field when the album has none', async () => {
+    const messages: string[] = [];
+    const service = makeService(filePath, (message) => messages.push(message));
+    await service.setOnAir(OTHER_ALBUM.id);
+
+    expect(messages).toEqual([
+      JSON.stringify({
+        type: 'now_playing',
+        artist: OTHER_ALBUM.artist,
+        title: OTHER_ALBUM.title,
+      }),
+    ]);
   });
 });

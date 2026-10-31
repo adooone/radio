@@ -80,12 +80,13 @@ untouched).
       routes (writes auth + admin, zod-validated body). Unit tests:
       resolution, persistence round-trip, refusals.
       run: 45m34s · 114 in · 22.9k out · sonnet-5 · sess:b8dfcf2a-2ae9-4492-b921-8aa3aaea1b3c
-- [ ] Phase 2 — WebSocket push and join replay
+- [x] Phase 2 — WebSocket push and join replay
       Broadcast `{ type: 'now_playing', artist, title, cover? }` via
       `clientStore.broadcast` on every set/clear (bare type-only message
       on clear); send the current value to each client in the `open`
       handler after chat history. Tests exercise broadcast and join
       replay through the client store.
+      run: 1h · 110 in · 16k out · sonnet-5 · sess:2288dbb3-575a-431a-9a86-827712c59a62
 - [ ] Phase 3 — Admin on-air controls
       `on-air-api.ts` + query hooks with a key factory in
       `src/services/api`; «Поставити в ефір» in `album-actions.tsx` and
