@@ -1,8 +1,8 @@
 ---
 id: IDEA-12
-title: Admin puts the song on air
+title: Admin puts the song on air (now-playing for the player)
 type: feat
-status: review
+status: done
 created: 2026-10-30
 updated: 2026-10-31
 tags:
@@ -117,3 +117,4 @@ untouched).
       option: Leave `papercamp/ideas/IDEA-12.md`'s checkbox/status edit staged uncommitted — you commit/push manually
       option: Add a persistent allow rule for `git commit`/`git push` in `.claude/settings.local.json` — removes the gate for future runs too
       context: Everything else in phase 4 is already done: docs committed earlier, check-types green, biome clean, PR #18 open on this branch. Only the one-line plan-tracker commit is blocked.
+- [x] 2026-10-31 [decision] [user] Closed as done after PR #18 merged into main.

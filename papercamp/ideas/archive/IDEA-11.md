@@ -2,9 +2,9 @@
 id: IDEA-11
 title: Puget Sound player rebuild
 type: feat
-status: review
+status: done
 created: 2026-10-30
-updated: 2026-10-30
+updated: 2026-10-31
 tags:
   - player
   - design
@@ -96,3 +96,4 @@ rendition on the server (the player ignores the video track for now).
 - [x] 2026-10-30 [decision] [agent] Verified headlessly against the dev server: offline state, the solid sleeve hiding the disc's half, portrait stacking at 390 px; tests, lint, types and build green. The air was off during the pass, so live playback and the analyser-driven bars still await a listen with the stream on.
 - [x] 2026-10-30 [question] [agent] What should set now-playing on the air side — the admin app marking the current album, or the stream toolchain (OBS/digitization) publishing metadata?
 - [x] 2026-10-30 [decision] [user] The admin app sets now-playing — wave only relays OBS and cannot see the track. Designed as IDEA-12, with the wave endpoint shaped so the stream toolchain can feed the same value later with a token.
+- [x] 2026-10-31 [decision] [user] Closed as done after PR #17 merged into main.
