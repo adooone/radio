@@ -157,19 +157,6 @@ html {
   grid-column: 2;
   grid-row: 1;
 }
-/* Installed on iOS with the translucent status bar, the layout viewport is
-   one status bar shorter than the screen yet drawn from its top edge, so a
-   layer pinned to `inset: 0` stops that far short of the bottom (measured on
-   the phone: the gap below the island was the bar's height). The full-screen
-   layers add that height back instead of trusting `bottom: 0`. */
-@media (display-mode: standalone) {
-  .stage,
-  .chat-view {
-    bottom: auto;
-    height: calc(100% + env(safe-area-inset-top, 0px));
-  }
-}
-
 /* Portrait (phones, tablets): the radio is the whole screen, and the chat
    leaves the grid — it becomes its own view behind the island's chat lamp,
    crossfading with the radio: the room fades in as the radio fades out
@@ -205,6 +192,27 @@ html {
   .chat-view,
   .radio-view {
     transition: none;
+  }
+}
+/* Installed on iOS with the translucent status bar, the layout viewport is
+   one status bar shorter than the screen yet drawn from its top edge, and
+   WebKit clips fixed layers to it — so a fixed stage stopped short of the
+   bottom, and once stretched it was cut off at the same line (both seen on
+   the phone). Here the stage sits in the document instead, absolutely,
+   one status bar taller than the viewport, and the chat view fills it. */
+@media (display-mode: standalone) {
+  .stage {
+    position: absolute;
+    inset: 0 0 auto;
+    height: calc(100% + env(safe-area-inset-top, 0px));
+  }
+  .chat-view {
+    position: absolute;
+    inset: 0;
+  }
+  html,
+  body {
+    overscroll-behavior: none;
   }
 }
 /* The chat sits last either way, flush to the screen's edges: its panel
