@@ -1,10 +1,10 @@
 ---
 id: IDEA-13
-title: The room's people and settings, in the chat's own view
+title: Chat's people and settings view
 type: feat
-status: planned
+status: review
 created: 2026-10-31
-updated: 2026-10-31
+updated: 2026-11-01
 tags:
   - player
   - chat
@@ -50,31 +50,34 @@ carried in the `listeners` payload — wave's handler is still there
 per-user colours live in `useChatRoom`, which the chat and the island
 already share.
 
+### Out of scope
+
+Any change to wave — its `color_update` relay already exists. The
+language switch and the Ukrainian copy (IDEA-14). Profile pictures,
+moderation, private messages.
+
 ### Phases
-- [ ] Phase 1 — Header bar and listeners page
+- [x] Phase 1 — Header bar and listeners page
       The chat header as the bar: sound lamp, the listeners pill with the
       pluralised count of the others, the listener's nick in label-red,
       the gear lamp; the page state in `useChatRoom` with crossfade
       between pages; the listeners page (colour, «that's you», last seen,
       status dot) and the join-sound debounce. Portrait keeps the back
       lamp first.
-- [ ] Phase 2 — Settings page
+      run: 32m58s · 184 in · 50.8k out · sonnet-5 · sess:77b31ca4-3a67-4751-944e-154afd85bace
+- [x] Phase 2 — Settings page
       Nickname change reusing the gate's validation; the colour section
       with auto plus the warm eight; chat sounds as a master lamp switch
       and the three per-type switches (the sound hook extended with the
       types the old `soundService` kept); clear all data with an inline
       confirm. Keyboard: Escape returns to the room.
-- [ ] Phase 3 — Colours synced through wave
+      run: 38m30s · 120 in · 43k out · sonnet-5 · sess:86a57e70-c8f2-426b-bb8e-6df8df102239
+- [x] Phase 3 — Colours synced through wave
       Per-user colours in `useChatRoom`: send `color_update` on a choice,
       apply `user_color_updated` and the `listeners` payload's `color`;
       bubbles, the listeners page and the header nick read the effective
       colour. Tests for the message handling; lint, types, build green.
-
-### Out of scope
-
-Any change to wave — its `color_update` relay already exists. The
-language switch and the Ukrainian copy (IDEA-14). Profile pictures,
-moderation, private messages.
+      run: 48m14s · 176 in · 37.5k out · sonnet-5 · sess:31b42b5b-0c84-4fc4-8b03-30ff79430e97
 
 ### Thread
 - [x] 2026-10-31 [decision] [user] Bring the old frontend's listeners / nick / settings section into the new player.

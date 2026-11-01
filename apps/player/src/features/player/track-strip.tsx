@@ -1,4 +1,5 @@
 import type { NowPlaying } from '@/features/stream/use-now-playing';
+import { useT } from '@/i18n';
 import { LampIconButton, type LampSize } from '@dendelion/func-ui';
 
 type TrackStripProps = {
@@ -51,34 +52,43 @@ export const TrackStrip = ({
   status,
   lampSize,
   wordsClassName = 'min-w-0 flex-1',
-}: TrackStripProps) => (
-  <>
-    <LampIconButton
-      tone={quiet ? 'dark' : 'red'}
-      size={lampSize}
-      label={playing ? 'Pause' : 'Listen live'}
-      icon={playing ? <PauseIcon /> : <PlayIcon />}
-      onClick={onToggle}
-      disabled={quiet}
-      className={`shrink-0 disabled:cursor-default disabled:opacity-60 ${
-        quiet ? 'text-cream' : 'text-ink'
-      }`}
-    />
-    <div className={wordsClassName}>
-      {song ? (
-        <>
-          <p className="truncate font-serif text-[15px] leading-tight text-cream">
-            {song.title}
+}: TrackStripProps) => {
+  const t = useT();
+  return (
+    <>
+      <LampIconButton
+        tone={quiet ? 'dark' : 'red'}
+        size={lampSize}
+        label={t(playing ? 'vinyl.pause' : 'vinyl.listenLive')}
+        icon={playing ? <PauseIcon /> : <PlayIcon />}
+        onClick={onToggle}
+        disabled={quiet}
+        className={`shrink-0 disabled:cursor-default disabled:opacity-60 ${
+          quiet ? 'text-cream' : 'text-ink'
+        }`}
+      />
+      <div className={wordsClassName}>
+        {song ? (
+          // One line where the pill is wide; stacked on portrait, where it
+          // shares a phone's width with two lamps.
+          <p className="flex min-w-0 items-baseline gap-2.5 portrait:flex-col portrait:items-start portrait:gap-0.5">
+            <span className="min-w-0 max-w-full type-title truncate text-cream">
+              {song.title}
+            </span>
+            <span
+              aria-hidden="true"
+              className="shrink-0 text-cream/45 portrait:hidden"
+            >
+              ·
+            </span>
+            <span className="min-w-0 max-w-full shrink-[2] truncate type-label text-cream/70">
+              {song.artist || 'Puget Sound'}
+            </span>
           </p>
-          <p className="mt-0.5 truncate font-sans text-[11px] uppercase tracking-[0.14em] text-cream/55">
-            {song.artist || 'Puget Sound'}
-          </p>
-        </>
-      ) : (
-        <p className="line-clamp-2 font-serif text-sm leading-snug text-cream/70 portrait:text-base">
-          {status}
-        </p>
-      )}
-    </div>
-  </>
-);
+        ) : (
+          <p className="type-body line-clamp-2 text-cream/70">{status}</p>
+        )}
+      </div>
+    </>
+  );
+};

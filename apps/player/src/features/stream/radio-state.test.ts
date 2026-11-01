@@ -1,5 +1,8 @@
+import { translate } from '@/i18n';
 import { describe, expect, it } from 'vitest';
 import { nextStatus, statusLine } from './radio-state';
+
+const t = (key: Parameters<typeof translate>[1]) => translate('en', key);
 
 describe('nextStatus', () => {
   it('turns live when a manifest parses, whatever came before', () => {
@@ -21,11 +24,9 @@ describe('nextStatus', () => {
 
 describe('statusLine', () => {
   it('speaks the air state', () => {
-    expect(statusLine('loading', false)).toBe('catching the wave…');
-    expect(statusLine('live', false)).toBe('on air — tap the record');
-    expect(statusLine('live', true)).toBe('on air');
-    expect(statusLine('offline', false)).toBe(
-      'the air is quiet — the record is resting',
-    );
+    expect(statusLine('loading', false, t)).toBe(t('status.loading'));
+    expect(statusLine('live', false, t)).toBe(t('status.livePaused'));
+    expect(statusLine('live', true, t)).toBe(t('status.live'));
+    expect(statusLine('offline', false, t)).toBe(t('status.offline'));
   });
 });

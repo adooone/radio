@@ -1,4 +1,5 @@
 import type { NowPlaying } from '@/features/stream/use-now-playing';
+import { useT } from '@/i18n';
 import { useEffect, useRef } from 'react';
 
 /** Points along the splat's outline: enough for a smooth, organic edge. */
@@ -94,6 +95,7 @@ export const VinylBox = ({
   getLevels,
   onToggle,
 }: VinylBoxProps) => {
+  const t = useT();
   const boxRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const sleeveRef = useRef<HTMLButtonElement | null>(null);
@@ -309,7 +311,7 @@ export const VinylBox = ({
           if (!quiet) onToggle();
         }}
         disabled={quiet}
-        aria-label={playing ? 'Pause' : 'Listen live'}
+        aria-label={t(playing ? 'vinyl.pause' : 'vinyl.listenLive')}
         className="vinyl-sleeve absolute cursor-pointer overflow-hidden bg-[#17100c] text-left transition-[filter] duration-700 disabled:cursor-default disabled:brightness-[0.65] disabled:saturate-50"
       >
         {song?.cover ? (
@@ -320,16 +322,16 @@ export const VinylBox = ({
           />
         ) : (
           <span className="absolute inset-0 flex flex-col justify-between p-[9%]">
-            <span className="font-sans text-[clamp(9px,1vw,13px)] tracking-[0.3em] text-cream/90">
+            <span className="font-sans text-[clamp(9px,1vw,13px)] font-semibold tracking-[0.3em] text-cream">
               PUGET SOUND
             </span>
             <span>
               {song && (
-                <span className="block font-serif text-[clamp(13px,1.5vw,19px)] text-cream">
+                <span className="block font-serif text-[clamp(13px,1.5vw,19px)] font-semibold text-cream">
                   {song.title}
                 </span>
               )}
-              <span className="mt-1 block font-serif text-[clamp(10px,1.1vw,14px)] text-cream/55">
+              <span className="mt-1 block font-serif text-[clamp(10px,1.1vw,14px)] text-cream/70">
                 vinyl radio · 33⅓
               </span>
             </span>

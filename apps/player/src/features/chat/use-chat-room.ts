@@ -1,8 +1,18 @@
-import { getSocket } from '@/lib/socket';
-import { useState } from 'react';
+import { useT } from '@/i18n';
+import { getSocket, subscribe } from '@/lib/socket';
+import { clearSoundSettings, playSound } from '@/lib/sound';
+import { useEffect, useRef, useState } from 'react';
+import { readColorChoice, writeColorChoice } from './colors';
 import { useChat } from './use-chat';
 import { useSound } from './use-sound';
 import { useUserList } from './use-user-list';
+
+/** The chat panel's three faces: the room itself, who is here, and the
+    listener's own settings — swapped in place behind the header's lamps. */
+export type ChatPage = 'room' | 'listeners' | 'settings';
+
+/** How long a run of joins waits before it is judged settled enough to chime. */
+const JOIN_SOUND_DEBOUNCE_MS = 1_500;
 
 export type ChatRoom = {
   nickname: string;
@@ -13,7 +23,15 @@ export type ChatRoom = {
   messages: ReturnType<typeof useChat>['messages'];
   sendMessage: (text: string) => void;
   users: ReturnType<typeof useUserList>;
-  sound: { isEnabled: boolean; toggle: () => void };
+  sound: ReturnType<typeof useSound>;
+  page: ChatPage;
+  /** Opens a page, or closes it back to the room if it (or the other one) is already open. */
+  togglePage: (target: 'listeners' | 'settings') => void;
+  colorChoice: string | null;
+  /** Sets the nickname's colour (or `null` for auto) and tells wave. */
+  setColorChoice: (color: string | null) => void;
+  /** Wipes the nickname, sound settings and colour choice back to a clean slate. */
+  clearData: () => void;
 };
 
 /**
@@ -23,36 +41,74 @@ export type ChatRoom = {
  * the old player did.
  */
 export const useChatRoom = (): ChatRoom => {
+  const t = useT();
   const [nickname, setNicknameState] = useState(
     () => localStorage.getItem('nickname') ?? '',
   );
   const [nicknameError, setNicknameError] = useState<string | null>(null);
+  const [colorChoice, setColorChoiceState] = useState(() => readColorChoice());
   const { messages, sendMessage } = useChat(nickname || null);
   const users = useUserList();
   const sound = useSound();
+  const [page, setPage] = useState<ChatPage>('room');
+
+  // A reconnect can re-announce a whole room at once; the old bar's 1.5s
+  // debounce waits for the count to settle before chiming once for the batch.
+  const settledCount = useRef(users.length);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (users.length > settledCount.current) playSound('join');
+      settledCount.current = users.length;
+    }, JOIN_SOUND_DEBOUNCE_MS);
+    return () => clearTimeout(timer);
+  }, [users.length]);
+
+  useEffect(() => {
+    if (page === 'room') return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setPage('room');
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [page]);
+
+  // Resent on every reconnect, like the join is, so the chosen colour outlives a dropped socket.
+  useEffect(() => {
+    if (!nickname) return;
+    return subscribe((socket) => {
+      socket.send(
+        JSON.stringify({ type: 'color_update', nickname, color: colorChoice }),
+      );
+    });
+  }, [nickname, colorChoice]);
+
+  const togglePage = (target: 'listeners' | 'settings') => {
+    setPage((current) => (current === 'room' ? target : 'room'));
+  };
 
   const setNickname = (name: string) => {
     const trimmedName = name.trim();
     setNicknameError(null);
 
     if (trimmedName.length < 2) {
-      setNicknameError('The name has to be at least 2 characters');
+      setNicknameError(t('chat.nickname.error.tooShort'));
       return;
     }
     if (trimmedName.length > 20) {
-      setNicknameError('The name has to be at most 20 characters');
+      setNicknameError(t('chat.nickname.error.tooLong'));
       return;
     }
     if (['anonymous', 'anon', 'анонім'].includes(trimmedName.toLowerCase())) {
-      setNicknameError('That name is reserved, try another');
+      setNicknameError(t('chat.nickname.error.reserved'));
       return;
     }
     if (
+      trimmedName.toLowerCase() !== nickname.toLowerCase() &&
       users.some(
         (user) => user.nickname.toLowerCase() === trimmedName.toLowerCase(),
       )
     ) {
-      setNicknameError('That name is already taken, try another');
+      setNicknameError(t('chat.nickname.error.taken'));
       return;
     }
 
@@ -68,6 +124,21 @@ export const useChatRoom = (): ChatRoom => {
     }
   };
 
+  const setColorChoice = (color: string | null) => {
+    writeColorChoice(color);
+    setColorChoiceState(color);
+  };
+
+  const clearData = () => {
+    localStorage.removeItem('nickname');
+    clearSoundSettings();
+    writeColorChoice(null);
+    setNicknameState('');
+    setNicknameError(null);
+    setColorChoiceState(null);
+    setPage('room');
+  };
+
   return {
     nickname,
     nicknameError,
@@ -77,5 +148,10 @@ export const useChatRoom = (): ChatRoom => {
     sendMessage,
     users,
     sound,
+    page,
+    togglePage,
+    colorChoice,
+    setColorChoice,
+    clearData,
   };
 };

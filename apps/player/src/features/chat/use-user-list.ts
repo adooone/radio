@@ -10,24 +10,83 @@ const isUserOnline = (lastSeen: string): boolean => {
   return Date.now() - lastSeenDate.getTime() <= FIVE_MINUTES_MS;
 };
 
-/** Who is listening, from wave's `listeners` broadcasts; quiet ones count as Anonymous. */
+/** Wave's `listeners` broadcast, with quiet seats padded in nameless. */
+export const applyListenersMessage = (data: unknown): User[] | null => {
+  if (
+    typeof data !== 'object' ||
+    data === null ||
+    (data as { type?: unknown }).type !== 'listeners' ||
+    !Array.isArray((data as { users?: unknown }).users)
+  ) {
+    return null;
+  }
+  const payload = data as { users: User[]; listeners?: number };
+  const list: User[] = [...payload.users];
+  if (
+    typeof payload.listeners === 'number' &&
+    payload.listeners > list.length
+  ) {
+    for (let i = list.length; i < payload.listeners; i++) {
+      list.push({
+        nickname: '',
+        lastSeen: new Date().toISOString(),
+        color: null,
+      });
+    }
+  }
+  return list;
+};
+
+/**
+ * Whether a seat is the listener's own. A listener without a name sits among
+ * the nameless seats with no way to tell which is theirs, so none is marked.
+ */
+export const isSelf = (user: User, nickname: string): boolean =>
+  nickname !== '' && user.nickname === nickname;
+
+/**
+ * Everyone else in the room. While connected the listener holds one of the
+ * seats wave counts, named or not, so the others are all seats but one.
+ */
+export const countOthers = (users: User[]): number =>
+  Math.max(0, users.length - 1);
+
+/** A lone colour change from `user_color_updated`, folded into the roster between broadcasts. */
+export const applyColorUpdateMessage = (
+  users: User[],
+  data: unknown,
+): User[] | null => {
+  if (
+    typeof data !== 'object' ||
+    data === null ||
+    (data as { type?: unknown }).type !== 'user_color_updated' ||
+    typeof (data as { nickname?: unknown }).nickname !== 'string'
+  ) {
+    return null;
+  }
+  const payload = data as { nickname: string; color: string | null };
+  return users.map((user) =>
+    user.nickname === payload.nickname
+      ? { ...user, color: payload.color ?? null }
+      : user,
+  );
+};
+
+/** Who is listening, from wave's `listeners` broadcasts and the odd colour update in between. */
 export const useUserList = (): UserWithStatus[] => {
   const [users, setUsers] = useState<User[]>([]);
 
   const onMessage = useCallback((msg: MessageEvent) => {
     try {
       const data = JSON.parse(msg.data);
-      if (data?.type !== 'listeners' || !Array.isArray(data.users)) return;
-      const list: User[] = [...data.users];
-      if (typeof data.listeners === 'number' && data.listeners > list.length) {
-        for (let i = list.length; i < data.listeners; i++) {
-          list.push({
-            nickname: 'Anonymous',
-            lastSeen: new Date().toISOString(),
-          });
-        }
+      const listeners = applyListenersMessage(data);
+      if (listeners) {
+        setUsers(listeners);
+        return;
       }
-      setUsers(list);
+      setUsers(
+        (previous) => applyColorUpdateMessage(previous, data) ?? previous,
+      );
     } catch {
       // Not JSON — not for us.
     }
