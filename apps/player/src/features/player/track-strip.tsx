@@ -69,14 +69,22 @@ export const TrackStrip = ({
       />
       <div className={wordsClassName}>
         {song ? (
-          <>
-            <p className="truncate font-serif text-[15px] leading-tight text-cream">
+          // One line where the pill is wide; stacked on portrait, where it
+          // shares a phone's width with two lamps.
+          <p className="flex min-w-0 items-baseline gap-2.5 portrait:flex-col portrait:items-start portrait:gap-0.5">
+            <span className="min-w-0 max-w-full truncate font-serif text-base font-semibold leading-tight text-cream">
               {song.title}
-            </p>
-            <p className="mt-0.5 truncate font-sans text-[11px] uppercase tracking-[0.14em] text-cream/55">
+            </span>
+            <span
+              aria-hidden="true"
+              className="shrink-0 text-cream/30 portrait:hidden"
+            >
+              ·
+            </span>
+            <span className="min-w-0 max-w-full shrink-[2] truncate font-sans text-[11px] font-medium uppercase tracking-[0.14em] text-cream/60">
               {song.artist || 'Puget Sound'}
-            </p>
-          </>
+            </span>
+          </p>
         ) : (
           <p className="line-clamp-2 font-serif text-sm leading-snug text-cream/70 portrait:text-base">
             {status}
