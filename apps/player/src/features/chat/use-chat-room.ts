@@ -1,6 +1,7 @@
 import { getSocket } from '@/lib/socket';
-import { playSound } from '@/lib/sound';
+import { clearSoundSettings, playSound } from '@/lib/sound';
 import { useEffect, useRef, useState } from 'react';
+import { writeColorChoice } from './colors';
 import { useChat } from './use-chat';
 import { useSound } from './use-sound';
 import { useUserList } from './use-user-list';
@@ -21,10 +22,12 @@ export type ChatRoom = {
   messages: ReturnType<typeof useChat>['messages'];
   sendMessage: (text: string) => void;
   users: ReturnType<typeof useUserList>;
-  sound: { isEnabled: boolean; toggle: () => void };
+  sound: ReturnType<typeof useSound>;
   page: ChatPage;
   /** Opens a page, or closes it back to the room if it (or the other one) is already open. */
   togglePage: (target: 'listeners' | 'settings') => void;
+  /** Wipes the nickname, sound settings and colour choice back to a clean slate. */
+  clearData: () => void;
 };
 
 /**
@@ -54,6 +57,15 @@ export const useChatRoom = (): ChatRoom => {
     return () => clearTimeout(timer);
   }, [users.length]);
 
+  useEffect(() => {
+    if (page === 'room') return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setPage('room');
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [page]);
+
   const togglePage = (target: 'listeners' | 'settings') => {
     setPage((current) => (current === 'room' ? target : 'room'));
   };
@@ -75,6 +87,7 @@ export const useChatRoom = (): ChatRoom => {
       return;
     }
     if (
+      trimmedName.toLowerCase() !== nickname.toLowerCase() &&
       users.some(
         (user) => user.nickname.toLowerCase() === trimmedName.toLowerCase(),
       )
@@ -95,6 +108,15 @@ export const useChatRoom = (): ChatRoom => {
     }
   };
 
+  const clearData = () => {
+    localStorage.removeItem('nickname');
+    clearSoundSettings();
+    writeColorChoice(null);
+    setNicknameState('');
+    setNicknameError(null);
+    setPage('room');
+  };
+
   return {
     nickname,
     nicknameError,
@@ -106,5 +128,6 @@ export const useChatRoom = (): ChatRoom => {
     sound,
     page,
     togglePage,
+    clearData,
   };
 };

@@ -65,12 +65,13 @@ moderation, private messages.
       status dot) and the join-sound debounce. Portrait keeps the back
       lamp first.
       run: 32m58s · 184 in · 50.8k out · sonnet-5 · sess:77b31ca4-3a67-4751-944e-154afd85bace
-- [ ] Phase 2 — Settings page
+- [x] Phase 2 — Settings page
       Nickname change reusing the gate's validation; the colour section
       with auto plus the warm eight; chat sounds as a master lamp switch
       and the three per-type switches (the sound hook extended with the
       types the old `soundService` kept); clear all data with an inline
       confirm. Keyboard: Escape returns to the room.
+      run: 38m30s · 120 in · 43k out · sonnet-5 · sess:86a57e70-c8f2-426b-bb8e-6df8df102239
 - [ ] Phase 3 — Colours synced through wave
       Per-user colours in `useChatRoom`: send `color_update` on a choice,
       apply `user_color_updated` and the `listeners` payload's `color`;

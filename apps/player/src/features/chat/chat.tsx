@@ -6,6 +6,7 @@ import { ChatInput } from './chat-input';
 import { ChatMessages } from './chat-messages';
 import { ListenersPage } from './listeners-page';
 import { NicknameInput } from './nickname-input';
+import { SettingsPage } from './settings-page';
 import type { ChatRoom } from './use-chat-room';
 
 type ChatProps = {
@@ -90,11 +91,7 @@ export const Chat = ({ room, mobileOpen, onClose, controls }: ChatProps) => {
               page === 'settings' ? 'chat-page-active' : ''
             }`}
           >
-            <div className="flex min-h-0 flex-1 items-center justify-center p-4">
-              <p className="text-center text-sm text-cream/40">
-                Settings are coming soon
-              </p>
-            </div>
+            <SettingsPage room={room} />
           </div>
         </div>
       </div>
