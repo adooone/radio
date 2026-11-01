@@ -47,11 +47,12 @@ Right-to-left or other languages — the layer is built for two.
       per-language pluralisation. Unit tests for the plural rules and
       the fallback.
       run: 33m45s · 102 in · 32.8k out · sonnet-5 · sess:070aafbb-52e5-4170-9ebc-a10fe97e6894
-- [ ] Phase 2 — The copy
+- [x] Phase 2 — The copy
       Every UI string routed through `t()`, the Ukrainian originals
       restored alongside the English; `<html lang>`, the title and the
       description follow the locale. The existing tests assert through
       the dictionaries instead of literals.
+      run: 1h4m · 164 in · 52.9k out · sonnet-5 · sess:f2b62526-f20c-4998-bcc9-cea732bf296b
 - [ ] Phase 3 — The switch
       The UK / EN lamp switch on the settings page, effective at once;
       a listener's choice survives reloads. Lint, types, build green.

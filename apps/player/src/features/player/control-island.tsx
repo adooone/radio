@@ -3,6 +3,7 @@ import { ChatBubbleIcon, CollapseIcon } from '@/features/chat/icons';
 import { NicknameInput } from '@/features/chat/nickname-input';
 import type { ChatRoom } from '@/features/chat/use-chat-room';
 import type { NowPlaying } from '@/features/stream/use-now-playing';
+import { useT } from '@/i18n';
 import { useMedia } from '@/lib/use-media';
 import { LampIconButton, LampMeter } from '@dendelion/func-ui';
 import { TrackStrip } from './track-strip';
@@ -46,6 +47,7 @@ export const ControlIsland = ({
   onToggleChat,
   room,
 }: ControlIslandProps) => {
+  const t = useT();
   // Thumbs need bigger lamps than a pointer does.
   const portrait = useMedia('(orientation: portrait)');
   const lampSize = portrait ? 'md' : 'sm';
@@ -81,7 +83,7 @@ export const ControlIsland = ({
                 quiet ? 'bg-cream/30' : 'live-dot bg-accent'
               }`}
             />
-            {quiet ? 'OFF AIR' : 'LIVE'}
+            {t(quiet ? 'island.offAirTag' : 'island.liveTag')}
           </span>
           <div className="relative hidden shrink-0 border-l border-cream/10 pl-4 sm:landscape:block">
             <LampMeter
@@ -100,7 +102,7 @@ export const ControlIsland = ({
               step={0.05}
               value={volume}
               onChange={(e) => onVolume(Number(e.target.value))}
-              aria-label="Volume"
+              aria-label={t('island.volume')}
               className="absolute inset-y-0 left-4 right-0 cursor-pointer appearance-none opacity-0"
             />
           </div>
@@ -109,7 +111,7 @@ export const ControlIsland = ({
       <LampIconButton
         tone={chatOpen ? 'dark' : 'red'}
         size={lampSize}
-        label={chatOpen ? 'Back to the radio' : 'Open the chat'}
+        label={t(chatOpen ? 'island.backToRadio' : 'island.openChat')}
         icon={chatOpen ? <CollapseIcon /> : <ChatBubbleIcon />}
         onClick={onToggleChat}
         className={`hidden shrink-0 portrait:inline-block ${

@@ -1,3 +1,4 @@
+import { useT } from '@/i18n';
 import { getSocket, subscribe } from '@/lib/socket';
 import { clearSoundSettings, playSound } from '@/lib/sound';
 import { useEffect, useRef, useState } from 'react';
@@ -40,6 +41,7 @@ export type ChatRoom = {
  * the old player did.
  */
 export const useChatRoom = (): ChatRoom => {
+  const t = useT();
   const [nickname, setNicknameState] = useState(
     () => localStorage.getItem('nickname') ?? '',
   );
@@ -89,15 +91,15 @@ export const useChatRoom = (): ChatRoom => {
     setNicknameError(null);
 
     if (trimmedName.length < 2) {
-      setNicknameError('The name has to be at least 2 characters');
+      setNicknameError(t('chat.nickname.error.tooShort'));
       return;
     }
     if (trimmedName.length > 20) {
-      setNicknameError('The name has to be at most 20 characters');
+      setNicknameError(t('chat.nickname.error.tooLong'));
       return;
     }
     if (['anonymous', 'anon', 'анонім'].includes(trimmedName.toLowerCase())) {
-      setNicknameError('That name is reserved, try another');
+      setNicknameError(t('chat.nickname.error.reserved'));
       return;
     }
     if (
@@ -106,7 +108,7 @@ export const useChatRoom = (): ChatRoom => {
         (user) => user.nickname.toLowerCase() === trimmedName.toLowerCase(),
       )
     ) {
-      setNicknameError('That name is already taken, try another');
+      setNicknameError(t('chat.nickname.error.taken'));
       return;
     }
 

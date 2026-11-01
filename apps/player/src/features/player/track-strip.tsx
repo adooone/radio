@@ -1,4 +1,5 @@
 import type { NowPlaying } from '@/features/stream/use-now-playing';
+import { useT } from '@/i18n';
 import { LampIconButton, type LampSize } from '@dendelion/func-ui';
 
 type TrackStripProps = {
@@ -51,34 +52,37 @@ export const TrackStrip = ({
   status,
   lampSize,
   wordsClassName = 'min-w-0 flex-1',
-}: TrackStripProps) => (
-  <>
-    <LampIconButton
-      tone={quiet ? 'dark' : 'red'}
-      size={lampSize}
-      label={playing ? 'Pause' : 'Listen live'}
-      icon={playing ? <PauseIcon /> : <PlayIcon />}
-      onClick={onToggle}
-      disabled={quiet}
-      className={`shrink-0 disabled:cursor-default disabled:opacity-60 ${
-        quiet ? 'text-cream' : 'text-ink'
-      }`}
-    />
-    <div className={wordsClassName}>
-      {song ? (
-        <>
-          <p className="truncate font-serif text-[15px] leading-tight text-cream">
-            {song.title}
+}: TrackStripProps) => {
+  const t = useT();
+  return (
+    <>
+      <LampIconButton
+        tone={quiet ? 'dark' : 'red'}
+        size={lampSize}
+        label={t(playing ? 'vinyl.pause' : 'vinyl.listenLive')}
+        icon={playing ? <PauseIcon /> : <PlayIcon />}
+        onClick={onToggle}
+        disabled={quiet}
+        className={`shrink-0 disabled:cursor-default disabled:opacity-60 ${
+          quiet ? 'text-cream' : 'text-ink'
+        }`}
+      />
+      <div className={wordsClassName}>
+        {song ? (
+          <>
+            <p className="truncate font-serif text-[15px] leading-tight text-cream">
+              {song.title}
+            </p>
+            <p className="mt-0.5 truncate font-sans text-[11px] uppercase tracking-[0.14em] text-cream/55">
+              {song.artist || 'Puget Sound'}
+            </p>
+          </>
+        ) : (
+          <p className="line-clamp-2 font-serif text-sm leading-snug text-cream/70 portrait:text-base">
+            {status}
           </p>
-          <p className="mt-0.5 truncate font-sans text-[11px] uppercase tracking-[0.14em] text-cream/55">
-            {song.artist || 'Puget Sound'}
-          </p>
-        </>
-      ) : (
-        <p className="line-clamp-2 font-serif text-sm leading-snug text-cream/70 portrait:text-base">
-          {status}
-        </p>
-      )}
-    </div>
-  </>
-);
+        )}
+      </div>
+    </>
+  );
+};

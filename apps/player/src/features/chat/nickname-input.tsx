@@ -1,3 +1,4 @@
+import { useT } from '@/i18n';
 import { LampButton, LampIconButton } from '@dendelion/func-ui';
 import { type KeyboardEvent, useState } from 'react';
 import { CheckIcon } from './icons';
@@ -17,6 +18,7 @@ export const NicknameInput = ({
   error,
   island = false,
 }: NicknameInputProps) => {
+  const t = useT();
   const [nickInput, setNickInput] = useState('');
 
   const handleSetNickname = () => {
@@ -37,7 +39,7 @@ export const NicknameInput = ({
         onNicknameChange?.();
       }}
       onKeyDown={handleKeyDown}
-      placeholder="Your name…"
+      placeholder={t('chat.nickname.placeholder')}
       aria-invalid={!!error}
       className={`w-full flex-grow rounded bg-transparent p-2 font-sans text-sm text-cream outline-none placeholder:text-cream/35 ${
         island ? 'min-w-0 text-base' : ''
@@ -54,7 +56,7 @@ export const NicknameInput = ({
           size="md"
           disabled={!nickInput}
           onClick={handleSetNickname}
-          label="Join the chat"
+          label={t('chat.nickname.join')}
           icon={<CheckIcon />}
           className={`shrink-0 disabled:cursor-default disabled:opacity-60 ${
             nickInput ? 'text-ink' : 'text-cream'
@@ -90,7 +92,7 @@ export const NicknameInput = ({
           onClick={handleSetNickname}
           className="shrink-0 whitespace-nowrap"
         >
-          {nickInput ? "Let's go" : 'Join the chat'}
+          {t(nickInput ? 'chat.nickname.go' : 'chat.nickname.join')}
         </LampButton>
       </div>
     </div>

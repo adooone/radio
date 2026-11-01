@@ -47,6 +47,25 @@ export const uk: Dictionary = {
   'listeners.title': 'Меломани на Городі',
   'listeners.empty': 'Поки тут нікого немає',
   'listeners.self': 'це ти',
+  'listeners.lastSeen.now': 'щойно',
+  'listeners.lastSeen.minutes': {
+    one: '{{count}} хвилину тому',
+    few: '{{count}} хвилини тому',
+    many: '{{count}} хвилин тому',
+    other: '{{count}} хвилин тому',
+  },
+  'listeners.lastSeen.hours': {
+    one: '{{count}} годину тому',
+    few: '{{count}} години тому',
+    many: '{{count}} годин тому',
+    other: '{{count}} годин тому',
+  },
+  'listeners.lastSeen.days': {
+    one: '{{count}} день тому',
+    few: '{{count}} дні тому',
+    many: '{{count}} днів тому',
+    other: '{{count}} днів тому',
+  },
 
   'settings.nickname.label': 'Нікнейм',
   'settings.nickname.save': 'Зберегти',

@@ -10,7 +10,7 @@ const isUserOnline = (lastSeen: string): boolean => {
   return Date.now() - lastSeenDate.getTime() <= FIVE_MINUTES_MS;
 };
 
-/** Wave's `listeners` broadcast, with quiet seats padded in as Anonymous. */
+/** Wave's `listeners` broadcast, with quiet seats padded in nameless. */
 export const applyListenersMessage = (data: unknown): User[] | null => {
   if (
     typeof data !== 'object' ||
@@ -28,7 +28,7 @@ export const applyListenersMessage = (data: unknown): User[] | null => {
   ) {
     for (let i = list.length; i < payload.listeners; i++) {
       list.push({
-        nickname: 'Anonymous',
+        nickname: '',
         lastSeen: new Date().toISOString(),
         color: null,
       });

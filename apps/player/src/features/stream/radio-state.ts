@@ -1,3 +1,5 @@
+import type { T } from '@/i18n';
+
 /** Where the air stands: still tuning, talking, or quiet. */
 export type RadioStatus = 'loading' | 'live' | 'offline';
 
@@ -24,8 +26,12 @@ export const nextStatus = (
 };
 
 /** The line under the sign, in the air's own words. */
-export const statusLine = (status: RadioStatus, playing: boolean): string => {
-  if (status === 'loading') return 'catching the wave…';
-  if (status === 'offline') return 'the air is quiet — the record is resting';
-  return playing ? 'on air' : 'on air — tap the record';
+export const statusLine = (
+  status: RadioStatus,
+  playing: boolean,
+  t: T,
+): string => {
+  if (status === 'loading') return t('status.loading');
+  if (status === 'offline') return t('status.offline');
+  return playing ? t('status.live') : t('status.livePaused');
 };

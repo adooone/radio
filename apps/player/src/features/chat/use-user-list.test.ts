@@ -25,7 +25,7 @@ describe('applyListenersMessage', () => {
     ).toEqual(users);
   });
 
-  it('pads quiet seats as Anonymous when the count outruns the roster', () => {
+  it('pads quiet seats as nameless when the count outruns the roster', () => {
     const result = applyListenersMessage({
       type: 'listeners',
       listeners: 2,
@@ -34,7 +34,7 @@ describe('applyListenersMessage', () => {
       ],
     });
     expect(result).toHaveLength(2);
-    expect(result?.[1].nickname).toBe('Anonymous');
+    expect(result?.[1].nickname).toBe('');
     expect(result?.[1].color).toBeNull();
   });
 });

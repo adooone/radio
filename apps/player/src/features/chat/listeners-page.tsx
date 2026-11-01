@@ -1,3 +1,4 @@
+import { useT } from '@/i18n';
 import { effectiveColor } from './colors';
 import { StatusIcon } from './icons';
 import { formatLastSeen } from './time';
@@ -13,10 +14,13 @@ type ListenersPageProps = {
  * out, the on-air status mark and when each was last seen.
  */
 export const ListenersPage = ({ users, nickname }: ListenersPageProps) => {
+  const t = useT();
   if (users.length === 0) {
     return (
       <div className="flex min-h-0 flex-1 items-center justify-center p-4">
-        <p className="text-center text-sm text-cream/40">No one is here yet</p>
+        <p className="text-center text-sm text-cream/40">
+          {t('listeners.empty')}
+        </p>
       </div>
     );
   }
@@ -35,22 +39,24 @@ export const ListenersPage = ({ users, nickname }: ListenersPageProps) => {
                 className={`size-4 shrink-0 ${
                   user.isOnline ? 'text-glow' : 'text-cream/25'
                 }`}
-                aria-label={user.isOnline ? 'Online' : 'Offline'}
+                aria-label={t(
+                  user.isOnline ? 'chat.status.online' : 'chat.status.offline',
+                )}
               />
               <span
                 className="truncate font-sans text-xs font-medium uppercase tracking-wide"
                 style={{ color: effectiveColor(user.nickname, user.color) }}
               >
-                {user.nickname}
+                {user.nickname || t('chat.anonymous')}
               </span>
               {isSelf && (
                 <span className="shrink-0 text-xs text-cream/40">
-                  that's you
+                  {t('listeners.self')}
                 </span>
               )}
             </span>
             <span className="shrink-0 font-mono text-[10px] text-cream/40">
-              {formatLastSeen(user.lastSeen)}
+              {formatLastSeen(user.lastSeen, t)}
             </span>
           </div>
         );

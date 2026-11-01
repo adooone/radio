@@ -1,3 +1,4 @@
+import { useT } from '@/i18n';
 import { LampButton, LampSwitch } from '@dendelion/func-ui';
 import { type KeyboardEvent, useState } from 'react';
 import { NICKNAME_COLORS } from './colors';
@@ -11,6 +12,7 @@ const SECTION_LABEL =
   'font-sans text-xs font-medium uppercase tracking-wide text-cream/40';
 
 export const SettingsPage = ({ room }: SettingsPageProps) => {
+  const t = useT();
   const [nickInput, setNickInput] = useState(room.nickname);
   const [confirmingClear, setConfirmingClear] = useState(false);
 
@@ -33,7 +35,7 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
   return (
     <div className="chat-scroll min-h-0 flex-1 space-y-6 overflow-y-auto overflow-x-hidden px-1 py-2">
       <section className="space-y-2">
-        <p className={SECTION_LABEL}>Nickname</p>
+        <p className={SECTION_LABEL}>{t('settings.nickname.label')}</p>
         <div className="control-island flex flex-row items-center gap-2 rounded-full border border-cream/10 p-2 pl-4">
           <input
             value={nickInput}
@@ -55,7 +57,7 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
             onClick={handleSaveNickname}
             className="shrink-0 whitespace-nowrap"
           >
-            Save
+            {t('settings.nickname.save')}
           </LampButton>
         </div>
         {room.nicknameError && (
@@ -66,7 +68,7 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
       </section>
 
       <section className="space-y-2">
-        <p className={SECTION_LABEL}>Name colour</p>
+        <p className={SECTION_LABEL}>{t('settings.color.label')}</p>
         <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
@@ -77,13 +79,13 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
                 : 'border-cream/15'
             }`}
           >
-            Auto
+            {t('settings.color.auto')}
           </button>
           {NICKNAME_COLORS.map((color) => (
             <button
               key={color}
               type="button"
-              aria-label={`Use ${color} as the name colour`}
+              aria-label={t('settings.color.useColor', { color })}
               onClick={() => room.setColorChoice(color)}
               className={`size-7 rounded-full border-2 ${
                 room.colorChoice === color
@@ -97,19 +99,19 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
       </section>
 
       <section className="space-y-2">
-        <p className={SECTION_LABEL}>Chat sounds</p>
+        <p className={SECTION_LABEL}>{t('settings.sounds.label')}</p>
         <div className="space-y-2">
           <LampSwitch
             tone="red"
             size="sm"
-            label="All sounds"
+            label={t('settings.sounds.all')}
             checked={room.sound.isEnabled}
             onChange={room.sound.toggle}
           />
           <LampSwitch
             tone="red"
             size="sm"
-            label="New message"
+            label={t('settings.sounds.newMessage')}
             checked={room.sound.types.message.enabled}
             disabled={!room.sound.isEnabled}
             onChange={room.sound.types.message.toggle}
@@ -117,7 +119,7 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
           <LampSwitch
             tone="red"
             size="sm"
-            label="Sent message"
+            label={t('settings.sounds.sentMessage')}
             checked={room.sound.types.send.enabled}
             disabled={!room.sound.isEnabled}
             onChange={room.sound.types.send.toggle}
@@ -125,7 +127,7 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
           <LampSwitch
             tone="red"
             size="sm"
-            label="Someone joins"
+            label={t('settings.sounds.join')}
             checked={room.sound.types.join.enabled}
             disabled={!room.sound.isEnabled}
             onChange={room.sound.types.join.toggle}
@@ -134,11 +136,11 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
       </section>
 
       <section className="space-y-2">
-        <p className={SECTION_LABEL}>Data</p>
+        <p className={SECTION_LABEL}>{t('settings.data.label')}</p>
         {confirmingClear ? (
           <div className="space-y-2 rounded-xl bg-cream/5 p-3">
             <p className="text-sm text-cream/70">
-              This clears your nickname, colour and sound settings.
+              {t('settings.data.confirmText')}
             </p>
             <div className="flex gap-2">
               <LampButton
@@ -147,7 +149,7 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
                 size="sm"
                 onClick={handleClear}
               >
-                Yes, clear everything
+                {t('settings.data.confirmYes')}
               </LampButton>
               <LampButton
                 type="button"
@@ -156,7 +158,7 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
                 onClick={() => setConfirmingClear(false)}
                 className="text-cream"
               >
-                Cancel
+                {t('settings.data.cancel')}
               </LampButton>
             </div>
           </div>
@@ -168,7 +170,7 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
             onClick={() => setConfirmingClear(true)}
             className="text-cream"
           >
-            Clear all data
+            {t('settings.data.clear')}
           </LampButton>
         )}
       </section>

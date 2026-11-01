@@ -1,3 +1,4 @@
+import { useT } from '@/i18n';
 import { effectiveColor } from './colors';
 import { StatusIcon } from './icons';
 import { formatTime } from './time';
@@ -16,7 +17,8 @@ type MessageProps = {
  * with the on-air status mark, the text, a small clock.
  */
 export const Message = ({ message, isSelf, isOnline, color }: MessageProps) => {
-  const displayNickname = message.nickname || 'Anonymous';
+  const t = useT();
+  const displayNickname = message.nickname || t('chat.anonymous');
   const messageTime = formatTime(message.timestamp);
 
   return (
@@ -38,7 +40,9 @@ export const Message = ({ message, isSelf, isOnline, color }: MessageProps) => {
             </span>
             <StatusIcon
               className={`size-4 shrink-0 ${isOnline ? 'text-glow' : 'text-cream/25'}`}
-              aria-label={isOnline ? 'Online' : 'Offline'}
+              aria-label={t(
+                isOnline ? 'chat.status.online' : 'chat.status.offline',
+              )}
             />
           </span>
         )}

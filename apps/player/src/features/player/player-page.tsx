@@ -3,6 +3,7 @@ import { useChatRoom } from '@/features/chat/use-chat-room';
 import { statusLine } from '@/features/stream/radio-state';
 import { useNowPlaying } from '@/features/stream/use-now-playing';
 import { useRadio } from '@/features/stream/use-radio';
+import { useT } from '@/i18n';
 import { useState } from 'react';
 import { ControlIsland } from './control-island';
 import { TrackStrip } from './track-strip';
@@ -16,6 +17,7 @@ import { Wordmark } from './wordmark';
  * a hidden audio element and the canvas is the whole picture.
  */
 export const PlayerPage = () => {
+  const t = useT();
   const { audioRef, status, playing, toggle, volume, setVolume, getLevels } =
     useRadio();
   const song = useNowPlaying();
@@ -81,7 +83,7 @@ export const PlayerPage = () => {
             quiet={quiet}
             onToggle={toggle}
             song={song}
-            status={statusLine(status, playing)}
+            status={statusLine(status, playing, t)}
             lampSize="md"
           />
         }
@@ -98,7 +100,7 @@ export const PlayerPage = () => {
           volume={volume}
           onVolume={setVolume}
           song={song}
-          status={statusLine(status, playing)}
+          status={statusLine(status, playing, t)}
           chatOpen={chatOpen}
           onToggleChat={() => setChatOpen((open) => !open)}
           room={room}

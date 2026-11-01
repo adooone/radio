@@ -47,6 +47,25 @@ export const en: Dictionary = {
   'listeners.title': 'Listeners',
   'listeners.empty': 'No one is here yet',
   'listeners.self': "that's you",
+  'listeners.lastSeen.now': 'just now',
+  'listeners.lastSeen.minutes': {
+    one: '{{count}}m ago',
+    few: '{{count}}m ago',
+    many: '{{count}}m ago',
+    other: '{{count}}m ago',
+  },
+  'listeners.lastSeen.hours': {
+    one: '{{count}}h ago',
+    few: '{{count}}h ago',
+    many: '{{count}}h ago',
+    other: '{{count}}h ago',
+  },
+  'listeners.lastSeen.days': {
+    one: '{{count}}d ago',
+    few: '{{count}}d ago',
+    many: '{{count}}d ago',
+    other: '{{count}}d ago',
+  },
 
   'settings.nickname.label': 'Nickname',
   'settings.nickname.save': 'Save',

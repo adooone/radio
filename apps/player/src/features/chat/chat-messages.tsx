@@ -1,3 +1,4 @@
+import { useT } from '@/i18n';
 import { useEffect, useRef } from 'react';
 import { Message } from './chat-message';
 import type { ChatMessage, UserWithStatus } from './types';
@@ -13,6 +14,7 @@ export const ChatMessages = ({
   nickname,
   users,
 }: ChatMessagesProps) => {
+  const t = useT();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,7 +27,7 @@ export const ChatMessages = ({
     return (
       <div className="flex min-h-0 flex-1 items-center justify-center p-4">
         <p className="text-center text-sm text-cream/40">
-          Enter a name to see the chat
+          {t('chat.empty.noName')}
         </p>
       </div>
     );
@@ -39,7 +41,7 @@ export const ChatMessages = ({
       {messages.length === 0 ? (
         <div className="flex h-full items-center justify-center p-4">
           <p className="text-center text-sm text-cream/40">
-            Nothing here yet — be the first!
+            {t('chat.empty.noMessages')}
           </p>
         </div>
       ) : (

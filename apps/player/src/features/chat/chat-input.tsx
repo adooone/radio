@@ -1,3 +1,4 @@
+import { useT } from '@/i18n';
 import { LampButton, LampIconButton } from '@dendelion/func-ui';
 import {
   type FormEvent,
@@ -16,6 +17,7 @@ type ChatInputProps = {
 };
 
 export const ChatInput = ({ onSend, island = false }: ChatInputProps) => {
+  const t = useT();
   const [message, setMessage] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -52,7 +54,7 @@ export const ChatInput = ({ onSend, island = false }: ChatInputProps) => {
         adjustHeight();
       }}
       onKeyDown={handleKeyDown}
-      placeholder="Say something…"
+      placeholder={t('chat.input.placeholder')}
       rows={1}
       className={`min-h-[38px] w-full flex-grow resize-none overflow-hidden bg-transparent p-2 font-sans text-sm text-cream outline-none placeholder:text-cream/35 ${
         island ? 'min-w-0 max-h-[64px] text-base' : 'max-h-[200px]'
@@ -67,7 +69,7 @@ export const ChatInput = ({ onSend, island = false }: ChatInputProps) => {
           type="submit"
           tone="red"
           size="md"
-          label="Send"
+          label={t('chat.input.send')}
           icon={<SendIcon />}
           className="shrink-0 text-ink"
         />
@@ -83,7 +85,7 @@ export const ChatInput = ({ onSend, island = false }: ChatInputProps) => {
     >
       {field}
       <LampButton type="submit" tone="red" size="sm" className="shrink-0">
-        Send
+        {t('chat.input.send')}
       </LampButton>
     </form>
   );
