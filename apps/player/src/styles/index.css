@@ -105,9 +105,7 @@ html {
 }
 
 /* The page's breathing room: one gutter, growing with the screen. The stage
-   is pinned to the layout viewport rather than sized in dvh: installed on
-   iOS with a translucent status bar, the dvh units leave out the bar's
-   height, and the page ended that much short of the bottom. */
+   is pinned to the layout viewport rather than sized in dvh. */
 .stage {
   position: fixed;
   inset: 0;
@@ -159,6 +157,19 @@ html {
   grid-column: 2;
   grid-row: 1;
 }
+/* Installed on iOS with the translucent status bar, the layout viewport is
+   one status bar shorter than the screen yet drawn from its top edge, so a
+   layer pinned to `inset: 0` stops that far short of the bottom (measured on
+   the phone: the gap below the island was the bar's height). The full-screen
+   layers add that height back instead of trusting `bottom: 0`. */
+@media (display-mode: standalone) {
+  .stage,
+  .chat-view {
+    bottom: auto;
+    height: calc(100% + env(safe-area-inset-top, 0px));
+  }
+}
+
 /* Portrait (phones, tablets): the radio is the whole screen, and the chat
    leaves the grid — it becomes its own view behind the island's chat lamp,
    crossfading with the radio: the room fades in as the radio fades out
