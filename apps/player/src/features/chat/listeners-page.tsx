@@ -3,6 +3,7 @@ import { effectiveColor } from './colors';
 import { StatusIcon } from './icons';
 import { formatLastSeen } from './time';
 import type { UserWithStatus } from './types';
+import { isSelf } from './use-user-list';
 
 type ListenersPageProps = {
   users: UserWithStatus[];
@@ -28,7 +29,7 @@ export const ListenersPage = ({ users, nickname }: ListenersPageProps) => {
   return (
     <div className="chat-scroll min-h-0 flex-1 space-y-1.5 overflow-y-auto overflow-x-hidden py-2">
       {users.map((user, index) => {
-        const isSelf = user.nickname === nickname;
+        const own = isSelf(user, nickname);
         return (
           <div
             key={`${user.nickname}-${index}`}
@@ -49,7 +50,7 @@ export const ListenersPage = ({ users, nickname }: ListenersPageProps) => {
               >
                 {user.nickname || t('chat.anonymous')}
               </span>
-              {isSelf && (
+              {own && (
                 <span className="shrink-0 text-xs text-cream/40">
                   {t('listeners.self')}
                 </span>

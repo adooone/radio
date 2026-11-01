@@ -128,7 +128,7 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
 
       <section className="space-y-2">
         <p className={SECTION_LABEL}>{t('settings.sounds.label')}</p>
-        <div className="space-y-2">
+        <div className="flex flex-col items-start gap-2">
           <LampSwitch
             tone="red"
             size="sm"

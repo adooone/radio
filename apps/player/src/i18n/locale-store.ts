@@ -9,10 +9,14 @@ const detectBrowserLocale = (): Locale =>
     ? 'uk'
     : 'en';
 
+/** The saved tongue; read at import, so blocked storage must not throw. */
 export const readStoredLocale = (): Locale | null => {
-  if (typeof localStorage === 'undefined') return null;
-  const stored = localStorage.getItem(STORAGE_KEY);
-  return isLocale(stored) ? stored : null;
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return isLocale(stored) ? stored : null;
+  } catch {
+    return null;
+  }
 };
 
 export const detectInitialLocale = (): Locale =>
@@ -25,8 +29,10 @@ export const getLocale = (): Locale => currentLocale;
 
 export const setLocale = (locale: Locale): void => {
   currentLocale = locale;
-  if (typeof localStorage !== 'undefined') {
+  try {
     localStorage.setItem(STORAGE_KEY, locale);
+  } catch {
+    // Private windows forget the choice; it still applies for the visit.
   }
   for (const listener of listeners) listener(locale);
 };

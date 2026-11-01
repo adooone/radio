@@ -37,6 +37,20 @@ export const applyListenersMessage = (data: unknown): User[] | null => {
   return list;
 };
 
+/**
+ * Whether a seat is the listener's own. A listener without a name sits among
+ * the nameless seats with no way to tell which is theirs, so none is marked.
+ */
+export const isSelf = (user: User, nickname: string): boolean =>
+  nickname !== '' && user.nickname === nickname;
+
+/**
+ * Everyone else in the room. While connected the listener holds one of the
+ * seats wave counts, named or not, so the others are all seats but one.
+ */
+export const countOthers = (users: User[]): number =>
+  Math.max(0, users.length - 1);
+
 /** A lone colour change from `user_color_updated`, folded into the roster between broadcasts. */
 export const applyColorUpdateMessage = (
   users: User[],

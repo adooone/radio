@@ -8,6 +8,7 @@ import { ListenersPage } from './listeners-page';
 import { NicknameInput } from './nickname-input';
 import { SettingsPage } from './settings-page';
 import type { ChatRoom } from './use-chat-room';
+import { countOthers } from './use-user-list';
 
 type ChatProps = {
   /** The room's state, held above (`useChatRoom`) and shared with the island. */
@@ -32,7 +33,7 @@ export const Chat = ({ room, mobileOpen, onClose, controls }: ChatProps) => {
   const lampSize = portrait ? 'md' : 'sm';
   const { nickname, colorChoice, messages, users, sound, page, togglePage } =
     room;
-  const othersCount = users.filter((user) => user.nickname !== nickname).length;
+  const othersCount = countOthers(users);
 
   return (
     <section

@@ -2,7 +2,36 @@ import { describe, expect, it } from 'vitest';
 import {
   applyColorUpdateMessage,
   applyListenersMessage,
+  countOthers,
+  isSelf,
 } from './use-user-list';
+
+const seat = (nickname: string) => ({
+  nickname,
+  lastSeen: '2026-11-01T00:00:00.000Z',
+  color: null,
+});
+
+describe('isSelf', () => {
+  it('marks the seat under the listener’s own name', () => {
+    expect(isSelf(seat('Ada'), 'Ada')).toBe(true);
+    expect(isSelf(seat('Grace'), 'Ada')).toBe(false);
+  });
+
+  it('marks no nameless seat as the listener’s own when they have no name', () => {
+    expect(isSelf(seat(''), '')).toBe(false);
+  });
+});
+
+describe('countOthers', () => {
+  it('counts every seat but the listener’s own, named or not', () => {
+    expect(countOthers([seat('Ada'), seat(''), seat('')])).toBe(2);
+  });
+
+  it('is zero before the room has been announced', () => {
+    expect(countOthers([])).toBe(0);
+  });
+});
 
 describe('applyListenersMessage', () => {
   it('ignores messages that are not a listeners broadcast', () => {

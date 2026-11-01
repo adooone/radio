@@ -1,5 +1,10 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { detectInitialLocale, readStoredLocale } from './locale-store';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import {
+  detectInitialLocale,
+  getLocale,
+  readStoredLocale,
+  setLocale,
+} from './locale-store';
 
 const setBrowserLanguage = (language: string) => {
   Object.defineProperty(navigator, 'language', {
@@ -48,5 +53,29 @@ describe('readStoredLocale / detectInitialLocale', () => {
     setBrowserLanguage('en-US');
     localStorage.setItem('radio.locale', 'uk');
     expect(detectInitialLocale()).toBe('uk');
+  });
+});
+
+describe('blocked storage', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('reads no locale instead of throwing', () => {
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new DOMException('denied', 'SecurityError');
+    });
+    expect(readStoredLocale()).toBeNull();
+  });
+
+  it('still switches the tongue for the visit when it cannot save', () => {
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new DOMException('denied', 'QuotaExceededError');
+    });
+    const before = getLocale();
+    const other = before === 'uk' ? 'en' : 'uk';
+    expect(() => setLocale(other)).not.toThrow();
+    expect(getLocale()).toBe(other);
+    setLocale(before);
   });
 });
