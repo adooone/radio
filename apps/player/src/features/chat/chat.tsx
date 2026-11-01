@@ -1,10 +1,10 @@
 import { useMedia } from '@/lib/use-media';
-import { LampIconButton } from '@dendelion/func-ui';
 import type { ReactNode } from 'react';
 import { ChatBackdrop } from './chat-backdrop';
+import { ChatHeader } from './chat-header';
 import { ChatInput } from './chat-input';
 import { ChatMessages } from './chat-messages';
-import { CollapseIcon, SoundOffIcon, SoundOnIcon } from './icons';
+import { ListenersPage } from './listeners-page';
 import { NicknameInput } from './nickname-input';
 import type { ChatRoom } from './use-chat-room';
 
@@ -29,7 +29,8 @@ export const Chat = ({ room, mobileOpen, onClose, controls }: ChatProps) => {
   // The header's lamps grow with the island's, for thumbs.
   const portrait = useMedia('(orientation: portrait)');
   const lampSize = portrait ? 'md' : 'sm';
-  const { nickname, messages, users, sound } = room;
+  const { nickname, messages, users, sound, page, togglePage } = room;
+  const othersCount = users.filter((user) => user.nickname !== nickname).length;
 
   return (
     <section
@@ -44,44 +45,58 @@ export const Chat = ({ room, mobileOpen, onClose, controls }: ChatProps) => {
         <div className="chat-topbar flex">{controls}</div>
       )}
       <div className="chat-panel relative z-10 flex min-h-0 flex-1 flex-col">
-        <header className="flex w-full items-center justify-between pb-3">
-          <span className="flex items-center gap-3">
-            <LampIconButton
-              tone="dark"
-              size={lampSize}
-              onClick={onClose}
-              label="Back to the radio"
-              icon={<CollapseIcon />}
-              className="hidden text-cream portrait:inline-block"
-            />
-            <LampIconButton
-              tone={sound.isEnabled ? 'red' : 'dark'}
-              size={lampSize}
-              onClick={sound.toggle}
-              label={
-                sound.isEnabled ? 'Mute chat sounds' : 'Unmute chat sounds'
-              }
-              icon={sound.isEnabled ? <SoundOnIcon /> : <SoundOffIcon />}
-              className={sound.isEnabled ? 'text-ink' : 'text-cream'}
-            />
-          </span>
-          <h2 className="font-serif text-xl font-semibold tracking-wide text-cream/90">
-            Chat
-          </h2>
-        </header>
+        <ChatHeader
+          lampSize={lampSize}
+          sound={sound}
+          nickname={nickname}
+          page={page}
+          othersCount={othersCount}
+          onTogglePage={togglePage}
+          onBack={onClose}
+        />
 
-        <ChatMessages messages={messages} nickname={nickname} users={users} />
-
-        {!portrait &&
-          (nickname ? (
-            <ChatInput onSend={room.sendMessage} />
-          ) : (
-            <NicknameInput
-              onSetNickname={room.setNickname}
-              onNicknameChange={room.clearNicknameError}
-              error={room.nicknameError}
+        <div className="relative min-h-0 flex-1">
+          <div
+            className={`chat-page ${page === 'room' ? 'chat-page-active' : ''}`}
+          >
+            <ChatMessages
+              messages={messages}
+              nickname={nickname}
+              users={users}
             />
-          ))}
+
+            {!portrait &&
+              (nickname ? (
+                <ChatInput onSend={room.sendMessage} />
+              ) : (
+                <NicknameInput
+                  onSetNickname={room.setNickname}
+                  onNicknameChange={room.clearNicknameError}
+                  error={room.nicknameError}
+                />
+              ))}
+          </div>
+
+          <div
+            className={`chat-page ${
+              page === 'listeners' ? 'chat-page-active' : ''
+            }`}
+          >
+            <ListenersPage users={users} nickname={nickname} />
+          </div>
+
+          <div
+            className={`chat-page ${
+              page === 'settings' ? 'chat-page-active' : ''
+            }`}
+          >
+            <div className="flex min-h-0 flex-1 items-center justify-center p-4">
+              <p className="text-center text-sm text-cream/40">
+                Settings are coming soon
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

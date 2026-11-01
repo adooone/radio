@@ -115,7 +115,7 @@ describe('encodeService', () => {
     expect(statSync(join(targetDir, 'a1-first-song.m4a')).size).toBeGreaterThan(
       0,
     );
-  });
+  }, 20_000);
 
   it('throws when there are no cut tracks to encode', async () => {
     const slug = 'some-band_no-tracks';

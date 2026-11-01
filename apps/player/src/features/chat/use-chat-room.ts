@@ -1,8 +1,16 @@
 import { getSocket } from '@/lib/socket';
-import { useState } from 'react';
+import { playSound } from '@/lib/sound';
+import { useEffect, useRef, useState } from 'react';
 import { useChat } from './use-chat';
 import { useSound } from './use-sound';
 import { useUserList } from './use-user-list';
+
+/** The chat panel's three faces: the room itself, who is here, and the
+    listener's own settings — swapped in place behind the header's lamps. */
+export type ChatPage = 'room' | 'listeners' | 'settings';
+
+/** How long a run of joins waits before it is judged settled enough to chime. */
+const JOIN_SOUND_DEBOUNCE_MS = 1_500;
 
 export type ChatRoom = {
   nickname: string;
@@ -14,6 +22,9 @@ export type ChatRoom = {
   sendMessage: (text: string) => void;
   users: ReturnType<typeof useUserList>;
   sound: { isEnabled: boolean; toggle: () => void };
+  page: ChatPage;
+  /** Opens a page, or closes it back to the room if it (or the other one) is already open. */
+  togglePage: (target: 'listeners' | 'settings') => void;
 };
 
 /**
@@ -30,6 +41,22 @@ export const useChatRoom = (): ChatRoom => {
   const { messages, sendMessage } = useChat(nickname || null);
   const users = useUserList();
   const sound = useSound();
+  const [page, setPage] = useState<ChatPage>('room');
+
+  // A reconnect can re-announce a whole room at once; the old bar's 1.5s
+  // debounce waits for the count to settle before chiming once for the batch.
+  const settledCount = useRef(users.length);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (users.length > settledCount.current) playSound('join');
+      settledCount.current = users.length;
+    }, JOIN_SOUND_DEBOUNCE_MS);
+    return () => clearTimeout(timer);
+  }, [users.length]);
+
+  const togglePage = (target: 'listeners' | 'settings') => {
+    setPage((current) => (current === 'room' ? target : 'room'));
+  };
 
   const setNickname = (name: string) => {
     const trimmedName = name.trim();
@@ -77,5 +104,7 @@ export const useChatRoom = (): ChatRoom => {
     sendMessage,
     users,
     sound,
+    page,
+    togglePage,
   };
 };

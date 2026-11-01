@@ -180,6 +180,27 @@ export const SendIcon = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+export const GearIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    {...props}
+  >
+    <title>Settings</title>
+    <circle cx="8" cy="8" r="2.3" stroke="currentColor" strokeWidth="1.5" />
+    <path
+      d="M8 2.2v1.6M8 12.2v1.6M2.2 8h1.6M12.2 8h1.6M4.3 4.3l1.1 1.1M10.6 10.6l1.1 1.1M11.7 4.3l-1.1 1.1M5.4 10.6l-1.1 1.1"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
 export const CheckIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="16"
