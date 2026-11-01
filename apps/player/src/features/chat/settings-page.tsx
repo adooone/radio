@@ -1,4 +1,4 @@
-import { useT } from '@/i18n';
+import { useLocale, useT } from '@/i18n';
 import { LampButton, LampSwitch } from '@dendelion/func-ui';
 import { type KeyboardEvent, useState } from 'react';
 import { NICKNAME_COLORS } from './colors';
@@ -13,6 +13,7 @@ const SECTION_LABEL =
 
 export const SettingsPage = ({ room }: SettingsPageProps) => {
   const t = useT();
+  const [locale, setLocale] = useLocale();
   const [nickInput, setNickInput] = useState(room.nickname);
   const [confirmingClear, setConfirmingClear] = useState(false);
 
@@ -34,6 +35,33 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
 
   return (
     <div className="chat-scroll min-h-0 flex-1 space-y-6 overflow-y-auto overflow-x-hidden px-1 py-2">
+      <section className="space-y-2">
+        <p className={SECTION_LABEL}>{t('settings.language.label')}</p>
+        <div className="flex items-center gap-2">
+          <span
+            className={`font-sans text-xs uppercase tracking-wide ${
+              locale === 'uk' ? 'text-cream' : 'text-cream/40'
+            }`}
+          >
+            UK
+          </span>
+          <LampSwitch
+            tone="red"
+            size="sm"
+            checked={locale === 'en'}
+            onChange={(event) => setLocale(event.target.checked ? 'en' : 'uk')}
+            aria-label={t('settings.language.label')}
+          />
+          <span
+            className={`font-sans text-xs uppercase tracking-wide ${
+              locale === 'en' ? 'text-cream' : 'text-cream/40'
+            }`}
+          >
+            EN
+          </span>
+        </div>
+      </section>
+
       <section className="space-y-2">
         <p className={SECTION_LABEL}>{t('settings.nickname.label')}</p>
         <div className="control-island flex flex-row items-center gap-2 rounded-full border border-cream/10 p-2 pl-4">

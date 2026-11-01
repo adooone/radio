@@ -67,6 +67,7 @@ export const uk: Dictionary = {
     other: '{{count}} днів тому',
   },
 
+  'settings.language.label': 'Мова',
   'settings.nickname.label': 'Нікнейм',
   'settings.nickname.save': 'Зберегти',
   'settings.color.label': 'Колір імені',

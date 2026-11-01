@@ -2,7 +2,7 @@
 id: IDEA-14
 title: Player speaks Ukrainian and English
 type: feat
-status: planned
+status: review
 created: 2026-10-31
 updated: 2026-11-01
 tags:
@@ -53,9 +53,10 @@ Right-to-left or other languages — the layer is built for two.
       description follow the locale. The existing tests assert through
       the dictionaries instead of literals.
       run: 1h4m · 164 in · 52.9k out · sonnet-5 · sess:f2b62526-f20c-4998-bcc9-cea732bf296b
-- [ ] Phase 3 — The switch
+- [x] Phase 3 — The switch
       The UK / EN lamp switch on the settings page, effective at once;
       a listener's choice survives reloads. Lint, types, build green.
+      run: 2m22s · 50 in · 8.4k out · sonnet-5 · sess:dc01b096-8b12-494d-8a15-1c78f70301bc
 
 ### Thread
 - [x] 2026-10-31 [decision] [user] A language switcher: the Ukrainian wording is liked and should stay available alongside English.

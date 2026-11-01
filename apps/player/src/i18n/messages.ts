@@ -44,6 +44,7 @@ export type MessageKey =
   | 'listeners.lastSeen.minutes'
   | 'listeners.lastSeen.hours'
   | 'listeners.lastSeen.days'
+  | 'settings.language.label'
   | 'settings.nickname.label'
   | 'settings.nickname.save'
   | 'settings.color.label'

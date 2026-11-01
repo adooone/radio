@@ -67,6 +67,7 @@ export const en: Dictionary = {
     other: '{{count}}d ago',
   },
 
+  'settings.language.label': 'Language',
   'settings.nickname.label': 'Nickname',
   'settings.nickname.save': 'Save',
   'settings.color.label': 'Name colour',
