@@ -1,6 +1,6 @@
 import { LampButton, LampIconButton } from '@dendelion/func-ui';
 import type { LampSize } from '@dendelion/func-ui';
-import { nicknameColor } from './colors';
+import { effectiveColor } from './colors';
 import { CollapseIcon, GearIcon, SoundOffIcon, SoundOnIcon } from './icons';
 import type { ChatPage } from './use-chat-room';
 
@@ -8,6 +8,7 @@ type ChatHeaderProps = {
   lampSize: LampSize;
   sound: { isEnabled: boolean; toggle: () => void };
   nickname: string;
+  colorChoice: string | null;
   page: ChatPage;
   /** The listeners pill counts everyone but the listener themself. */
   othersCount: number;
@@ -28,6 +29,7 @@ export const ChatHeader = ({
   lampSize,
   sound,
   nickname,
+  colorChoice,
   page,
   othersCount,
   onTogglePage,
@@ -66,7 +68,7 @@ export const ChatHeader = ({
       {nickname && (
         <span
           className="font-sans text-xs font-medium uppercase tracking-wide"
-          style={{ color: nicknameColor(nickname, true) }}
+          style={{ color: effectiveColor(nickname, colorChoice) }}
         >
           + {nickname}
         </span>

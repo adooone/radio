@@ -30,7 +30,8 @@ export const Chat = ({ room, mobileOpen, onClose, controls }: ChatProps) => {
   // The header's lamps grow with the island's, for thumbs.
   const portrait = useMedia('(orientation: portrait)');
   const lampSize = portrait ? 'md' : 'sm';
-  const { nickname, messages, users, sound, page, togglePage } = room;
+  const { nickname, colorChoice, messages, users, sound, page, togglePage } =
+    room;
   const othersCount = users.filter((user) => user.nickname !== nickname).length;
 
   return (
@@ -50,6 +51,7 @@ export const Chat = ({ room, mobileOpen, onClose, controls }: ChatProps) => {
           lampSize={lampSize}
           sound={sound}
           nickname={nickname}
+          colorChoice={colorChoice}
           page={page}
           othersCount={othersCount}
           onTogglePage={togglePage}

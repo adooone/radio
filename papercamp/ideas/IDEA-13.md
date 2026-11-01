@@ -2,7 +2,7 @@
 id: IDEA-13
 title: Chat's people and settings view
 type: feat
-status: planned
+status: review
 created: 2026-10-31
 updated: 2026-11-01
 tags:
@@ -72,11 +72,12 @@ moderation, private messages.
       types the old `soundService` kept); clear all data with an inline
       confirm. Keyboard: Escape returns to the room.
       run: 38m30s · 120 in · 43k out · sonnet-5 · sess:86a57e70-c8f2-426b-bb8e-6df8df102239
-- [ ] Phase 3 — Colours synced through wave
+- [x] Phase 3 — Colours synced through wave
       Per-user colours in `useChatRoom`: send `color_update` on a choice,
       apply `user_color_updated` and the `listeners` payload's `color`;
       bubbles, the listeners page and the header nick read the effective
       colour. Tests for the message handling; lint, types, build green.
+      run: 48m14s · 176 in · 37.5k out · sonnet-5 · sess:31b42b5b-0c84-4fc4-8b03-30ff79430e97
 
 ### Thread
 - [x] 2026-10-31 [decision] [user] Bring the old frontend's listeners / nick / settings section into the new player.

@@ -1,7 +1,7 @@
-import { getSocket } from '@/lib/socket';
+import { getSocket, subscribe } from '@/lib/socket';
 import { clearSoundSettings, playSound } from '@/lib/sound';
 import { useEffect, useRef, useState } from 'react';
-import { writeColorChoice } from './colors';
+import { readColorChoice, writeColorChoice } from './colors';
 import { useChat } from './use-chat';
 import { useSound } from './use-sound';
 import { useUserList } from './use-user-list';
@@ -26,6 +26,9 @@ export type ChatRoom = {
   page: ChatPage;
   /** Opens a page, or closes it back to the room if it (or the other one) is already open. */
   togglePage: (target: 'listeners' | 'settings') => void;
+  colorChoice: string | null;
+  /** Sets the nickname's colour (or `null` for auto) and tells wave. */
+  setColorChoice: (color: string | null) => void;
   /** Wipes the nickname, sound settings and colour choice back to a clean slate. */
   clearData: () => void;
 };
@@ -41,6 +44,7 @@ export const useChatRoom = (): ChatRoom => {
     () => localStorage.getItem('nickname') ?? '',
   );
   const [nicknameError, setNicknameError] = useState<string | null>(null);
+  const [colorChoice, setColorChoiceState] = useState(() => readColorChoice());
   const { messages, sendMessage } = useChat(nickname || null);
   const users = useUserList();
   const sound = useSound();
@@ -65,6 +69,16 @@ export const useChatRoom = (): ChatRoom => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [page]);
+
+  // Resent on every reconnect, like the join is, so the chosen colour outlives a dropped socket.
+  useEffect(() => {
+    if (!nickname) return;
+    return subscribe((socket) => {
+      socket.send(
+        JSON.stringify({ type: 'color_update', nickname, color: colorChoice }),
+      );
+    });
+  }, [nickname, colorChoice]);
 
   const togglePage = (target: 'listeners' | 'settings') => {
     setPage((current) => (current === 'room' ? target : 'room'));
@@ -108,12 +122,18 @@ export const useChatRoom = (): ChatRoom => {
     }
   };
 
+  const setColorChoice = (color: string | null) => {
+    writeColorChoice(color);
+    setColorChoiceState(color);
+  };
+
   const clearData = () => {
     localStorage.removeItem('nickname');
     clearSoundSettings();
     writeColorChoice(null);
     setNicknameState('');
     setNicknameError(null);
+    setColorChoiceState(null);
     setPage('room');
   };
 
@@ -128,6 +148,8 @@ export const useChatRoom = (): ChatRoom => {
     sound,
     page,
     togglePage,
+    colorChoice,
+    setColorChoice,
     clearData,
   };
 };

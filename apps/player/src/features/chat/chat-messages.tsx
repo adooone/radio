@@ -43,17 +43,20 @@ export const ChatMessages = ({
           </p>
         </div>
       ) : (
-        messages.map((message) => (
-          <Message
-            key={`${message.nickname}-${message.timestamp}`}
-            message={message}
-            isSelf={message.nickname === nickname}
-            isOnline={
-              users.find((user) => user.nickname === message.nickname)
-                ?.isOnline ?? false
-            }
-          />
-        ))
+        messages.map((message) => {
+          const sender = users.find(
+            (user) => user.nickname === message.nickname,
+          );
+          return (
+            <Message
+              key={`${message.nickname}-${message.timestamp}`}
+              message={message}
+              isSelf={message.nickname === nickname}
+              isOnline={sender?.isOnline ?? false}
+              color={sender?.color ?? null}
+            />
+          );
+        })
       )}
     </div>
   );

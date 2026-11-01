@@ -1,6 +1,6 @@
 import { LampButton, LampSwitch } from '@dendelion/func-ui';
 import { type KeyboardEvent, useState } from 'react';
-import { NICKNAME_COLORS, readColorChoice, writeColorChoice } from './colors';
+import { NICKNAME_COLORS } from './colors';
 import type { ChatRoom } from './use-chat-room';
 
 type SettingsPageProps = {
@@ -12,7 +12,6 @@ const SECTION_LABEL =
 
 export const SettingsPage = ({ room }: SettingsPageProps) => {
   const [nickInput, setNickInput] = useState(room.nickname);
-  const [colorChoice, setColorChoiceState] = useState(() => readColorChoice());
   const [confirmingClear, setConfirmingClear] = useState(false);
 
   const handleSaveNickname = () => {
@@ -25,15 +24,9 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
     if (event.key === 'Enter') handleSaveNickname();
   };
 
-  const selectColor = (color: string | null) => {
-    setColorChoiceState(color);
-    writeColorChoice(color);
-  };
-
   const handleClear = () => {
     room.clearData();
     setNickInput('');
-    setColorChoiceState(null);
     setConfirmingClear(false);
   };
 
@@ -77,9 +70,9 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
         <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
-            onClick={() => selectColor(null)}
+            onClick={() => room.setColorChoice(null)}
             className={`rounded-full border px-3 py-1 font-sans text-xs uppercase tracking-wide text-cream/70 ${
-              colorChoice === null
+              room.colorChoice === null
                 ? 'border-cream/60 bg-cream/10'
                 : 'border-cream/15'
             }`}
@@ -91,9 +84,11 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
               key={color}
               type="button"
               aria-label={`Use ${color} as the name colour`}
-              onClick={() => selectColor(color)}
+              onClick={() => room.setColorChoice(color)}
               className={`size-7 rounded-full border-2 ${
-                colorChoice === color ? 'border-cream/80' : 'border-transparent'
+                room.colorChoice === color
+                  ? 'border-cream/80'
+                  : 'border-transparent'
               }`}
               style={{ backgroundColor: color }}
             />

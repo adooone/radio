@@ -10,24 +10,69 @@ const isUserOnline = (lastSeen: string): boolean => {
   return Date.now() - lastSeenDate.getTime() <= FIVE_MINUTES_MS;
 };
 
-/** Who is listening, from wave's `listeners` broadcasts; quiet ones count as Anonymous. */
+/** Wave's `listeners` broadcast, with quiet seats padded in as Anonymous. */
+export const applyListenersMessage = (data: unknown): User[] | null => {
+  if (
+    typeof data !== 'object' ||
+    data === null ||
+    (data as { type?: unknown }).type !== 'listeners' ||
+    !Array.isArray((data as { users?: unknown }).users)
+  ) {
+    return null;
+  }
+  const payload = data as { users: User[]; listeners?: number };
+  const list: User[] = [...payload.users];
+  if (
+    typeof payload.listeners === 'number' &&
+    payload.listeners > list.length
+  ) {
+    for (let i = list.length; i < payload.listeners; i++) {
+      list.push({
+        nickname: 'Anonymous',
+        lastSeen: new Date().toISOString(),
+        color: null,
+      });
+    }
+  }
+  return list;
+};
+
+/** A lone colour change from `user_color_updated`, folded into the roster between broadcasts. */
+export const applyColorUpdateMessage = (
+  users: User[],
+  data: unknown,
+): User[] | null => {
+  if (
+    typeof data !== 'object' ||
+    data === null ||
+    (data as { type?: unknown }).type !== 'user_color_updated' ||
+    typeof (data as { nickname?: unknown }).nickname !== 'string'
+  ) {
+    return null;
+  }
+  const payload = data as { nickname: string; color: string | null };
+  return users.map((user) =>
+    user.nickname === payload.nickname
+      ? { ...user, color: payload.color ?? null }
+      : user,
+  );
+};
+
+/** Who is listening, from wave's `listeners` broadcasts and the odd colour update in between. */
 export const useUserList = (): UserWithStatus[] => {
   const [users, setUsers] = useState<User[]>([]);
 
   const onMessage = useCallback((msg: MessageEvent) => {
     try {
       const data = JSON.parse(msg.data);
-      if (data?.type !== 'listeners' || !Array.isArray(data.users)) return;
-      const list: User[] = [...data.users];
-      if (typeof data.listeners === 'number' && data.listeners > list.length) {
-        for (let i = list.length; i < data.listeners; i++) {
-          list.push({
-            nickname: 'Anonymous',
-            lastSeen: new Date().toISOString(),
-          });
-        }
+      const listeners = applyListenersMessage(data);
+      if (listeners) {
+        setUsers(listeners);
+        return;
       }
-      setUsers(list);
+      setUsers(
+        (previous) => applyColorUpdateMessage(previous, data) ?? previous,
+      );
     } catch {
       // Not JSON — not for us.
     }

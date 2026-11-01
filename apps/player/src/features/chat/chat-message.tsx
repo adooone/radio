@@ -1,4 +1,4 @@
-import { nicknameColor } from './colors';
+import { effectiveColor } from './colors';
 import { StatusIcon } from './icons';
 import { formatTime } from './time';
 import type { ChatMessage } from './types';
@@ -7,6 +7,7 @@ type MessageProps = {
   message: ChatMessage;
   isSelf: boolean;
   isOnline: boolean;
+  color: string | null;
 };
 
 /**
@@ -14,7 +15,7 @@ type MessageProps = {
  * the listener's own on the right over a red tint; uppercase warm nickname
  * with the on-air status mark, the text, a small clock.
  */
-export const Message = ({ message, isSelf, isOnline }: MessageProps) => {
+export const Message = ({ message, isSelf, isOnline, color }: MessageProps) => {
   const displayNickname = message.nickname || 'Anonymous';
   const messageTime = formatTime(message.timestamp);
 
@@ -31,7 +32,7 @@ export const Message = ({ message, isSelf, isOnline }: MessageProps) => {
           <span className="flex items-center gap-1.5">
             <span
               className="font-sans text-xs font-medium uppercase tracking-wide"
-              style={{ color: nicknameColor(displayNickname, false) }}
+              style={{ color: effectiveColor(displayNickname, color) }}
             >
               {displayNickname}
             </span>

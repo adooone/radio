@@ -1,4 +1,4 @@
-import { nicknameColor } from './colors';
+import { effectiveColor } from './colors';
 import { StatusIcon } from './icons';
 import { formatLastSeen } from './time';
 import type { UserWithStatus } from './types';
@@ -39,7 +39,7 @@ export const ListenersPage = ({ users, nickname }: ListenersPageProps) => {
               />
               <span
                 className="truncate font-sans text-xs font-medium uppercase tracking-wide"
-                style={{ color: nicknameColor(user.nickname, isSelf) }}
+                style={{ color: effectiveColor(user.nickname, user.color) }}
               >
                 {user.nickname}
               </span>

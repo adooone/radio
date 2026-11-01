@@ -7,6 +7,7 @@ export interface ChatMessage {
 export interface User {
   nickname: string;
   lastSeen: string;
+  color: string | null;
 }
 
 export interface UserWithStatus extends User {

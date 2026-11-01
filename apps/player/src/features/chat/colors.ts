@@ -33,9 +33,12 @@ export const writeColorChoice = (color: string | null) => {
   }
 };
 
-/** A steady warm shade for a nickname; the listener's own name burns label-red. */
-export const nicknameColor = (nickname: string, isSelf: boolean): string => {
-  if (isSelf) return '#ff5647';
+/** The shade a nickname actually shows: wave's colour for it, or a steady hash-picked fallback. */
+export const effectiveColor = (
+  nickname: string,
+  color: string | null | undefined,
+): string => {
+  if (color) return color;
   let hash = 0;
   for (let i = 0; i < nickname.length; i++) {
     hash = (hash << 5) - hash + nickname.charCodeAt(i);
