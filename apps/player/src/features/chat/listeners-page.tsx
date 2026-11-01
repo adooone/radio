@@ -19,7 +19,7 @@ export const ListenersPage = ({ users, nickname }: ListenersPageProps) => {
   if (users.length === 0) {
     return (
       <div className="flex min-h-0 flex-1 items-center justify-center p-4">
-        <p className="text-center text-sm text-cream/40">
+        <p className="type-body text-center text-cream/45">
           {t('listeners.empty')}
         </p>
       </div>
@@ -45,18 +45,18 @@ export const ListenersPage = ({ users, nickname }: ListenersPageProps) => {
                 )}
               />
               <span
-                className="truncate font-sans text-xs font-medium uppercase tracking-wide"
+                className="type-label truncate"
                 style={{ color: effectiveColor(user.nickname, user.color) }}
               >
                 {user.nickname || t('chat.anonymous')}
               </span>
               {own && (
-                <span className="shrink-0 text-xs text-cream/40">
+                <span className="type-meta shrink-0 text-cream/45">
                   {t('listeners.self')}
                 </span>
               )}
             </span>
-            <span className="shrink-0 font-mono text-[10px] text-cream/40">
+            <span className="type-meta shrink-0 text-cream/45">
               {formatLastSeen(user.lastSeen, t)}
             </span>
           </div>

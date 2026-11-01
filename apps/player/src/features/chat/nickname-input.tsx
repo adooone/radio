@@ -41,7 +41,7 @@ export const NicknameInput = ({
       onKeyDown={handleKeyDown}
       placeholder={t('chat.nickname.placeholder')}
       aria-invalid={!!error}
-      className={`w-full flex-grow rounded bg-transparent p-2 font-sans text-sm text-cream outline-none placeholder:text-cream/35 ${
+      className={`w-full flex-grow rounded bg-transparent p-2 type-ui text-base text-cream outline-none placeholder:text-cream/45 ${
         island ? 'min-w-0 text-base' : ''
       } ${error ? 'border border-accent/50 bg-accent/10' : ''}`}
     />
@@ -66,7 +66,7 @@ export const NicknameInput = ({
         {error && (
           <p
             role="alert"
-            className="absolute right-4 bottom-full left-4 mb-2 rounded-lg border border-accent/20 bg-ink/90 px-3 py-1 text-sm text-accent"
+            className="absolute right-4 bottom-full left-4 mb-2 rounded-lg border border-accent/20 bg-ink/90 px-3 py-1 type-ui text-accent"
           >
             {error}
           </p>
@@ -78,7 +78,7 @@ export const NicknameInput = ({
   return (
     <div className="flex w-full flex-col gap-2">
       {error && (
-        <p className="rounded-lg border border-accent/20 bg-accent/10 px-3 py-1 text-sm text-accent">
+        <p className="type-ui rounded-lg border border-accent/20 bg-accent/10 px-3 py-1 text-accent">
           {error}
         </p>
       )}

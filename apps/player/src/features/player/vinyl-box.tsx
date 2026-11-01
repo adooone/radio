@@ -322,16 +322,16 @@ export const VinylBox = ({
           />
         ) : (
           <span className="absolute inset-0 flex flex-col justify-between p-[9%]">
-            <span className="font-sans text-[clamp(9px,1vw,13px)] tracking-[0.3em] text-cream/90">
+            <span className="font-sans text-[clamp(9px,1vw,13px)] font-semibold tracking-[0.3em] text-cream">
               PUGET SOUND
             </span>
             <span>
               {song && (
-                <span className="block font-serif text-[clamp(13px,1.5vw,19px)] text-cream">
+                <span className="block font-serif text-[clamp(13px,1.5vw,19px)] font-semibold text-cream">
                   {song.title}
                 </span>
               )}
-              <span className="mt-1 block font-serif text-[clamp(10px,1.1vw,14px)] text-cream/55">
+              <span className="mt-1 block font-serif text-[clamp(10px,1.1vw,14px)] text-cream/70">
                 vinyl radio · 33⅓
               </span>
             </span>

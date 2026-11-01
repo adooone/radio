@@ -56,7 +56,7 @@ export const ChatInput = ({ onSend, island = false }: ChatInputProps) => {
       onKeyDown={handleKeyDown}
       placeholder={t('chat.input.placeholder')}
       rows={1}
-      className={`min-h-[38px] w-full flex-grow resize-none overflow-hidden bg-transparent p-2 font-sans text-sm text-cream outline-none placeholder:text-cream/35 ${
+      className={`min-h-[38px] w-full flex-grow resize-none overflow-hidden bg-transparent p-2 type-ui text-base text-cream outline-none placeholder:text-cream/45 ${
         island ? 'min-w-0 max-h-[64px] text-base' : 'max-h-[200px]'
       }`}
     />

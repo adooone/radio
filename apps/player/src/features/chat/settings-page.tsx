@@ -8,8 +8,7 @@ type SettingsPageProps = {
   room: ChatRoom;
 };
 
-const SECTION_LABEL =
-  'font-sans text-xs font-medium uppercase tracking-wide text-cream/40';
+const SECTION_LABEL = 'type-label text-cream/45';
 
 export const SettingsPage = ({ room }: SettingsPageProps) => {
   const t = useT();
@@ -39,8 +38,8 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
         <p className={SECTION_LABEL}>{t('settings.language.label')}</p>
         <div className="flex items-center gap-2">
           <span
-            className={`font-sans text-xs uppercase tracking-wide ${
-              locale === 'uk' ? 'text-cream' : 'text-cream/40'
+            className={`type-label ${
+              locale === 'uk' ? 'text-cream' : 'text-cream/45'
             }`}
           >
             UK
@@ -53,8 +52,8 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
             aria-label={t('settings.language.label')}
           />
           <span
-            className={`font-sans text-xs uppercase tracking-wide ${
-              locale === 'en' ? 'text-cream' : 'text-cream/40'
+            className={`type-label ${
+              locale === 'en' ? 'text-cream' : 'text-cream/45'
             }`}
           >
             EN
@@ -73,7 +72,7 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
             }}
             onKeyDown={handleKeyDown}
             aria-invalid={!!room.nicknameError}
-            className={`w-full flex-grow rounded bg-transparent p-2 font-sans text-sm text-cream outline-none placeholder:text-cream/35 ${
+            className={`w-full flex-grow rounded bg-transparent p-2 type-ui text-base text-cream outline-none placeholder:text-cream/45 ${
               room.nicknameError ? 'border border-accent/50 bg-accent/10' : ''
             }`}
           />
@@ -89,7 +88,7 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
           </LampButton>
         </div>
         {room.nicknameError && (
-          <p className="rounded-lg border border-accent/20 bg-accent/10 px-3 py-1 text-sm text-accent">
+          <p className="type-ui rounded-lg border border-accent/20 bg-accent/10 px-3 py-1 text-accent">
             {room.nicknameError}
           </p>
         )}
@@ -101,7 +100,7 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
           <button
             type="button"
             onClick={() => room.setColorChoice(null)}
-            className={`rounded-full border px-3 py-1 font-sans text-xs uppercase tracking-wide text-cream/70 ${
+            className={`rounded-full border px-3 py-1 type-label text-cream/70 ${
               room.colorChoice === null
                 ? 'border-cream/60 bg-cream/10'
                 : 'border-cream/15'
@@ -167,7 +166,7 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
         <p className={SECTION_LABEL}>{t('settings.data.label')}</p>
         {confirmingClear ? (
           <div className="space-y-2 rounded-xl bg-cream/5 p-3">
-            <p className="text-sm text-cream/70">
+            <p className="type-body text-cream/70">
               {t('settings.data.confirmText')}
             </p>
             <div className="flex gap-2">

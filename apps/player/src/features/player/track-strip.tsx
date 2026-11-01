@@ -72,23 +72,21 @@ export const TrackStrip = ({
           // One line where the pill is wide; stacked on portrait, where it
           // shares a phone's width with two lamps.
           <p className="flex min-w-0 items-baseline gap-2.5 portrait:flex-col portrait:items-start portrait:gap-0.5">
-            <span className="min-w-0 max-w-full truncate font-serif text-base font-semibold leading-tight text-cream">
+            <span className="min-w-0 max-w-full type-title truncate text-cream">
               {song.title}
             </span>
             <span
               aria-hidden="true"
-              className="shrink-0 text-cream/30 portrait:hidden"
+              className="shrink-0 text-cream/45 portrait:hidden"
             >
               ·
             </span>
-            <span className="min-w-0 max-w-full shrink-[2] truncate font-sans text-[11px] font-medium uppercase tracking-[0.14em] text-cream/60">
+            <span className="min-w-0 max-w-full shrink-[2] truncate type-label text-cream/70">
               {song.artist || 'Puget Sound'}
             </span>
           </p>
         ) : (
-          <p className="line-clamp-2 font-serif text-sm leading-snug text-cream/70 portrait:text-base">
-            {status}
-          </p>
+          <p className="type-body line-clamp-2 text-cream/70">{status}</p>
         )}
       </div>
     </>

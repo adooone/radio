@@ -8,14 +8,9 @@
 @import "@dendelion/func-ui/dist/index.css" layer(func-ui);
 @import "tailwindcss";
 
-/* KyivType, self-hosted (shared with the admin and the sister sites). */
-@font-face {
-  font-family: "KyivType Serif";
-  src: url("/fonts/KyivTypeSerif-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+/* KyivType, self-hosted, the same faces as the admin: Medium, Bold and Heavy
+   only. With no Regular declared, anything asking for normal weight gets
+   Medium — the player reads bold throughout. */
 @font-face {
   font-family: "KyivType Serif";
   src: url("/fonts/KyivTypeSerif-Medium.woff2") format("woff2");
@@ -31,9 +26,9 @@
   font-display: swap;
 }
 @font-face {
-  font-family: "KyivType Sans";
-  src: url("/fonts/KyivTypeSans-Regular.woff2") format("woff2");
-  font-weight: 400;
+  font-family: "KyivType Serif";
+  src: url("/fonts/KyivTypeSerif-Heavy.woff2") format("woff2");
+  font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
@@ -41,6 +36,20 @@
   font-family: "KyivType Sans";
   src: url("/fonts/KyivTypeSans-Medium.woff2") format("woff2");
   font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KyivType Sans";
+  src: url("/fonts/KyivTypeSans-Bold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KyivType Sans";
+  src: url("/fonts/KyivTypeSans-Heavy.woff2") format("woff2");
+  font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
@@ -90,6 +99,55 @@
 /* func-ui's body rule sits above the base layer; the page reads KyivType. */
 body {
   font-family: var(--font-serif);
+  font-weight: 500;
+}
+
+/* The player's type, in two voices: KyivType Serif for what is read (the
+   song, the messages, the air's state), KyivType Sans for what is operated
+   (names, labels, buttons, fields, times). Colour comes from three cream
+   tones on top: full, /70 for secondary, /45 for muted. */
+@layer components {
+  .type-title {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .type-body {
+    font-family: var(--font-serif);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+  .type-ui {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .type-label {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .type-meta {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+  }
+  /* func-ui's lamps bring Montserrat (Latin only, so Ukrainian fell back to
+     a system face); this layer sits above theirs, so they speak KyivType. */
+  [class*="lamp-button-module__content"],
+  [class*="lamp-switch-module__control"],
+  [class*="lamp-meter-module__header"],
+  [class*="lamp-status-module__text"] {
+    font-family: var(--font-sans);
+  }
 }
 
 /* func-ui's focus ring is a hardcoded green; keep keyboard focus red. */

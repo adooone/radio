@@ -1,5 +1,5 @@
 import { useT } from '@/i18n';
-import { LampButton, LampIconButton } from '@dendelion/func-ui';
+import { LampIconButton } from '@dendelion/func-ui';
 import type { LampSize } from '@dendelion/func-ui';
 import { effectiveColor } from './colors';
 import { CollapseIcon, GearIcon, SoundOffIcon, SoundOnIcon } from './icons';
@@ -11,17 +11,18 @@ type ChatHeaderProps = {
   nickname: string;
   colorChoice: string | null;
   page: ChatPage;
-  /** The listeners pill counts everyone but the listener themself. */
+  /** The listeners count, everyone but the listener themself. */
   othersCount: number;
   onTogglePage: (target: 'listeners' | 'settings') => void;
   onBack: () => void;
 };
 
 /**
- * The bar over the chat: the back lamp (portrait only) and the sound toggle,
- * then the listeners pill; on the other end the listener's own nick and the
- * settings gear. Whichever page the pill or gear opens sits lit as a pressed
- * state.
+ * The bar over the chat, laid out as the old player's: the settings flower
+ * in the left corner (after the back lamp on portrait) with the sound
+ * toggle beside it, the listeners count in the middle as plain words that
+ * open the list, and the listener's own nick on the right. The page the
+ * gear or the count opens shows as pressed.
  */
 export const ChatHeader = ({
   lampSize,
@@ -34,9 +35,12 @@ export const ChatHeader = ({
   onBack,
 }: ChatHeaderProps) => {
   const t = useT();
+  const listenersOpen = page === 'listeners';
   return (
-    <header className="flex w-full items-center justify-between gap-3 pb-3">
-      <span className="flex min-w-0 items-center gap-3">
+    // One row where there is room; on portrait, three lamps and a nick
+    // leave none for the count, so it drops to its own centred line.
+    <header className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-x-3 gap-y-1 pb-3 portrait:grid-cols-[1fr_auto]">
+      <span className="col-start-1 row-start-1 flex min-w-0 items-center gap-3 justify-self-start">
         <LampIconButton
           tone="dark"
           size={lampSize}
@@ -45,34 +49,6 @@ export const ChatHeader = ({
           icon={<CollapseIcon />}
           className="hidden text-cream portrait:inline-block"
         />
-        <LampIconButton
-          tone={sound.isEnabled ? 'red' : 'dark'}
-          size={lampSize}
-          onClick={sound.toggle}
-          label={t(sound.isEnabled ? 'chat.muteSounds' : 'chat.unmuteSounds')}
-          icon={sound.isEnabled ? <SoundOnIcon /> : <SoundOffIcon />}
-          className={sound.isEnabled ? 'text-ink' : 'text-cream'}
-        />
-        <LampButton
-          tone={page === 'listeners' ? 'red' : 'dark'}
-          size={lampSize}
-          onClick={() => onTogglePage('listeners')}
-          className={`shrink-0 whitespace-nowrap text-xs ${
-            page === 'listeners' ? 'text-ink' : 'text-cream'
-          }`}
-        >
-          {t('chat.listenersCount', { count: othersCount })}
-        </LampButton>
-      </span>
-      <span className="flex shrink-0 items-center gap-2">
-        {nickname && (
-          <span
-            className="font-sans text-xs font-medium uppercase tracking-wide"
-            style={{ color: effectiveColor(nickname, colorChoice) }}
-          >
-            + {nickname}
-          </span>
-        )}
         <LampIconButton
           tone={page === 'settings' ? 'red' : 'dark'}
           size={lampSize}
@@ -83,6 +59,36 @@ export const ChatHeader = ({
           icon={<GearIcon />}
           className={page === 'settings' ? 'text-ink' : 'text-cream'}
         />
+        <LampIconButton
+          tone={sound.isEnabled ? 'red' : 'dark'}
+          size={lampSize}
+          onClick={sound.toggle}
+          label={t(sound.isEnabled ? 'chat.muteSounds' : 'chat.unmuteSounds')}
+          icon={sound.isEnabled ? <SoundOnIcon /> : <SoundOffIcon />}
+          className={sound.isEnabled ? 'text-ink' : 'text-cream'}
+        />
+      </span>
+      <button
+        type="button"
+        onClick={() => onTogglePage('listeners')}
+        aria-pressed={listenersOpen}
+        className={`type-label col-start-2 row-start-1 justify-self-center whitespace-nowrap rounded-full px-3 py-2 underline-offset-[6px] transition-colors portrait:col-span-2 portrait:col-start-1 portrait:row-start-2 ${
+          listenersOpen
+            ? 'text-cream underline decoration-accent decoration-2'
+            : 'text-cream/70 hover:text-cream'
+        }`}
+      >
+        {t('chat.listenersCount', { count: othersCount })}
+      </button>
+      <span className="col-start-3 row-start-1 min-w-0 justify-self-end portrait:col-start-2">
+        {nickname && (
+          <span
+            className="type-label block truncate"
+            style={{ color: effectiveColor(nickname, colorChoice) }}
+          >
+            + {nickname}
+          </span>
+        )}
       </span>
     </header>
   );

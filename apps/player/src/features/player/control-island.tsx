@@ -76,7 +76,7 @@ export const ControlIsland = ({
             lampSize={lampSize}
             wordsClassName="w-[340px] min-w-0 shrink portrait:w-auto portrait:flex-1"
           />
-          <span className="hidden shrink-0 items-center gap-2 border-l border-cream/10 pl-4 font-sans text-[11px] tracking-[0.14em] text-cream/85 sm:landscape:flex">
+          <span className="hidden shrink-0 items-center gap-2 border-l border-cream/10 pl-4 type-label text-cream/70 sm:landscape:flex">
             <span
               aria-hidden="true"
               className={`inline-block size-2 rounded-full ${
