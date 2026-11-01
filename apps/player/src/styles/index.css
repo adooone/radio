@@ -290,8 +290,7 @@ html {
      ink); the photo fades into that same ink at the top and bottom edges,
      so the bars read as the page continuing rather than as black stripes. */
   .room-shade {
-    background:
-      linear-gradient(
+    background: linear-gradient(
         to bottom,
         var(--color-ink) 0,
         rgb(10 6 5 / 0.6) 6%,
@@ -299,8 +298,7 @@ html {
         transparent 84%,
         rgb(10 6 5 / 0.6) 94%,
         var(--color-ink) 100%
-      ),
-      linear-gradient(97.74deg, rgba(0, 0, 0, 0.25) 20.78%, #120d05 105.31%);
+      ), linear-gradient(97.74deg, rgba(0, 0, 0, 0.25) 20.78%, #120d05 105.31%);
   }
 }
 
@@ -331,6 +329,26 @@ html {
 .chat-scroll {
   scrollbar-width: thin;
   scrollbar-color: rgb(255 86 71 / 0.3) transparent;
+}
+
+/* The chat panel's three faces (room, listeners, settings) stacked and
+   crossfaded in place, the same way the chat view fades over the radio on
+   phones — but here regardless of orientation, since the header stays put
+   on every screen. The hidden ones sit out of the tab order and the hand. */
+.chat-page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0s linear 0.35s;
+}
+.chat-page-active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.35s ease, visibility 0s;
 }
 
 /*
@@ -423,5 +441,8 @@ html {
   .film-grain,
   .live-dot {
     animation: none;
+  }
+  .chat-page {
+    transition: none;
   }
 }
