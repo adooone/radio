@@ -91,13 +91,14 @@ today).
       the old paths redirecting; the main feature folder and its
       widget store removed.
       run: 5s · 54 in · 17.8k out · sonnet-5-5 · sess:856f88fc-45c8-4dab-8503-9c22be46f5b3
-- [ ] Phase 2 — On Air
+- [x] Phase 2 — On Air
       The landing page in the split: on-air vinyl box with the
       turntable queue and controls left, over the service cards
       (RTMP, listeners, bitrate, airtime); the right column is the
       journal with monitoring and configuration as its tabs — the
       stream page's three tabs and cards fold in, the `stream`
       feature folder absorbed.
+      run: 1m30s · 78 in · 25.9k out · sonnet-5-5 · sess:856f88fc-45c8-4dab-8503-9c22be46f5b3
 - [ ] Phase 3 — Collection
       The collection in the split: searchable list left with the
       albums / playlists tabs in the page header, the selected
