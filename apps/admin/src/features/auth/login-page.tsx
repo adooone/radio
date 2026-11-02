@@ -46,7 +46,7 @@ export const LoginPage = () => {
         className="relative z-10 rounded-2xl bg-gray-900/25 backdrop-blur-2xl border border-white/5 p-6 sm:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] w-full max-w-md before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/5 before:to-transparent before:pointer-events-none before:rounded-2xl"
       >
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-display font-bold text-sun mb-2 tracking-wide">
+          <h1 className="text-3xl font-display font-bold text-glow mb-2 tracking-wide">
             Wave Admin
           </h1>
           <p className="text-gray-300">

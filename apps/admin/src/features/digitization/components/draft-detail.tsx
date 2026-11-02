@@ -1,18 +1,14 @@
+import { Pill } from '@/features/admin/ui';
 import { useDigitizationDraft } from '@/services/api';
-import { LampButton } from '@dendelion/func-ui';
-import type { DigitizationDraft } from '@radio/types';
-import clsx from 'clsx';
-import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { CleanupSection } from './cleanup-section';
+import { getErrorMessage } from '../lib/split-review-utils';
+import { formatFileSize, nextStepHint } from '../lib/stages';
+import { DiscogsLookup } from './discogs-lookup';
 import { DraftCover } from './draft-cover';
-import { DraftStageBadge } from './draft-stage-badge';
-import { MetadataEditForm } from './metadata-edit-form';
-import { MetadataModal } from './metadata-modal';
-import { PublishSection } from './publish-section';
-import { SplitReviewSection } from './split-review';
-import { getErrorMessage } from './split-review/split-review-utils';
-import { UploadSection } from './upload-section';
+import { MetadataForm } from './metadata-form';
+import { PublishSteps } from './publish-steps';
+import { SplitReview } from './split-review';
+import { UploadZone } from './upload-zone';
 
 type DraftDetailProps = {
   slug: string;
@@ -20,160 +16,99 @@ type DraftDetailProps = {
   onPublished: () => void;
 };
 
-export const DraftDetail = ({
-  slug,
-  onDeleted,
-  onPublished,
-}: DraftDetailProps) => {
-  const [metadataModalForce, setMetadataModalForce] = useState<boolean | null>(
-    null,
-  );
+/**
+ * The open draft: its name and files under the stage chips, then the work
+ * of each step in order — the sides to upload, the metadata (fetched from
+ * Discogs or edited), the split, the publishing, and the cleanup once the
+ * record is on air.
+ */
+export const DraftDetail = ({ slug, onDeleted, onPublished }: DraftDetailProps) => {
   const { data: draft, isLoading, isError, error } = useDigitizationDraft(slug);
+  // `null` keeps the lookup closed; otherwise whether it may replace data.json.
+  const [lookupForce, setLookupForce] = useState<boolean | null>(null);
+
+  if (isError) {
+    return <p className="type-body text-accent">{getErrorMessage(error)}</p>;
+  }
+  if (isLoading || !draft) {
+    return <p className="type-body text-cream/45">Завантаження…</p>;
+  }
+
+  const files = [...draft.sides, ...draft.trackFiles];
 
   return (
     <>
-      {isError ? (
-        <p className={clsx(styles.error)}>{getErrorMessage(error)}</p>
-      ) : isLoading || !draft ? (
-        <p className={clsx(styles.hint)}>Завантаження...</p>
-      ) : (
-        <div className={clsx(styles.layout)}>
-          <div className={clsx(styles.sidebar)}>
-            <DraftCover
-              slug={draft.slug}
-              hasCover={draft.hasCover}
-              title={draft.title}
-              layoutId={`draft-cover-${draft.slug}`}
-            />
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
-              className={clsx(styles.sidebarInfo)}
-            >
-              <div>
-                <h2 className={clsx(styles.title)}>{draft.title}</h2>
-                <p className={clsx(styles.artist)}>{draft.artist}</p>
-              </div>
-              <DraftStageBadge stage={draft.stage} />
-              {draft.sides.length > 0 || draft.trackFiles.length > 0 ? (
-                <ul className={clsx(styles.fileList)}>
-                  {[...draft.sides, ...draft.trackFiles].map((file) => (
-                    <li key={file} className={clsx(styles.fileRow)}>
-                      <span className={clsx(styles.fileName)}>{file}</span>
-                      <span className={clsx(styles.fileSize)}>
-                        {formatFileSize(draft.fileSizes[file])}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className={clsx(styles.counts)}>Файлів ще немає</p>
-              )}
-              <p className={clsx(styles.nextStep)}>{nextStepHint(draft)}</p>
-            </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25, ease: 'easeOut', delay: 0.05 }}
-            className={clsx(styles.content)}
-          >
-            {draft.stage !== 'on-air' && <UploadSection slug={draft.slug} />}
-            {draft.metadata ? (
-              <>
-                <MetadataEditForm slug={draft.slug} metadata={draft.metadata} />
-                <LampButton
-                  type="button"
-                  tone="gray"
-                  size="sm"
-                  onClick={() => setMetadataModalForce(true)}
-                  className="self-start"
-                >
-                  Отримати метадані з Discogs повторно
-                </LampButton>
-                {draft.sides.length > 0 &&
-                  (draft.stage === 'ready-to-encode' ||
-                  draft.stage === 'on-air' ? (
-                    <p className={clsx(styles.hint)}>Треки вже розкроєні.</p>
-                  ) : (
-                    <SplitReviewSection
-                      slug={draft.slug}
-                      hasTrackFiles={draft.trackFiles.length > 0}
-                    />
-                  ))}
-                {draft.trackFiles.length > 0 && (
-                  <PublishSection slug={draft.slug} onPublished={onPublished} />
-                )}
-                {draft.stage === 'on-air' && (
-                  <CleanupSection
-                    slug={draft.slug}
-                    onFolderDeleted={onDeleted}
-                  />
-                )}
-              </>
-            ) : (
-              <div className={clsx(styles.empty)}>
-                <p>У цього драфту ще немає data.json.</p>
-                <LampButton
-                  type="button"
-                  tone="dark"
-                  size="md"
-                  onClick={() => setMetadataModalForce(false)}
-                >
-                  Отримати метадані з Discogs
-                </LampButton>
-              </div>
-            )}
-          </motion.div>
+      <div className="flex items-start gap-6">
+        <DraftCover slug={draft.slug} hasCover={draft.hasCover} title={draft.title} />
+        <div className="flex min-w-0 flex-col gap-2">
+          <h1 className="font-serif text-[34px] font-extrabold leading-[1.1] text-cream">
+            {draft.artist} — {draft.title}
+          </h1>
+          <p className="font-sans text-[13px] text-cream/60">
+            {files.length > 0
+              ? files
+                  .map((file) =>
+                    [file, formatFileSize(draft.fileSizes[file])]
+                      .filter(Boolean)
+                      .join(' '),
+                  )
+                  .join(' · ')
+              : 'файлів ще немає'}
+          </p>
+          <p className="type-label text-glow">{nextStepHint(draft)}</p>
         </div>
-      )}
+      </div>
 
-      {metadataModalForce !== null && (
-        <MetadataModal
-          slug={draft?.slug ?? slug}
-          force={metadataModalForce}
-          onClose={() => setMetadataModalForce(null)}
+      {draft.stage !== 'on-air' && <UploadZone slug={draft.slug} />}
+
+      {draft.metadata ? (
+        <>
+          {lookupForce !== null ? (
+            <DiscogsLookup
+              slug={draft.slug}
+              force={lookupForce}
+              onClose={() => setLookupForce(null)}
+            />
+          ) : (
+            <MetadataForm
+              slug={draft.slug}
+              metadata={draft.metadata}
+              onRefetch={() => setLookupForce(true)}
+            />
+          )}
+          {draft.sides.length > 0 &&
+            (draft.stage === 'ready-to-encode' || draft.stage === 'on-air' ? (
+              <p className="type-body text-cream/45">Треки вже розкроєні.</p>
+            ) : (
+              <SplitReview
+                slug={draft.slug}
+                hasTrackFiles={draft.trackFiles.length > 0}
+              />
+            ))}
+          {(draft.trackFiles.length > 0 || draft.stage === 'on-air') && (
+            <PublishSteps
+              slug={draft.slug}
+              onAir={draft.stage === 'on-air'}
+              canPublish={draft.trackFiles.length > 0}
+              onPublished={onPublished}
+              onFolderDeleted={onDeleted}
+            />
+          )}
+        </>
+      ) : lookupForce !== null ? (
+        <DiscogsLookup
+          slug={draft.slug}
+          force={lookupForce}
+          onClose={() => setLookupForce(null)}
         />
+      ) : (
+        <div className="flex flex-col items-start gap-3">
+          <p className="type-body text-cream/70">У цього драфту ще немає data.json.</p>
+          <Pill tone="lit" size="sm" onClick={() => setLookupForce(false)}>
+            Отримати метадані з Discogs
+          </Pill>
+        </div>
       )}
     </>
   );
 };
-
-const formatFileSize = (bytes: number | undefined): string => {
-  if (!bytes) return '';
-  if (bytes >= 1024 ** 3) return `${(bytes / 1024 ** 3).toFixed(2)} ГБ`;
-  if (bytes >= 1024 ** 2) return `${Math.round(bytes / 1024 ** 2)} МБ`;
-  return `${Math.max(1, Math.round(bytes / 1024))} КБ`;
-};
-
-const nextStepHint = (draft: DigitizationDraft): string => {
-  if (draft.stage === 'awaiting-sides')
-    return 'Наступний крок: завантажте side-*.wav';
-  if (draft.stage === 'ready-to-split' && !draft.hasMetadata)
-    return 'Наступний крок: отримайте метадані з Discogs';
-  if (draft.stage === 'ready-to-split')
-    return 'Наступний крок: розкроїть сторони на треки';
-  if (draft.stage === 'ready-to-encode')
-    return 'Наступний крок: опублікуйте запис';
-  return 'Запис в ефірі';
-};
-
-const styles = {
-  hint: ['text-sm text-gray-400'],
-  error: ['text-sm text-red-400'],
-  layout: ['flex flex-col md:flex-row gap-6'],
-  sidebar: ['flex flex-col gap-3 w-full md:w-48 flex-shrink-0'],
-  sidebarInfo: ['flex flex-col gap-3'],
-  title: ['font-medium text-gray-200 truncate'],
-  artist: ['text-sm text-gray-400 truncate'],
-  counts: ['text-xs text-gray-500'],
-  fileList: ['flex flex-col gap-1'],
-  fileRow: ['flex items-baseline justify-between gap-2 text-xs'],
-  fileName: ['text-gray-300 font-mono truncate'],
-  fileSize: ['text-gray-500 flex-shrink-0'],
-  nextStep: ['text-xs text-amber-400/80'],
-  content: ['flex-1 flex flex-col gap-4'],
-  empty: ['flex flex-col items-start gap-3 text-gray-400'],
-} as const;

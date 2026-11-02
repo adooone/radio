@@ -1,6 +1,6 @@
 import { useMedia } from '@/lib/use-media';
 import type { ReactNode } from 'react';
-import { ChatBackdrop } from './chat-backdrop';
+import { Slab } from '@radio/stage';
 import { ChatHeader } from './chat-header';
 import { ChatInput } from './chat-input';
 import { ChatMessages } from './chat-messages';
@@ -43,7 +43,7 @@ export const Chat = ({ room, mobileOpen, onClose, controls }: ChatProps) => {
     >
       {/* The room's ground, one canvas shape: a darker slab rimmed like the
           record toward the radio. */}
-      <ChatBackdrop />
+      <Slab />
       {portrait && controls && (
         <div className="chat-topbar flex">{controls}</div>
       )}

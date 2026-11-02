@@ -17,6 +17,7 @@ Monorepo for a radio streaming platform featuring live and playlist-based stream
 | Package | Description |
 |---------|-------------|
 | `@radio/types` | Shared TypeScript types (source-only, no build step) |
+| `@radio/stage` | The station's shared chrome: Puget Sound wordmark and splat art, film overlay, island glass and func-ui retune (`stage.css`), used by both player and admin (source-only, no build step) |
 
 ## Documentation Index
 

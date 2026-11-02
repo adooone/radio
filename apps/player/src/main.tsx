@@ -3,6 +3,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import '@/styles/index.css';
+import '@radio/stage/stage.css';
 
 const root = document.getElementById('root');
 if (root) {

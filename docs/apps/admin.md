@@ -16,36 +16,56 @@ Web-based admin interface for managing the radio streaming platform. Built with 
 
 ```
 src/
-├── components/           # Shared UI (form inputs, notifications)
+├── components/
+│   ├── auth/             # Auth guard
+│   └── ui/               # Toasts, the wave connection line
 ├── features/
-│   ├── admin/            # Ink stage layout, wordmark, control island, user lamp
-│   ├── auth/             # Login page
-│   ├── collection/       # «Колекція»: album and playlist management
-│   │   ├── components/
-│   │   │   ├── header/   # Tabs, stat chips, sync / add actions
-│   │   │   ├── browser/  # Searchable album list
-│   │   │   ├── detail/   # Selected album pane
-│   │   │   ├── content/  # Album list items, album detail, playlists
-│   │   │   ├── modals/   # Create/edit/detail modals
-│   │   │   └── shared/   # Tag editor, cover/audio upload
-│   │   ├── hooks/        # Collection state hooks
-│   │   └── store/        # Collection Zustand store
-│   ├── digitization/     # «Студія»: vinyl digitization workbench
-│   ├── film/             # Film vignette overlay
-│   ├── on-air/           # «Ефір»: on-air state, queue, services, journal
-│   └── users/            # People panel behind the island's user lamp
+│   ├── admin/            # The stage: layout, the split (work column + slab),
+│   │   │                 #   control island, track strip, user ring
+│   │   └── ui/           # The admin's primitives in the player's language:
+│   │                     #   Pill, TabPills, Chip, Dot, FeedRow, Stat, Field, GhostNav
+│   ├── auth/             # Login page (kept as it was)
+│   ├── collection/       # «Колекція»
+│   │   ├── components/   # Album browser and rows, the detail on the slab
+│   │   │                 #   (sleeve, notes, session / folder photos, songs,
+│   │   │                 #   in-place edit form and cover drop), playlists
+│   │   ├── hooks/        # Collection data, album form, photo blobs
+│   │   ├── lib/          # Meta lines, plurals, durations
+│   │   ├── store/        # Tab, search, sort, what is open
+│   │   └── utils/        # Filtering, sorting, completeness
+│   ├── digitization/     # «Студія»
+│   │   ├── components/   # Stage chips, draft rows, the draft's steps: upload
+│   │   │                 #   zone, Discogs lookup, metadata form, split review
+│   │   │                 #   with the waveform, publish / cleanup, radio folder
+│   │   ├── hooks/        # Chunked upload, radio folder (File System Access),
+│   │   │                 #   side audition, metadata form
+│   │   └── lib/          # Stages, slugify, dropped files, folder scan, IDB handle
+│   ├── on-air/           # «Ефір»
+│   │   ├── components/   # Turntable (the record), figures, corner status,
+│   │   │                 #   the slab's journal / monitoring / settings
+│   │   ├── hooks/        # Journal state, RTMP config edit session
+│   │   └── lib/          # RTMP status heuristics and figures
+│   └── users/            # The people sheet behind the island's user ring
 ├── routes/               # TanStack Router routes
 ├── services/api/         # API clients and query hooks
-└── styles/               # Global styles
+└── styles/               # Tailwind entry: fonts, type voices, stage CSS
 ```
+
+The wordmark, the splat record, the sleeve-and-record (`VinylBox`), the
+wavy seam slab and the film overlay — and the func-ui retune, island glass
+and film CSS — come from `@radio/stage`, shared with the player. Pages
+render into the stage's split through `features/admin/split.tsx`: the work
+on the left, a feed or detail on the slab to the right, and optional
+controls in the top-right corner. Forms open in place (the slab swaps its
+detail for the form); the people sheet is the one overlay.
 
 ## Features
 
 - **Collection Management** - Albums, songs, and playlists with search and filtering
 - **Vinyl Digitization** - In-app chunked upload of recorded vinyl sides into `MEDIA_INBOX_PATH` (drag-and-drop, or a remembered "тека Radio" folder in Chromium), Discogs metadata, waveform-based track splitting, encode and publish
 - **Three pages** - «Ефір» (`/`), «Колекція» (`/collection`) and «Студія» (`/studio`, `/studio/$slug`), each the player's 2 : 1 split on an ink stage with the control island docked at the bottom. `/digitization`, `/stream-control` and `/users` redirect
-- **On Air** - RTMP server management, and putting an album or song on air («Поставити в ефір» / «Зняти з ефіру»): the player's now-playing sleeve, and — when nobody is streaming live — wave playing the record itself; the «В ефірі» card says whether the sound is from the library or live from OBS, with «Зупинити звук» to stop playback and keep the mark
-- **People panel** - Behind the island's user lamp: account list, roles, activate / delete, create, JSON export and sign out
+- **On Air** - The record on air drawn as the player draws it, the turntable's place in it, and the three actions: «Наступний трек», «Зупинити вертушку», «Зняти з ефіру»; four figures (RTMP, listeners, bitrate, air time); on the slab, the station's journal from wave's logs, the RTMP service's rows with start / stop / restart, and its configuration edited in place
+- **People sheet** - Behind the island's user ring, over the dimmed page: accounts with their role and light, role / active toggles, delete, create (in place), JSON export and sign out
 - **Real-time Monitoring** - Service status and system health
 - **PWA Support** - Installable Progressive Web App, installed as a Dock app the Студія workflow is designed around
 

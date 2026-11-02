@@ -39,22 +39,52 @@
   font-style: normal;
 }
 
+/* The shared chrome — func-ui's retuned variables, the island glass, the
+   live dot and the film — ships from `@radio/stage` (stage.css, imported
+   beside this file in styles/index.ts). */
 :root {
-  --fui-bg: #0a0605;
-  --fui-text: #f5f2ec;
-  --fui-surface: rgb(245 242 236 / 0.08);
-  --fui-accent: #ff5647;
-  --fui-glow: #ffb84d;
-  --fui-danger: #ff5647;
-  --fui-shadow-color: rgb(0 0 0 / 0.85);
-  --fui-lamp-red: #e08b26;
-  --fui-lamp-red-glow: rgb(224 139 38 / 0.5);
-  --fui-lamp-red-glow-strong: rgb(190 110 18 / 0.75);
-  --film-vignette: 0.3;
-  --film-grain: 0.04;
-  --film-warm: 0.05;
-  --film-gate: 0.35;
-  --film-scratch: 0.08;
+  /* The two voices, for the type scale and the shared chrome's lamps. */
+  --font-serif: "KyivType Serif", Georgia, serif;
+  --font-sans: "KyivType Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* The admin's type, in the player's two voices: KyivType Serif for what is
+   read, KyivType Sans for what is operated. Kept in step with the player's
+   `index.css` until the admin joins it on Tailwind v4. */
+@layer components {
+  .type-title {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .type-body {
+    font-family: var(--font-serif);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+  .type-ui {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .type-label {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .type-meta {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+  }
 }
 
 html,
@@ -73,11 +103,80 @@ textarea:focus-visible {
   outline-color: #ff5647 !important;
 }
 
+/* The page's breathing room: one gutter, growing with the screen. The stage
+   is pinned to the viewport; nothing on it scrolls but the columns. */
 .stage {
   position: fixed;
   inset: 0;
   --gutter: clamp(2.5rem, 6.4vw, 6rem);
+  /* Every page starts under the corner sign and scrolls its own columns,
+     whose foot clears the island docked over them. */
+  --page-top: calc(var(--gutter) * 0.8 + 6.5rem);
+  --page-bottom: 8rem;
   background: #0a0605;
+}
+
+/* The split: work 2, slab 1 — the player's grid. The work column keeps
+   the gutters; the slab runs flush to the screen's edge, its rim swinging
+   over the seam between them. */
+.split {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+.work-view {
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  padding: var(--page-top) var(--gutter) 0;
+}
+.slab-view {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+}
+/* What sits on the slab: level with the work column at the top, clear of
+   the rim on its left. */
+.slab-panel {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  padding: var(--page-top) 2.5rem 0 3rem;
+}
+/* A page's own controls in the top-right corner, level with the sign. */
+.corner-actions {
+  position: absolute;
+  top: calc(var(--gutter) * 0.8 + 0.5rem);
+  right: var(--gutter);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+/* The scrolling parts of a page: the work's without chrome, the slab's a
+   thin red whisper like the player's chat. */
+.work-scroll,
+.slab-scroll {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: var(--page-bottom);
+}
+.work-scroll {
+  scrollbar-width: none;
+}
+.slab-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 86 71 / 0.3) transparent;
 }
 
 .sign-corner {
@@ -92,117 +191,24 @@ textarea:focus-visible {
   width: clamp(250px, 26vw, 400px);
 }
 
+/* The island docks over the foot of the work column — the same grid cell,
+   laid over the section — as in the player. */
 .island-dock {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+  justify-self: stretch;
+  position: relative;
   z-index: 35;
   display: flex;
   justify-content: center;
-  padding: 0 1.5rem calc(3.5vmin + env(safe-area-inset-bottom, 0px));
+  padding: 0 calc(var(--gutter) + 1.5rem) 3.5vmin;
   pointer-events: none;
 }
 
+/* The island pill keeps taking the hand through the dock's dead zone. */
 .control-island {
   pointer-events: auto;
-  background: rgb(18 11 8 / 0.9);
-  backdrop-filter: blur(24px);
-  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.6);
-}
-
-.live-dot {
-  animation: live-pulse 2.4s ease-in-out infinite;
-  box-shadow: 0 0 8px rgb(255 86 71 / 0.8);
-}
-
-@keyframes live-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
-}
-
-.film {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.film-vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse 70% 62% at 50% 50%,
-    transparent 55%,
-    rgb(0 0 0 / var(--film-vignette)) 100%
-  );
-}
-
-.film-warm {
-  position: absolute;
-  inset: 0;
-  background: rgb(255 184 96 / var(--film-warm));
-  mix-blend-mode: multiply;
-}
-
-.film-grain {
-  position: absolute;
-  inset: -64px;
-  background-size: 192px 192px;
-  opacity: var(--film-grain);
-  mix-blend-mode: soft-light;
-  animation: film-grain 0.5s steps(1) infinite;
-  will-change: transform;
-}
-
-@keyframes film-grain {
-  0% {
-    transform: translate(0, 0);
-  }
-  20% {
-    transform: translate(-37px, 22px);
-  }
-  40% {
-    transform: translate(19px, -41px);
-  }
-  60% {
-    transform: translate(-11px, -27px);
-  }
-  80% {
-    transform: translate(43px, 13px);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
-
-.film-scratches {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  mix-blend-mode: difference;
-  opacity: var(--film-scratch);
-}
-
-.film-gate {
-  position: absolute;
-  inset: 0;
-  box-shadow: inset 0 0 48px rgb(0 0 0 / var(--film-gate)), inset 0 0 8px
-    rgb(0 0 0 / calc(0.4 * var(--film-gate)));
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .film-grain,
-  .live-dot {
-    animation: none;
-  }
 }
 
 /* func-ui's stylesheet asserts Montserrat at the html level and its import

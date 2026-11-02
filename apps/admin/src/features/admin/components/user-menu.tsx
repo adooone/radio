@@ -1,14 +1,17 @@
-import { PeoplePanel } from '@/features/users';
+import { PeopleSheet } from '@/features/users';
 import { useLogout } from '@/services/api/hooks/use-auth';
 import { useAuthStore } from '@/stores/auth-store';
-import { LampButton } from '@dendelion/func-ui';
-import { AnimatePresence, motion } from 'framer-motion';
+import clsx from 'clsx';
 import { useState } from 'react';
 
+/** The person at the island's end: a ghost ring with their initial, lit
+    while the people sheet is open. */
 export const UserMenu = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const { user } = useAuthStore();
   const logout = useLogout();
+
+  if (!user) return null;
 
   const handleLogout = async () => {
     try {
@@ -18,51 +21,30 @@ export const UserMenu = () => {
     }
   };
 
-  if (!user) return null;
-
   return (
-    <div className="relative">
-      <LampButton
-        tone={isOpen ? 'red' : 'dark'}
-        size="sm"
+    <>
+      <button
+        type="button"
         aria-label={user.username}
-        aria-expanded={isOpen}
-        onClick={() => setIsOpen(!isOpen)}
-        className={isOpen ? 'text-ink' : 'text-cream'}
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        className={clsx(
+          'flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full border font-sans text-[13px] font-semibold transition-colors',
+          open
+            ? 'border-lamp/50 bg-lamp/[0.18] text-glow shadow-[0_0_14px_rgba(224,139,38,0.3)]'
+            : 'border-cream/20 text-cream/80 hover:text-cream',
+        )}
       >
         {user.username.charAt(0).toUpperCase()}
-      </LampButton>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            className="control-island absolute right-0 bottom-full z-50 mb-4 rounded-3xl border border-cream/10 p-4"
-          >
-            <PeoplePanel
-              onLogout={handleLogout}
-              isLoggingOut={logout.isPending}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-40"
-          onClick={() => setIsOpen(false)}
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') {
-              setIsOpen(false);
-            }
-          }}
-          role="button"
-          tabIndex={0}
-          aria-label="Close menu"
+      </button>
+      {open && (
+        <PeopleSheet
+          selfId={Number(user.id)}
+          onClose={() => setOpen(false)}
+          onLogout={handleLogout}
+          isLoggingOut={logout.isPending}
         />
       )}
-    </div>
+    </>
   );
 };

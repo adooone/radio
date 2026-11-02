@@ -1,2 +1,2 @@
-export { UserList } from './user-list';
-export { CreateUserModal } from './create-user-modal';
+export { NewPerson } from './new-person';
+export { PeopleRows, type Person } from './people-rows';

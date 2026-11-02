@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { seedOf } from './sleeve-wear';
+import { seedOf } from '@radio/stage';
 
 describe('seedOf', () => {
   it('gives one album the same seed every time', () => {

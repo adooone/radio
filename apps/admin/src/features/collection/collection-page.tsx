@@ -1,39 +1,50 @@
-import type { Collection } from '@radio/types';
+import { Split } from '@/features/admin/split';
 import { useState } from 'react';
-import { CollectionModals } from './components';
-import { AlbumBrowser } from './components/browser';
-import { CollectionList } from './components/content/playlists';
-import { AlbumPane } from './components/detail';
-import { CollectionHeader } from './components/header';
+import {
+  AlbumBrowser,
+  AlbumDetail,
+  CornerTabs,
+  PlaylistBrowser,
+  PlaylistDetail,
+  PlaylistForm,
+} from './components';
 import { useCollectionStore } from './store/collection-store';
 
+const Hint = ({ children }: { children: string }) => (
+  <p className="type-body text-cream/45">{children}</p>
+);
+
+/** «Колекція»: the records or the playlists on the left, the open one on the slab. */
 export const CollectionPage = () => {
-  const [selectedCollection, setSelectedCollection] =
-    useState<Collection | null>(null);
-  const { activeTab } = useCollectionStore();
+  const { activeTab, selectedAlbum, selectedPlaylist } = useCollectionStore();
+  const [creatingPlaylist, setCreatingPlaylist] = useState(false);
+
+  const slab =
+    activeTab === 'albums' ? (
+      selectedAlbum ? (
+        <AlbumDetail album={selectedAlbum} />
+      ) : (
+        <Hint>Оберіть альбом зі списку, щоб побачити його деталі.</Hint>
+      )
+    ) : creatingPlaylist ? (
+      <PlaylistForm onDone={() => setCreatingPlaylist(false)} />
+    ) : selectedPlaylist ? (
+      <PlaylistDetail playlist={selectedPlaylist} />
+    ) : (
+      <Hint>Оберіть плейлист зі списку або створіть новий.</Hint>
+    );
 
   return (
-    <div className="flex h-full flex-col">
-      <CollectionHeader />
-      <div className="grid min-h-0 flex-1 grid-cols-[2fr_1fr] gap-[var(--gutter)] px-[var(--gutter)]">
-        {activeTab === 'albums' ? (
-          <>
-            <AlbumBrowser />
-            <div className="min-h-0 overflow-y-auto pb-28 [scrollbar-width:none]">
-              <AlbumPane />
-            </div>
-          </>
+    <Split
+      corner={<CornerTabs />}
+      left={
+        activeTab === 'albums' ? (
+          <AlbumBrowser />
         ) : (
-          <div className="col-span-2 min-h-0 overflow-y-auto pb-28 [scrollbar-width:none]">
-            <CollectionList onCollectionClick={setSelectedCollection} />
-          </div>
-        )}
-      </div>
-
-      <CollectionModals
-        selectedCollection={selectedCollection}
-        onCloseCollection={() => setSelectedCollection(null)}
-      />
-    </div>
+          <PlaylistBrowser onCreate={() => setCreatingPlaylist(true)} />
+        )
+      }
+      right={<div className="slab-scroll">{slab}</div>}
+    />
   );
 };

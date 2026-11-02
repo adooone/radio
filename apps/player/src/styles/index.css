@@ -7,6 +7,8 @@
 @layer theme, base, func-ui, components, utilities;
 @import "@dendelion/func-ui/dist/index.css" layer(func-ui);
 @import "tailwindcss";
+/* The shared chrome (@radio/stage) uses Tailwind classes of its own. */
+@source "../../../../packages/stage/src";
 
 /* KyivType, self-hosted, the same faces as the admin: Medium, Bold and Heavy
    only. With no Regular declared, anything asking for normal weight gets
@@ -66,23 +68,9 @@
   --font-sans: "KyivType Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
-/* func-ui, retuned to the room: warm dark ground, cream text and thumbs,
-   the label red for both the accent and the "danger" chips — this palette
-   has one red. Its hardcoded green focus ring is retuned below. */
-:root {
-  --fui-bg: #0a0605;
-  --fui-text: #f5f2ec;
-  --fui-surface: rgb(245 242 236 / 0.08);
-  --fui-accent: #ff5647;
-  --fui-glow: #ffb84d;
-  --fui-danger: #ff5647;
-  --fui-shadow-color: rgb(0 0 0 / 0.85);
-  /* Every lit lamp burns one flat orange-yellow — no gradient — with a
-     warm orange halo. (The components say tone="red"; the glass is amber.) */
-  --fui-lamp-red: #e08b26;
-  --fui-lamp-red-glow: rgb(224 139 38 / 0.5);
-  --fui-lamp-red-glow-strong: rgb(190 110 18 / 0.75);
-}
+/* The shared chrome — func-ui's retuned variables, the island glass, the
+   live dot and the film — ships from `@radio/stage` (stage.css, imported
+   beside this file in main.tsx). */
 
 @layer base {
   /* Whatever shows past the page (a phone's bars, an overscroll) stays black. */
@@ -139,14 +127,6 @@ body {
     font-weight: 500;
     line-height: 1.2;
     font-variant-numeric: tabular-nums;
-  }
-  /* func-ui's lamps bring Montserrat (Latin only, so Ukrainian fell back to
-     a system face); this layer sits above theirs, so they speak KyivType. */
-  [class*="lamp-button-module__content"],
-  [class*="lamp-switch-module__control"],
-  [class*="lamp-meter-module__header"],
-  [class*="lamp-status-module__text"] {
-    font-family: var(--font-sans);
   }
 }
 
@@ -342,58 +322,8 @@ html {
   }
 }
 
-/* The sleeve throws its shadow over the disc sliding out of it — to the
-   right in the split, upward on portrait where the record rises out. */
-.vinyl-sleeve {
-  box-shadow: 10px 0 24px rgb(0 0 0 / 0.6);
-}
-@media (orientation: portrait) {
-  .vinyl-sleeve {
-    box-shadow: 0 -10px 24px rgb(0 0 0 / 0.6);
-  }
-}
-
-/*
- * The sleeve as a cardboard jacket, over the print: the board's fibre, the
- * wear of handling (`sleeve-wear.tsx`), then the bevel of its edges.
- */
-.sleeve-paper,
-.sleeve-wear,
-.sleeve-bevel {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-/* Fibre grain: grey noise lifting the print faintly, visible even on black. */
-.sleeve-paper {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85 0.55' numOctaves='3' seed='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23f)'/%3E%3C/svg%3E");
-  background-size: 300px 300px;
-  mix-blend-mode: screen;
-  opacity: 0.09;
-}
-
-/* Light on a dark print, dark on a pale one. */
-.sleeve-wear {
-  mix-blend-mode: difference;
-}
-
-/* The board's edges: lit along the top, shaded along the bottom, a soft
-   darkening at the spine and toward the open side. */
-.sleeve-bevel {
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.22), inset 0 -1px 0
-    rgb(0 0 0 / 0.5), inset 1px 0 0 rgb(255 255 255 / 0.08), inset 0 0 18px
-    rgb(0 0 0 / 0.35);
-  background: linear-gradient(
-    90deg,
-    rgb(0 0 0 / 0.18),
-    transparent 9%,
-    transparent 94%,
-    rgb(0 0 0 / 0.3)
-  );
-}
+/* The sleeve's shadow, jacket and bevel ship with the record itself, from
+   `@radio/stage` (vinyl-box.tsx, stage.css). */
 
 /* A session photo over the room: clear until it is loaded and shown, then
    a slow fade in; held a touch dim so it sits in the warm room like the
@@ -439,29 +369,6 @@ html {
   }
 }
 
-/* The islands float like the admin's navigation island: frosted warm-dark
-   glass under the controls pill and the chat box alike. */
-.control-island {
-  background: rgb(18 11 8 / 0.9);
-  backdrop-filter: blur(24px);
-  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.6);
-}
-
-/* The on-air lamp breathes. */
-.live-dot {
-  animation: live-pulse 2.4s ease-in-out infinite;
-  box-shadow: 0 0 8px rgb(255 86 71 / 0.8);
-}
-@keyframes live-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
-}
-
 /* The chat's scroll: a thin red whisper, no chrome. */
 .chat-scroll {
   scrollbar-width: thin;
@@ -488,97 +395,7 @@ html {
   transition: opacity 0.35s ease, visibility 0s;
 }
 
-/*
- * Old film over everything (`film-overlay.tsx`): the strengths, then the
- * layers.
- */
-:root {
-  --film-vignette: 0.3;
-  --film-grain: 0.04;
-  --film-warm: 0.05;
-  --film-gate: 0.35;
-  --film-scratch: 0.08;
-}
-
-.film {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.film-vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse 70% 62% at 50% 50%,
-    transparent 55%,
-    rgb(0 0 0 / var(--film-vignette)) 100%
-  );
-}
-
-.film-warm {
-  position: absolute;
-  inset: 0;
-  background: rgb(255 184 96 / var(--film-warm));
-  mix-blend-mode: multiply;
-}
-
-.film-grain {
-  position: absolute;
-  inset: -64px;
-  background-size: 192px 192px;
-  opacity: var(--film-grain);
-  mix-blend-mode: soft-light;
-  animation: film-grain 0.5s steps(1) infinite;
-  will-change: transform;
-}
-
-@keyframes film-grain {
-  0% {
-    transform: translate(0, 0);
-  }
-  20% {
-    transform: translate(-37px, 22px);
-  }
-  40% {
-    transform: translate(19px, -41px);
-  }
-  60% {
-    transform: translate(-11px, -27px);
-  }
-  80% {
-    transform: translate(43px, 13px);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
-
-/* The wear of the lens: scratches and dust, light on the dark room. */
-.film-scratches {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  mix-blend-mode: difference;
-  opacity: var(--film-scratch);
-}
-
-/* The viewfinder's gate: the frame's edge darkens softly all round. */
-.film-gate {
-  position: absolute;
-  inset: 0;
-  box-shadow: inset 0 0 48px rgb(0 0 0 / var(--film-gate)), inset 0 0 8px
-    rgb(0 0 0 / calc(0.4 * var(--film-gate)));
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .film-grain,
-  .live-dot {
-    animation: none;
-  }
   .chat-page {
     transition: none;
   }

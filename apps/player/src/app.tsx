@@ -1,5 +1,5 @@
-import { FilmOverlay } from '@/features/film/film-overlay';
 import { PlayerPage } from '@/features/player/player-page';
+import { FilmOverlay } from '@radio/stage';
 import { translate, useLocale } from '@/i18n';
 import { useEffect } from 'react';
 

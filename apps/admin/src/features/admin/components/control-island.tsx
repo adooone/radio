@@ -1,6 +1,7 @@
-import { LampButton } from '@dendelion/func-ui';
+import { SplatRecord } from '@radio/stage';
 import { useNavigate } from '@tanstack/react-router';
-import { NowPlaying } from './now-playing';
+import { GhostNav } from '../ui';
+import { TrackStrip } from './track-strip';
 import { UserMenu } from './user-menu';
 
 interface ControlIslandProps {
@@ -16,48 +17,44 @@ const NAV_ITEMS = [
 const isActive = (current: string, path: string) =>
   path === '/' ? current === '/' : current.startsWith(path);
 
+/**
+ * The admin's island — the player's pill, carrying the back room's
+ * controls: the splat record as the sign home, the three pages as ghost
+ * labels underlined where you are, the track strip with its one lamp, and
+ * the person at the end.
+ */
 export const ControlIsland = ({ currentRoute }: ControlIslandProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="island-dock">
-      <div className="control-island relative flex max-w-full items-center gap-4 rounded-full border border-cream/10 py-2 pr-3 pl-2">
-        <button
-          type="button"
-          aria-label="Ефір"
-          onClick={() => navigate({ to: '/' })}
-          className="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-ink ring-1 ring-cream/15"
-        >
-          <span className="flex size-7 items-center justify-center rounded-full bg-glow">
-            <span className="size-1.5 rounded-full bg-ink" />
-          </span>
-        </button>
+    <div className="control-island relative flex max-w-full items-center gap-4 rounded-full border border-cream/10 py-2 pr-5 pl-3">
+      <button
+        type="button"
+        aria-label="Ефір"
+        onClick={() => navigate({ to: '/' })}
+        className="shrink-0 cursor-pointer"
+      >
+        <SplatRecord className="w-9" />
+      </button>
 
-        <nav className="flex shrink-0 items-center gap-2 border-l border-cream/10 pl-4">
-          {NAV_ITEMS.map((item) => {
-            const active = isActive(currentRoute, item.path);
-            return (
-              <LampButton
-                key={item.path}
-                tone={active ? 'red' : 'dark'}
-                size="sm"
-                aria-current={active ? 'page' : undefined}
-                onClick={() => navigate({ to: item.path })}
-                className={active ? 'text-ink' : 'text-cream'}
-              >
-                {item.label}
-              </LampButton>
-            );
-          })}
-        </nav>
+      <nav className="flex shrink-0 items-center gap-1">
+        {NAV_ITEMS.map((item) => (
+          <GhostNav
+            key={item.path}
+            active={isActive(currentRoute, item.path)}
+            onClick={() => navigate({ to: item.path })}
+          >
+            {item.label}
+          </GhostNav>
+        ))}
+      </nav>
 
-        <div className="hidden min-w-0 shrink items-center border-l border-cream/10 pl-4 sm:flex">
-          <NowPlaying />
-        </div>
+      <div className="hidden min-w-0 shrink items-center border-l border-cream/10 pl-4 sm:flex">
+        <TrackStrip />
+      </div>
 
-        <div className="shrink-0 border-l border-cream/10 pl-4">
-          <UserMenu />
-        </div>
+      <div className="shrink-0 border-l border-cream/10 pl-4">
+        <UserMenu />
       </div>
     </div>
   );

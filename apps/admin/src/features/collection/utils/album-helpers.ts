@@ -157,27 +157,3 @@ export const sortAlbums = (
   return sorted;
 };
 
-export const getCompletenessColor = (
-  percentage: number,
-): { bg: string; text: string } => {
-  if (percentage > 80) {
-    return { bg: 'bg-green-900/30', text: 'text-green-400' };
-  }
-  if (percentage >= 50) {
-    return { bg: 'bg-yellow-900/30', text: 'text-yellow-400' };
-  }
-  return { bg: 'bg-red-900/30', text: 'text-red-400' };
-};
-
-export const GENRE_COLORS = [
-  '#87CEEB',
-  '#FFE66D',
-  '#98D8C8',
-  '#F88379',
-  '#C7CEEA',
-  '#FFB6B9',
-];
-
-export const getGenreColor = (index: number): string => {
-  return GENRE_COLORS[index % GENRE_COLORS.length];
-};

@@ -1,1 +1,1 @@
-export { PeoplePanel } from './people-panel';
+export { PeopleSheet } from './people-sheet';

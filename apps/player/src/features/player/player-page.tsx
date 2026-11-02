@@ -8,8 +8,7 @@ import { useState } from 'react';
 import { ControlIsland } from './control-island';
 import { RoomBackdrop } from './room-backdrop';
 import { TrackStrip } from './track-strip';
-import { VinylBox } from './vinyl-box';
-import { Wordmark } from './wordmark';
+import { VinylBox, Wordmark } from '@radio/stage';
 
 /**
  * The listening room, planned together on IDEA-11: one black screen split
@@ -69,6 +68,7 @@ export const PlayerPage = () => {
             playing={playing}
             quiet={quiet}
             song={song}
+            label={t(playing ? 'vinyl.pause' : 'vinyl.listenLive')}
             getLevels={getLevels}
             onToggle={toggle}
           />

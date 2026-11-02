@@ -13,6 +13,7 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
+      "@radio/stage": ["packages/stage/src"],
       "@radio/types": ["packages/types/src"]
     }
   },

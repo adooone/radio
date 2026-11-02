@@ -17,8 +17,8 @@ export default defineConfig({
         name: 'Radio Admin Panel',
         short_name: 'Radio Admin',
         description: 'Admin panel for Radio station',
-        theme_color: '#8aa982',
-        background_color: '#2e2e2e',
+        theme_color: '#0a0605',
+        background_color: '#0a0605',
         display: 'standalone',
         icons: [
           {
@@ -44,6 +44,16 @@ export default defineConfig({
   server: {
     host: true,
     port: 3001,
+    // The dev admin reaches wave through its own origin, so a browser on
+    // the tailnet needs only this port open: set VITE_API_URL to the page's
+    // origin and point ADMIN_API_PROXY at the wave to use (the local dev
+    // wave by default, the pm2 one on 6970 to work against the station).
+    proxy: {
+      '/api': {
+        target: process.env.ADMIN_API_PROXY ?? 'http://localhost:6870',
+        changeOrigin: true,
+      },
+    },
     fs: {
       allow: ['..', '../..'],
     },

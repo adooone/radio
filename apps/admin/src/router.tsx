@@ -22,10 +22,9 @@ const router = createRouter({
     streamControlRedirectRoute,
     usersRedirectRoute,
   ]),
+  // Pages scroll their own columns; the ones that survive a route change
+  // carry a data-scroll-restoration-id, so going back lands where you left.
   scrollRestoration: true,
-  // The layout scrolls an inner div, not window — point forward-navigation
-  // scroll-to-top at it, or pages open pre-scrolled to the previous offset.
-  scrollToTopSelectors: ['[data-scroll-restoration-id="admin-content"]'],
 });
 
 export default router;
