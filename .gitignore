@@ -139,3 +139,13 @@ data/
 
 # Vite ephemeral build artifacts
 *.timestamp-*.mjs
+
+# Paper Camp runtime state: caches and logs it rewrites as it runs.
+# Ideas and config.json stay tracked.
+papercamp/pr-map.json
+papercamp/chat.md
+papercamp/suggestions.md
+papercamp/.local/
+
+# Worktrees Claude Code sessions make for themselves.
+.claude/worktrees/
