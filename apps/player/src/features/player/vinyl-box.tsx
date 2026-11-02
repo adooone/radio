@@ -1,6 +1,7 @@
 import type { NowPlaying } from '@/features/stream/use-now-playing';
 import { useT } from '@/i18n';
 import { useEffect, useRef } from 'react';
+import { SleeveWear } from './sleeve-wear';
 
 /** Points along the splat's outline: enough for a smooth, organic edge. */
 const POINTS = 220;
@@ -22,6 +23,13 @@ const SPLAT = {
   labelR: 34.95,
   holeR: 7.7,
 };
+
+/**
+ * How far the art reaches in the split, in sleeve sides: the sleeve, then
+ * the record's exposed left lobe past it at rest (label centre at 1.04,
+ * the outline's far edge 0.42 beyond).
+ */
+const REACH = 1.46;
 
 type Sample = { ux: number; uy: number; dist: number; theta: number };
 
@@ -83,7 +91,8 @@ type VinylBoxProps = {
 
 /**
  * The centerpiece: the album sleeve of the song on air with the record half
- * slid out of it. The record is the logo's splat, outline and colours taken
+ * slid out of it. The sleeve wears as old cardboard: fibre, the album's own
+ * scuffs and scratches, bevelled edges. The record is the logo's splat, outline and colours taken
  * from the export, alive — its edge rides slow waves, barely while the air
  * idles, harder with the actual sound while playing (a time-driven swell of
  * the same shape where the analyser can't hear the stream).
@@ -122,6 +131,10 @@ export const VinylBox = ({
     // `mirror` flips the splat so its left side shows past the sleeve in the
     // split; portrait shows its top and keeps the logo's own orientation.
     const geo = { w: 0, h: 0, cx: 0, cy: 0, r: 0, mirror: true };
+    // The controls island docked under the radio: the art matches its width.
+    const island = box
+      .closest('main')
+      ?.querySelector<HTMLElement>('.island-dock .control-island');
 
     const resize = () => {
       const w = box.clientWidth;
@@ -158,9 +171,17 @@ export const VinylBox = ({
         geo.cx = sleeveX + side * 0.5;
         geo.cy = sleeveY - side * 0.04;
       } else {
+        // The sleeve and the record's reach span exactly the controls
+        // island below, centred on it; the room's height and width still
+        // cap it where the island would be the larger.
+        const iRect = island?.getBoundingClientRect();
         side = Math.min(h * 0.92, (w - 24) / 1.62);
-        const groupWidth = side * 1.51;
-        sleeveX = (w - groupWidth) / 2;
+        if (iRect?.width) side = Math.min(side, iRect.width / REACH);
+        const groupWidth = side * REACH;
+        const centre = iRect?.width
+          ? iRect.left + iRect.width / 2 - bRect.left
+          : w / 2;
+        sleeveX = centre - groupWidth / 2;
         sleeveY = clamp(mid - side / 2, h - side);
         // The label's centre just clears the sleeve, so the spindle hole shows.
         geo.cx = sleeveX + side * 1.04;
@@ -286,6 +307,7 @@ export const VinylBox = ({
 
     const observer = new ResizeObserver(resize);
     observer.observe(box);
+    if (island) observer.observe(island);
     resize();
     if (!reduced) frame = requestAnimationFrame(tick);
 
@@ -337,6 +359,9 @@ export const VinylBox = ({
             </span>
           </span>
         )}
+        <span aria-hidden="true" className="sleeve-paper" />
+        <SleeveWear wearKey={song?.cover ?? 'puget-sound'} />
+        <span aria-hidden="true" className="sleeve-bevel" />
       </button>
     </div>
   );
