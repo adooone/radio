@@ -100,10 +100,11 @@ export const AlbumBrowser = () => {
           className="min-w-0 flex-1"
         />
         <SelectInput
+          fit
           aria-label="Сортування"
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value as SortField)}
-          className="w-auto py-2 text-[11px] font-semibold uppercase tracking-[0.12em]"
+          className="shrink-0 py-2 text-[11px] font-semibold uppercase tracking-[0.12em]"
         >
           {SORT_OPTIONS.map((option) => (
             <option key={option.value} value={option.value}>

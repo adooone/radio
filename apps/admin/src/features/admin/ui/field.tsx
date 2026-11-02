@@ -9,7 +9,7 @@ import type {
 /* Form controls in the player's idiom: a pill of cream/5 ground with a
    faint rim, the label red on focus, KyivType Sans inside. */
 const CONTROL =
-  'w-full border border-cream/[0.12] bg-cream/5 font-sans text-[13px] text-cream placeholder:text-cream/45 outline-none transition-colors focus-visible:border-accent/60 disabled:opacity-50';
+  'border border-cream/[0.12] bg-cream/5 font-sans text-[13px] text-cream placeholder:text-cream/45 outline-none transition-colors focus-visible:border-accent/60 disabled:opacity-50';
 
 export const Field = ({
   label,
@@ -29,7 +29,9 @@ export const Field = ({
       {label}
     </label>
     {children}
-    {hint && <span className="font-sans text-[11px] text-cream/45">{hint}</span>}
+    {hint && (
+      <span className="font-sans text-[11px] text-cream/45">{hint}</span>
+    )}
   </div>
 );
 
@@ -38,7 +40,7 @@ export const TextInput = ({
   ...rest
 }: InputHTMLAttributes<HTMLInputElement>) => (
   <input
-    className={clsx(CONTROL, 'rounded-full px-5 py-[11px]', className)}
+    className={clsx(CONTROL, 'w-full rounded-full px-5 py-[11px]', className)}
     {...rest}
   />
 );
@@ -48,17 +50,28 @@ export const TextArea = ({
   ...rest
 }: TextareaHTMLAttributes<HTMLTextAreaElement>) => (
   <textarea
-    className={clsx(CONTROL, 'rounded-2xl px-5 py-3 leading-relaxed', className)}
+    className={clsx(
+      CONTROL,
+      'w-full rounded-2xl px-5 py-3 leading-relaxed',
+      className,
+    )}
     {...rest}
   />
 );
 
+/** A select fills its field; `fit` sizes it to its words, for one in a row. */
 export const SelectInput = ({
+  fit,
   className,
   ...rest
-}: SelectHTMLAttributes<HTMLSelectElement>) => (
+}: SelectHTMLAttributes<HTMLSelectElement> & { fit?: boolean }) => (
   <select
-    className={clsx(CONTROL, 'rounded-full px-5 py-[11px]', className)}
+    className={clsx(
+      CONTROL,
+      fit ? 'w-auto' : 'w-full',
+      'rounded-full px-5 py-[11px]',
+      className,
+    )}
     {...rest}
   />
 );
