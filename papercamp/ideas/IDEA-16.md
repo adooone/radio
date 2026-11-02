@@ -2,7 +2,7 @@
 id: IDEA-16
 title: Admin redesign — three pages in the player's language
 type: feat
-status: planned
+status: review
 created: 2026-11-02
 updated: 2026-11-02
 tags:
@@ -112,12 +112,13 @@ today).
       radio-folder panel right; `/studio/$slug` detail carried over;
       no changes to upload / split / publish logic.
       run: 1m34s · 44 in · 12.6k out · sonnet-5-5 · sess:757c2b2a-e014-4f02-99a5-6b533103d0be
-- [ ] Phase 5 — People and ship
+- [x] Phase 5 — People and ship
       The users page becomes the people panel behind the island's
       user lamp (list, roles, create, export, logout) and the
       `/users` route goes; docs updated (`docs/apps/admin.md`);
       check-types / lint / tests green across the repo; verified
       against a running wave.
+      run: 2m3s · 54 in · 18.1k out · sonnet-5-5 · sess:757c2b2a-e014-4f02-99a5-6b533103d0be
 
 ### Thread
 - [x] 2026-11-02 [decision] [user] Rebuild the admin in the player's layout; remove the main page; at most three pages, named more usefully.

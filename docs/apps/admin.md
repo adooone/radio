@@ -18,21 +18,22 @@ Web-based admin interface for managing the radio streaming platform. Built with 
 src/
 ├── components/           # Shared UI (form inputs, notifications)
 ├── features/
-│   ├── admin/            # Layout, navigation, user menu
+│   ├── admin/            # Ink stage layout, wordmark, control island, user lamp
 │   ├── auth/             # Login page
-│   ├── collection/       # Album and playlist management
+│   ├── collection/       # «Колекція»: album and playlist management
 │   │   ├── components/
-│   │   │   ├── content/  # Album list, playlist list
-│   │   │   ├── filters/  # Search bar, filter chips
+│   │   │   ├── header/   # Tabs, stat chips, sync / add actions
+│   │   │   ├── browser/  # Searchable album list
+│   │   │   ├── detail/   # Selected album pane
+│   │   │   ├── content/  # Album list items, album detail, playlists
 │   │   │   ├── modals/   # Create/edit/detail modals
-│   │   │   ├── shared/   # Tag editor, cover/audio upload
-│   │   │   └── sidebar/  # Sidebar navigation, stats, views
+│   │   │   └── shared/   # Tag editor, cover/audio upload
 │   │   ├── hooks/        # Collection state hooks
 │   │   └── store/        # Collection Zustand store
-│   ├── digitization/     # Vinyl digitization pipeline («Оцифровка»)
-│   ├── main/             # Dashboard
-│   ├── stream/           # Stream control (RTMP, on-air)
-│   └── users/            # User management
+│   ├── digitization/     # «Студія»: vinyl digitization workbench
+│   ├── film/             # Film vignette overlay
+│   ├── on-air/           # «Ефір»: on-air state, queue, services, journal
+│   └── users/            # People panel behind the island's user lamp
 ├── routes/               # TanStack Router routes
 ├── services/api/         # API clients and query hooks
 └── styles/               # Global styles
@@ -42,16 +43,17 @@ src/
 
 - **Collection Management** - Albums, songs, and playlists with search and filtering
 - **Vinyl Digitization** - In-app chunked upload of recorded vinyl sides into `MEDIA_INBOX_PATH` (drag-and-drop, or a remembered "тека Radio" folder in Chromium), Discogs metadata, waveform-based track splitting, encode and publish
-- **Stream Control** - RTMP server management, and putting an album or song on air («Поставити в ефір» / «Зняти з ефіру»): the player's now-playing sleeve, and — when nobody is streaming live — wave playing the record itself; the «В ефірі» card says whether the sound is from the library or live from OBS, with «Зупинити звук» to stop playback and keep the mark
-- **User Management** - Account creation and role management
+- **Three pages** - «Ефір» (`/`), «Колекція» (`/collection`) and «Студія» (`/studio`, `/studio/$slug`), each the player's 2 : 1 split on an ink stage with the control island docked at the bottom. `/digitization`, `/stream-control` and `/users` redirect
+- **On Air** - RTMP server management, and putting an album or song on air («Поставити в ефір» / «Зняти з ефіру»): the player's now-playing sleeve, and — when nobody is streaming live — wave playing the record itself; the «В ефірі» card says whether the sound is from the library or live from OBS, with «Зупинити звук» to stop playback and keep the mark
+- **People panel** - Behind the island's user lamp: account list, roles, activate / delete, create, JSON export and sign out
 - **Real-time Monitoring** - Service status and system health
-- **PWA Support** - Installable Progressive Web App, installed as a Dock app the Оцифровка workflow is designed around
+- **PWA Support** - Installable Progressive Web App, installed as a Dock app the Студія workflow is designed around
 
 ## Vinyl Digitization Upload
 
 The admin, installed as a PWA («Встановити застосунок» in the browser menu
 gives it a Dock icon), is the digitization workflow's upload client — it
-replaces rsyncing side WAVs into the server inbox. On the Оцифровка page:
+replaces rsyncing side WAVs into the server inbox. On the Студія page:
 
 - **Drag-and-drop / file picker** - works everywhere; drag the whole record
   folder in Chromium (recurses into it) or select files directly on

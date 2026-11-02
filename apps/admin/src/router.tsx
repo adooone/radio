@@ -5,22 +5,22 @@ import {
   digitizationDetailRedirectRoute,
   digitizationRedirectRoute,
   streamControlRedirectRoute,
+  usersRedirectRoute,
 } from './routes/redirects';
 import { Root } from './routes/root';
 import { studioRoute } from './routes/studio';
 import { studioDetailRoute } from './routes/studio-detail';
-import { userManagementRoute } from './routes/user-management';
 
 const router = createRouter({
   routeTree: Root.addChildren([
     indexRoute,
     collectionRoute,
-    userManagementRoute,
     studioRoute,
     studioDetailRoute,
     digitizationRedirectRoute,
     digitizationDetailRedirectRoute,
     streamControlRedirectRoute,
+    usersRedirectRoute,
   ]),
   scrollRestoration: true,
   // The layout scrolls an inner div, not window — point forward-navigation

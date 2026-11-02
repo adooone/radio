@@ -24,3 +24,11 @@ export const streamControlRedirectRoute = createRoute({
     throw redirect({ to: '/' });
   },
 });
+
+export const usersRedirectRoute = createRoute({
+  getParentRoute: () => Root,
+  path: '/users',
+  beforeLoad: () => {
+    throw redirect({ to: '/' });
+  },
+});

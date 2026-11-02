@@ -1,1 +1,1 @@
-export { UsersPage } from './users-page';
+export { PeoplePanel } from './people-panel';
