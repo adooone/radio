@@ -9,7 +9,7 @@ import {
 import { DraftDetail } from './components';
 
 export const DraftDetailPage = () => {
-  const { slug } = useParams({ from: '/digitization/$slug' });
+  const { slug } = useParams({ from: '/studio/$slug' });
   const navigate = useNavigate();
   const router = useRouter();
   const canGoBack = useCanGoBack();
@@ -19,7 +19,7 @@ export const DraftDetailPage = () => {
     if (canGoBack) {
       router.history.back();
     } else {
-      navigate({ to: '/digitization' });
+      navigate({ to: '/studio' });
     }
   };
 

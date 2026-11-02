@@ -1,10 +1,14 @@
 import { createRouter } from '@tanstack/react-router';
 import { collectionRoute } from './routes/collection';
-import { digitizationRoute } from './routes/digitization';
-import { digitizationDetailRoute } from './routes/digitization-detail';
 import { indexRoute } from './routes/index';
+import {
+  digitizationDetailRedirectRoute,
+  digitizationRedirectRoute,
+  streamControlRedirectRoute,
+} from './routes/redirects';
 import { Root } from './routes/root';
-import { streamControlRoute } from './routes/stream-control';
+import { studioRoute } from './routes/studio';
+import { studioDetailRoute } from './routes/studio-detail';
 import { userManagementRoute } from './routes/user-management';
 
 const router = createRouter({
@@ -12,9 +16,11 @@ const router = createRouter({
     indexRoute,
     collectionRoute,
     userManagementRoute,
-    streamControlRoute,
-    digitizationRoute,
-    digitizationDetailRoute,
+    studioRoute,
+    studioDetailRoute,
+    digitizationRedirectRoute,
+    digitizationDetailRedirectRoute,
+    streamControlRedirectRoute,
   ]),
   scrollRestoration: true,
   // The layout scrolls an inner div, not window — point forward-navigation

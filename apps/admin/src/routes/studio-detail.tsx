@@ -2,8 +2,8 @@ import { createRoute } from '@tanstack/react-router';
 import { DraftDetailPage } from '../features';
 import { Root } from './root';
 
-export const digitizationDetailRoute = createRoute({
+export const studioDetailRoute = createRoute({
   getParentRoute: () => Root,
-  path: '/digitization/$slug',
+  path: '/studio/$slug',
   component: DraftDetailPage,
 });

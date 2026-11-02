@@ -2,8 +2,8 @@ import { createRoute } from '@tanstack/react-router';
 import { DigitizationPage } from '../features';
 import { Root } from './root';
 
-export const digitizationRoute = createRoute({
+export const studioRoute = createRoute({
   getParentRoute: () => Root,
-  path: '/digitization',
+  path: '/studio',
   component: DigitizationPage,
 });

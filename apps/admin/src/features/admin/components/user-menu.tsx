@@ -1,5 +1,7 @@
 import { useLogout } from '@/services/api/hooks/use-auth';
 import { useAuthStore } from '@/stores/auth-store';
+import { LampButton } from '@dendelion/func-ui';
+import { useNavigate } from '@tanstack/react-router';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 
@@ -7,6 +9,7 @@ export const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuthStore();
   const logout = useLogout();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -20,55 +23,51 @@ export const UserMenu = () => {
 
   return (
     <div className="relative">
-      <button
-        type="button"
+      <LampButton
+        tone={isOpen ? 'red' : 'dark'}
+        size="sm"
+        aria-label={user.username}
+        aria-expanded={isOpen}
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 border border-ember/0 rounded-full transition-all duration-300 hover:bg-white/5 text-paper-calm hover:text-paper-fog"
+        className={isOpen ? 'text-ink' : 'text-cream'}
       >
-        <div className="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center text-sm font-medium text-coal">
-          {user.username.charAt(0).toUpperCase()}
-        </div>
-        <span className="hidden sm:block font-display font-medium">
-          {user.username}
-        </span>
-        <svg
-          className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          role="img"
-          aria-label="Toggle menu"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </button>
+        {user.username.charAt(0).toUpperCase()}
+      </LampButton>
 
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 10 }}
-            className="absolute right-0 bottom-full mb-2 w-48 bg-stone-900/90 backdrop-blur-xl border border-white/20 rounded-lg shadow-2xl py-1"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            className="control-island absolute right-0 bottom-full z-50 mb-4 w-56 rounded-3xl border border-cream/10 py-2"
           >
-            <div className="px-4 py-2 border-b border-white/10">
-              <p className="text-sm font-medium text-stone-100">
+            <div className="border-b border-cream/10 px-4 py-2">
+              <p className="font-sans text-sm font-semibold text-cream">
                 {user.username}
               </p>
-              <p className="text-xs text-stone-400">{user.email}</p>
-              <p className="text-xs text-amber-400 capitalize">{user.role}</p>
+              <p className="font-sans text-xs text-cream/70">{user.email}</p>
+              <p className="font-sans text-xs text-glow capitalize">
+                {user.role}
+              </p>
             </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                setIsOpen(false);
+                navigate({ to: '/users' });
+              }}
+              className="w-full px-4 py-2 text-left font-sans text-sm text-cream/70 transition-colors hover:text-cream"
+            >
+              Користувачі
+            </button>
 
             <button
               type="button"
               onClick={handleLogout}
               disabled={logout.isPending}
-              className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-900/20 transition-colors disabled:opacity-50"
+              className="w-full px-4 py-2 text-left font-sans text-sm text-accent transition-colors hover:bg-accent/10 disabled:opacity-50"
             >
               {logout.isPending ? 'Signing out...' : 'Sign Out'}
             </button>
@@ -76,7 +75,6 @@ export const UserMenu = () => {
         )}
       </AnimatePresence>
 
-      {/* Click outside to close */}
       {isOpen && (
         <div
           className="fixed inset-0 z-40"

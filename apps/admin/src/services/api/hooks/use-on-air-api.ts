@@ -12,6 +12,7 @@ export const useOnAir = () => {
   return useQuery({
     queryKey: onAirKeys.current(),
     queryFn: onAirApi.getOnAir,
+    refetchInterval: 10000,
   });
 };
 

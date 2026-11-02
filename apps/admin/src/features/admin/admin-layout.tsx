@@ -1,21 +1,20 @@
 import { Outlet, useLocation } from '@tanstack/react-router';
-import clsx from 'clsx';
 import { LayoutGroup } from 'framer-motion';
 import type React from 'react';
-import { BottomNavigation } from './components';
+import { FilmOverlay } from '../film/film-overlay';
+import { ControlIsland, Wordmark } from './components';
 
 export const AdminLayout: React.FC = () => {
-  const location = useLocation();
-  const currentRoute = location.pathname;
+  const { pathname } = useLocation();
 
   return (
-    <div className={clsx(styles.container)}>
-      <div className={clsx(styles.backgroundOverlay)} />
-      <div className={clsx(styles.dimOverlay)} />
-      <div className={clsx(styles.gradientOverlay)} />
+    <div className="stage flex flex-col bg-ink">
+      <div className="sign-corner">
+        <Wordmark className="sign-lockup" />
+      </div>
 
       <div
-        className={clsx(styles.content)}
+        className="relative z-10 flex-1 overflow-y-auto pb-32"
         data-scroll-restoration-id="admin-content"
       >
         <LayoutGroup>
@@ -23,19 +22,8 @@ export const AdminLayout: React.FC = () => {
         </LayoutGroup>
       </div>
 
-      <BottomNavigation currentRoute={currentRoute} />
+      <ControlIsland currentRoute={pathname} />
+      <FilmOverlay />
     </div>
   );
 };
-
-const styles = {
-  container: ['w-full h-screen bg-coal flex flex-col relative'],
-  backgroundOverlay: [
-    'absolute inset-0 bg-[url("/login-bg.jpg")] bg-cover bg-center bg-no-repeat',
-  ],
-  dimOverlay: ['absolute inset-0 bg-coal-relic/80'],
-  gradientOverlay: [
-    'absolute inset-0 bg-gradient-to-br from-coal/40 via-transparent to-coal/60',
-  ],
-  content: ['flex-1 overflow-y-auto relative z-10'],
-} as const;

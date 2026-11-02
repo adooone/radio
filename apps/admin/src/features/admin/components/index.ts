@@ -1,4 +1,4 @@
-export { BottomNavigation } from './bottom-navigation';
+export { ControlIsland } from './control-island';
 export { UserMenu } from './user-menu';
-export { RadioLogo } from './radio-logo';
 export { NowPlaying } from './now-playing';
+export { Wordmark } from './wordmark';

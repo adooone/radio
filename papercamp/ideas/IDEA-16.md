@@ -81,7 +81,7 @@ not rework. Phone-portrait layouts for the admin (desktop-first, as
 today).
 
 ### Phases
-- [ ] Phase 1 — Stage, island and routes
+- [x] Phase 1 — Stage, island and routes
       The shared shell: ink stage with the film vignette in
       `admin-layout.tsx` (photo background and overlays removed), the
       corner wordmark, palette and func-ui variables retuned to the
@@ -90,6 +90,7 @@ today).
       become `/`, `/collection`, `/studio` (+ `/studio/$slug`) with
       the old paths redirecting; the main feature folder and its
       widget store removed.
+      run: 5s · 54 in · 17.8k out · sonnet-5-5 · sess:856f88fc-45c8-4dab-8503-9c22be46f5b3
 - [ ] Phase 2 — On Air
       The landing page in the split: on-air vinyl box with the
       turntable queue and controls left, over the service cards

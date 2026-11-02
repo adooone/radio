@@ -55,7 +55,7 @@ export const DigitizationPage = () => {
               drafts={drafts ?? []}
               isLoading={isLoading}
               onSelect={(slug) =>
-                navigate({ to: '/digitization/$slug', params: { slug } })
+                navigate({ to: '/studio/$slug', params: { slug } })
               }
             />
           </div>
