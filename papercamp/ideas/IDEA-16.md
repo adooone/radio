@@ -99,12 +99,13 @@ today).
       stream page's three tabs and cards fold in, the `stream`
       feature folder absorbed.
       run: 1m30s · 78 in · 25.9k out · sonnet-5-5 · sess:856f88fc-45c8-4dab-8503-9c22be46f5b3
-- [ ] Phase 3 — Collection
+- [x] Phase 3 — Collection
       The collection in the split: searchable list left with the
       albums / playlists tabs in the page header, the selected
       album's detail right — cover, metadata, session photos, on-air
       and edit actions — replacing the sliding master-detail; the
       absorbed stats as header chips.
+      run: 6s · 32 in · 8.1k out · sonnet-5-5 · sess:757c2b2a-e014-4f02-99a5-6b533103d0be
 - [ ] Phase 4 — Studio
       Digitization reskinned as the workbench: stage chips, waveform
       with split markers and the track table left; drafts and the
