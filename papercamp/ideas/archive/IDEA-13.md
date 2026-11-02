@@ -2,9 +2,9 @@
 id: IDEA-13
 title: Chat's people and settings view
 type: feat
-status: review
+status: done
 created: 2026-10-31
-updated: 2026-11-01
+updated: 2026-11-02
 tags:
   - player
   - chat
