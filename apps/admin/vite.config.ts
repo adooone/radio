@@ -12,7 +12,12 @@ export default defineConfig({
     tsconfigPaths(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      includeAssets: [
+        'favicon.ico',
+        'favicon.svg',
+        'favicon-32x32.png',
+        'icons/apple-touch-icon.png',
+      ],
       manifest: {
         name: 'Radio Admin Panel',
         short_name: 'Radio Admin',
@@ -20,19 +25,20 @@ export default defineConfig({
         theme_color: '#0a0605',
         background_color: '#0a0605',
         display: 'standalone',
+        // The player's icon set, copied as is, so both tabs wear the splat.
         icons: [
           {
-            src: 'pwa-192x192.png',
+            src: 'icons/icon-192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: 'pwa-512x512.png',
+            src: 'icons/icon-512x512.png',
             sizes: '512x512',
             type: 'image/png',
           },
           {
-            src: 'pwa-512x512.png',
+            src: 'icons/icon-512x512-maskable.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
