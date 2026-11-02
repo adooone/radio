@@ -19,9 +19,18 @@ import { Wordmark } from './wordmark';
  */
 export const PlayerPage = () => {
   const t = useT();
-  const { audioRef, status, playing, toggle, volume, setVolume, getLevels } =
-    useRadio();
-  const song = useNowPlaying();
+  const {
+    audioRef,
+    status,
+    playing,
+    toggle,
+    volume,
+    setVolume,
+    getLevels,
+    getLag,
+  } = useRadio();
+  // Held back by the listener's lag, so the titles change with the music.
+  const song = useNowPlaying(getLag);
   const quiet = status === 'offline';
   // Small screens keep the chat as its own view behind the island's lamp.
   // While it is open there, the island carries the room's input and the

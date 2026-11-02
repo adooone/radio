@@ -8,15 +8,26 @@ import type { OnAirState } from '@radio/types';
 
 export type { OnAirState };
 
-export function formatNowPlayingMessage(state: OnAirState | null): string {
+/**
+ * The player's now_playing message. `elapsedMs` says how long ago the song
+ * began on air, so a listener hearing the stream some seconds behind can
+ * hold the new title until the music itself gets there: 0 when sent as the
+ * song starts, its age when a listener connects mid-song.
+ */
+export function formatNowPlayingMessage(
+  state: OnAirState | null,
+  now: number = Date.now(),
+): string {
   if (!state) return JSON.stringify({ type: 'now_playing' });
-  const { artist, title, cover, backdrop } = state;
+  const { artist, title, cover, backdrop, setAt } = state;
+  const started = Date.parse(setAt);
   return JSON.stringify({
     type: 'now_playing',
     artist,
     title,
     cover,
     backdrop,
+    elapsedMs: Number.isNaN(started) ? 0 : Math.max(0, now - started),
   });
 }
 
@@ -140,7 +151,10 @@ export class OnAirService {
       source,
     };
     this.persist();
-    this.deps.broadcast(formatNowPlayingMessage(this.current));
+    // Sent as the song begins: nothing of it has played yet.
+    this.deps.broadcast(
+      formatNowPlayingMessage(this.current, Date.parse(this.current.setAt)),
+    );
     return this.current;
   }
 

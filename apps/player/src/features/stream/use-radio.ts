@@ -7,6 +7,13 @@ import { type RadioStatus, nextStatus } from './radio-state';
 const RETRY_MS = 15_000;
 /** Small analyser: 64 usable bins are plenty for the disc's halo. */
 const FFT_SIZE = 256;
+/** From ffmpeg's output to the relay's open segment: a few hundred ms. */
+const INGEST_SEC = 0.3;
+/**
+ * Safari doesn't say how old its playlist is: allow about a segment and a
+ * half between the newest audio and the live edge it reports.
+ */
+const NATIVE_SLACK_SEC = 1.5;
 
 /**
  * The player's engine, audio-only: hls.js feeds a hidden audio element where
@@ -58,8 +65,16 @@ export const useRadio = () => {
 
     const open = () => {
       if (Hls.isSupported()) {
-        // Segments load only once the listener presses play (startLoad in toggle).
-        hls = new Hls({ autoStartLoad: false });
+        // Segments load only once the listener presses play (startLoad in
+        // toggle). Live, it holds three segments behind the newest, drifts
+        // back to that by playing up to 5% faster when it falls behind, and
+        // jumps forward if it ever trails by ten.
+        hls = new Hls({
+          autoStartLoad: false,
+          liveSyncDurationCount: 3,
+          maxLiveSyncPlaybackRate: 1.05,
+          liveMaxLatencyDurationCount: 10,
+        });
         hlsRef.current = hls;
         hls.loadSource(streamUrl);
         hls.attachMedia(audio);
@@ -161,6 +176,31 @@ export const useRadio = () => {
     return levels;
   }, []);
 
+  /**
+   * Seconds between what wave sends now and what this listener hears: how
+   * far the playhead trails the playlist's newest audio, plus the slack for
+   * that audio to reach the playlist. Null while the radio is not playing.
+   */
+  const getLag = useCallback((): number | null => {
+    const audio = audioRef.current;
+    if (!audio || audio.paused || audio.currentTime === 0) return null;
+    const hls = hlsRef.current;
+    if (hls) {
+      // hls.js counts the playlist's age in its latency already; what is
+      // left is the wait between a segment closing and the reload that
+      // brings it, half a segment on average.
+      const latency = hls.latency;
+      if (!Number.isFinite(latency) || latency <= 0) return null;
+      const segment = hls.levels[hls.currentLevel]?.details?.targetduration;
+      return latency + (segment ?? 1) / 2 + INGEST_SEC;
+    }
+    // Safari's own pipeline: the distance to the live edge it knows of.
+    const { seekable } = audio;
+    if (!seekable.length) return null;
+    const behind = seekable.end(seekable.length - 1) - audio.currentTime;
+    return behind > 0 ? behind + NATIVE_SLACK_SEC : null;
+  }, []);
+
   const toggle = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -177,5 +217,14 @@ export const useRadio = () => {
     }
   }, [wireAnalyser]);
 
-  return { audioRef, status, playing, toggle, volume, setVolume, getLevels };
+  return {
+    audioRef,
+    status,
+    playing,
+    toggle,
+    volume,
+    setVolume,
+    getLevels,
+    getLag,
+  };
 };

@@ -2,7 +2,11 @@ import { afterEach, beforeEach, describe, expect, it } from 'bun:test';
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { OnAirService, pickBackdrop } from './onAirService';
+import {
+  OnAirService,
+  formatNowPlayingMessage,
+  pickBackdrop,
+} from './onAirService';
 
 const ALBUM = {
   id: 1,
@@ -161,6 +165,7 @@ describe('onAirService', () => {
         artist: ALBUM.artist,
         title: ALBUM.title,
         cover: ALBUM.coverImageUrl,
+        elapsedMs: 0,
       }),
     ]);
   });
@@ -185,6 +190,7 @@ describe('onAirService', () => {
         type: 'now_playing',
         artist: OTHER_ALBUM.artist,
         title: OTHER_ALBUM.title,
+        elapsedMs: 0,
       }),
     ]);
   });
@@ -235,5 +241,31 @@ describe('pickBackdrop', () => {
 
   it('stays in range when the random source returns its top end', () => {
     expect(photos).toContain(pickBackdrop(photos, undefined, () => 0.999999));
+  });
+});
+
+describe('formatNowPlayingMessage', () => {
+  const state = {
+    albumId: 1,
+    artist: 'A',
+    title: 'T',
+    setAt: '2026-11-02T08:00:00.000Z',
+  };
+
+  it('tells a listener joining mid-song how long it has been on air', () => {
+    const now = Date.parse(state.setAt) + 42_500;
+    expect(JSON.parse(formatNowPlayingMessage(state, now)).elapsedMs).toBe(
+      42_500,
+    );
+  });
+
+  it('never reports a song as starting in the future', () => {
+    const now = Date.parse(state.setAt) - 1_000;
+    expect(JSON.parse(formatNowPlayingMessage(state, now)).elapsedMs).toBe(0);
+  });
+
+  it('treats an unreadable start as just begun', () => {
+    const broken = { ...state, setAt: 'not a date' };
+    expect(JSON.parse(formatNowPlayingMessage(broken)).elapsedMs).toBe(0);
   });
 });
