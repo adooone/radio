@@ -10,8 +10,8 @@ export const en: Dictionary = {
   'vinyl.listenLive': 'Listen live',
 
   'island.volume': 'Volume',
-  'island.liveTag': 'LIVE',
-  'island.offAirTag': 'OFF AIR',
+  'island.liveTag': 'Live',
+  'island.offAirTag': 'Off air',
   'island.openChat': 'Open the chat',
   'island.backToRadio': 'Back to the radio',
 

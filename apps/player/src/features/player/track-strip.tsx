@@ -81,7 +81,7 @@ export const TrackStrip = ({
             >
               ·
             </span>
-            <span className="min-w-0 max-w-full shrink-[2] truncate type-label text-cream/70">
+            <span className="min-w-0 max-w-full shrink-[2] truncate type-body text-cream/70">
               {song.artist || 'Puget Sound'}
             </span>
           </p>

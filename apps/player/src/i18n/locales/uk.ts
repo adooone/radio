@@ -10,8 +10,8 @@ export const uk: Dictionary = {
   'vinyl.listenLive': 'Слухати ефір',
 
   'island.volume': 'Голосність',
-  'island.liveTag': 'В ЕФІРІ',
-  'island.offAirTag': 'ТИША',
+  'island.liveTag': 'В ефірі',
+  'island.offAirTag': 'Тиша',
   'island.openChat': 'Відкрити чат',
   'island.backToRadio': 'Назад до радіо',
 

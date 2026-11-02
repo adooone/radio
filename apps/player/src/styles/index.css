@@ -65,7 +65,9 @@
   --color-accent: #ff5647;
   --color-glow: #ffb84d;
   --font-serif: "KyivType Serif", Georgia, serif;
-  --font-sans: "KyivType Sans", ui-sans-serif, system-ui, sans-serif;
+  /* One face across the page: the operated voice reads KyivType Serif too
+     (func-ui's lamps and the type-* classes all follow --font-sans). */
+  --font-sans: "KyivType Serif", Georgia, serif;
 }
 
 /* The shared chrome — func-ui's retuned variables, the island glass, the
@@ -90,10 +92,10 @@ body {
   font-weight: 500;
 }
 
-/* The player's type, in two voices: KyivType Serif for what is read (the
-   song, the messages, the air's state), KyivType Sans for what is operated
-   (names, labels, buttons, fields, times). Colour comes from three cream
-   tones on top: full, /70 for secondary, /45 for muted. */
+/* The player's type, all KyivType Serif: the read voice (the song, the
+   messages, the air's state) and the operated one (names, labels, buttons,
+   fields, times) differ by size, weight and case, not by face. Colour comes
+   from three cream tones on top: full, /70 for secondary, /45 for muted. */
 @layer components {
   .type-title {
     font-family: var(--font-serif);
@@ -128,6 +130,17 @@ body {
     line-height: 1.2;
     font-variant-numeric: tabular-nums;
   }
+}
+
+/* The island's air lamp: func-ui's status lamp, its word set like the
+   artist beside it rather than in func-ui's coloured capitals. */
+.air-lamp [class*="lamp-status-module__text"] {
+  font-family: var(--font-serif);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
+  color: rgb(245 242 236 / 0.7);
 }
 
 /* func-ui's focus ring is a hardcoded green; keep keyboard focus red. */
@@ -297,8 +310,10 @@ html {
   }
 }
 
-/* The full lockup — splat record, then the sign — small in the top-left
-   corner; portrait keeps it in the flow so the vinyl box never sits under it. */
+/* The sign alone (no splat record — the one on screen is the vinyl's), small
+   in the top-left corner, its left edge on the sleeve's and the island's
+   (`use-island-edge.ts` sets `left`; the gutter holds until it does).
+   Portrait keeps it in the flow so the vinyl box never sits under it. */
 .sign-corner {
   position: absolute;
   left: calc(var(--gutter) + env(safe-area-inset-left, 0px));
@@ -306,7 +321,8 @@ html {
   z-index: 10;
 }
 .sign-lockup {
-  width: clamp(250px, 26vw, 400px);
+  /* The sign's 79% of the old full lockup (250px, 26vw, 400px). */
+  width: clamp(198px, 20.5vw, 316px);
 }
 @media (orientation: portrait) {
   /* Centered in the header, with the script moved under the wordmark;

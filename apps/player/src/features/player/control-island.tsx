@@ -5,7 +5,7 @@ import type { ChatRoom } from '@/features/chat/use-chat-room';
 import type { NowPlaying } from '@/features/stream/use-now-playing';
 import { useT } from '@/i18n';
 import { useMedia } from '@/lib/use-media';
-import { LampIconButton, LampMeter } from '@dendelion/func-ui';
+import { LampIconButton, LampMeter, LampStatus } from '@dendelion/func-ui';
 import { TrackStrip } from './track-strip';
 
 type ControlIslandProps = {
@@ -76,15 +76,15 @@ export const ControlIsland = ({
             lampSize={lampSize}
             wordsClassName="w-[340px] min-w-0 shrink portrait:w-auto portrait:flex-1"
           />
-          <span className="hidden shrink-0 items-center gap-2 border-l border-cream/10 pl-4 type-label text-cream/70 sm:landscape:flex">
-            <span
-              aria-hidden="true"
-              className={`inline-block size-2 rounded-full ${
-                quiet ? 'bg-cream/30' : 'live-dot bg-accent'
-              }`}
+          {/* The air lamp: lit (func-ui's "error" is its lit red lamp,
+              which this palette burns orange) while live, dark off air. */}
+          <div className="hidden shrink-0 border-l border-cream/10 pl-4 sm:landscape:block">
+            <LampStatus
+              status={quiet ? 'stopped' : 'error'}
+              label={t(quiet ? 'island.offAirTag' : 'island.liveTag')}
+              className="air-lamp"
             />
-            {t(quiet ? 'island.offAirTag' : 'island.liveTag')}
-          </span>
+          </div>
           <div className="relative hidden shrink-0 border-l border-cream/10 pl-4 sm:landscape:block">
             <LampMeter
               aria-hidden="true"

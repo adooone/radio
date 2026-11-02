@@ -16,11 +16,11 @@
   --fui-glow: #ffb84d;
   --fui-danger: #ff5647;
   --fui-shadow-color: rgb(0 0 0 / 0.85);
-  /* Every lit lamp burns one flat orange-yellow — no gradient — with a
-     warm orange halo. (The components say tone="red"; the glass is amber.) */
-  --fui-lamp-red: #e08b26;
-  --fui-lamp-red-glow: rgb(224 139 38 / 0.5);
-  --fui-lamp-red-glow-strong: rgb(190 110 18 / 0.75);
+  /* Every lit lamp burns one flat bright red-orange — no gradient — with a
+     warm halo. (The components say tone="red"; the glass is red-orange.) */
+  --fui-lamp-red: #fb6a2c;
+  --fui-lamp-red-glow: rgb(251 106 44 / 0.5);
+  --fui-lamp-red-glow-strong: rgb(214 76 18 / 0.75);
 }
 
 /* func-ui's lamps bring Montserrat (Latin only, so Ukrainian falls back to

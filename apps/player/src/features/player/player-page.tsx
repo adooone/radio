@@ -4,11 +4,12 @@ import { statusLine } from '@/features/stream/radio-state';
 import { useNowPlaying } from '@/features/stream/use-now-playing';
 import { useRadio } from '@/features/stream/use-radio';
 import { useT } from '@/i18n';
-import { useState } from 'react';
+import { VinylBox, Wordmark } from '@radio/stage';
+import { useRef, useState } from 'react';
 import { ControlIsland } from './control-island';
 import { RoomBackdrop } from './room-backdrop';
 import { TrackStrip } from './track-strip';
-import { VinylBox, Wordmark } from '@radio/stage';
+import { useIslandEdge } from './use-island-edge';
 
 /**
  * The listening room, planned together on IDEA-11: one black screen split
@@ -37,6 +38,9 @@ export const PlayerPage = () => {
   // shared by both.
   const [chatOpen, setChatOpen] = useState(false);
   const room = useChatRoom();
+  // The sign starts where the sleeve and the island do.
+  const signRef = useRef<HTMLElement>(null);
+  useIslandEdge(signRef);
 
   return (
     <main className="stage split overflow-hidden bg-ink text-cream">
@@ -59,8 +63,11 @@ export const PlayerPage = () => {
           className="room-shade absolute top-0 left-0"
           style={{ width: 'calc(100% + 32px)', height: 'calc(100% + 32px)' }}
         />
-        <header className="sign-corner pointer-events-none select-none">
-          <Wordmark className="sign-lockup" />
+        <header
+          ref={signRef}
+          className="sign-corner pointer-events-none select-none"
+        >
+          <Wordmark className="sign-lockup" mark={false} />
         </header>
         {/* Portrait lets the vinyl run the full screen width, past the gutters. */}
         <div className="relative min-h-0 w-full flex-1 py-[1.5vmin] portrait:w-[calc(100%+var(--gutter)*2)]">

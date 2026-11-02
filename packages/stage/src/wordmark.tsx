@@ -3,6 +3,8 @@ import { SplatRecord } from './splat-record';
 
 type WordmarkProps = {
   className?: string;
+  /** The splat record before the sign; off, the sign fills the lockup. */
+  mark?: boolean;
 };
 
 /**
@@ -15,17 +17,21 @@ type WordmarkProps = {
  * design's box sizes, but with the wordmark and the script each centred,
  * the script under the wordmark.
  */
-export const Wordmark = ({ className = '' }: WordmarkProps) => (
+export const Wordmark = ({ className = '', mark = true }: WordmarkProps) => (
   <div
     role="img"
     aria-label="Puget Sound — Vinyl Radio"
     className={`flex items-center portrait:block ${className}`}
   >
-    <SplatRecord className="w-[15%] shrink-0 portrait:hidden" />
+    {mark && <SplatRecord className="w-[15%] shrink-0 portrait:hidden" />}
     {/* The sign block: the wordmark with the script beside it on wide
         screens (the same geometry as the old single row: 51.5 + 5.5 + 22 of
         the lockup = 79), and under its right end on portrait. */}
-    <div className="relative ml-[6%] w-[79%] portrait:ml-0 portrait:aspect-[814.5/262.5] portrait:w-full">
+    <div
+      className={`relative portrait:ml-0 portrait:aspect-[814.5/262.5] portrait:w-full ${
+        mark ? 'ml-[6%] w-[79%]' : 'w-full'
+      }`}
+    >
       <div
         className="relative w-[65.19%] portrait:absolute portrait:top-0 portrait:left-[11.14%] portrait:h-[53.26%] portrait:w-[77.72%]"
         style={{ aspectRatio: '633 / 139.8' }}
