@@ -1,4 +1,5 @@
 import { albumService, syncMediaToDatabase } from '@/services/albums';
+import { sessionPhotoService } from '@/services/albums/sessionPhotoService';
 import { authService } from '@/services/auth';
 import { env } from '@/utils/env';
 import { ResponseHelper } from '@/utils/response';
@@ -179,6 +180,92 @@ export const albumHandlers = {
             'Cache-Control': 'private, max-age=3600',
           },
         });
+      },
+    );
+  },
+
+  get getSessionPhotosHandler() {
+    return withErrorHandling(
+      async (c: Context<{ Variables: { accountId: number } }>) => {
+        const id = commonSchemas.id.parse(c.req.param('id'));
+        const album = await albumService.getAlbumById(id);
+        await authService.requireOwnershipOrAdmin(
+          c.get('accountId'),
+          album.ownerId,
+        );
+        const photos = album.folderSlug
+          ? sessionPhotoService.list(album.folderSlug)
+          : [];
+        return ResponseHelper.success(c, { photos });
+      },
+    );
+  },
+
+  get uploadSessionPhotosHandler() {
+    return withErrorHandling(
+      async (c: Context<{ Variables: { accountId: number } }>) => {
+        const id = commonSchemas.id.parse(c.req.param('id'));
+        const album = await albumService.getAlbumById(id);
+        await authService.requireOwnershipOrAdmin(
+          c.get('accountId'),
+          album.ownerId,
+        );
+        if (!album.folderSlug) {
+          return ResponseHelper.error(c, 'Album has no media folder', 400);
+        }
+        const body = await c.req.parseBody({ all: true });
+        const files = [body.photos]
+          .flat()
+          .filter((entry): entry is File => entry instanceof File);
+        if (files.length === 0) {
+          return ResponseHelper.error(c, 'No photos provided', 400);
+        }
+        // One bad file must not lose the good ones: keep what saved and
+        // report what did not.
+        const added = [];
+        const failed: { file: string; error: string }[] = [];
+        for (const file of files) {
+          try {
+            added.push(await sessionPhotoService.add(album.folderSlug, file));
+          } catch (error) {
+            failed.push({
+              file: file.name,
+              error: error instanceof Error ? error.message : 'Upload failed',
+            });
+          }
+        }
+        if (added.length === 0) {
+          return ResponseHelper.error(
+            c,
+            failed.map((f) => `${f.file}: ${f.error}`).join('; '),
+            400,
+          );
+        }
+        return ResponseHelper.success(c, { added, failed });
+      },
+    );
+  },
+
+  get deleteSessionPhotoHandler() {
+    return withErrorHandling(
+      async (c: Context<{ Variables: { accountId: number } }>) => {
+        const id = commonSchemas.id.parse(c.req.param('id'));
+        const album = await albumService.getAlbumById(id);
+        await authService.requireOwnershipOrAdmin(
+          c.get('accountId'),
+          album.ownerId,
+        );
+        const name = c.req.param('name') ?? '';
+        let removed = false;
+        try {
+          removed = album.folderSlug
+            ? sessionPhotoService.remove(album.folderSlug, name)
+            : false;
+        } catch {
+          return ResponseHelper.error(c, 'Invalid photo name', 400);
+        }
+        if (!removed) return ResponseHelper.error(c, 'Photo not found', 404);
+        return ResponseHelper.success(c, { removed: name });
       },
     );
   },

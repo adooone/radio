@@ -5,6 +5,8 @@ export interface NowPlaying {
   artist: string;
   title: string;
   cover?: string;
+  /** A photo from the album's sessions, for the room behind the record. */
+  backdrop?: string;
 }
 
 /**
@@ -29,6 +31,8 @@ export const useNowPlaying = () => {
                 artist: typeof data.artist === 'string' ? data.artist : '',
                 title: data.title,
                 cover: typeof data.cover === 'string' ? data.cover : undefined,
+                backdrop:
+                  typeof data.backdrop === 'string' ? data.backdrop : undefined,
               }
             : null,
         );

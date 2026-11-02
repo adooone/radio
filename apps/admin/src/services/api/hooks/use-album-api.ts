@@ -60,6 +60,50 @@ export const useAlbumPhotos = (
   });
 };
 
+export const sessionPhotosKeys = {
+  all: ['session-photos'] as const,
+  list: (albumId: number) => [...sessionPhotosKeys.all, albumId] as const,
+};
+
+export const useSessionPhotos = (
+  albumId: number,
+  options?: { enabled?: boolean },
+) => {
+  return useQuery({
+    queryKey: sessionPhotosKeys.list(albumId),
+    queryFn: () => albumApi.getSessionPhotos(albumId),
+    enabled: !!albumId && (options?.enabled ?? true),
+  });
+};
+
+export const useUploadSessionPhotos = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ albumId, files }: { albumId: number; files: File[] }) =>
+      albumApi.uploadSessionPhotos(albumId, files),
+    onSettled: (_, __, { albumId }) => {
+      queryClient.invalidateQueries({
+        queryKey: sessionPhotosKeys.list(albumId),
+      });
+    },
+  });
+};
+
+export const useDeleteSessionPhoto = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ albumId, name }: { albumId: number; name: string }) =>
+      albumApi.deleteSessionPhoto(albumId, name),
+    onSettled: (_, __, { albumId }) => {
+      queryClient.invalidateQueries({
+        queryKey: sessionPhotosKeys.list(albumId),
+      });
+    },
+  });
+};
+
 export const useCreateAlbum = () => {
   const queryClient = useQueryClient();
 

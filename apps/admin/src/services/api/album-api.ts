@@ -1,4 +1,4 @@
-import type { Album, Song } from '@radio/types';
+import type { Album, SessionPhoto, Song } from '@radio/types';
 import { waveApiClient } from './clients/http-client';
 
 type ApiResponse<T> = {
@@ -131,6 +131,39 @@ export const albumApi = {
       `/api/albums/${id}/photos`,
     );
     return response.data.data.photos;
+  },
+
+  getSessionPhotos: async (id: number): Promise<SessionPhoto[]> => {
+    const response = await waveApiClient.get<
+      ApiResponse<{ photos: SessionPhoto[] }>
+    >(`/api/albums/${id}/session-photos`);
+    return response.data.data.photos;
+  },
+
+  uploadSessionPhotos: async (
+    id: number,
+    files: File[],
+  ): Promise<{
+    added: SessionPhoto[];
+    failed: { file: string; error: string }[];
+  }> => {
+    const formData = new FormData();
+    for (const file of files) formData.append('photos', file);
+    const response = await waveApiClient.post<
+      ApiResponse<{
+        added: SessionPhoto[];
+        failed: { file: string; error: string }[];
+      }>
+    >(`/api/albums/${id}/session-photos`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data.data;
+  },
+
+  deleteSessionPhoto: async (id: number, name: string): Promise<void> => {
+    await waveApiClient.delete<ApiResponse<{ removed: string }>>(
+      `/api/albums/${id}/session-photos/${encodeURIComponent(name)}`,
+    );
   },
 
   getAlbumPhoto: async (id: number, filename: string): Promise<Blob> => {

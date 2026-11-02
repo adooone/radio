@@ -286,9 +286,17 @@ export interface OnAirState {
   artist: string;
   title: string;
   cover?: string;
+  /** One of the album's session photos, for the room behind the record. */
+  backdrop?: string;
   setAt: string;
   /** Who set it: the admin by hand, or the turntable as it plays. */
   source?: 'admin' | 'turntable';
+}
+
+/** A photo from an album's recording sessions, as wave serves it. */
+export interface SessionPhoto {
+  name: string;
+  url: string;
 }
 
 export interface TurntableTrack {

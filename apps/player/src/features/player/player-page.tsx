@@ -6,6 +6,7 @@ import { useRadio } from '@/features/stream/use-radio';
 import { useT } from '@/i18n';
 import { useState } from 'react';
 import { ControlIsland } from './control-island';
+import { RoomBackdrop } from './room-backdrop';
 import { TrackStrip } from './track-strip';
 import { VinylBox } from './vinyl-box';
 import { Wordmark } from './wordmark';
@@ -39,20 +40,12 @@ export const PlayerPage = () => {
           chatOpen ? 'radio-view-away' : ''
         }`}
       >
-        {/* The room behind the radio: the old frontend's waiting-room
-            photograph under the warm shade, below everything on this side.
-            Both bleed past the chat's boundary, under its slab, so the rim's
-            swing never uncovers the bare page between them. */}
-        <img
-          alt=""
-          src="/brand/room.jpg"
-          className="absolute top-0 left-0 max-w-none object-cover"
-          style={{
-            objectPosition: '62% 50%',
-            width: 'calc(100% + 32px)',
-            height: 'calc(100% + 32px)',
-          }}
-        />
+        {/* The room behind the radio — the waiting-room photograph, or a
+            photo from the album's sessions — under the warm shade, below
+            everything on this side. Both bleed past the chat's boundary,
+            under its slab, so the rim's swing never uncovers the bare page
+            between them. */}
+        <RoomBackdrop photo={song?.backdrop} />
         <div
           aria-hidden="true"
           className="room-shade absolute top-0 left-0"

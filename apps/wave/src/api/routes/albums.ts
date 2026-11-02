@@ -55,6 +55,24 @@ albumsRoutes.get(
   albumHandlers.getAlbumPhotoHandler,
 );
 
+albumsRoutes.get(
+  '/:id/session-photos',
+  authMiddleware,
+  albumHandlers.getSessionPhotosHandler,
+);
+
+albumsRoutes.post(
+  '/:id/session-photos',
+  authMiddleware,
+  albumHandlers.uploadSessionPhotosHandler,
+);
+
+albumsRoutes.delete(
+  '/:id/session-photos/:name',
+  authMiddleware,
+  albumHandlers.deleteSessionPhotoHandler,
+);
+
 albumsRoutes.get('/:albumId/songs', albumHandlers.getAlbumByIdHandler);
 
 albumsRoutes.post(

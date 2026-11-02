@@ -10,6 +10,7 @@ import { AlbumDetailLoading } from './album-detail-loading';
 import { AlbumEditForm } from './album-edit-form';
 import { AlbumMetadata } from './album-metadata';
 import { AlbumPhotosSection } from './album-photos-section';
+import { AlbumSessionPhotosSection } from './album-session-photos-section';
 
 type AlbumDetailProps = {
   album: Album;
@@ -110,6 +111,10 @@ export const AlbumDetail = ({ album }: AlbumDetailProps) => {
       {!isEditing && (
         <>
           <AlbumPhotosSection
+            albumId={albumWithSongs.id}
+            folderSlug={albumWithSongs.folderSlug}
+          />
+          <AlbumSessionPhotosSection
             albumId={albumWithSongs.id}
             folderSlug={albumWithSongs.folderSlug}
           />

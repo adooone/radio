@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'bun:test';
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { OnAirService } from './onAirService';
+import { OnAirService, pickBackdrop } from './onAirService';
 
 const ALBUM = {
   id: 1,
@@ -32,16 +32,30 @@ const OTHER_ALBUM = {
   coverImageUrl: null,
 };
 
+const SESSION_ALBUM = {
+  id: 3,
+  artist: 'Session Artist',
+  title: 'Session Album',
+  coverImageUrl: 'https://media.example.com/session/img/cover.webp',
+  backdrops: [
+    'https://media.example.com/session/img/session/a.webp',
+    'https://media.example.com/session/img/session/b.webp',
+  ],
+};
+
 function makeService(
   filePath: string,
   broadcast: (message: string) => void = () => {},
+  random: () => number = () => 0,
 ) {
   return new OnAirService({
     filePath,
     broadcast,
+    random,
     getAlbum: async (id) => {
       if (id === ALBUM.id) return ALBUM;
       if (id === OTHER_ALBUM.id) return OTHER_ALBUM;
+      if (id === SESSION_ALBUM.id) return SESSION_ALBUM;
       return null;
     },
     getSong: async (id) => {
@@ -173,5 +187,53 @@ describe('onAirService', () => {
         title: OTHER_ALBUM.title,
       }),
     ]);
+  });
+
+  it('sends one of the album session photos as the backdrop', async () => {
+    const messages: string[] = [];
+    const service = makeService(filePath, (message) => messages.push(message));
+    const state = await service.setOnAir(SESSION_ALBUM.id);
+
+    expect(state.backdrop).toBe(SESSION_ALBUM.backdrops[0]);
+    expect(JSON.parse(messages[0]).backdrop).toBe(SESSION_ALBUM.backdrops[0]);
+  });
+
+  it('moves to another session photo on the next song', async () => {
+    const service = makeService(filePath);
+    await service.setOnAir(SESSION_ALBUM.id);
+    const next = await service.setOnAir(SESSION_ALBUM.id);
+
+    expect(next.backdrop).toBe(SESSION_ALBUM.backdrops[1]);
+  });
+
+  it('leaves the backdrop out when the album has no session photos', async () => {
+    const service = makeService(filePath);
+    await service.setOnAir(SESSION_ALBUM.id);
+    const state = await service.setOnAir(ALBUM.id);
+
+    expect(state.backdrop).toBeUndefined();
+  });
+});
+
+describe('pickBackdrop', () => {
+  const photos = ['a', 'b', 'c'];
+
+  it('has nothing to pick from an album without photos', () => {
+    expect(pickBackdrop(undefined, undefined, () => 0)).toBeUndefined();
+    expect(pickBackdrop([], 'a', () => 0)).toBeUndefined();
+  });
+
+  it('keeps a lone photo even when it showed last', () => {
+    expect(pickBackdrop(['a'], 'a', () => 0.9)).toBe('a');
+  });
+
+  it('never repeats the last photo while there are others', () => {
+    for (const r of [0, 0.4, 0.99]) {
+      expect(pickBackdrop(photos, 'b', () => r)).not.toBe('b');
+    }
+  });
+
+  it('stays in range when the random source returns its top end', () => {
+    expect(photos).toContain(pickBackdrop(photos, undefined, () => 0.999999));
   });
 });

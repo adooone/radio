@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { findSongById } from '@/db/albums/songs';
 import { albumService } from '@/services/albums';
+import { sessionPhotoService } from '@/services/albums/sessionPhotoService';
 import { clientStore } from '@/ws/utils/clientStore';
 import type { OnAirState } from '@radio/types';
 
@@ -9,8 +10,14 @@ export type { OnAirState };
 
 export function formatNowPlayingMessage(state: OnAirState | null): string {
   if (!state) return JSON.stringify({ type: 'now_playing' });
-  const { artist, title, cover } = state;
-  return JSON.stringify({ type: 'now_playing', artist, title, cover });
+  const { artist, title, cover, backdrop } = state;
+  return JSON.stringify({
+    type: 'now_playing',
+    artist,
+    title,
+    cover,
+    backdrop,
+  });
 }
 
 interface AlbumLookup {
@@ -18,6 +25,8 @@ interface AlbumLookup {
   artist: string;
   title: string;
   coverImageUrl: string | null;
+  /** The album's session photos, for the room behind the record. */
+  backdrops?: string[];
 }
 
 interface SongLookup {
@@ -32,11 +41,29 @@ interface OnAirDeps {
   getAlbum: (id: number) => Promise<AlbumLookup | null>;
   getSong: (id: number) => Promise<SongLookup | null>;
   broadcast: (message: string) => void;
+  /** Picks among the session photos: 0 ≤ n < 1, like Math.random. */
+  random: () => number;
+}
+
+/**
+ * One of the album's session photos for the next song: any of them, but not
+ * the one the last song showed while there is another to move on to.
+ */
+export function pickBackdrop(
+  photos: string[] | undefined,
+  previous: string | undefined,
+  random: () => number,
+): string | undefined {
+  if (!photos?.length) return undefined;
+  const choices =
+    photos.length > 1 ? photos.filter((photo) => photo !== previous) : photos;
+  return choices[Math.floor(random() * choices.length) % choices.length];
 }
 
 const defaultDeps = (): OnAirDeps => ({
   filePath: join(process.cwd(), 'data', 'on-air.json'),
   broadcast: (message) => clientStore.broadcast(message),
+  random: Math.random,
   getAlbum: async (id) => {
     try {
       const album = await albumService.getAlbumById(id);
@@ -45,6 +72,9 @@ const defaultDeps = (): OnAirDeps => ({
         artist: album.artist,
         title: album.title,
         coverImageUrl: album.coverImageUrl,
+        backdrops: album.folderSlug
+          ? sessionPhotoService.list(album.folderSlug).map((p) => p.url)
+          : [],
       };
     } catch {
       return null;
@@ -101,6 +131,11 @@ export class OnAirService {
       artist,
       title,
       cover: album.coverImageUrl ?? undefined,
+      backdrop: pickBackdrop(
+        album.backdrops,
+        this.current?.backdrop,
+        this.deps.random,
+      ),
       setAt: new Date().toISOString(),
       source,
     };
