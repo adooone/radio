@@ -47,8 +47,8 @@ const Scratches = () => {
       const rng = mulberry32(Math.floor(Math.random() * 1e9));
       ctx.clearRect(0, 0, W, H);
       ctx.lineCap = 'round';
-      // Long faint scratches, a few sharper short ones.
-      for (let i = 0; i < 26; i++) {
+      // A few long faint scratches, a couple of sharper short ones.
+      for (let i = 0; i < 10; i++) {
         const long = rng() < 0.6;
         const len =
           (long ? 0.25 + 0.55 * rng() : 0.05 + 0.12 * rng()) * Math.max(W, H);
@@ -69,7 +69,7 @@ const Scratches = () => {
         ctx.stroke();
       }
       // Dust: specks and the odd hair.
-      for (let i = 0; i < 70; i++) {
+      for (let i = 0; i < 30; i++) {
         const x = rng() * W;
         const y = rng() * H;
         const r = 0.4 + rng() * 1.3;
