@@ -106,11 +106,12 @@ today).
       and edit actions — replacing the sliding master-detail; the
       absorbed stats as header chips.
       run: 6s · 32 in · 8.1k out · sonnet-5-5 · sess:757c2b2a-e014-4f02-99a5-6b533103d0be
-- [ ] Phase 4 — Studio
+- [x] Phase 4 — Studio
       Digitization reskinned as the workbench: stage chips, waveform
       with split markers and the track table left; drafts and the
       radio-folder panel right; `/studio/$slug` detail carried over;
       no changes to upload / split / publish logic.
+      run: 1m34s · 44 in · 12.6k out · sonnet-5-5 · sess:757c2b2a-e014-4f02-99a5-6b533103d0be
 - [ ] Phase 5 — People and ship
       The users page becomes the people panel behind the island's
       user lamp (list, roles, create, export, logout) and the
