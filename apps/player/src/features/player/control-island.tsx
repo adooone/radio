@@ -89,7 +89,7 @@ export const ControlIsland = ({
             lampSize={lampSize}
             wordsClassName="w-[340px] min-w-0 shrink portrait:w-auto portrait:flex-1"
           />
-          <div className="relative hidden shrink-0 border-l border-cream/10 pl-4 sm:landscape:block">
+          <div className="relative hidden shrink-0 sm:landscape:block">
             <LampMeter
               aria-hidden="true"
               value={volume}
@@ -107,7 +107,7 @@ export const ControlIsland = ({
               value={volume}
               onChange={(e) => onVolume(Number(e.target.value))}
               aria-label={t('island.volume')}
-              className="absolute inset-y-0 left-4 right-0 cursor-pointer appearance-none opacity-0"
+              className="absolute inset-0 cursor-pointer appearance-none opacity-0"
             />
           </div>
           {/* The room's lamps on wide screens — mute, then settings — at the
