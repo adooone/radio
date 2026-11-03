@@ -3,8 +3,21 @@ import { useEffect, useRef } from 'react';
 type SlabProps = {
   /** Overhang past the column's edge, so the rim can swing across the seam. */
   bleed?: number;
-  /** Portrait keeps this much above the rim, for a bar laid over the slab. */
+  /** Portrait keeps this much above the rim, for a bar laid over the slab
+      (plus the status bar's inset, where the page runs beneath it). */
   topbar?: number;
+};
+
+/** The screen's top safe-area inset in px: the status bar an installed app
+    draws beneath, 0 in a browser tab. CSS knows it; a probe reads it out. */
+const topInset = () => {
+  const probe = document.createElement('div');
+  probe.style.cssText =
+    'position:absolute;visibility:hidden;padding-top:env(safe-area-inset-top, 0px)';
+  document.body.append(probe);
+  const inset = probe.getBoundingClientRect().height;
+  probe.remove();
+  return inset;
 };
 
 /**
@@ -30,7 +43,7 @@ export const Slab = ({ bleed = 32, topbar = 96 }: SlabProps) => {
     ).matches;
     let frame = 0;
     let t = 0;
-    const size = { w: 0, h: 0, portrait: false };
+    const size = { w: 0, h: 0, portrait: false, inset: 0 };
 
     const resize = () => {
       const w = canvas.clientWidth;
@@ -43,17 +56,18 @@ export const Slab = ({ bleed = 32, topbar = 96 }: SlabProps) => {
       size.w = w;
       size.h = h;
       size.portrait = window.matchMedia('(orientation: portrait)').matches;
+      size.inset = topInset();
       if (reduced) draw();
     };
 
     const draw = () => {
-      const { w, h, portrait } = size;
+      const { w, h, portrait, inset } = size;
       ctx.clearRect(0, 0, w, h);
 
       // The rim rides the column's edge, swinging a little past it both
       // ways — the same slow wave pair the vinyl box runs around the disc.
-      // Portrait holds it below the bar, fully visible.
-      const base = portrait ? bleed + topbar : bleed;
+      // Portrait holds it below the bar (and the status bar), fully visible.
+      const base = portrait ? bleed + topbar + inset : bleed;
       const edge = (p: number) =>
         base +
         Math.sin(p * 0.006 - t * 1.4) * 7 +

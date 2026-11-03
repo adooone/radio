@@ -167,8 +167,10 @@ html {
   /* The island's height on portrait (md lamps in a py-3 pill), so the chat
      keeps its messages clear of the docked input. */
   --island-h: 76px;
-  /* The strip above the chat's rim on portrait, for the track strip. */
-  --chat-topbar: 96px;
+  /* The strip above the chat's rim on portrait, for the track strip: 96px
+     of its own under the status bar, which an installed app runs beneath
+     (`Slab` holds its rim below the same inset). */
+  --chat-topbar: calc(96px + env(safe-area-inset-top, 0px));
 }
 
 /* The island docks over the foot of the radio column — the same grid cell,
