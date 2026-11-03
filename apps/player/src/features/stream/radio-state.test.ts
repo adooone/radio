@@ -15,8 +15,8 @@ describe('nextStatus', () => {
     expect(nextStatus('loading', 'fatal')).toBe('offline');
   });
 
-  it('retries only out of the quiet state', () => {
-    expect(nextStatus('offline', 'retry')).toBe('loading');
+  it('retries quietly, leaving the status as it is', () => {
+    expect(nextStatus('offline', 'retry')).toBe('offline');
     expect(nextStatus('live', 'retry')).toBe('live');
     expect(nextStatus('loading', 'retry')).toBe('loading');
   });

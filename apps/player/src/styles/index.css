@@ -133,8 +133,11 @@ body {
 }
 
 /* The island's air lamp: func-ui's status lamp, its word set like the
-   artist beside it rather than in func-ui's coloured capitals. */
+   artist beside it rather than in func-ui's coloured capitals, in a fixed
+   width so going on or off air never resizes the island (and the sleeve
+   and sign measured from it). */
 .air-lamp [class*="lamp-status-module__text"] {
+  min-width: 4.5rem;
   font-family: var(--font-serif);
   font-size: 0.9375rem;
   font-weight: 500;

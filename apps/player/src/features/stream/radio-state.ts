@@ -8,7 +8,8 @@ export type RadioEvent =
   | 'manifest'
   /** The stream broke or the manifest 404ed: nobody is. */
   | 'fatal'
-  /** A timer asks the engine to try the manifest again. */
+  /** A timer asks the engine to try the manifest again — quietly: the air
+      stays off until a manifest says otherwise, so the page holds still. */
   | 'retry';
 
 export const nextStatus = (
@@ -21,7 +22,7 @@ export const nextStatus = (
     case 'fatal':
       return 'offline';
     case 'retry':
-      return status === 'offline' ? 'loading' : status;
+      return status;
   }
 };
 
