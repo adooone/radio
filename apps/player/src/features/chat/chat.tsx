@@ -16,7 +16,6 @@ type ChatProps = {
   room: ChatRoom;
   /** Small screens show the chat as its own view, crossfaded over the radio. */
   mobileOpen: boolean;
-  onClose: () => void;
   /** What rides above the rim while the view is open on a small screen:
       the track strip, so the music stays in hand inside the room. */
   controls?: ReactNode;
@@ -28,7 +27,7 @@ type ChatProps = {
  * speaking to wave's WebSocket as before. On small screens the input is
  * not here but on the island, in the controls' place.
  */
-export const Chat = ({ room, mobileOpen, onClose, controls }: ChatProps) => {
+export const Chat = ({ room, mobileOpen, controls }: ChatProps) => {
   // The header's lamps grow with the island's, for thumbs.
   const portrait = useMedia('(orientation: portrait)');
   const lampSize = portrait ? 'md' : 'sm';
@@ -45,8 +44,19 @@ export const Chat = ({ room, mobileOpen, onClose, controls }: ChatProps) => {
       {/* The room's ground, one canvas shape: a darker slab rimmed like the
           record toward the radio. */}
       <Slab />
+      {/* Phones: the track strip rides the bar above the rim, the room's
+          lamps — settings, mute — at its right end. */}
       {portrait && controls && (
-        <div className="chat-topbar flex">{controls}</div>
+        <div className="chat-topbar flex">
+          {controls}
+          <ChatLamps
+            lampSize={lampSize}
+            sound={sound}
+            page={page}
+            onTogglePage={togglePage}
+            className="shrink-0"
+          />
+        </div>
       )}
       <div className="chat-panel relative z-10 flex min-h-0 flex-1 flex-col">
         <ChatHeader
@@ -57,8 +67,7 @@ export const Chat = ({ room, mobileOpen, onClose, controls }: ChatProps) => {
           onTogglePage={togglePage}
         />
 
-        {/* Phones keep the pages clear of the lamp stack at the right. */}
-        <div className="relative min-h-0 flex-1 portrait:mr-10">
+        <div className="relative min-h-0 flex-1">
           <div
             className={`chat-page ${page === 'room' ? 'chat-page-active' : ''}`}
           >
@@ -97,18 +106,6 @@ export const Chat = ({ room, mobileOpen, onClose, controls }: ChatProps) => {
           </div>
         </div>
       </div>
-      {/* Phones hold the room's lamps where the thumb rests: stacked in the
-          bottom-right corner, just over the input on the island. */}
-      {portrait && (
-        <ChatLamps
-          lampSize={lampSize}
-          sound={sound}
-          page={page}
-          onTogglePage={togglePage}
-          onBack={onClose}
-          className="chat-thumbs flex-col"
-        />
-      )}
     </section>
   );
 };

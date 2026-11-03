@@ -18,8 +18,6 @@ export const en: Dictionary = {
   'chat.unmuteSounds': 'Unmute chat sounds',
   'chat.openSettings': 'Open settings',
   'chat.closeSettings': 'Close settings',
-  'chat.openListeners': 'Show listeners',
-  'chat.closeListeners': 'Back to the chat',
   'chat.listenersCount': {
     one: '{{count}} listener online',
     few: '{{count}} listeners online',

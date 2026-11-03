@@ -1,7 +1,7 @@
 import { useT } from '@/i18n';
 import { LampIconButton } from '@dendelion/func-ui';
 import type { LampSize } from '@dendelion/func-ui';
-import { CollapseIcon, GearIcon, SoundOffIcon, SoundOnIcon } from './icons';
+import { GearIcon, SoundOffIcon, SoundOnIcon } from './icons';
 import type { ChatPage } from './use-chat-room';
 
 type ChatLampsProps = {
@@ -9,25 +9,22 @@ type ChatLampsProps = {
   sound: { isEnabled: boolean; toggle: () => void };
   page: ChatPage;
   onTogglePage: (target: 'listeners' | 'settings') => void;
-  /** Phones lead with the lamp back to the radio. */
-  onBack?: () => void;
   /** The island reads mute before settings. */
   soundFirst?: boolean;
   className?: string;
 };
 
 /**
- * The room's own lamps: back to the radio (phones only), the settings
- * flower, the sound toggle. Wide screens set them at the end of the control
- * island, after the volume; phones stack them in the bottom-right corner,
- * over the input, under the thumb. The page the gear opens shows as pressed.
+ * The room's own lamps: the settings flower and the sound toggle. Wide
+ * screens set them at the end of the control island, after the volume;
+ * phones at the right end of the track bar over the open room. The page the
+ * gear opens shows as pressed.
  */
 export const ChatLamps = ({
   lampSize,
   sound,
   page,
   onTogglePage,
-  onBack,
   soundFirst = false,
   className = '',
 }: ChatLampsProps) => {
@@ -44,16 +41,6 @@ export const ChatLamps = ({
   );
   return (
     <span className={`flex items-center gap-3 ${className}`}>
-      {onBack && (
-        <LampIconButton
-          tone="dark"
-          size={lampSize}
-          onClick={onBack}
-          label={t('island.backToRadio')}
-          icon={<CollapseIcon />}
-          className="text-cream"
-        />
-      )}
       {soundFirst && soundLamp}
       <LampIconButton
         tone={page === 'settings' ? 'red' : 'dark'}

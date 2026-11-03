@@ -15,7 +15,7 @@ type ChatHeaderProps = {
  * The bar over the chat: the listeners count in the middle as plain words
  * that open the list, and the listener's own nick on the right. The room's
  * lamps live elsewhere (`ChatLamps`): at the control island's end on wide
- * screens, stacked in the bottom-right corner on phones.
+ * screens, in the track bar's right end on phones.
  */
 export const ChatHeader = ({
   nickname,

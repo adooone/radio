@@ -85,7 +85,6 @@ export const PlayerPage = () => {
       <Chat
         room={room}
         mobileOpen={chatOpen}
-        onClose={() => setChatOpen(false)}
         controls={
           <TrackStrip
             playing={playing}

@@ -18,8 +18,6 @@ export const uk: Dictionary = {
   'chat.unmuteSounds': 'Увімкнути звуки чату',
   'chat.openSettings': 'Відкрити налаштування',
   'chat.closeSettings': 'Закрити налаштування',
-  'chat.openListeners': 'Показати слухачів',
-  'chat.closeListeners': 'Назад до чату',
   'chat.listenersCount': {
     one: '{{count}} меломан на Городі',
     few: '{{count}} меломани на Городі',

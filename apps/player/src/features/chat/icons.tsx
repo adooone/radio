@@ -239,29 +239,3 @@ export const CheckIcon = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
-
-export const ListenersIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-    {...props}
-  >
-    <circle cx="6" cy="5.2" r="2.3" stroke="currentColor" strokeWidth="1.5" />
-    <path
-      d="M1.8 13.2c.4-2.3 2.1-3.6 4.2-3.6s3.8 1.3 4.2 3.6"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-    <path
-      d="M10.4 3.2a2.2 2.2 0 0 1 0 4.2M11.6 9.8c1.4.4 2.3 1.6 2.6 3.4"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-  </svg>
-);

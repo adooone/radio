@@ -1,6 +1,6 @@
 import { ChatInput } from '@/features/chat/chat-input';
 import { ChatLamps } from '@/features/chat/chat-lamps';
-import { ChatBubbleIcon, ListenersIcon } from '@/features/chat/icons';
+import { ChatBubbleIcon, CollapseIcon } from '@/features/chat/icons';
 import { NicknameInput } from '@/features/chat/nickname-input';
 import type { ChatRoom } from '@/features/chat/use-chat-room';
 import type { NowPlaying } from '@/features/stream/use-now-playing';
@@ -20,8 +20,8 @@ type ControlIslandProps = {
   status: string;
   /** Small screens keep the chat behind the island's last lamp, which
       opens the room; while the room is open the island carries the room's
-      input instead of the music controls (the way back is in the room's
-      lamp stack). */
+      input instead of the music controls, led by the lamp back to the
+      radio. */
   chatOpen: boolean;
   onToggleChat: () => void;
   room: ChatRoom;
@@ -34,9 +34,9 @@ type ControlIslandProps = {
  * with an invisible range input over it for the hand and the keyboard. On
  * small portrait screens the pill turns compact — the strip and the chat
  * lamp that opens the room as its own view — doubling as the page's
- * navigation; and with the room open, the same pill holds the listeners
- * lamp, then the message (or name) field with its send (or join) lamp at
- * the right end, under the thumb.
+ * navigation; and with the room open, the same pill holds the lamp back to
+ * the radio, then the message (or name) field with its send (or join) lamp
+ * at the right end, under the thumb.
  */
 export const ControlIsland = ({
   playing,
@@ -60,18 +60,12 @@ export const ControlIsland = ({
       {chatMode ? (
         <>
           <LampIconButton
-            tone={room.page === 'listeners' ? 'red' : 'dark'}
+            tone="dark"
             size={lampSize}
-            onClick={() => room.togglePage('listeners')}
-            label={t(
-              room.page === 'listeners'
-                ? 'chat.closeListeners'
-                : 'chat.openListeners',
-            )}
-            icon={<ListenersIcon />}
-            className={`shrink-0 ${
-              room.page === 'listeners' ? 'text-ink' : 'text-cream'
-            }`}
+            onClick={onToggleChat}
+            label={t('island.backToRadio')}
+            icon={<CollapseIcon />}
+            className="shrink-0 text-cream"
           />
           {room.nickname ? (
             <ChatInput island onSend={room.sendMessage} />

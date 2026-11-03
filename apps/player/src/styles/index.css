@@ -172,9 +172,11 @@ html {
   justify-content: center;
   padding: 0 calc(var(--gutter) + 1.5rem) 3.5vmin;
 }
+/* Phones float the island like iOS's own bars: as far from the bottom as
+   from the sides, with the home indicator riding the gap beneath it. */
 @media (orientation: portrait) {
   .island-dock {
-    padding: 0 1rem calc(3.5vmin + env(safe-area-inset-bottom, 0px));
+    padding: 0 1rem 1rem;
   }
 }
 /* Wide screens set the controls island and the chat's input pill on one
@@ -296,26 +298,7 @@ html {
        of the input docked in the island's slot at the foot. */
     padding-top: calc(var(--chat-topbar) + 2.5rem);
     padding-left: 1.5rem;
-    padding-bottom: calc(
-      3.5vmin +
-      var(--island-h) +
-      1rem +
-      env(safe-area-inset-bottom, 0px)
-    );
-  }
-  /* The room's lamps on a phone (`ChatLamps`): a column in the bottom-right
-     corner, just over the input on the island, where a thumb rests, in one
-     column with the send lamp (the dock's 1rem plus the island's 0.75rem). */
-  .chat-thumbs {
-    position: absolute;
-    right: 1.75rem;
-    bottom: calc(
-      3.5vmin +
-      var(--island-h) +
-      1rem +
-      env(safe-area-inset-bottom, 0px)
-    );
-    z-index: 20;
+    padding-bottom: calc(1rem + var(--island-h) + 1rem);
   }
   /* The bar above the rim while the room is open: the track strip, with
      the play lamp in hand. (`TOPBAR` in chat-backdrop.tsx matches.) */
