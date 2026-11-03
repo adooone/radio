@@ -13,8 +13,6 @@ export type MessageKey =
   | 'vinyl.pause'
   | 'vinyl.listenLive'
   | 'island.volume'
-  | 'island.liveTag'
-  | 'island.offAirTag'
   | 'island.openChat'
   | 'island.backToRadio'
   | 'chat.title'

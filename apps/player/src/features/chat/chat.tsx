@@ -50,8 +50,6 @@ export const Chat = ({ room, mobileOpen, onClose, controls }: ChatProps) => {
       )}
       <div className="chat-panel relative z-10 flex min-h-0 flex-1 flex-col">
         <ChatHeader
-          lampSize={lampSize}
-          sound={sound}
           nickname={nickname}
           colorChoice={colorChoice}
           page={page}

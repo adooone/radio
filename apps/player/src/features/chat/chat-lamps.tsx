@@ -11,14 +11,16 @@ type ChatLampsProps = {
   onTogglePage: (target: 'listeners' | 'settings') => void;
   /** Phones lead with the lamp back to the radio. */
   onBack?: () => void;
+  /** The island reads mute before settings. */
+  soundFirst?: boolean;
   className?: string;
 };
 
 /**
  * The room's own lamps: back to the radio (phones only), the settings
- * flower, the sound toggle. Wide screens set them in the chat header; phones
- * stack them in the bottom-right corner, over the input, under the thumb.
- * The page the gear opens shows as pressed.
+ * flower, the sound toggle. Wide screens set them at the end of the control
+ * island, after the volume; phones stack them in the bottom-right corner,
+ * over the input, under the thumb. The page the gear opens shows as pressed.
  */
 export const ChatLamps = ({
   lampSize,
@@ -26,9 +28,20 @@ export const ChatLamps = ({
   page,
   onTogglePage,
   onBack,
+  soundFirst = false,
   className = '',
 }: ChatLampsProps) => {
   const t = useT();
+  const soundLamp = (
+    <LampIconButton
+      tone={sound.isEnabled ? 'red' : 'dark'}
+      size={lampSize}
+      onClick={sound.toggle}
+      label={t(sound.isEnabled ? 'chat.muteSounds' : 'chat.unmuteSounds')}
+      icon={sound.isEnabled ? <SoundOnIcon /> : <SoundOffIcon />}
+      className={sound.isEnabled ? 'text-ink' : 'text-cream'}
+    />
+  );
   return (
     <span className={`flex items-center gap-3 ${className}`}>
       {onBack && (
@@ -41,6 +54,7 @@ export const ChatLamps = ({
           className="text-cream"
         />
       )}
+      {soundFirst && soundLamp}
       <LampIconButton
         tone={page === 'settings' ? 'red' : 'dark'}
         size={lampSize}
@@ -51,14 +65,7 @@ export const ChatLamps = ({
         icon={<GearIcon />}
         className={page === 'settings' ? 'text-ink' : 'text-cream'}
       />
-      <LampIconButton
-        tone={sound.isEnabled ? 'red' : 'dark'}
-        size={lampSize}
-        onClick={sound.toggle}
-        label={t(sound.isEnabled ? 'chat.muteSounds' : 'chat.unmuteSounds')}
-        icon={sound.isEnabled ? <SoundOnIcon /> : <SoundOffIcon />}
-        className={sound.isEnabled ? 'text-ink' : 'text-cream'}
-      />
+      {!soundFirst && soundLamp}
     </span>
   );
 };

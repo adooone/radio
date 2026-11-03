@@ -1,11 +1,12 @@
 import { ChatInput } from '@/features/chat/chat-input';
+import { ChatLamps } from '@/features/chat/chat-lamps';
 import { ChatBubbleIcon, ListenersIcon } from '@/features/chat/icons';
 import { NicknameInput } from '@/features/chat/nickname-input';
 import type { ChatRoom } from '@/features/chat/use-chat-room';
 import type { NowPlaying } from '@/features/stream/use-now-playing';
 import { useT } from '@/i18n';
 import { useMedia } from '@/lib/use-media';
-import { LampIconButton, LampMeter, LampStatus } from '@dendelion/func-ui';
+import { LampIconButton, LampMeter } from '@dendelion/func-ui';
 import { TrackStrip } from './track-strip';
 
 type ControlIslandProps = {
@@ -94,15 +95,6 @@ export const ControlIsland = ({
             lampSize={lampSize}
             wordsClassName="w-[340px] min-w-0 shrink portrait:w-auto portrait:flex-1"
           />
-          {/* The air lamp: lit (func-ui's "error" is its lit red lamp,
-              which this palette burns orange) while live, dark off air. */}
-          <div className="hidden shrink-0 border-l border-cream/10 pl-4 sm:landscape:block">
-            <LampStatus
-              status={quiet ? 'stopped' : 'error'}
-              label={t(quiet ? 'island.offAirTag' : 'island.liveTag')}
-              className="air-lamp"
-            />
-          </div>
           <div className="relative hidden shrink-0 border-l border-cream/10 pl-4 sm:landscape:block">
             <LampMeter
               aria-hidden="true"
@@ -122,6 +114,17 @@ export const ControlIsland = ({
               onChange={(e) => onVolume(Number(e.target.value))}
               aria-label={t('island.volume')}
               className="absolute inset-y-0 left-4 right-0 cursor-pointer appearance-none opacity-0"
+            />
+          </div>
+          {/* The room's lamps on wide screens — mute, then settings — at the
+              island's end; phones stack them over the input instead. */}
+          <div className="hidden shrink-0 border-l border-cream/10 pl-4 sm:landscape:block">
+            <ChatLamps
+              lampSize={lampSize}
+              sound={room.sound}
+              page={room.page}
+              onTogglePage={room.togglePage}
+              soundFirst
             />
           </div>
         </>

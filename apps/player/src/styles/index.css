@@ -132,20 +132,6 @@ body {
   }
 }
 
-/* The island's air lamp: func-ui's status lamp, its word set like the
-   artist beside it rather than in func-ui's coloured capitals, in a fixed
-   width so going on or off air never resizes the island (and the sleeve
-   and sign measured from it). */
-.air-lamp [class*="lamp-status-module__text"] {
-  min-width: 4.5rem;
-  font-family: var(--font-serif);
-  font-size: 0.9375rem;
-  font-weight: 500;
-  letter-spacing: normal;
-  text-transform: none;
-  color: rgb(245 242 236 / 0.7);
-}
-
 /* func-ui's focus ring is a hardcoded green; keep keyboard focus red. */
 button:focus-visible,
 input:focus-visible,
@@ -189,6 +175,14 @@ html {
 @media (orientation: portrait) {
   .island-dock {
     padding: 0 1rem calc(3.5vmin + env(safe-area-inset-bottom, 0px));
+  }
+}
+/* Wide screens set the controls island and the chat's input pill on one
+   line, bottoms level: one height for both, the input pill's (its send
+   lamp's 40px in a p-2 pill), so their tops meet the same line too. */
+@media (orientation: landscape) {
+  .control-island {
+    min-height: 58px;
   }
 }
 
