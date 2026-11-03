@@ -1,5 +1,5 @@
 import { ChatInput } from '@/features/chat/chat-input';
-import { ChatBubbleIcon, CollapseIcon } from '@/features/chat/icons';
+import { ChatBubbleIcon, ListenersIcon } from '@/features/chat/icons';
 import { NicknameInput } from '@/features/chat/nickname-input';
 import type { ChatRoom } from '@/features/chat/use-chat-room';
 import type { NowPlaying } from '@/features/stream/use-now-playing';
@@ -18,8 +18,9 @@ type ControlIslandProps = {
   /** The air's state in words, read where no track names itself. */
   status: string;
   /** Small screens keep the chat behind the island's last lamp, which
-      opens the room and brings the radio back; while the room is open the
-      island carries the room's input instead of the music controls. */
+      opens the room; while the room is open the island carries the room's
+      input instead of the music controls (the way back is in the room's
+      lamp stack). */
   chatOpen: boolean;
   onToggleChat: () => void;
   room: ChatRoom;
@@ -32,8 +33,9 @@ type ControlIslandProps = {
  * with an invisible range input over it for the hand and the keyboard. On
  * small portrait screens the pill turns compact — the strip and the chat
  * lamp that opens the room as its own view — doubling as the page's
- * navigation; and with the room open, the same pill holds the message
- * (or name) field with its send (or join) lamp where the play lamp was.
+ * navigation; and with the room open, the same pill holds the listeners
+ * lamp, then the message (or name) field with its send (or join) lamp at
+ * the right end, under the thumb.
  */
 export const ControlIsland = ({
   playing,
@@ -55,16 +57,32 @@ export const ControlIsland = ({
   return (
     <div className="control-island relative flex max-w-full items-center gap-4 rounded-full border border-cream/10 py-2 pr-6 pl-2 portrait:w-full portrait:py-3 portrait:pr-3 portrait:pl-3">
       {chatMode ? (
-        room.nickname ? (
-          <ChatInput island onSend={room.sendMessage} />
-        ) : (
-          <NicknameInput
-            island
-            onSetNickname={room.setNickname}
-            onNicknameChange={room.clearNicknameError}
-            error={room.nicknameError}
+        <>
+          <LampIconButton
+            tone={room.page === 'listeners' ? 'red' : 'dark'}
+            size={lampSize}
+            onClick={() => room.togglePage('listeners')}
+            label={t(
+              room.page === 'listeners'
+                ? 'chat.closeListeners'
+                : 'chat.openListeners',
+            )}
+            icon={<ListenersIcon />}
+            className={`shrink-0 ${
+              room.page === 'listeners' ? 'text-ink' : 'text-cream'
+            }`}
           />
-        )
+          {room.nickname ? (
+            <ChatInput island onSend={room.sendMessage} />
+          ) : (
+            <NicknameInput
+              island
+              onSetNickname={room.setNickname}
+              onNicknameChange={room.clearNicknameError}
+              error={room.nicknameError}
+            />
+          )}
+        </>
       ) : (
         <>
           <TrackStrip
@@ -108,16 +126,16 @@ export const ControlIsland = ({
           </div>
         </>
       )}
-      <LampIconButton
-        tone={chatOpen ? 'dark' : 'red'}
-        size={lampSize}
-        label={t(chatOpen ? 'island.backToRadio' : 'island.openChat')}
-        icon={chatOpen ? <CollapseIcon /> : <ChatBubbleIcon />}
-        onClick={onToggleChat}
-        className={`hidden shrink-0 portrait:inline-block ${
-          chatOpen ? 'text-cream' : 'text-ink'
-        }`}
-      />
+      {!chatMode && (
+        <LampIconButton
+          tone="red"
+          size={lampSize}
+          label={t('island.openChat')}
+          icon={<ChatBubbleIcon />}
+          onClick={onToggleChat}
+          className="hidden shrink-0 text-ink portrait:inline-block"
+        />
+      )}
     </div>
   );
 };

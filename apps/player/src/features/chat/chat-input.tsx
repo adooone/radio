@@ -11,8 +11,8 @@ import { SendIcon } from './icons';
 
 type ChatInputProps = {
   onSend: (text: string) => void;
-  /** On the island: no pill of its own — the send lamp and the field join
-      the island's row, in the play lamp's and the words' places. */
+  /** On the island: no pill of its own — the field and the send lamp join
+      the island's row, send at the right end, under the thumb. */
   island?: boolean;
 };
 
@@ -65,6 +65,7 @@ export const ChatInput = ({ onSend, island = false }: ChatInputProps) => {
   if (island) {
     return (
       <form onSubmit={handleSend} className="contents">
+        {field}
         <LampIconButton
           type="submit"
           tone="red"
@@ -73,7 +74,6 @@ export const ChatInput = ({ onSend, island = false }: ChatInputProps) => {
           icon={<SendIcon />}
           className="shrink-0 text-ink"
         />
-        {field}
       </form>
     );
   }

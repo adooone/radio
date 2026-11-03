@@ -22,6 +22,8 @@ export type MessageKey =
   | 'chat.unmuteSounds'
   | 'chat.openSettings'
   | 'chat.closeSettings'
+  | 'chat.openListeners'
+  | 'chat.closeListeners'
   | 'chat.listenersCount'
   | 'chat.input.placeholder'
   | 'chat.input.send'

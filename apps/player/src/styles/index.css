@@ -266,6 +266,15 @@ html {
     overscroll-behavior: none;
   }
 }
+/* An absolute grid item is placed in its grid area, and portrait has one
+   column — so the chat's column 2 would be an empty track past the right
+   edge, squeezing the room off screen. Unplaced, it fills the whole stage. */
+@media (display-mode: standalone) and (orientation: portrait) {
+  .chat-view {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
 /* The chat sits last either way, flush to the screen's edges: its panel
    takes the column's full height, and the wavy seam marks the boundary. */
 .split > .chat-view {
@@ -294,6 +303,20 @@ html {
       1rem +
       env(safe-area-inset-bottom, 0px)
     );
+  }
+  /* The room's lamps on a phone (`ChatLamps`): a column in the bottom-right
+     corner, just over the input on the island, where a thumb rests, in one
+     column with the send lamp (the dock's 1rem plus the island's 0.75rem). */
+  .chat-thumbs {
+    position: absolute;
+    right: 1.75rem;
+    bottom: calc(
+      3.5vmin +
+      var(--island-h) +
+      1rem +
+      env(safe-area-inset-bottom, 0px)
+    );
+    z-index: 20;
   }
   /* The bar above the rim while the room is open: the track strip, with
      the play lamp in hand. (`TOPBAR` in chat-backdrop.tsx matches.) */

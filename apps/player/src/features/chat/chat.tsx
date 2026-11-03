@@ -1,8 +1,9 @@
 import { useMedia } from '@/lib/use-media';
-import type { ReactNode } from 'react';
 import { Slab } from '@radio/stage';
+import type { ReactNode } from 'react';
 import { ChatHeader } from './chat-header';
 import { ChatInput } from './chat-input';
+import { ChatLamps } from './chat-lamps';
 import { ChatMessages } from './chat-messages';
 import { ListenersPage } from './listeners-page';
 import { NicknameInput } from './nickname-input';
@@ -56,10 +57,10 @@ export const Chat = ({ room, mobileOpen, onClose, controls }: ChatProps) => {
           page={page}
           othersCount={othersCount}
           onTogglePage={togglePage}
-          onBack={onClose}
         />
 
-        <div className="relative min-h-0 flex-1">
+        {/* Phones keep the pages clear of the lamp stack at the right. */}
+        <div className="relative min-h-0 flex-1 portrait:mr-10">
           <div
             className={`chat-page ${page === 'room' ? 'chat-page-active' : ''}`}
           >
@@ -98,6 +99,18 @@ export const Chat = ({ room, mobileOpen, onClose, controls }: ChatProps) => {
           </div>
         </div>
       </div>
+      {/* Phones hold the room's lamps where the thumb rests: stacked in the
+          bottom-right corner, just over the input on the island. */}
+      {portrait && (
+        <ChatLamps
+          lampSize={lampSize}
+          sound={sound}
+          page={page}
+          onTogglePage={togglePage}
+          onBack={onClose}
+          className="chat-thumbs flex-col"
+        />
+      )}
     </section>
   );
 };

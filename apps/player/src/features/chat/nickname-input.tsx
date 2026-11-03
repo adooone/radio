@@ -50,6 +50,7 @@ export const NicknameInput = ({
   if (island) {
     return (
       <>
+        {field}
         <LampIconButton
           type="button"
           tone={nickInput ? 'red' : 'dark'}
@@ -62,7 +63,6 @@ export const NicknameInput = ({
             nickInput ? 'text-ink' : 'text-cream'
           }`}
         />
-        {field}
         {error && (
           <p
             role="alert"

@@ -2,7 +2,7 @@ import type { Dictionary } from '../messages';
 
 export const en: Dictionary = {
   'status.loading': 'catching the wave…',
-  'status.offline': 'the air is quiet — the record is resting',
+  'status.offline': 'off air',
   'status.live': 'on air',
   'status.livePaused': 'on air — tap the record',
 
@@ -20,6 +20,8 @@ export const en: Dictionary = {
   'chat.unmuteSounds': 'Unmute chat sounds',
   'chat.openSettings': 'Open settings',
   'chat.closeSettings': 'Close settings',
+  'chat.openListeners': 'Show listeners',
+  'chat.closeListeners': 'Back to the chat',
   'chat.listenersCount': {
     one: '{{count}} listener online',
     few: '{{count}} listeners online',
