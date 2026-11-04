@@ -4,7 +4,7 @@ title: Admin controls on func-ui — no custom primitives
 type: refactor
 status: planned
 created: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-04
 tags:
   - admin
   - design
@@ -84,7 +84,7 @@ canvas pieces (`Slab`, `VinylBox`, `SplatRecord`, `FilmOverlay`) — art,
 not controls. The login page. Any change to what the pages do.
 
 ### Phases
-- [ ] Phase 1 — func-ui: tokens and the missing variants
+- [x] Phase 1 — func-ui: tokens and the missing variants
       In `~/dev/func-ui`, as its own idea there: `--fui-radius` (and a
       panel radius) read by every control's module instead of a fixed
       value; `--fui-font` with the stylesheet no longer styling `html`
@@ -94,6 +94,7 @@ not controls. The login page. Any change to what the pages do.
       while it is shaped, published as 0.4.0 and bumped once it
       settles; the admin sets the tokens in `tailwind.css` and drops
       the module-class retunes and the font override.
+      run: 4s · 58 in · 12.8k out · sonnet-5-5 · sess:360fcc11-26a0-45cd-b153-59cc686a82b7
 - [ ] Phase 2 — Forms
       `Input`, `Textarea`, `Select` replace `Field` / `TextInput` /
       `TextArea` / `SelectInput` / `ReadValue` everywhere they are

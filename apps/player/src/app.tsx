@@ -1,6 +1,6 @@
 import { PlayerPage } from '@/features/player/player-page';
-import { FilmOverlay } from '@radio/stage';
 import { translate, useLocale } from '@/i18n';
+import { FilmOverlay } from '@radio/stage';
 import { useEffect } from 'react';
 
 export const App = () => {

@@ -38,10 +38,7 @@ export const SplatRecord = ({ className = '' }: SplatRecordProps) => (
           height: '10.06%',
         }}
       >
-        <Art
-          html={ART.splatHole}
-          inset="-119.01% -118.98% -119.01% -118.97%"
-        />
+        <Art html={ART.splatHole} inset="-119.01% -118.98% -119.01% -118.97%" />
       </div>
     </div>
   </div>

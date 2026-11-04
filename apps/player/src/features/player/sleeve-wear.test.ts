@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
 import { seedOf } from '@radio/stage';
+import { describe, expect, it } from 'vitest';
 
 describe('seedOf', () => {
   it('gives one album the same seed every time', () => {

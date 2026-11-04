@@ -1,5 +1,5 @@
-import { mulberry32 } from './rng';
 import { useEffect, useRef, useState } from 'react';
+import { mulberry32 } from './rng';
 
 /**
  * A tile of film grain: grey noise, drawn once into a small canvas and
