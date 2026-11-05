@@ -46,6 +46,9 @@
   /* The two voices, for the type scale and the shared chrome's lamps. */
   --font-serif: "KyivType Serif", Georgia, serif;
   --font-sans: "KyivType Sans", ui-sans-serif, system-ui, sans-serif;
+  --fui-font: var(--font-serif);
+  --fui-radius: 9999px;
+  --fui-radius-panel: 1.5rem;
 }
 
 /* The admin's type, in the player's two voices: KyivType Serif for what is
@@ -93,6 +96,8 @@ body {
   margin: 0;
   height: 100%;
   overflow: hidden;
+  font-family: var(--font-serif);
+  line-height: 1.6;
   background: #0a0605;
   color: #f5f2ec;
 }
@@ -180,6 +185,18 @@ textarea:focus-visible {
   scrollbar-color: rgb(255 86 71 / 0.3) transparent;
 }
 
+/* The room's shade over the desk photograph: deeper than the player's,
+   since the desk is lit and the work column is read, not watched — the
+   photo stays as texture under the lists, and darkens to the ink toward
+   the seam. */
+.work-shade {
+  background: linear-gradient(
+    97.74deg,
+    rgb(10 6 5 / 0.78) 20.78%,
+    #120d05 105.31%
+  );
+}
+
 .sign-corner {
   position: absolute;
   left: var(--gutter);
@@ -212,23 +229,4 @@ textarea:focus-visible {
 /* The island pill keeps taking the hand through the dock's dead zone. */
 .control-island {
   pointer-events: auto;
-}
-
-/* func-ui's stylesheet asserts Montserrat at the html level and its import
-   order in the bundle is not guaranteed — re-assert the admin's base family
-   with higher specificity so the app keeps its KyivType face. */
-html body {
-  font-family: "KyivType Serif", Georgia, serif;
-}
-
-[class*="input-module__input"],
-[class*="textarea-module__textarea"],
-[class*="select-module__trigger"],
-[class*="chip-module__chip"],
-[class*="stamp-module__stamp"] {
-  border-radius: 9999px;
-}
-
-[class*="modal-module__panel"] {
-  border-radius: 1.5rem;
 }

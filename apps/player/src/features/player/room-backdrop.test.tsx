@@ -1,6 +1,6 @@
+import { RoomBackdrop } from '@radio/stage';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { RoomBackdrop } from './room-backdrop';
 
 const PHOTO = 'https://media.example.com/a/img/session/one.webp';
 const NEXT = 'https://media.example.com/a/img/session/two.webp';

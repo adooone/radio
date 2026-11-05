@@ -4,10 +4,9 @@ import { statusLine } from '@/features/stream/radio-state';
 import { useNowPlaying } from '@/features/stream/use-now-playing';
 import { useRadio } from '@/features/stream/use-radio';
 import { useT } from '@/i18n';
-import { VinylBox, Wordmark } from '@radio/stage';
+import { RoomBackdrop, VinylBox, Wordmark } from '@radio/stage';
 import { useRef, useState } from 'react';
 import { ControlIsland } from './control-island';
-import { RoomBackdrop } from './room-backdrop';
 import { TrackStrip } from './track-strip';
 import { useIslandEdge } from './use-island-edge';
 

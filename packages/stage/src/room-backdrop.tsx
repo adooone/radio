@@ -1,15 +1,21 @@
 import { useEffect, useState } from 'react';
 
-/** The default room: the old frontend's waiting-room photograph. */
-const ROOM = '/brand/room.jpg';
-
 /**
- * Both bleed past the chat's boundary, under its slab, so the rim's swing
+ * Both bleed past the column's boundary, under the slab, so the rim's swing
  * never uncovers the bare page between them.
  */
 const BLEED = { width: 'calc(100% + 32px)', height: 'calc(100% + 32px)' };
 
 type Layer = { url: string; shown: boolean };
+
+type RoomBackdropProps = {
+  /** A photo from the album's sessions, faded in over the room. */
+  photo?: string;
+  /** The room itself: each app ships its own under this path. */
+  room?: string;
+  /** Where the room's crop settles when the column is narrower than it. */
+  roomPosition?: string;
+};
 
 /**
  * Fetches and decodes a photo off screen, so it can appear whole at once;
@@ -23,14 +29,19 @@ export const loadPhoto = async (url: string): Promise<void> => {
 };
 
 /**
- * The room behind the radio. The waiting-room photograph is always there;
- * when the song on air brings a photo from its album's sessions, that photo
- * is loaded out of sight and only then faded in over the room. The next
- * photo fades in over the last one, which is let go once it is covered;
- * with no photo, or one that will not load, the photos fade back off the
- * room.
+ * The room behind the work — the player's radio, the admin's desk. The
+ * room photograph is always there; when the song on air brings a photo
+ * from its album's sessions, that photo is loaded out of sight and only
+ * then faded in over the room. The next photo fades in over the last one,
+ * which is let go once it is covered; with no photo, or one that will not
+ * load, the photos fade back off the room. The app lays its `.room-shade`
+ * over this.
  */
-export const RoomBackdrop = ({ photo }: { photo?: string }) => {
+export const RoomBackdrop = ({
+  photo,
+  room = '/brand/room.jpg',
+  roomPosition = '62% 50%',
+}: RoomBackdropProps) => {
   const [layers, setLayers] = useState<Layer[]>([]);
 
   useEffect(() => {
@@ -89,9 +100,9 @@ export const RoomBackdrop = ({ photo }: { photo?: string }) => {
     <>
       <img
         alt=""
-        src={ROOM}
+        src={room}
         className="absolute top-0 left-0 max-w-none object-cover"
-        style={{ objectPosition: '62% 50%', ...BLEED }}
+        style={{ objectPosition: roomPosition, ...BLEED }}
       />
       {layers.map((layer) => (
         <img

@@ -346,49 +346,9 @@ html {
 /* The sleeve's shadow, jacket and bevel ship with the record itself, from
    `@radio/stage` (vinyl-box.tsx, stage.css). */
 
-/* A session photo over the room: clear until it is loaded and shown, then
-   a slow fade in; held a touch dim so it sits in the warm room like the
-   photograph it covers. */
-.room-photo {
-  opacity: 0;
-  filter: brightness(0.85) saturate(0.9);
-  transition: opacity 1.6s ease;
-}
-.room-photo[data-shown="true"] {
-  opacity: 1;
-}
-/* Still a transition (so the layers settle when it ends), just instant. */
-@media (prefers-reduced-motion: reduce) {
-  .room-photo {
-    transition-duration: 1ms;
-  }
-}
-
-/* The room's warm shade over the turntable photograph, darkening toward
-   the seam, from the first build's Figma frame. */
-.room-shade {
-  background: linear-gradient(
-    97.74deg,
-    rgba(0, 0, 0, 0.25) 20.78%,
-    #120d05 105.31%
-  );
-}
-@media (orientation: portrait) {
-  /* The phone's browser and status bars take the page's theme colour (the
-     ink); the photo fades into that same ink at the top and bottom edges,
-     so the bars read as the page continuing rather than as black stripes. */
-  .room-shade {
-    background: linear-gradient(
-        to bottom,
-        var(--color-ink) 0,
-        rgb(10 6 5 / 0.6) 6%,
-        transparent 16%,
-        transparent 84%,
-        rgb(10 6 5 / 0.6) 94%,
-        var(--color-ink) 100%
-      ), linear-gradient(97.74deg, rgba(0, 0, 0, 0.25) 20.78%, #120d05 105.31%);
-  }
-}
+/* The room photograph, the session photo over it and the warm shade ship
+   with the backdrop itself, from `@radio/stage` (room-backdrop.tsx,
+   stage.css). */
 
 /* The chat's scroll: a thin red whisper, no chrome. */
 .chat-scroll {
