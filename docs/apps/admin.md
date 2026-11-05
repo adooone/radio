@@ -21,9 +21,7 @@ src/
 │   └── ui/               # Toasts, the wave connection line
 ├── features/
 │   ├── admin/            # The stage: layout, the split (work column + slab),
-│   │   │                 #   control island, track strip, user ring
-│   │   └── ui/           # The admin's primitives in the player's language:
-│   │                     #   Pill, TabPills, Chip, Dot, FeedRow, Stat, Field, GhostNav
+│   │                     #   control island, track strip, user ring
 │   ├── auth/             # Login page (kept as it was)
 │   ├── collection/       # «Колекція»
 │   │   ├── components/   # Album browser and rows, the detail on the slab
@@ -132,3 +130,5 @@ Uses @dendelion/func-ui, including its lamp family for retro-styled controls (bu
 ---
 
 **Next**: [Player Documentation](player.md) | [API Reference](../api/streaming.md)
+
+Every control — buttons, tabs, inputs, selects, stamps, status dots, list rows — comes from `@dendelion/func-ui`; the admin keeps no primitives of its own. `tailwind.css` sets the func-ui tokens (`--fui-font`, `--fui-radius`, `--fui-radius-panel`) and the type voices.

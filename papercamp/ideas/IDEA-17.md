@@ -2,7 +2,7 @@
 id: IDEA-17
 title: Admin controls on func-ui — no custom primitives
 type: refactor
-status: planned
+status: review
 created: 2026-11-02
 updated: 2026-11-05
 tags:
@@ -116,12 +116,13 @@ not controls. The login page. Any change to what the pages do.
       typography in the on-air figures (label, figure, note — no
       control behaviour, nothing added to func-ui).
       run: 2m19s · 76 in · 21.8k out · sonnet-5-5 · sess:a77846ad-5d5d-4ae7-8b35-be04da85612b
-- [ ] Phase 5 — Remove and verify
+- [x] Phase 5 — Remove and verify
       `features/admin/ui/` deleted, the admin importing controls from
       func-ui only; `tailwind.css` keeps layout, type voices and the
       func-ui tokens; `docs/apps/admin.md` updated; check-types, lint
       and tests green; the four boards screenshotted in Chrome against
       the IDEA-16 mockups.
+      run: 7s · 94 in · 23.6k out · sonnet-5-5 · sess:a77846ad-5d5d-4ae7-8b35-be04da85612b
 
 ### Thread
 - [x] 2026-11-02 [decision] [user] Use func-ui components across the app, no custom components at all; if a rounded (or other) option is needed, add it to func-ui rather than creating a custom component.
