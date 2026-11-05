@@ -1,8 +1,7 @@
-import { Chip } from '@/features/admin/ui';
 import { collectionApi, useDeleteSong } from '@/services/api';
 import { useOnAir, useSetOnAir } from '@/services/api/hooks/use-on-air-api';
 import { useNowPlayingStore } from '@/stores/now-playing-store';
-import { Button } from '@dendelion/func-ui';
+import { Button, Stamp } from '@dendelion/func-ui';
 import { LampIconButton } from '@dendelion/func-ui';
 import type { Song } from '@radio/types';
 import clsx from 'clsx';
@@ -133,9 +132,9 @@ export const SongRows = ({
               {song.title}
             </span>
             {songOnAir && (
-              <Chip tone="red" dot="live">
+              <Stamp variant="error" dot>
                 в ефірі
-              </Chip>
+              </Stamp>
             )}
             <span className="type-meta shrink-0 text-cream/60">
               {song.duration}

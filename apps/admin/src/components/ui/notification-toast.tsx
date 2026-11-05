@@ -1,5 +1,5 @@
-import { Dot, type DotTone } from '@/features/admin/ui';
 import type { Notification } from '@/stores/notification-store';
+import { StatusDot, type StatusDotProps } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import type React from 'react';
 import { useEffect, useState } from 'react';
@@ -7,11 +7,14 @@ import { useEffect, useState } from 'react';
 /* A toast is a line in the island's glass: a light for what kind of news,
    the words, and a close. Trouble reads red; the rest keeps to cream and the
    glow. */
-const TONES: Record<Notification['type'], { dot: DotTone; rim: string }> = {
-  success: { dot: 'lit', rim: 'border-cream/15' },
-  error: { dot: 'live', rim: 'border-accent/40' },
-  warning: { dot: 'lit', rim: 'border-glow/40' },
-  info: { dot: 'quiet', rim: 'border-cream/15' },
+const TONES: Record<
+  Notification['type'],
+  { dot: StatusDotProps['variant']; rim: string }
+> = {
+  success: { dot: 'warning', rim: 'border-cream/15' },
+  error: { dot: 'error', rim: 'border-accent/40' },
+  warning: { dot: 'warning', rim: 'border-glow/40' },
+  info: { dot: 'neutral', rim: 'border-cream/15' },
 };
 
 export const NotificationToast: React.FC<{
@@ -42,7 +45,11 @@ export const NotificationToast: React.FC<{
           : 'translate-y-2 opacity-0',
       )}
     >
-      <Dot tone={tone.dot} className="mt-1.5" />
+      <StatusDot
+        variant={tone.dot}
+        pulse={notification.type === 'error'}
+        className="mt-1.5"
+      />
       <div className="flex min-w-0 flex-1 flex-col gap-0.5">
         <p className="type-ui break-words text-cream">{notification.title}</p>
         {notification.message && (

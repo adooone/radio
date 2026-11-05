@@ -1,9 +1,9 @@
-import { Chip } from '@/features/admin/ui';
 import {
   collectionApi,
   useCollection,
   useRemoveItemFromCollection,
 } from '@/services/api';
+import { Stamp } from '@dendelion/func-ui';
 import type { Collection } from '@radio/types';
 import { plural } from '../lib/album-meta';
 
@@ -35,9 +35,9 @@ export const PlaylistDetail = ({ playlist }: { playlist: Collection }) => {
           </p>
         )}
         <p className="flex items-center gap-3 font-sans text-[13px] text-cream/60">
-          <Chip tone={playlist.isPublic ? 'lit' : 'quiet'}>
+          <Stamp variant={playlist.isPublic ? 'warning' : 'neutral'}>
             {playlist.isPublic ? 'публічний' : 'приватний'}
-          </Chip>
+          </Stamp>
           <span>{plural(items.length, ['трек', 'треки', 'треків'])}</span>
           <span>
             створено {new Date(playlist.createdAt).toLocaleDateString('uk-UA')}

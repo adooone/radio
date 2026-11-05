@@ -1,5 +1,5 @@
-import { Dot } from '@/features/admin/ui';
 import { useOnAir, useTurntable } from '@/services/api/hooks/use-on-air-api';
+import { StatusDot } from '@dendelion/func-ui';
 
 /** The air's state in one line, top right, level with the sign. */
 export const CornerStatus = () => {
@@ -18,7 +18,10 @@ export const CornerStatus = () => {
 
   return (
     <span className="flex items-center gap-2.5">
-      <Dot tone={playing || live ? 'live' : 'quiet'} />
+      <StatusDot
+        variant={playing || live ? 'error' : 'neutral'}
+        pulse={playing || live}
+      />
       <span className="type-label text-cream/70">{line}</span>
     </span>
   );

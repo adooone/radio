@@ -1,6 +1,5 @@
-import { Chip } from '@/features/admin/ui';
 import { useDeleteCollection, useUserCollections } from '@/services/api';
-import { Button } from '@dendelion/func-ui';
+import { Button, Stamp } from '@dendelion/func-ui';
 import type { Collection } from '@radio/types';
 import clsx from 'clsx';
 import { useState } from 'react';
@@ -47,9 +46,9 @@ const Row = ({
         </span>
       )}
     </button>
-    <Chip tone={playlist.isPublic ? 'lit' : 'quiet'}>
+    <Stamp variant={playlist.isPublic ? 'warning' : 'neutral'}>
       {playlist.isPublic ? 'публічний' : 'приватний'}
-    </Chip>
+    </Stamp>
     <span className="type-meta shrink-0 text-cream/60">
       {new Date(playlist.createdAt).toLocaleDateString('uk-UA')}
     </span>

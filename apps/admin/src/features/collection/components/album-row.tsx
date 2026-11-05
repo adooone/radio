@@ -1,4 +1,4 @@
-import { Chip } from '@/features/admin/ui';
+import { Stamp } from '@dendelion/func-ui';
 import type { Album } from '@radio/types';
 import clsx from 'clsx';
 import { tracksCount } from '../lib/album-meta';
@@ -51,11 +51,11 @@ export const AlbumRow = ({
         </span>
       </span>
       {onAir && (
-        <Chip tone="red" dot="live">
+        <Stamp variant="error" dot>
           в ефірі
-        </Chip>
+        </Stamp>
       )}
-      {!album.coverImageUrl && <Chip tone="quiet">без обкладинки</Chip>}
+      {!album.coverImageUrl && <Stamp variant="neutral">без обкладинки</Stamp>}
       <span className="shrink-0 font-sans text-xs tabular-nums text-cream/60">
         {tracksCount(album.songCount ?? 0)}
       </span>

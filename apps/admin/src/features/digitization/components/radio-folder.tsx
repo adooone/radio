@@ -1,6 +1,5 @@
-import { Chip, Dot } from '@/features/admin/ui';
 import { useCreateDraft } from '@/services/api';
-import { Button } from '@dendelion/func-ui';
+import { Button, Stamp, StatusDot } from '@dendelion/func-ui';
 import type { DigitizationDraft } from '@radio/types';
 import { useMemo, useState } from 'react';
 import { useBeforeUnloadWhileUploading } from '../hooks/use-before-unload-while-uploading';
@@ -52,7 +51,7 @@ const FolderRow = ({
         <span className="type-meta shrink-0 text-cream/60">
           {filesCount(folder.files.length)}
         </span>
-        {draft && <Chip tone="quiet">у драфтах</Chip>}
+        {draft && <Stamp variant="neutral">у драфтах</Stamp>}
         {missing.length > 0 && (
           <Button
             variant="ghost"
@@ -110,7 +109,7 @@ export const RadioFolder = ({ drafts }: { drafts: DigitizationDraft[] }) => {
   return (
     <div className="flex flex-col gap-3">
       <span className="type-label flex items-center gap-2 text-cream/60">
-        <Dot tone={granted ? 'lit' : 'quiet'} />
+        <StatusDot variant={granted ? 'warning' : 'neutral'} />
         Папка радіо
       </span>
       <span className="font-sans text-[13px] text-cream/75">{status}</span>

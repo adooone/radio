@@ -1,8 +1,8 @@
-import { Chip, Dot } from '@/features/admin/ui';
 import {
   useDeleteUser,
   useUpdateUser,
 } from '@/services/api/hooks/use-user-management';
+import { Stamp, StatusDot } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { useState } from 'react';
 
@@ -132,9 +132,9 @@ export const PeopleRows = ({
               title={admin ? 'Зробити користувачем' : 'Зробити адміном'}
               className="cursor-pointer disabled:cursor-default"
             >
-              <Chip tone={admin ? 'lit' : 'cream'}>
+              <Stamp variant={admin ? 'warning' : 'neutral'}>
                 {admin ? 'Адмін' : 'Редактор'}
-              </Chip>
+              </Stamp>
             </button>
             <button
               type="button"
@@ -144,7 +144,7 @@ export const PeopleRows = ({
               title={person.isActive ? 'Деактивувати' : 'Активувати'}
               className="cursor-pointer p-1 disabled:cursor-default"
             >
-              <Dot tone={person.isActive ? 'lit' : 'quiet'} />
+              <StatusDot variant={person.isActive ? 'warning' : 'neutral'} />
             </button>
             <button
               type="button"

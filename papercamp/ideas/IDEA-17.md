@@ -110,11 +110,12 @@ not controls. The login page. Any change to what the pages do.
       slab (journal / monitoring / settings, albums / playlists);
       `GhostNav` → `Tabs` in the ghost-word style inside the island.
       run: 2m · 56 in · 13.2k out · sonnet-5-5 · sess:a77846ad-5d5d-4ae7-8b35-be04da85612b
-- [ ] Phase 4 — Marks and rows
+- [x] Phase 4 — Marks and rows
       `Chip` → `Stamp`, `Dot` → `StatusDot`, `FeedRow` → `ListItem`
       in the journal and monitoring feeds; `Stat` becomes plain
       typography in the on-air figures (label, figure, note — no
       control behaviour, nothing added to func-ui).
+      run: 2m19s · 76 in · 21.8k out · sonnet-5-5 · sess:a77846ad-5d5d-4ae7-8b35-be04da85612b
 - [ ] Phase 5 — Remove and verify
       `features/admin/ui/` deleted, the admin importing controls from
       func-ui only; `tailwind.css` keeps layout, type voices and the

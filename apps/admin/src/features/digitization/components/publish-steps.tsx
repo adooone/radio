@@ -1,11 +1,10 @@
-import { FeedRow } from '@/features/admin/ui';
 import {
   digitizationKeys,
   useCleanupDraft,
   useDigitizationJob,
   usePublishDraft,
 } from '@/services/api';
-import { Button } from '@dendelion/func-ui';
+import { Button, ListItem } from '@dendelion/func-ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { getErrorMessage } from '../lib/split-review-utils';
@@ -108,9 +107,9 @@ export const PublishSteps = ({
         <div className="flex flex-col gap-2">
           {job.progress.map((line, index) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: the job's lines are append-only
-            <FeedRow key={index} time="" tone="muted">
+            <ListItem key={index} className="text-cream/45">
               {line}
-            </FeedRow>
+            </ListItem>
           ))}
         </div>
       )}

@@ -1,6 +1,6 @@
-import { Dot } from '@/features/admin/ui';
 import { useWebSocket } from '@/hooks/use-websocket';
 import { isSocketUrlConfigured } from '@/services/env';
+import { StatusDot } from '@dendelion/func-ui';
 import type React from 'react';
 
 const WORDS: Record<string, string> = {
@@ -18,7 +18,10 @@ export const ConnectionStatus: React.FC = () => {
 
   return (
     <div className="fixed right-10 bottom-[3.5vmin] z-30 flex items-center gap-2">
-      <Dot tone={isConnected ? 'live' : 'quiet'} />
+      <StatusDot
+        variant={isConnected ? 'error' : 'neutral'}
+        pulse={isConnected}
+      />
       <span className="type-label text-cream/45">
         {WORDS[connectionState] ?? connectionState}
       </span>

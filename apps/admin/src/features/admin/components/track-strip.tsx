@@ -1,8 +1,7 @@
 import { useOnAir } from '@/services/api/hooks';
 import { useNowPlayingStore } from '@/stores/now-playing-store';
-import { LampIconButton } from '@dendelion/func-ui';
+import { LampIconButton, StatusDot } from '@dendelion/func-ui';
 import type React from 'react';
-import { Dot } from '../ui';
 
 const PlayIcon = () => (
   <svg
@@ -66,7 +65,7 @@ export const TrackStrip: React.FC = () => {
           className="shrink-0 text-ink"
         />
       ) : (
-        <Dot tone={song ? 'live' : 'quiet'} />
+        <StatusDot variant={song ? 'error' : 'neutral'} pulse={Boolean(song)} />
       )}
       <div className="w-[260px] min-w-0">
         {song ? (

@@ -1,11 +1,10 @@
-import { Chip } from '@/features/admin/ui';
 import { useAlbum, useDeleteAlbum } from '@/services/api';
 import {
   useClearOnAir,
   useOnAir,
   useSetOnAir,
 } from '@/services/api/hooks/use-on-air-api';
-import { Button } from '@dendelion/func-ui';
+import { Button, Stamp } from '@dendelion/func-ui';
 import type { Album, Song } from '@radio/types';
 import { useEffect, useState } from 'react';
 import { albumMetaLine, albumStateLine, albumTags } from '../lib/album-meta';
@@ -85,9 +84,9 @@ export const AlbumDetail = ({ album }: { album: Album }) => {
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
-            <Chip key={tag} tone="cream">
+            <Stamp key={tag} variant="neutral">
               {tag}
-            </Chip>
+            </Stamp>
           ))}
         </div>
       )}
@@ -100,9 +99,9 @@ export const AlbumDetail = ({ album }: { album: Album }) => {
       <div className="flex flex-col gap-2.5 pt-1">
         {albumOnAir ? (
           <div className="flex items-center gap-3">
-            <Chip tone="red" dot="live">
+            <Stamp variant="error" dot>
               в ефірі
-            </Chip>
+            </Stamp>
             <Button
               variant="danger"
               size="sm"

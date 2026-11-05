@@ -1,11 +1,10 @@
-import { Dot, FeedRow } from '@/features/admin/ui';
 import { useMonitoringData } from '@/services/api/hooks';
 import {
   useRestartRtmpServer,
   useStartRtmpServer,
   useStopRtmpServer,
 } from '@/services/api/hooks/use-stream-control';
-import { Button } from '@dendelion/func-ui';
+import { Button, ListItem, StatusDot } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { rtmpAlert, rtmpRows } from '../lib/rtmp-status';
 
@@ -61,7 +60,7 @@ export const MonitoringRows = () => {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-2.5">
-        <Dot tone={running ? 'lit' : 'quiet'} />
+        <StatusDot variant={running ? 'warning' : 'neutral'} />
         <span className="type-label text-cream/70">
           RTMP-сервер · {running ? 'працює' : 'зупинено'}
         </span>
@@ -75,9 +74,12 @@ export const MonitoringRows = () => {
       </div>
 
       {alert && (
-        <FeedRow time="" tone={alert.tone}>
+        <ListItem
+          tone={alert.tone === 'muted' ? 'default' : alert.tone}
+          className={alert.tone === 'muted' ? 'text-cream/45' : undefined}
+        >
           {alert.message}
-        </FeedRow>
+        </ListItem>
       )}
 
       <div className="flex flex-wrap gap-3">

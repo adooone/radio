@@ -1,13 +1,12 @@
-import { FeedRow, type FeedTone } from '@/features/admin/ui';
-import { Tabs } from '@dendelion/func-ui';
+import { ListItem, Tabs } from '@dendelion/func-ui';
 import type { LogEntry } from '@radio/types';
 import { useJournal } from '../hooks/use-journal';
 
-const TONES: Record<LogEntry['level'], FeedTone> = {
+const TONES: Record<LogEntry['level'], 'default' | 'warn' | 'alert'> = {
   error: 'alert',
   warn: 'warn',
   info: 'default',
-  debug: 'muted',
+  debug: 'default',
 };
 
 const clock = (timestamp: string) =>
@@ -50,10 +49,15 @@ export const JournalFeed = () => {
       ) : (
         <div className="flex flex-col gap-3.5">
           {entries.map((entry, index) => (
-            <FeedRow
+            <ListItem
               key={`${entry.timestamp}-${entry.source}-${index}`}
-              time={clock(entry.timestamp)}
+              icon={
+                <span className="type-meta text-cream/55">
+                  {clock(entry.timestamp)}
+                </span>
+              }
               tone={TONES[entry.level]}
+              className={entry.level === 'debug' ? 'text-cream/45' : undefined}
             >
               {source === 'all' && (
                 <span className="type-label mr-2 text-cream/45">
@@ -61,7 +65,7 @@ export const JournalFeed = () => {
                 </span>
               )}
               {entry.message}
-            </FeedRow>
+            </ListItem>
           ))}
         </div>
       )}
