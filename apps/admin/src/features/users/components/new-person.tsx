@@ -1,5 +1,6 @@
-import { Field, Pill, SelectInput, TextInput } from '@/features/admin/ui';
+import { Pill } from '@/features/admin/ui';
 import { useCreateUser } from '@/services/api/hooks/use-user-management';
+import { Input, Select } from '@dendelion/func-ui';
 import { useState } from 'react';
 
 /** A new account, made on the sheet in place of the list. */
@@ -40,46 +41,43 @@ export const NewPerson = ({ onDone }: { onDone: () => void }) => {
     >
       <span className="type-label text-cream/60">Нова обліковка</span>
       <div className="grid grid-cols-2 gap-4">
-        <Field label="Імʼя користувача" htmlFor="person-username">
-          <TextInput
-            id="person-username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            autoComplete="off"
-            required
-          />
-        </Field>
-        <Field label="Пошта" htmlFor="person-email">
-          <TextInput
-            id="person-email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="off"
-            required
-          />
-        </Field>
-        <Field label="Пароль" htmlFor="person-password">
-          <TextInput
-            id="person-password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="new-password"
-            minLength={8}
-            required
-          />
-        </Field>
-        <Field label="Роль" htmlFor="person-role">
-          <SelectInput
-            id="person-role"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-          >
-            <option value="user">Редактор</option>
-            <option value="admin">Адмін</option>
-          </SelectInput>
-        </Field>
+        <Input
+          label="Імʼя користувача"
+          id="person-username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          autoComplete="off"
+          required
+        />
+        <Input
+          label="Пошта"
+          id="person-email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          autoComplete="off"
+          required
+        />
+        <Input
+          label="Пароль"
+          id="person-password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          autoComplete="new-password"
+          minLength={8}
+          required
+        />
+        <Select
+          label="Роль"
+          id="person-role"
+          value={role}
+          onChange={setRole}
+          options={[
+            { value: 'user', label: 'Редактор' },
+            { value: 'admin', label: 'Адмін' },
+          ]}
+        />
       </div>
       {error && <p className="font-sans text-xs text-accent">{error}</p>}
       <div className="flex gap-2.5">

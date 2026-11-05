@@ -4,7 +4,7 @@ title: Admin controls on func-ui — no custom primitives
 type: refactor
 status: planned
 created: 2026-11-02
-updated: 2026-11-04
+updated: 2026-11-05
 tags:
   - admin
   - design
@@ -95,13 +95,14 @@ not controls. The login page. Any change to what the pages do.
       settles; the admin sets the tokens in `tailwind.css` and drops
       the module-class retunes and the font override.
       run: 4s · 58 in · 12.8k out · sonnet-5-5 · sess:360fcc11-26a0-45cd-b153-59cc686a82b7
-- [ ] Phase 2 — Forms
+- [x] Phase 2 — Forms
       `Input`, `Textarea`, `Select` replace `Field` / `TextInput` /
       `TextArea` / `SelectInput` / `ReadValue` everywhere they are
       used: the collection header, the album form and tag editor, the
       RTMP settings form, the new-person form, the studio's metadata
       and Discogs forms. Labels, hints and errors move onto the
       components' own props.
+      run: 6s · 34 in · 6.6k out · sonnet-5-5 · sess:a77846ad-5d5d-4ae7-8b35-be04da85612b
 - [ ] Phase 3 — Buttons, tabs and the island nav
       `Pill` → `Button` across its 21 files, tone by tone (ghost →
       ghost, lit → the armed tone, red / danger → danger, quiet →

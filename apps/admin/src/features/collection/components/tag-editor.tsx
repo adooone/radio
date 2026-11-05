@@ -1,4 +1,5 @@
-import { Pill, TextInput } from '@/features/admin/ui';
+import { Pill } from '@/features/admin/ui';
+import { Input } from '@dendelion/func-ui';
 import { useState } from 'react';
 
 const PREDEFINED_TAGS = [
@@ -66,7 +67,7 @@ export const TagEditor = ({
         ))}
       </div>
       <div className="flex gap-2.5">
-        <TextInput
+        <Input
           value={custom}
           onChange={(e) => setCustom(e.target.value)}
           onKeyDown={(e) => {

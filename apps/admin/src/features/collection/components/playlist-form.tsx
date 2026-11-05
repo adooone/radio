@@ -1,5 +1,6 @@
-import { Field, Pill, TextArea, TextInput } from '@/features/admin/ui';
+import { Pill } from '@/features/admin/ui';
 import { useCreateCollection } from '@/services/api';
+import { Input, Textarea } from '@dendelion/func-ui';
 import { useState } from 'react';
 
 /** A new playlist, made on the slab. */
@@ -35,22 +36,20 @@ export const PlaylistForm = ({ onDone }: { onDone: () => void }) => {
       className="flex flex-col gap-5"
     >
       <span className="type-label text-cream/60">Новий плейлист</span>
-      <Field label="Назва" htmlFor="playlist-name">
-        <TextInput
-          id="playlist-name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-      </Field>
-      <Field label="Опис" htmlFor="playlist-description">
-        <TextArea
-          id="playlist-description"
-          rows={3}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </Field>
+      <Input
+        label="Назва"
+        id="playlist-name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
+      <Textarea
+        label="Опис"
+        id="playlist-description"
+        rows={3}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
       <label className="flex items-center gap-3 type-ui text-cream/70">
         <input
           type="checkbox"

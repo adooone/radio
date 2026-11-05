@@ -1,4 +1,5 @@
-import { Field, Pill, TextArea, TextInput } from '@/features/admin/ui';
+import { Pill } from '@/features/admin/ui';
+import { Input, Textarea } from '@dendelion/func-ui';
 import type { AlbumDataJson } from '@radio/types';
 import { useState } from 'react';
 import { useDraftMetadataForm } from '../hooks/use-draft-metadata-form';
@@ -60,113 +61,101 @@ export const MetadataForm = ({
           className="flex flex-col gap-5"
         >
           <div className="grid grid-cols-2 gap-4">
-            <Field label="Назва альбому" htmlFor="md-title">
-              <TextInput
-                id="md-title"
-                value={fields.albumTitle}
-                onChange={(e) => set('albumTitle', e.target.value)}
-                required
-              />
-            </Field>
-            <Field label="Виконавець" htmlFor="md-artist">
-              <TextInput
-                id="md-artist"
-                value={fields.artist}
-                onChange={(e) => set('artist', e.target.value)}
-                required
-              />
-            </Field>
-          </div>
-          <Field label="Рік запису" htmlFor="md-year" className="max-w-[12rem]">
-            <TextInput
-              id="md-year"
-              type="number"
-              value={fields.recordingYear}
-              onChange={(e) => set('recordingYear', e.target.value)}
-              placeholder="1971"
+            <Input
+              label="Назва альбому"
+              id="md-title"
+              value={fields.albumTitle}
+              onChange={(e) => set('albumTitle', e.target.value)}
+              required
             />
-          </Field>
+            <Input
+              label="Виконавець"
+              id="md-artist"
+              value={fields.artist}
+              onChange={(e) => set('artist', e.target.value)}
+              required
+            />
+          </div>
+          <Input
+            label="Рік запису"
+            className="max-w-[12rem]"
+            id="md-year"
+            type="number"
+            value={fields.recordingYear}
+            onChange={(e) => set('recordingYear', e.target.value)}
+            placeholder="1971"
+          />
 
           <Section title="Деталі запису">
             <div className="grid grid-cols-2 gap-4">
-              <Field label="Період" htmlFor="md-period">
-                <TextInput
-                  id="md-period"
-                  value={fields.period}
-                  onChange={(e) => set('period', e.target.value)}
-                />
-              </Field>
-              <Field label="Місце" htmlFor="md-location">
-                <TextInput
-                  id="md-location"
-                  value={fields.location}
-                  onChange={(e) => set('location', e.target.value)}
-                />
-              </Field>
-            </div>
-            <Field label="Винятки" htmlFor="md-exceptions">
-              <TextArea
-                id="md-exceptions"
-                rows={2}
-                value={fields.exceptions}
-                onChange={(e) => set('exceptions', e.target.value)}
+              <Input
+                label="Період"
+                id="md-period"
+                value={fields.period}
+                onChange={(e) => set('period', e.target.value)}
               />
-            </Field>
+              <Input
+                label="Місце"
+                id="md-location"
+                value={fields.location}
+                onChange={(e) => set('location', e.target.value)}
+              />
+            </div>
+            <Textarea
+              label="Винятки"
+              id="md-exceptions"
+              rows={2}
+              value={fields.exceptions}
+              onChange={(e) => set('exceptions', e.target.value)}
+            />
           </Section>
 
           <Section title="Видання">
             <div className="grid grid-cols-2 gap-4">
-              <Field label="Лейбл" htmlFor="md-label">
-                <TextInput
-                  id="md-label"
-                  value={fields.label}
-                  onChange={(e) => set('label', e.target.value)}
-                />
-              </Field>
-              <Field label="Каталожний номер" htmlFor="md-catno">
-                <TextInput
-                  id="md-catno"
-                  value={fields.catalogNumber}
-                  onChange={(e) => set('catalogNumber', e.target.value)}
-                />
-              </Field>
-              <Field label="Країна" htmlFor="md-country">
-                <TextInput
-                  id="md-country"
-                  value={fields.country}
-                  onChange={(e) => set('country', e.target.value)}
-                />
-              </Field>
-              <Field label="Рік видання" htmlFor="md-issue-year">
-                <TextInput
-                  id="md-issue-year"
-                  type="number"
-                  value={fields.issueYear}
-                  onChange={(e) => set('issueYear', e.target.value)}
-                />
-              </Field>
-              <Field label="Дата видання" htmlFor="md-released">
-                <TextInput
-                  id="md-released"
-                  value={fields.released}
-                  onChange={(e) => set('released', e.target.value)}
-                />
-              </Field>
-              <Field label="Формат" htmlFor="md-format">
-                <TextInput
-                  id="md-format"
-                  value={fields.format}
-                  onChange={(e) => set('format', e.target.value)}
-                />
-              </Field>
-            </div>
-            <Field label="Phonographic copyright" htmlFor="md-copyright">
-              <TextInput
-                id="md-copyright"
-                value={fields.phonographicCopyright}
-                onChange={(e) => set('phonographicCopyright', e.target.value)}
+              <Input
+                label="Лейбл"
+                id="md-label"
+                value={fields.label}
+                onChange={(e) => set('label', e.target.value)}
               />
-            </Field>
+              <Input
+                label="Каталожний номер"
+                id="md-catno"
+                value={fields.catalogNumber}
+                onChange={(e) => set('catalogNumber', e.target.value)}
+              />
+              <Input
+                label="Країна"
+                id="md-country"
+                value={fields.country}
+                onChange={(e) => set('country', e.target.value)}
+              />
+              <Input
+                label="Рік видання"
+                id="md-issue-year"
+                type="number"
+                value={fields.issueYear}
+                onChange={(e) => set('issueYear', e.target.value)}
+              />
+              <Input
+                label="Дата видання"
+                id="md-released"
+                value={fields.released}
+                onChange={(e) => set('released', e.target.value)}
+              />
+              <Input
+                label="Формат"
+                id="md-format"
+                value={fields.format}
+                onChange={(e) => set('format', e.target.value)}
+              />
+            </div>
+            <Input
+              label="Phonographic copyright"
+              id="md-copyright"
+              value={fields.phonographicCopyright}
+              onChange={(e) => set('phonographicCopyright', e.target.value)}
+            />
           </Section>
 
           <Section title="Треклист">
@@ -177,7 +166,7 @@ export const MetadataForm = ({
                   key={index}
                   className="grid grid-cols-[5rem_1fr_6rem_auto] items-center gap-2"
                 >
-                  <TextInput
+                  <Input
                     aria-label="Позиція"
                     value={track.position}
                     onChange={(e) =>
@@ -185,7 +174,7 @@ export const MetadataForm = ({
                     }
                     placeholder="A1"
                   />
-                  <TextInput
+                  <Input
                     aria-label="Назва"
                     value={track.title}
                     onChange={(e) =>
@@ -193,7 +182,7 @@ export const MetadataForm = ({
                     }
                     placeholder="Назва"
                   />
-                  <TextInput
+                  <Input
                     aria-label="Тривалість"
                     value={track.duration ?? ''}
                     onChange={(e) =>
@@ -230,7 +219,7 @@ export const MetadataForm = ({
                   key={index}
                   className="grid grid-cols-[1fr_1fr_auto] items-center gap-2"
                 >
-                  <TextInput
+                  <Input
                     aria-label="Імʼя"
                     value={person.name}
                     onChange={(e) =>
@@ -238,7 +227,7 @@ export const MetadataForm = ({
                     }
                     placeholder="Імʼя"
                   />
-                  <TextInput
+                  <Input
                     aria-label="Ролі"
                     value={person.roles.join(', ')}
                     onChange={(e) =>
@@ -269,50 +258,46 @@ export const MetadataForm = ({
 
           <Section title="Продакшн та оформлення">
             <div className="grid grid-cols-2 gap-4">
-              <Field label="Звукорежисер" htmlFor="md-engineer">
-                <TextInput
-                  id="md-engineer"
-                  value={fields.engineer}
-                  onChange={(e) => set('engineer', e.target.value)}
-                />
-              </Field>
-              <Field label="Продюсери" htmlFor="md-producers" hint="через кому">
-                <TextInput
-                  id="md-producers"
-                  value={fields.producers}
-                  onChange={(e) => set('producers', e.target.value)}
-                />
-              </Field>
-              <Field label="Мастеринг" htmlFor="md-mastering">
-                <TextInput
-                  id="md-mastering"
-                  value={fields.mastering}
-                  onChange={(e) => set('mastering', e.target.value)}
-                />
-              </Field>
-              <Field label="Фото" htmlFor="md-photography" hint="через кому">
-                <TextInput
-                  id="md-photography"
-                  value={fields.photography}
-                  onChange={(e) => set('photography', e.target.value)}
-                />
-              </Field>
-              <Field label="Дизайн" htmlFor="md-design">
-                <TextInput
-                  id="md-design"
-                  value={fields.design}
-                  onChange={(e) => set('design', e.target.value)}
-                />
-              </Field>
-            </div>
-            <Field label="Додаткова інформація" htmlFor="md-notes">
-              <TextArea
-                id="md-notes"
-                rows={3}
-                value={fields.additionalInfo}
-                onChange={(e) => set('additionalInfo', e.target.value)}
+              <Input
+                label="Звукорежисер"
+                id="md-engineer"
+                value={fields.engineer}
+                onChange={(e) => set('engineer', e.target.value)}
               />
-            </Field>
+              <Input
+                label="Продюсери"
+                helperText="через кому"
+                id="md-producers"
+                value={fields.producers}
+                onChange={(e) => set('producers', e.target.value)}
+              />
+              <Input
+                label="Мастеринг"
+                id="md-mastering"
+                value={fields.mastering}
+                onChange={(e) => set('mastering', e.target.value)}
+              />
+              <Input
+                label="Фото"
+                helperText="через кому"
+                id="md-photography"
+                value={fields.photography}
+                onChange={(e) => set('photography', e.target.value)}
+              />
+              <Input
+                label="Дизайн"
+                id="md-design"
+                value={fields.design}
+                onChange={(e) => set('design', e.target.value)}
+              />
+            </div>
+            <Textarea
+              label="Додаткова інформація"
+              id="md-notes"
+              rows={3}
+              value={fields.additionalInfo}
+              onChange={(e) => set('additionalInfo', e.target.value)}
+            />
           </Section>
 
           <div className="flex items-center gap-3">

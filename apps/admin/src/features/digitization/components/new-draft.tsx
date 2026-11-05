@@ -1,5 +1,6 @@
-import { Field, Pill, TextInput } from '@/features/admin/ui';
+import { Pill } from '@/features/admin/ui';
 import { useCreateDraft } from '@/services/api';
+import { Input } from '@dendelion/func-ui';
 import { useState } from 'react';
 import { slugify } from '../lib/slugify';
 import { getErrorMessage } from '../lib/split-review-utils';
@@ -37,26 +38,21 @@ export const NewDraft = ({
       className="flex flex-col gap-4"
     >
       <span className="type-label text-cream/60">Новий запис</span>
-      <Field label="Виконавець" htmlFor="draft-artist">
-        <TextInput
-          id="draft-artist"
-          value={artist}
-          onChange={(e) => setArtist(e.target.value)}
-          required
-        />
-      </Field>
-      <Field
+      <Input
+        label="Виконавець"
+        id="draft-artist"
+        value={artist}
+        onChange={(e) => setArtist(e.target.value)}
+        required
+      />
+      <Input
         label="Альбом"
-        htmlFor="draft-album"
-        hint={slugPreview ? `тека інбоксу: ${slugPreview}` : undefined}
-      >
-        <TextInput
-          id="draft-album"
-          value={album}
-          onChange={(e) => setAlbum(e.target.value)}
-          required
-        />
-      </Field>
+        helperText={slugPreview ? `тека інбоксу: ${slugPreview}` : undefined}
+        id="draft-album"
+        value={album}
+        onChange={(e) => setAlbum(e.target.value)}
+        required
+      />
       {createDraft.isError && (
         <p className="font-sans text-xs text-accent">
           {getErrorMessage(createDraft.error)}

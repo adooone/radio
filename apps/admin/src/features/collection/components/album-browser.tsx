@@ -1,7 +1,8 @@
-import { Pill, SelectInput, TextInput } from '@/features/admin/ui';
+import { Pill } from '@/features/admin/ui';
 import { useSyncMedia } from '@/services/api';
 import { useOnAir } from '@/services/api/hooks/use-on-air-api';
 import { useNotificationStore } from '@/stores/notification-store';
+import { Input, Select } from '@dendelion/func-ui';
 import { useEffect, useMemo, useState } from 'react';
 import { useCollectionData } from '../hooks';
 import { albumsCount, tracksCount } from '../lib/album-meta';
@@ -101,7 +102,7 @@ export const AlbumBrowser = () => {
   return (
     <>
       <div className="flex items-center gap-3.5 pb-3">
-        <TextInput
+        <Input
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -109,19 +110,14 @@ export const AlbumBrowser = () => {
           aria-label="Пошук у колекції"
           className="min-w-0 flex-1"
         />
-        <SelectInput
-          fit
+        <Select
+          size="sm"
           aria-label="Сортування"
           value={sortBy}
-          onChange={(e) => setSortBy(e.target.value as SortField)}
-          className="shrink-0 py-2 text-[11px] font-semibold uppercase tracking-[0.12em]"
-        >
-          {SORT_OPTIONS.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </SelectInput>
+          onChange={(value) => setSortBy(value as SortField)}
+          options={SORT_OPTIONS}
+          className="shrink-0"
+        />
         <Pill
           tone="ghost"
           size="sm"

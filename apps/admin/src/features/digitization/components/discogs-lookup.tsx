@@ -1,5 +1,6 @@
-import { Field, GhostNav, Pill, TextInput } from '@/features/admin/ui';
+import { GhostNav, Pill } from '@/features/admin/ui';
 import { useDiscogsSearch, useFetchDraftMetadata } from '@/services/api';
+import { Input } from '@dendelion/func-ui';
 import { useState } from 'react';
 
 type Mode = 'url' | 'search';
@@ -62,15 +63,14 @@ export const DiscogsLookup = ({
           }}
           className="flex flex-col gap-4"
         >
-          <Field label="Посилання на реліз або його id" htmlFor="discogs-ref">
-            <TextInput
-              id="discogs-ref"
-              value={releaseRef}
-              onChange={(e) => setReleaseRef(e.target.value)}
-              placeholder="https://www.discogs.com/release/2243449-… або 2243449"
-              required
-            />
-          </Field>
+          <Input
+            label="Посилання на реліз або його id"
+            id="discogs-ref"
+            value={releaseRef}
+            onChange={(e) => setReleaseRef(e.target.value)}
+            placeholder="https://www.discogs.com/release/2243449-… або 2243449"
+            required
+          />
           <div className="flex gap-2.5">
             <Pill
               type="submit"
@@ -94,18 +94,14 @@ export const DiscogsLookup = ({
             }}
             className="flex items-end gap-2.5"
           >
-            <Field
+            <Input
               label="Пошук на Discogs"
-              htmlFor="discogs-query"
               className="flex-1"
-            >
-              <TextInput
-                id="discogs-query"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="jethro tull aqualung"
-              />
-            </Field>
+              id="discogs-query"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="jethro tull aqualung"
+            />
             <Pill type="submit" tone="ghost" size="sm" disabled={!query.trim()}>
               Шукати
             </Pill>
