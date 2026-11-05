@@ -22,7 +22,11 @@ type DraftDetailProps = {
  * Discogs or edited), the split, the publishing, and the cleanup once the
  * record is on air.
  */
-export const DraftDetail = ({ slug, onDeleted, onPublished }: DraftDetailProps) => {
+export const DraftDetail = ({
+  slug,
+  onDeleted,
+  onPublished,
+}: DraftDetailProps) => {
   const { data: draft, isLoading, isError, error } = useDigitizationDraft(slug);
   // `null` keeps the lookup closed; otherwise whether it may replace data.json.
   const [lookupForce, setLookupForce] = useState<boolean | null>(null);
@@ -39,7 +43,11 @@ export const DraftDetail = ({ slug, onDeleted, onPublished }: DraftDetailProps) 
   return (
     <>
       <div className="flex items-start gap-6">
-        <DraftCover slug={draft.slug} hasCover={draft.hasCover} title={draft.title} />
+        <DraftCover
+          slug={draft.slug}
+          hasCover={draft.hasCover}
+          title={draft.title}
+        />
         <div className="flex min-w-0 flex-col gap-2">
           <h1 className="font-serif text-[34px] font-extrabold leading-[1.1] text-cream">
             {draft.artist} — {draft.title}
@@ -103,7 +111,9 @@ export const DraftDetail = ({ slug, onDeleted, onPublished }: DraftDetailProps) 
         />
       ) : (
         <div className="flex flex-col items-start gap-3">
-          <p className="type-body text-cream/70">У цього драфту ще немає data.json.</p>
+          <p className="type-body text-cream/70">
+            У цього драфту ще немає data.json.
+          </p>
           <Pill tone="lit" size="sm" onClick={() => setLookupForce(false)}>
             Отримати метадані з Discogs
           </Pill>

@@ -52,9 +52,10 @@ export const AlbumNotes = ({ album }: { album: Album }) => {
   ) {
     return (
       <p className="font-serif text-sm italic text-cream/45">
-        Покладіть <code className="rounded bg-cream/10 px-1 py-0.5">data.json</code>{' '}
-        до теки альбому й натисніть «Оновити», щоб побачити учасників,
-        продакшн та інше.
+        Покладіть{' '}
+        <code className="rounded bg-cream/10 px-1 py-0.5">data.json</code> до
+        теки альбому й натисніть «Оновити», щоб побачити учасників, продакшн та
+        інше.
       </p>
     );
   }
@@ -64,7 +65,9 @@ export const AlbumNotes = ({ album }: { album: Album }) => {
       {hasRecording && recordingDetails && (
         <Block title="Запис">
           {recordingDetails.period && <p>Період: {recordingDetails.period}</p>}
-          {recordingDetails.location && <p>Місце: {recordingDetails.location}</p>}
+          {recordingDetails.location && (
+            <p>Місце: {recordingDetails.location}</p>
+          )}
           {recordingDetails.exceptions && <p>{recordingDetails.exceptions}</p>}
         </Block>
       )}

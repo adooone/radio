@@ -8,13 +8,25 @@ import clsx from 'clsx';
 import { useState } from 'react';
 
 const PlayIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+  <svg
+    width="12"
+    height="12"
+    viewBox="0 0 14 14"
+    fill="currentColor"
+    aria-hidden="true"
+  >
     <path d="M3.5 1.8c0-.6.65-.97 1.17-.67l8 4.7a.78.78 0 0 1 0 1.34l-8 4.7a.78.78 0 0 1-1.17-.67V1.8Z" />
   </svg>
 );
 
 const PauseIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+  <svg
+    width="12"
+    height="12"
+    viewBox="0 0 14 14"
+    fill="currentColor"
+    aria-hidden="true"
+  >
     <rect x="2.5" y="1.5" width="3.2" height="11" rx="1" />
     <rect x="8.3" y="1.5" width="3.2" height="11" rx="1" />
   </svg>
@@ -70,7 +82,9 @@ export const SongRows = ({
 
   if (sorted.length === 0) {
     return (
-      <p className="type-body text-cream/45">У цьому альбомі ще немає треків.</p>
+      <p className="type-body text-cream/45">
+        У цьому альбомі ще немає треків.
+      </p>
     );
   }
 
@@ -80,7 +94,8 @@ export const SongRows = ({
       {sorted.map((song) => {
         const previewing =
           Boolean(song.audioUrl) && currentTrack?.audioUrl === song.audioUrl;
-        const songOnAir = onAir?.albumId === albumId && onAir.songId === song.id;
+        const songOnAir =
+          onAir?.albumId === albumId && onAir.songId === song.id;
         const index = indexOf.get(song.id);
         return (
           <div

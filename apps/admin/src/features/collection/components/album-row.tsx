@@ -12,7 +12,12 @@ type AlbumRowProps = {
 
 /** One record in the list: its small sleeve, title, artist and year, the
     states worth a chip, and how many tracks it holds. The open one is lit. */
-export const AlbumRow = ({ album, selected, onAir, onClick }: AlbumRowProps) => {
+export const AlbumRow = ({
+  album,
+  selected,
+  onAir,
+  onClick,
+}: AlbumRowProps) => {
   const year = album.releaseYear ?? album.year;
   return (
     <button

@@ -71,7 +71,9 @@ export const PeopleSheet = ({
         className="control-island absolute top-24 left-1/2 flex max-h-[calc(100vh-9rem)] w-[640px] max-w-[calc(100vw-3rem)] -translate-x-1/2 flex-col gap-6 overflow-y-auto rounded-[28px] border border-cream/[0.12] p-9 [scrollbar-width:thin]"
       >
         <div className="flex items-center justify-between">
-          <h1 className="font-serif text-[28px] font-extrabold text-cream">Люди</h1>
+          <h1 className="font-serif text-[28px] font-extrabold text-cream">
+            Люди
+          </h1>
           <button
             type="button"
             onClick={onClose}

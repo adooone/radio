@@ -104,7 +104,8 @@ export const UploadZone = ({ slug }: { slug: string }) => {
           }}
         />
         <p className="type-body">
-          Перетягніть теку запису або файли side-*.wav, або натисніть, щоб вибрати
+          Перетягніть теку запису або файли side-*.wav, або натисніть, щоб
+          вибрати
         </p>
       </div>
       {rejected.length > 0 && (
@@ -113,7 +114,12 @@ export const UploadZone = ({ slug }: { slug: string }) => {
         </p>
       )}
       {tasks.length > 0 && (
-        <UploadTasks tasks={tasks} onPause={pause} onResume={resume} onRetry={retry} />
+        <UploadTasks
+          tasks={tasks}
+          onPause={pause}
+          onResume={resume}
+          onRetry={retry}
+        />
       )}
     </section>
   );

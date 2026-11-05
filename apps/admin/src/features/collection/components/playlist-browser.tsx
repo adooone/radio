@@ -99,10 +99,15 @@ export const PlaylistBrowser = ({ onCreate }: { onCreate: () => void }) => {
       <div className="work-scroll flex flex-col gap-2.5">
         {isLoading ? (
           ['s1', 's2', 's3'].map((key) => (
-            <div key={key} className="h-[66px] animate-pulse rounded-[18px] bg-cream/5" />
+            <div
+              key={key}
+              className="h-[66px] animate-pulse rounded-[18px] bg-cream/5"
+            />
           ))
         ) : error ? (
-          <p className="type-body text-accent">Не вдалося завантажити плейлисти.</p>
+          <p className="type-body text-accent">
+            Не вдалося завантажити плейлисти.
+          </p>
         ) : !playlists?.length ? (
           <p className="type-body py-8 text-center text-cream/45">
             Плейлистів ще немає.

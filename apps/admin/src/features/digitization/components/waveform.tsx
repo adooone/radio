@@ -101,7 +101,10 @@ export const Waveform = ({
     i === dragIndex ? { ...cut, time: dragTime } : cut,
   );
 
-  const onMarkerDown = (index: number, e: React.PointerEvent<HTMLDivElement>) => {
+  const onMarkerDown = (
+    index: number,
+    e: React.PointerEvent<HTMLDivElement>,
+  ) => {
     e.stopPropagation();
     movedRef.current = false;
     setDragIndex(index);
@@ -109,12 +112,17 @@ export const Waveform = ({
     e.currentTarget.setPointerCapture(e.pointerId);
   };
 
-  const onMarkerMove = (index: number, e: React.PointerEvent<HTMLDivElement>) => {
+  const onMarkerMove = (
+    index: number,
+    e: React.PointerEvent<HTMLDivElement>,
+  ) => {
     if (dragIndex !== index) return;
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
     const next = clampTime(xToTime(e.clientX - rect.left));
-    if (Math.abs(timeToX(next) - timeToX(cuts[index].time)) > DRAG_THRESHOLD_PX) {
+    if (
+      Math.abs(timeToX(next) - timeToX(cuts[index].time)) > DRAG_THRESHOLD_PX
+    ) {
       movedRef.current = true;
     }
     setDragTime(next);
@@ -172,7 +180,9 @@ export const Waveform = ({
             onDoubleClick={(e) => {
               e.stopPropagation();
               onSelect(null);
-              onCutsChange(cuts.filter((_, i) => i !== index).map((c) => c.time));
+              onCutsChange(
+                cuts.filter((_, i) => i !== index).map((c) => c.time),
+              );
             }}
             className={clsx(
               'absolute top-2 bottom-2 -translate-x-1/2 cursor-grab touch-none',

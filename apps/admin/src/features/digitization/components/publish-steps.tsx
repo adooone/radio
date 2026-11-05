@@ -91,13 +91,17 @@ export const PublishSteps = ({
             {running ? 'Публікація…' : 'Опублікувати в ефір'}
           </Pill>
           {job?.status === 'success' && (
-            <span className="font-sans text-xs text-glow">Альбом опубліковано.</span>
+            <span className="font-sans text-xs text-glow">
+              Альбом опубліковано.
+            </span>
           )}
         </div>
       )}
 
       {publish.isError && (
-        <p className="font-sans text-xs text-accent">{getErrorMessage(publish.error)}</p>
+        <p className="font-sans text-xs text-accent">
+          {getErrorMessage(publish.error)}
+        </p>
       )}
       {job && job.progress.length > 0 && (
         <div className="flex flex-col gap-2">
@@ -115,10 +119,20 @@ export const PublishSteps = ({
 
       {onAir && (
         <div className="flex flex-wrap items-center gap-2.5">
-          <Pill tone="ghost" size="sm" disabled={cleanup.isPending} onClick={deleteSides}>
+          <Pill
+            tone="ghost"
+            size="sm"
+            disabled={cleanup.isPending}
+            onClick={deleteSides}
+          >
             Видалити side-*.wav
           </Pill>
-          <Pill tone="danger" size="sm" disabled={cleanup.isPending} onClick={deleteFolder}>
+          <Pill
+            tone="danger"
+            size="sm"
+            disabled={cleanup.isPending}
+            onClick={deleteFolder}
+          >
             Видалити теку інбоксу
           </Pill>
           {cleanup.isError && (

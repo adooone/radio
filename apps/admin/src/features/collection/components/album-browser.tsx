@@ -52,7 +52,12 @@ export const AlbumBrowser = () => {
   }, [query, setSearchQuery]);
 
   const list = useMemo(
-    () => sortAlbums(filterAlbums(albums ?? [], {}, searchQuery), sortBy, sortOrder),
+    () =>
+      sortAlbums(
+        filterAlbums(albums ?? [], {}, searchQuery),
+        sortBy,
+        sortOrder,
+      ),
     [albums, searchQuery, sortBy, sortOrder],
   );
   const trackTotal = (albums ?? []).reduce(
@@ -64,11 +69,16 @@ export const AlbumBrowser = () => {
     syncMedia.mutate(undefined, {
       onSuccess: (data) => {
         const parts: string[] = [];
-        if (data.albumsCreated > 0) parts.push(`нових альбомів: ${data.albumsCreated}`);
-        if (data.albumsUpdated > 0) parts.push(`оновлено: ${data.albumsUpdated}`);
-        if (data.albumsMarkedOffline > 0) parts.push(`офлайн: ${data.albumsMarkedOffline}`);
-        if (data.tracksCreated > 0) parts.push(`нових треків: ${data.tracksCreated}`);
-        if (data.tracksUpdated > 0) parts.push(`треків оновлено: ${data.tracksUpdated}`);
+        if (data.albumsCreated > 0)
+          parts.push(`нових альбомів: ${data.albumsCreated}`);
+        if (data.albumsUpdated > 0)
+          parts.push(`оновлено: ${data.albumsUpdated}`);
+        if (data.albumsMarkedOffline > 0)
+          parts.push(`офлайн: ${data.albumsMarkedOffline}`);
+        if (data.tracksCreated > 0)
+          parts.push(`нових треків: ${data.tracksCreated}`);
+        if (data.tracksUpdated > 0)
+          parts.push(`треків оновлено: ${data.tracksUpdated}`);
         const message = parts.length > 0 ? parts.join(', ') : 'без змін';
         addNotification({
           type: data.errors.length > 0 ? 'warning' : 'success',

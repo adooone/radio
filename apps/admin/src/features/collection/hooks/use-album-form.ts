@@ -56,9 +56,7 @@ const fieldsOf = (album: Album): AlbumFormFields => ({
  * a JSON string the way wave keeps them.
  */
 export const useAlbumForm = (album: Album, onSaved?: () => void) => {
-  const [fields, setFields] = useState<AlbumFormFields>(() =>
-    fieldsOf(album),
-  );
+  const [fields, setFields] = useState<AlbumFormFields>(() => fieldsOf(album));
   const [error, setError] = useState<string | null>(null);
   const update = useUpdateAlbum();
 
@@ -84,7 +82,8 @@ export const useAlbumForm = (album: Album, onSaved?: () => void) => {
           artist: fields.artist.trim(),
           year: fields.year ? Number.parseInt(fields.year, 10) : undefined,
           description: fields.description.trim() || undefined,
-          tags: fields.tags.length > 0 ? JSON.stringify(fields.tags) : undefined,
+          tags:
+            fields.tags.length > 0 ? JSON.stringify(fields.tags) : undefined,
           isPublic: fields.isPublic,
           releaseYear: fields.releaseYear
             ? Number.parseInt(fields.releaseYear, 10)

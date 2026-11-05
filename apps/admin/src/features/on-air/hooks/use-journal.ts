@@ -23,12 +23,11 @@ export const useJournal = (lines = 100) => {
     [current.data],
   );
 
-  const sources: Array<{ id: JournalSource; label: string; count: number }> =
-    [
-      { id: 'all', label: 'Усі', count: all.data?.totalLines ?? 0 },
-      { id: 'rtmp', label: 'RTMP', count: rtmp.data?.totalLines ?? 0 },
-      { id: 'wave', label: 'Wave', count: wave.data?.totalLines ?? 0 },
-    ];
+  const sources: Array<{ id: JournalSource; label: string; count: number }> = [
+    { id: 'all', label: 'Усі', count: all.data?.totalLines ?? 0 },
+    { id: 'rtmp', label: 'RTMP', count: rtmp.data?.totalLines ?? 0 },
+    { id: 'wave', label: 'Wave', count: wave.data?.totalLines ?? 0 },
+  ];
 
   return {
     source,

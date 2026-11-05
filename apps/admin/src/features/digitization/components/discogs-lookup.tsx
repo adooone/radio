@@ -94,7 +94,11 @@ export const DiscogsLookup = ({
             }}
             className="flex items-end gap-2.5"
           >
-            <Field label="Пошук на Discogs" htmlFor="discogs-query" className="flex-1">
+            <Field
+              label="Пошук на Discogs"
+              htmlFor="discogs-query"
+              className="flex-1"
+            >
               <TextInput
                 id="discogs-query"
                 value={query}
@@ -128,8 +132,8 @@ export const DiscogsLookup = ({
                   </span>
                   <span className="font-sans text-xs text-cream/60">
                     {result.year} · {result.country} ·{' '}
-                    {[...result.label, result.catno].filter(Boolean).join(' ')} ·{' '}
-                    {result.format.join(', ')}
+                    {[...result.label, result.catno].filter(Boolean).join(' ')}{' '}
+                    · {result.format.join(', ')}
                   </span>
                 </button>
               ))}

@@ -81,11 +81,21 @@ export const MonitoringRows = () => {
 
       <div className="flex flex-wrap gap-3">
         {running ? (
-          <Pill tone="danger" size="sm" disabled={busy} onClick={() => stop.mutate()}>
+          <Pill
+            tone="danger"
+            size="sm"
+            disabled={busy}
+            onClick={() => stop.mutate()}
+          >
             Зупинити
           </Pill>
         ) : (
-          <Pill tone="lit" size="sm" disabled={busy} onClick={() => start.mutate()}>
+          <Pill
+            tone="lit"
+            size="sm"
+            disabled={busy}
+            onClick={() => start.mutate()}
+          >
             Запустити
           </Pill>
         )}

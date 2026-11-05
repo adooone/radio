@@ -17,7 +17,11 @@ import { CUT_COLORS, Waveform } from './waveform';
 
 type TuningParams = { noise: number; minSilence: number; tolerance: number };
 
-const DEFAULT_PARAMS: TuningParams = { noise: -40, minSilence: 1, tolerance: 25 };
+const DEFAULT_PARAMS: TuningParams = {
+  noise: -40,
+  minSilence: 1,
+  tolerance: 25,
+};
 const MANUAL_CUTS_DEBOUNCE_MS = 500;
 const EMPTY: Record<string, number[]> = {};
 
@@ -72,10 +76,36 @@ const Tuning = ({
   );
   return (
     <div className="flex flex-wrap items-end gap-5">
-      <Range label="Чутливість, дБ" value={pending.noise} min={-60} max={-20} step={1} onChange={(noise) => setPending((p) => ({ ...p, noise }))} />
-      <Range label="Мін. пауза, с" value={pending.minSilence} min={0.2} max={3} step={0.1} onChange={(minSilence) => setPending((p) => ({ ...p, minSilence }))} />
-      <Range label="Допуск, с" value={pending.tolerance} min={5} max={60} step={1} onChange={(tolerance) => setPending((p) => ({ ...p, tolerance }))} />
-      <Pill tone="ghost" size="sm" disabled={busy} onClick={() => onReanalyze(pending)}>
+      <Range
+        label="Чутливість, дБ"
+        value={pending.noise}
+        min={-60}
+        max={-20}
+        step={1}
+        onChange={(noise) => setPending((p) => ({ ...p, noise }))}
+      />
+      <Range
+        label="Мін. пауза, с"
+        value={pending.minSilence}
+        min={0.2}
+        max={3}
+        step={0.1}
+        onChange={(minSilence) => setPending((p) => ({ ...p, minSilence }))}
+      />
+      <Range
+        label="Допуск, с"
+        value={pending.tolerance}
+        min={5}
+        max={60}
+        step={1}
+        onChange={(tolerance) => setPending((p) => ({ ...p, tolerance }))}
+      />
+      <Pill
+        tone="ghost"
+        size="sm"
+        disabled={busy}
+        onClick={() => onReanalyze(pending)}
+      >
         {busy ? 'Аналіз…' : 'Переаналізувати'}
       </Pill>
     </div>
@@ -103,8 +133,11 @@ const Side = ({
     onConfirm: () => void;
   };
 }) => {
-  const { audition, isLoading: auditioning, error: auditionError } =
-    useSideAudio(slug, plan.side);
+  const {
+    audition,
+    isLoading: auditioning,
+    error: auditionError,
+  } = useSideAudio(slug, plan.side);
   const [selected, setSelected] = useState<number | null>(null);
 
   const cuts = manualCuts
@@ -118,7 +151,9 @@ const Side = ({
     const longest = [...plan.tracks].sort(
       (a, b) => b.end - b.start - (a.end - a.start),
     )[0];
-    const time = longest ? (longest.start + longest.end) / 2 : plan.duration / 2;
+    const time = longest
+      ? (longest.start + longest.end) / 2
+      : plan.duration / 2;
     const times = [...cuts.map((c) => c.time), time].sort((a, b) => a - b);
     setSelected(times.indexOf(time));
     change(times);
@@ -153,7 +188,11 @@ const Side = ({
           </span>
         ))}
         {auditioning && <span>завантаження фрагмента…</span>}
-        {manualCuts && <span className="text-glow">ручні позначки — переаналіз скине їх</span>}
+        {manualCuts && (
+          <span className="text-glow">
+            ручні позначки — переаналіз скине їх
+          </span>
+        )}
       </div>
 
       <div className="flex flex-wrap gap-2.5">
@@ -161,14 +200,21 @@ const Side = ({
           tone="ghost"
           size="sm"
           disabled={selected === null || !cuts[selected]}
-          onClick={() => selected !== null && cuts[selected] && audition(cuts[selected].time)}
+          onClick={() =>
+            selected !== null && cuts[selected] && audition(cuts[selected].time)
+          }
         >
           Прослухати з межі
         </Pill>
         <Pill tone="ghost" size="sm" onClick={addCut}>
           Додати межу
         </Pill>
-        <Pill tone="ghost" size="sm" disabled={selected === null} onClick={removeCut}>
+        <Pill
+          tone="ghost"
+          size="sm"
+          disabled={selected === null}
+          onClick={removeCut}
+        >
           Прибрати межу
         </Pill>
         <Pill
@@ -185,11 +231,13 @@ const Side = ({
         </Pill>
       </div>
 
-      {auditionError && <p className="font-sans text-xs text-accent">{auditionError}</p>}
+      {auditionError && (
+        <p className="font-sans text-xs text-accent">{auditionError}</p>
+      )}
       {manualCuts && manualCuts.length !== expectedCuts && (
         <p className="font-sans text-xs text-glow">
-          Для {plan.tracks.length} треків потрібно {expectedCuts} позначок, зараз{' '}
-          {manualCuts.length}.
+          Для {plan.tracks.length} треків потрібно {expectedCuts} позначок,
+          зараз {manualCuts.length}.
         </p>
       )}
       {hasTrackFiles && (
@@ -213,10 +261,14 @@ const Side = ({
               key={track.fileSlug}
               className={clsx(
                 'flex items-baseline gap-4 rounded-[14px] border px-4 py-2.5',
-                warned ? 'border-lamp/35 bg-lamp/[0.06]' : 'border-cream/[0.08]',
+                warned
+                  ? 'border-lamp/35 bg-lamp/[0.06]'
+                  : 'border-cream/[0.08]',
               )}
             >
-              <span className="type-meta w-5 shrink-0 text-cream/55">{track.index + 1}</span>
+              <span className="type-meta w-5 shrink-0 text-cream/55">
+                {track.index + 1}
+              </span>
               <span className="min-w-0 flex-1 truncate font-serif text-base font-semibold text-cream">
                 {track.title ?? track.fileSlug}
                 {warned && (
@@ -254,11 +306,17 @@ export const SplitReview = ({
 }) => {
   const [params, setParams] = useState<TuningParams>(DEFAULT_PARAMS);
   const [manualCuts, setManualCuts] = useState<Record<string, number[]>>(EMPTY);
-  const [debouncedCuts, setDebouncedCuts] = useState<Record<string, number[]>>(EMPTY);
+  const [debouncedCuts, setDebouncedCuts] =
+    useState<Record<string, number[]>>(EMPTY);
   const [side, setSide] = useState<string | null>(null);
 
   const hasOverrides = Object.keys(debouncedCuts).length > 0;
-  const { data: plan, isFetching, isError, error } = useSplitPlan(
+  const {
+    data: plan,
+    isFetching,
+    isError,
+    error,
+  } = useSplitPlan(
     slug,
     { ...params, manualCuts: hasOverrides ? debouncedCuts : undefined },
     true,
@@ -272,7 +330,10 @@ export const SplitReview = ({
 
   useEffect(() => {
     if (countMismatch) return;
-    const handle = setTimeout(() => setDebouncedCuts(manualCuts), MANUAL_CUTS_DEBOUNCE_MS);
+    const handle = setTimeout(
+      () => setDebouncedCuts(manualCuts),
+      MANUAL_CUTS_DEBOUNCE_MS,
+    );
     return () => clearTimeout(handle);
   }, [manualCuts, countMismatch]);
 
@@ -308,7 +369,8 @@ export const SplitReview = ({
 
   const hasWarnings = plan.sides.some((item) => item.warnings.length > 0);
   const stale = manualCuts !== debouncedCuts;
-  const activeSide = plan.sides.find((item) => item.side === side) ?? plan.sides[0];
+  const activeSide =
+    plan.sides.find((item) => item.side === side) ?? plan.sides[0];
   const tabs = plan.sides.map((item) => ({
     id: item.side,
     label: `Сторона ${sideLetterFromFile(item.side).toUpperCase()}`,
@@ -325,7 +387,9 @@ export const SplitReview = ({
       </div>
 
       <Tuning params={params} onReanalyze={reanalyze} busy={isFetching} />
-      {isFetching && <p className="type-meta text-cream/45">оновлення аналізу…</p>}
+      {isFetching && (
+        <p className="type-meta text-cream/45">оновлення аналізу…</p>
+      )}
       {plan.missingSides.length > 0 && (
         <p className="font-sans text-xs text-glow">
           Відсутні сторони: {plan.missingSides.join(', ')}
@@ -339,12 +403,19 @@ export const SplitReview = ({
           plan={activeSide}
           manualCuts={manualCuts[sideLetterFromFile(activeSide.side)]}
           onManualCutsChange={(file, times) =>
-            setManualCuts((prev) => ({ ...prev, [sideLetterFromFile(file)]: times }))
+            setManualCuts((prev) => ({
+              ...prev,
+              [sideLetterFromFile(file)]: times,
+            }))
           }
           hasTrackFiles={hasTrackFiles}
           confirm={{
             disabled:
-              applySplit.isPending || isFetching || stale || countMismatch || hasTrackFiles,
+              applySplit.isPending ||
+              isFetching ||
+              stale ||
+              countMismatch ||
+              hasTrackFiles,
             pending: applySplit.isPending,
             hasWarnings,
             onConfirm: confirm,
@@ -353,9 +424,13 @@ export const SplitReview = ({
       )}
 
       {applySplit.isError && (
-        <p className="font-sans text-xs text-accent">{getErrorMessage(applySplit.error)}</p>
+        <p className="font-sans text-xs text-accent">
+          {getErrorMessage(applySplit.error)}
+        </p>
       )}
-      {applySplit.isSuccess && <p className="font-sans text-xs text-glow">Треки розкроєні.</p>}
+      {applySplit.isSuccess && (
+        <p className="font-sans text-xs text-glow">Треки розкроєні.</p>
+      )}
     </section>
   );
 };

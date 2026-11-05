@@ -125,8 +125,14 @@ export const rtmpRows = (
       value: rtmpStatusLabel(stats.status),
       highlight: !isHealthyStatus(stats.status),
     },
-    { label: 'Публікують', value: String(stats.stats?.rtmp?.activePublishers ?? 0) },
-    { label: 'Зʼєднань', value: String(stats.stats?.rtmp?.totalConnections ?? 0) },
+    {
+      label: 'Публікують',
+      value: String(stats.stats?.rtmp?.activePublishers ?? 0),
+    },
+    {
+      label: 'Зʼєднань',
+      value: String(stats.stats?.rtmp?.totalConnections ?? 0),
+    },
   ];
   const container = stats.stats?.container;
   if (container) {

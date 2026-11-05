@@ -75,7 +75,9 @@ export const CoverDropzone = ({
         ) : (
           <>
             <span className="font-sans text-3xl leading-none">+</span>
-            <span className="type-body">Перетягніть фото сюди або натисніть</span>
+            <span className="type-body">
+              Перетягніть фото сюди або натисніть
+            </span>
             <span className="font-sans text-[11px] text-cream/45">
               JPEG, PNG, WebP · до 5 МБ
             </span>

@@ -4,7 +4,7 @@ title: Player speaks Ukrainian and English
 type: feat
 status: review
 created: 2026-10-31
-updated: 2026-11-01
+updated: 2026-11-04
 tags:
   - player
   - i18n
@@ -61,3 +61,5 @@ Right-to-left or other languages — the layer is built for two.
 ### Thread
 - [x] 2026-10-31 [decision] [user] A language switcher: the Ukrainian wording is liked and should stay available alongside English.
 - [x] 2026-10-31 [decision] [agent] Its own idea, not a phase of IDEA-13: the layer touches every component, and the settings page simply hosts the switch once both land. Built after IDEA-13.
+- [x] 2026-11-04 [chat] test
+- [x] 2026-11-04 [chat] [agent] Got it — test received. Nothing to change here. IDEA-14 is at 3/3 phases (layer, copy, switch) and sitting in review. Ping me when you want something adjusted.

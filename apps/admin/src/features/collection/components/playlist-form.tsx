@@ -62,10 +62,20 @@ export const PlaylistForm = ({ onDone }: { onDone: () => void }) => {
       </label>
       {error && <p className="font-sans text-xs text-accent">{error}</p>}
       <div className="flex gap-2.5">
-        <Pill type="submit" tone="lit" size="sm" disabled={!name.trim() || create.isPending}>
+        <Pill
+          type="submit"
+          tone="lit"
+          size="sm"
+          disabled={!name.trim() || create.isPending}
+        >
           {create.isPending ? 'Створення…' : 'Створити'}
         </Pill>
-        <Pill tone="ghost" size="sm" disabled={create.isPending} onClick={onDone}>
+        <Pill
+          tone="ghost"
+          size="sm"
+          disabled={create.isPending}
+          onClick={onDone}
+        >
           Скасувати
         </Pill>
       </div>

@@ -19,6 +19,10 @@ export const Dot = ({
 }) => (
   <span
     aria-hidden="true"
-    className={clsx('inline-block shrink-0 rounded-full', TONES[tone], className)}
+    className={clsx(
+      'inline-block shrink-0 rounded-full',
+      TONES[tone],
+      className,
+    )}
   />
 );

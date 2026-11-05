@@ -172,7 +172,12 @@ export const SettingsForm = () => {
       <div className="flex flex-wrap items-center gap-3">
         {editing ? (
           <>
-            <Pill tone="lit" size="sm" disabled={form.saving} onClick={form.save}>
+            <Pill
+              tone="lit"
+              size="sm"
+              disabled={form.saving}
+              onClick={form.save}
+            >
               Зберегти
             </Pill>
             <Pill

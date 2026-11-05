@@ -19,8 +19,13 @@ type StudioShellProps = {
 export const StudioShell = ({ children, activeSlug }: StudioShellProps) => {
   const navigate = useNavigate();
   const [creating, setCreating] = useState(false);
-  const { data: drafts, isLoading, isFetching, isError, refetch } =
-    useDigitizationDrafts();
+  const {
+    data: drafts,
+    isLoading,
+    isFetching,
+    isError,
+    refetch,
+  } = useDigitizationDrafts();
 
   const list = drafts ?? [];
   const active = list.find((draft) => draft.slug === activeSlug);

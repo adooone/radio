@@ -24,7 +24,11 @@ export const DraftDetailPage = () => {
 
   return (
     <StudioShell activeSlug={slug}>
-      <DraftDetail slug={slug} onDeleted={backToList} onPublished={backToList} />
+      <DraftDetail
+        slug={slug}
+        onDeleted={backToList}
+        onPublished={backToList}
+      />
     </StudioShell>
   );
 };

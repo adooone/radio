@@ -5,7 +5,9 @@ import { slugify } from '../lib/slugify';
 import { getErrorMessage } from '../lib/split-review-utils';
 
 /** A new record, named on the slab; its folder opens for the sides next. */
-export const NewDraft = ({ onDone }: { onDone: (slug: string | null) => void }) => {
+export const NewDraft = ({
+  onDone,
+}: { onDone: (slug: string | null) => void }) => {
   const [artist, setArtist] = useState('');
   const [album, setAlbum] = useState('');
   const createDraft = useCreateDraft();

@@ -11,7 +11,12 @@ type TabPillsProps = {
 };
 
 /** A row of pills, the open one lit, the others quiet — the mockups' tabs. */
-export const TabPills = ({ tabs, active, onChange, className }: TabPillsProps) => (
+export const TabPills = ({
+  tabs,
+  active,
+  onChange,
+  className,
+}: TabPillsProps) => (
   <div className={clsx('flex items-center gap-2', className)}>
     {tabs.map((tab) => {
       const open = tab.id === active;

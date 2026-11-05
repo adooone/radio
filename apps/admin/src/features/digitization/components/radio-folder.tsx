@@ -11,7 +11,10 @@ import { filesCount } from '../lib/stages';
 import { UploadTasks } from './upload-zone';
 
 /** One record folder on the disk: its name, what it holds, and the way in. */
-const FolderRow = ({ folder, draft }: { folder: Folder; draft?: DigitizationDraft }) => {
+const FolderRow = ({
+  folder,
+  draft,
+}: { folder: Folder; draft?: DigitizationDraft }) => {
   const [started, setStarted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const createDraft = useCreateDraft();
@@ -29,7 +32,9 @@ const FolderRow = ({ folder, draft }: { folder: Folder; draft?: DigitizationDraf
     setError(null);
     try {
       if (!draft) await createDraft.mutateAsync({ slug: folder.slug });
-      const files = await Promise.all(missing.map((entry) => entry.handle.getFile()));
+      const files = await Promise.all(
+        missing.map((entry) => entry.handle.getFile()),
+      );
       addFiles(files);
     } catch (err) {
       setStarted(false);
@@ -64,7 +69,12 @@ const FolderRow = ({ folder, draft }: { folder: Folder; draft?: DigitizationDraf
       </div>
       {error && <p className="font-sans text-xs text-accent">{error}</p>}
       {tasks.length > 0 && (
-        <UploadTasks tasks={tasks} onPause={pause} onResume={resume} onRetry={retry} />
+        <UploadTasks
+          tasks={tasks}
+          onPause={pause}
+          onResume={resume}
+          onRetry={retry}
+        />
       )}
     </li>
   );
@@ -103,7 +113,9 @@ export const RadioFolder = ({ drafts }: { drafts: DigitizationDraft[] }) => {
         Папка радіо
       </span>
       <span className="font-sans text-[13px] text-cream/75">{status}</span>
-      {folder.error && <p className="font-sans text-xs text-accent">{folder.error}</p>}
+      {folder.error && (
+        <p className="font-sans text-xs text-accent">{folder.error}</p>
+      )}
 
       {folder.supported && (
         <div className="flex flex-wrap gap-2">
@@ -113,7 +125,12 @@ export const RadioFolder = ({ drafts }: { drafts: DigitizationDraft[] }) => {
             </Pill>
           )}
           {granted && (
-            <Pill tone="ghost" size="sm" disabled={folder.isScanning} onClick={folder.refresh}>
+            <Pill
+              tone="ghost"
+              size="sm"
+              disabled={folder.isScanning}
+              onClick={folder.refresh}
+            >
               Сканувати
             </Pill>
           )}
@@ -131,7 +148,11 @@ export const RadioFolder = ({ drafts }: { drafts: DigitizationDraft[] }) => {
       {granted && !folder.isScanning && folder.folders.length > 0 && (
         <ul className="flex flex-col gap-3 pt-1">
           {folder.folders.map((item) => (
-            <FolderRow key={item.slug} folder={item} draft={bySlug.get(item.slug)} />
+            <FolderRow
+              key={item.slug}
+              folder={item}
+              draft={bySlug.get(item.slug)}
+            />
           ))}
         </ul>
       )}

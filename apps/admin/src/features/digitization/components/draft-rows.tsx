@@ -21,14 +21,19 @@ export const DraftRows = ({
     return (
       <div className="flex flex-col gap-2.5">
         {['s1', 's2', 's3'].map((key) => (
-          <div key={key} className="h-[66px] animate-pulse rounded-[18px] bg-cream/5" />
+          <div
+            key={key}
+            className="h-[66px] animate-pulse rounded-[18px] bg-cream/5"
+          />
         ))}
       </div>
     );
   }
   if (drafts.length === 0) {
     return (
-      <p className="type-body text-cream/45">У вхідній теці немає жодного драфту.</p>
+      <p className="type-body text-cream/45">
+        У вхідній теці немає жодного драфту.
+      </p>
     );
   }
   return (

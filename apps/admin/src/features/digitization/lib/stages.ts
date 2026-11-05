@@ -37,7 +37,8 @@ export const nextStepHint = (draft: DigitizationDraft): string => {
   if (draft.stage === 'ready-to-split' && !draft.hasMetadata) {
     return 'далі: отримайте метадані з Discogs';
   }
-  if (draft.stage === 'ready-to-split') return 'далі: розкроїть сторони на треки';
+  if (draft.stage === 'ready-to-split')
+    return 'далі: розкроїть сторони на треки';
   if (draft.stage === 'ready-to-encode') return 'далі: опублікуйте запис';
   return 'запис в ефірі';
 };

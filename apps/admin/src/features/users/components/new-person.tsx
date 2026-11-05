@@ -83,10 +83,20 @@ export const NewPerson = ({ onDone }: { onDone: () => void }) => {
       </div>
       {error && <p className="font-sans text-xs text-accent">{error}</p>}
       <div className="flex gap-2.5">
-        <Pill type="submit" tone="lit" size="sm" disabled={!valid || createUser.isPending}>
+        <Pill
+          type="submit"
+          tone="lit"
+          size="sm"
+          disabled={!valid || createUser.isPending}
+        >
           {createUser.isPending ? 'Створення…' : 'Створити'}
         </Pill>
-        <Pill tone="ghost" size="sm" disabled={createUser.isPending} onClick={onDone}>
+        <Pill
+          tone="ghost"
+          size="sm"
+          disabled={createUser.isPending}
+          onClick={onDone}
+        >
           Скасувати
         </Pill>
       </div>

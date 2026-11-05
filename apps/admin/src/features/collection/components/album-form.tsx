@@ -138,10 +138,17 @@ export const AlbumForm = ({
         </Field>
       </div>
 
-      {form.error && <p className="font-sans text-xs text-accent">{form.error}</p>}
+      {form.error && (
+        <p className="font-sans text-xs text-accent">{form.error}</p>
+      )}
 
       <div className="flex gap-2.5">
-        <Pill type="submit" tone="lit" size="sm" disabled={!form.valid || form.saving}>
+        <Pill
+          type="submit"
+          tone="lit"
+          size="sm"
+          disabled={!form.valid || form.saving}
+        >
           {form.saving ? 'Збереження…' : 'Зберегти'}
         </Pill>
         <Pill tone="ghost" size="sm" disabled={form.saving} onClick={onDone}>

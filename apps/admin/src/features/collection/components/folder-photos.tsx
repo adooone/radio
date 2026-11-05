@@ -19,7 +19,12 @@ const Thumbnail = ({
   const { url, failed } = usePhotoBlob(albumId, filename);
   if (failed) {
     return (
-      <div className={clsx(TILE, 'flex items-center justify-center bg-cream/10 text-[10px] text-cream/45')}>
+      <div
+        className={clsx(
+          TILE,
+          'flex items-center justify-center bg-cream/10 text-[10px] text-cream/45',
+        )}
+      >
         не читається
       </div>
     );
@@ -29,7 +34,10 @@ const Thumbnail = ({
     <button
       type="button"
       onClick={onOpen}
-      className={clsx(TILE, 'cursor-pointer bg-cream/10 transition-shadow hover:ring-2 hover:ring-glow/50 focus:outline-none focus:ring-2 focus:ring-glow')}
+      className={clsx(
+        TILE,
+        'cursor-pointer bg-cream/10 transition-shadow hover:ring-2 hover:ring-glow/50 focus:outline-none focus:ring-2 focus:ring-glow',
+      )}
     >
       <img src={url} alt={filename} className="size-full object-cover" />
     </button>
@@ -146,7 +154,11 @@ export const FolderPhotos = ({
   albumId: number;
   folderSlug: string | null;
 }) => {
-  const { data: photos, isLoading, error } = useAlbumPhotos(albumId, {
+  const {
+    data: photos,
+    isLoading,
+    error,
+  } = useAlbumPhotos(albumId, {
     enabled: !!folderSlug,
   });
   const [open, setOpen] = useState<string | null>(null);
@@ -165,7 +177,9 @@ export const FolderPhotos = ({
           ))}
         </div>
       ) : error ? (
-        <p className="font-sans text-xs text-accent">Не вдалося прочитати теку.</p>
+        <p className="font-sans text-xs text-accent">
+          Не вдалося прочитати теку.
+        </p>
       ) : !photos?.length ? (
         <p className="type-body text-cream/45">У теці альбому фото немає.</p>
       ) : (

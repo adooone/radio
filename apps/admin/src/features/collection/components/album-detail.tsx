@@ -42,8 +42,7 @@ export const AlbumDetail = ({ album }: { album: Album }) => {
     setError(null);
   }, [album.id]);
 
-  const albumOnAir =
-    onAir?.albumId === album.id && onAir.songId === undefined;
+  const albumOnAir = onAir?.albumId === album.id && onAir.songId === undefined;
   const tags = albumTags(full);
 
   const remove = async () => {
@@ -122,10 +121,20 @@ export const AlbumDetail = ({ album }: { album: Album }) => {
           </Pill>
         )}
         <div className="flex gap-2.5">
-          <Pill tone="ghost" size="sm" className="flex-1" onClick={() => setMode('edit')}>
+          <Pill
+            tone="ghost"
+            size="sm"
+            className="flex-1"
+            onClick={() => setMode('edit')}
+          >
             Редагувати
           </Pill>
-          <Pill tone="ghost" size="sm" className="flex-1" onClick={() => setMode('cover')}>
+          <Pill
+            tone="ghost"
+            size="sm"
+            className="flex-1"
+            onClick={() => setMode('cover')}
+          >
             Обкладинка
           </Pill>
         </div>

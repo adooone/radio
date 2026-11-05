@@ -25,6 +25,8 @@ export const Stat = ({
     <span className="truncate font-serif text-[26px] font-semibold leading-none tabular-nums text-cream">
       {value}
     </span>
-    {note && <span className="font-sans text-[11px] text-cream/60">{note}</span>}
+    {note && (
+      <span className="font-sans text-[11px] text-cream/60">{note}</span>
+    )}
   </div>
 );

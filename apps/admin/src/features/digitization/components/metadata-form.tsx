@@ -172,24 +172,33 @@ export const MetadataForm = ({
           <Section title="Треклист">
             <div className="flex flex-col gap-2">
               {form.tracklist.map((track, index) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: rows are only appended or removed by index
-                <div key={index} className="grid grid-cols-[5rem_1fr_6rem_auto] items-center gap-2">
+                <div
+                  // biome-ignore lint/suspicious/noArrayIndexKey: rows are only appended or removed by index
+                  key={index}
+                  className="grid grid-cols-[5rem_1fr_6rem_auto] items-center gap-2"
+                >
                   <TextInput
                     aria-label="Позиція"
                     value={track.position}
-                    onChange={(e) => form.tracks.update(index, { position: e.target.value })}
+                    onChange={(e) =>
+                      form.tracks.update(index, { position: e.target.value })
+                    }
                     placeholder="A1"
                   />
                   <TextInput
                     aria-label="Назва"
                     value={track.title}
-                    onChange={(e) => form.tracks.update(index, { title: e.target.value })}
+                    onChange={(e) =>
+                      form.tracks.update(index, { title: e.target.value })
+                    }
                     placeholder="Назва"
                   />
                   <TextInput
                     aria-label="Тривалість"
                     value={track.duration ?? ''}
-                    onChange={(e) => form.tracks.update(index, { duration: e.target.value })}
+                    onChange={(e) =>
+                      form.tracks.update(index, { duration: e.target.value })
+                    }
                     placeholder="3:45"
                   />
                   <button
@@ -203,7 +212,12 @@ export const MetadataForm = ({
                 </div>
               ))}
             </div>
-            <Pill tone="ghost" size="sm" className="self-start" onClick={form.tracks.add}>
+            <Pill
+              tone="ghost"
+              size="sm"
+              className="self-start"
+              onClick={form.tracks.add}
+            >
               Додати трек
             </Pill>
           </Section>
@@ -211,18 +225,25 @@ export const MetadataForm = ({
           <Section title="Учасники">
             <div className="flex flex-col gap-2">
               {form.personnel.map((person, index) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: rows are only appended or removed by index
-                <div key={index} className="grid grid-cols-[1fr_1fr_auto] items-center gap-2">
+                <div
+                  // biome-ignore lint/suspicious/noArrayIndexKey: rows are only appended or removed by index
+                  key={index}
+                  className="grid grid-cols-[1fr_1fr_auto] items-center gap-2"
+                >
                   <TextInput
                     aria-label="Імʼя"
                     value={person.name}
-                    onChange={(e) => form.people.update(index, { name: e.target.value })}
+                    onChange={(e) =>
+                      form.people.update(index, { name: e.target.value })
+                    }
                     placeholder="Імʼя"
                   />
                   <TextInput
                     aria-label="Ролі"
                     value={person.roles.join(', ')}
-                    onChange={(e) => form.people.update(index, { rolesText: e.target.value })}
+                    onChange={(e) =>
+                      form.people.update(index, { rolesText: e.target.value })
+                    }
                     placeholder="ролі через кому"
                   />
                   <button
@@ -236,7 +257,12 @@ export const MetadataForm = ({
                 </div>
               ))}
             </div>
-            <Pill tone="ghost" size="sm" className="self-start" onClick={form.people.add}>
+            <Pill
+              tone="ghost"
+              size="sm"
+              className="self-start"
+              onClick={form.people.add}
+            >
               Додати учасника
             </Pill>
           </Section>
@@ -290,13 +316,24 @@ export const MetadataForm = ({
           </Section>
 
           <div className="flex items-center gap-3">
-            <Pill type="submit" tone="lit" size="sm" disabled={form.saving || !form.dirty}>
+            <Pill
+              type="submit"
+              tone="lit"
+              size="sm"
+              disabled={form.saving || !form.dirty}
+            >
               {form.saving ? 'Збереження…' : 'Зберегти'}
             </Pill>
             {form.dirty && !form.saving && (
-              <span className="font-sans text-[11px] text-glow">є незбережені зміни</span>
+              <span className="font-sans text-[11px] text-glow">
+                є незбережені зміни
+              </span>
             )}
-            {form.error && <span className="font-sans text-xs text-accent">{form.error}</span>}
+            {form.error && (
+              <span className="font-sans text-xs text-accent">
+                {form.error}
+              </span>
+            )}
           </div>
         </form>
       )}

@@ -123,7 +123,10 @@ export const SessionPhotos = ({
       <div className="flex flex-wrap gap-2.5">
         {isLoading
           ? ['s1', 's2', 's3'].map((key) => (
-              <div key={key} className={clsx(TILE, 'animate-pulse bg-cream/5')} />
+              <div
+                key={key}
+                className={clsx(TILE, 'animate-pulse bg-cream/5')}
+              />
             ))
           : photos?.map((photo) => (
               <Tile

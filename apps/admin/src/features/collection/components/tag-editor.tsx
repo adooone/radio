@@ -30,7 +30,9 @@ export const TagEditor = ({
   const [custom, setCustom] = useState('');
 
   const toggle = (tag: string) =>
-    onChange(tags.includes(tag) ? tags.filter((t) => t !== tag) : [...tags, tag]);
+    onChange(
+      tags.includes(tag) ? tags.filter((t) => t !== tag) : [...tags, tag],
+    );
 
   const addCustom = () => {
     const tag = custom.trim();
@@ -77,7 +79,12 @@ export const TagEditor = ({
           aria-label="Інший тег"
           className="min-w-0 flex-1"
         />
-        <Pill tone="ghost" size="sm" disabled={!custom.trim()} onClick={addCustom}>
+        <Pill
+          tone="ghost"
+          size="sm"
+          disabled={!custom.trim()}
+          onClick={addCustom}
+        >
           Додати
         </Pill>
       </div>

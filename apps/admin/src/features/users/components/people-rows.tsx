@@ -40,7 +40,11 @@ export const PeopleRows = ({
   const [busyId, setBusyId] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const run = async (id: number, action: () => Promise<unknown>, failure: string) => {
+  const run = async (
+    id: number,
+    action: () => Promise<unknown>,
+    failure: string,
+  ) => {
     setBusyId(id);
     setError(null);
     try {
@@ -75,7 +79,11 @@ export const PeopleRows = ({
     );
   const remove = (person: Person) => {
     if (!confirm(`Видалити обліковку «${person.username}»?`)) return;
-    run(person.id, () => deleteUser.mutateAsync(person.id), 'Не вдалося видалити.');
+    run(
+      person.id,
+      () => deleteUser.mutateAsync(person.id),
+      'Не вдалося видалити.',
+    );
   };
 
   if (people.length === 0) {
@@ -109,7 +117,9 @@ export const PeopleRows = ({
             <span className="flex min-w-0 flex-1 flex-col gap-0.5">
               <span className="truncate font-serif text-base font-semibold text-cream">
                 {person.username}
-                {self && <span className="type-meta ml-2 text-cream/45">це ви</span>}
+                {self && (
+                  <span className="type-meta ml-2 text-cream/45">це ви</span>
+                )}
               </span>
               <span className="truncate font-sans text-[11px] text-cream/60">
                 {lastSeen(person)} · {person.email}
@@ -122,7 +132,9 @@ export const PeopleRows = ({
               title={admin ? 'Зробити користувачем' : 'Зробити адміном'}
               className="cursor-pointer disabled:cursor-default"
             >
-              <Chip tone={admin ? 'lit' : 'cream'}>{admin ? 'Адмін' : 'Редактор'}</Chip>
+              <Chip tone={admin ? 'lit' : 'cream'}>
+                {admin ? 'Адмін' : 'Редактор'}
+              </Chip>
             </button>
             <button
               type="button"
