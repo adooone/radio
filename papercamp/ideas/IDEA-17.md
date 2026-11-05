@@ -103,12 +103,13 @@ not controls. The login page. Any change to what the pages do.
       and Discogs forms. Labels, hints and errors move onto the
       components' own props.
       run: 6s · 34 in · 6.6k out · sonnet-5-5 · sess:a77846ad-5d5d-4ae7-8b35-be04da85612b
-- [ ] Phase 3 — Buttons, tabs and the island nav
+- [x] Phase 3 — Buttons, tabs and the island nav
       `Pill` → `Button` across its 21 files, tone by tone (ghost →
       ghost, lit → the armed tone, red / danger → danger, quiet →
       secondary); `TabPills` → `Tabs` or `SegmentedControl` on the
       slab (journal / monitoring / settings, albums / playlists);
       `GhostNav` → `Tabs` in the ghost-word style inside the island.
+      run: 2m · 56 in · 13.2k out · sonnet-5-5 · sess:a77846ad-5d5d-4ae7-8b35-be04da85612b
 - [ ] Phase 4 — Marks and rows
       `Chip` → `Stamp`, `Dot` → `StatusDot`, `FeedRow` → `ListItem`
       in the journal and monitoring feeds; `Stat` becomes plain

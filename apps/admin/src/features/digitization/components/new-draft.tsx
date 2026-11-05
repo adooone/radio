@@ -1,5 +1,5 @@
-import { Pill } from '@/features/admin/ui';
 import { useCreateDraft } from '@/services/api';
+import { Button } from '@dendelion/func-ui';
 import { Input } from '@dendelion/func-ui';
 import { useState } from 'react';
 import { slugify } from '../lib/slugify';
@@ -59,17 +59,17 @@ export const NewDraft = ({
         </p>
       )}
       <div className="flex gap-2.5">
-        <Pill
+        <Button
           type="submit"
-          tone="lit"
+          variant="lit"
           size="sm"
           disabled={createDraft.isPending || !artist.trim() || !album.trim()}
         >
           {createDraft.isPending ? 'Створення…' : 'Створити'}
-        </Pill>
-        <Pill tone="ghost" size="sm" onClick={() => onDone(null)}>
+        </Button>
+        <Button variant="ghost" size="sm" onClick={() => onDone(null)}>
           Скасувати
-        </Pill>
+        </Button>
       </div>
     </form>
   );

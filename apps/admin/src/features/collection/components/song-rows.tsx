@@ -1,7 +1,8 @@
-import { Chip, Pill } from '@/features/admin/ui';
+import { Chip } from '@/features/admin/ui';
 import { collectionApi, useDeleteSong } from '@/services/api';
 import { useOnAir, useSetOnAir } from '@/services/api/hooks/use-on-air-api';
 import { useNowPlayingStore } from '@/stores/now-playing-store';
+import { Button } from '@dendelion/func-ui';
 import { LampIconButton } from '@dendelion/func-ui';
 import type { Song } from '@radio/types';
 import clsx from 'clsx';
@@ -140,14 +141,14 @@ export const SongRows = ({
               {song.duration}
             </span>
             {!songOnAir && (
-              <Pill
-                tone="quiet"
+              <Button
+                variant="secondary"
                 size="sm"
                 disabled={setOnAir.isPending}
                 onClick={() => setOnAir.mutate({ albumId, songId: song.id })}
               >
                 В ефір
-              </Pill>
+              </Button>
             )}
             <button
               type="button"

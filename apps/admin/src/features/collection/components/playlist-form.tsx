@@ -1,5 +1,5 @@
-import { Pill } from '@/features/admin/ui';
 import { useCreateCollection } from '@/services/api';
+import { Button } from '@dendelion/func-ui';
 import { Input, Textarea } from '@dendelion/func-ui';
 import { useState } from 'react';
 
@@ -61,22 +61,22 @@ export const PlaylistForm = ({ onDone }: { onDone: () => void }) => {
       </label>
       {error && <p className="font-sans text-xs text-accent">{error}</p>}
       <div className="flex gap-2.5">
-        <Pill
+        <Button
           type="submit"
-          tone="lit"
+          variant="lit"
           size="sm"
           disabled={!name.trim() || create.isPending}
         >
           {create.isPending ? 'Створення…' : 'Створити'}
-        </Pill>
-        <Pill
-          tone="ghost"
+        </Button>
+        <Button
+          variant="ghost"
           size="sm"
           disabled={create.isPending}
           onClick={onDone}
         >
           Скасувати
-        </Pill>
+        </Button>
       </div>
     </form>
   );

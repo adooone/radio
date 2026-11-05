@@ -1,6 +1,5 @@
-import { GhostNav, Pill } from '@/features/admin/ui';
 import { useDiscogsSearch, useFetchDraftMetadata } from '@/services/api';
-import { Input } from '@dendelion/func-ui';
+import { Button, Input, Tabs } from '@dendelion/func-ui';
 import { useState } from 'react';
 
 type Mode = 'url' | 'search';
@@ -47,12 +46,16 @@ export const DiscogsLookup = ({
           {force ? 'Замінити метадані з Discogs' : 'Метадані з Discogs'}
         </span>
         <span className="flex-1" />
-        <GhostNav active={mode === 'url'} onClick={() => setMode('url')}>
-          URL / ID
-        </GhostNav>
-        <GhostNav active={mode === 'search'} onClick={() => setMode('search')}>
-          Пошук
-        </GhostNav>
+        <Tabs
+          variant="ghost"
+          size="sm"
+          value={mode}
+          onChange={(value) => setMode(value as typeof mode)}
+          items={[
+            { value: 'url', label: 'URL / ID' },
+            { value: 'search', label: 'Пошук' },
+          ]}
+        />
       </div>
 
       {mode === 'url' ? (
@@ -72,17 +75,17 @@ export const DiscogsLookup = ({
             required
           />
           <div className="flex gap-2.5">
-            <Pill
+            <Button
               type="submit"
-              tone="lit"
+              variant="lit"
               size="sm"
               disabled={fetchMetadata.isPending || !releaseRef.trim()}
             >
               {fetchMetadata.isPending ? 'Завантаження…' : 'Завантажити'}
-            </Pill>
-            <Pill tone="ghost" size="sm" onClick={onClose}>
+            </Button>
+            <Button variant="ghost" size="sm" onClick={onClose}>
               Скасувати
-            </Pill>
+            </Button>
           </div>
         </form>
       ) : (
@@ -102,12 +105,17 @@ export const DiscogsLookup = ({
               onChange={(e) => setQuery(e.target.value)}
               placeholder="jethro tull aqualung"
             />
-            <Pill type="submit" tone="ghost" size="sm" disabled={!query.trim()}>
+            <Button
+              type="submit"
+              variant="ghost"
+              size="sm"
+              disabled={!query.trim()}
+            >
               Шукати
-            </Pill>
-            <Pill tone="quiet" size="sm" onClick={onClose}>
+            </Button>
+            <Button variant="secondary" size="sm" onClick={onClose}>
               Скасувати
-            </Pill>
+            </Button>
           </form>
           {isFetching && <p className="type-body text-cream/45">Пошук…</p>}
           {!isFetching && term && results?.length === 0 && (

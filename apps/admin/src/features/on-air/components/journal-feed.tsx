@@ -1,4 +1,5 @@
-import { FeedRow, type FeedTone, GhostNav } from '@/features/admin/ui';
+import { FeedRow, type FeedTone } from '@/features/admin/ui';
+import { Tabs } from '@dendelion/func-ui';
 import type { LogEntry } from '@radio/types';
 import { useJournal } from '../hooks/use-journal';
 
@@ -24,20 +25,23 @@ export const JournalFeed = () => {
 
   return (
     <div className="flex min-h-0 flex-col gap-5">
-      <div className="flex items-center gap-1">
-        {sources.map((item) => (
-          <GhostNav
-            key={item.id}
-            active={item.id === source}
-            onClick={() => setSource(item.id)}
-          >
-            {item.label}
-            {item.count > 0 && (
-              <span className="ml-1.5 text-cream/45">{item.count}</span>
-            )}
-          </GhostNav>
-        ))}
-      </div>
+      <Tabs
+        variant="ghost"
+        size="sm"
+        value={source}
+        onChange={(value) => setSource(value as typeof source)}
+        items={sources.map((item) => ({
+          value: item.id,
+          label: (
+            <>
+              {item.label}
+              {item.count > 0 && (
+                <span className="ml-1.5 text-cream/45">{item.count}</span>
+              )}
+            </>
+          ),
+        }))}
+      />
 
       {isLoading ? (
         <p className="type-body text-cream/45">Завантаження журналу…</p>

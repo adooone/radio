@@ -1,10 +1,11 @@
-import { Dot, FeedRow, Pill } from '@/features/admin/ui';
+import { Dot, FeedRow } from '@/features/admin/ui';
 import { useMonitoringData } from '@/services/api/hooks';
 import {
   useRestartRtmpServer,
   useStartRtmpServer,
   useStopRtmpServer,
 } from '@/services/api/hooks/use-stream-control';
+import { Button } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { rtmpAlert, rtmpRows } from '../lib/rtmp-status';
 
@@ -81,32 +82,32 @@ export const MonitoringRows = () => {
 
       <div className="flex flex-wrap gap-3">
         {running ? (
-          <Pill
-            tone="danger"
+          <Button
+            variant="danger"
             size="sm"
             disabled={busy}
             onClick={() => stop.mutate()}
           >
             Зупинити
-          </Pill>
+          </Button>
         ) : (
-          <Pill
-            tone="lit"
+          <Button
+            variant="lit"
             size="sm"
             disabled={busy}
             onClick={() => start.mutate()}
           >
             Запустити
-          </Pill>
+          </Button>
         )}
-        <Pill
-          tone="ghost"
+        <Button
+          variant="ghost"
           size="sm"
           disabled={busy}
           onClick={() => restart.mutate()}
         >
           Перезапустити
-        </Pill>
+        </Button>
       </div>
     </div>
   );

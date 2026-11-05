@@ -1,4 +1,3 @@
-import { Pill } from '@/features/admin/ui';
 import {
   useClearOnAir,
   useOnAir,
@@ -6,6 +5,7 @@ import {
   useStopTurntable,
   useTurntable,
 } from '@/services/api/hooks/use-on-air-api';
+import { Button } from '@dendelion/func-ui';
 import { VinylBox } from '@radio/stage';
 import type { TurntableState } from '@radio/types';
 
@@ -81,9 +81,9 @@ export const Turntable = () => {
         )}
 
         <div className="mt-3 flex flex-wrap gap-3">
-          <Pill
+          <Button
             size="sm"
-            tone="lit"
+            variant="lit"
             disabled={!next || busy || !onAir}
             onClick={() =>
               next &&
@@ -92,23 +92,23 @@ export const Turntable = () => {
             }
           >
             Наступний трек
-          </Pill>
-          <Pill
+          </Button>
+          <Button
             size="sm"
-            tone="ghost"
+            variant="ghost"
             disabled={!playing || busy}
             onClick={() => stopTurntable.mutate()}
           >
             Зупинити вертушку
-          </Pill>
-          <Pill
+          </Button>
+          <Button
             size="sm"
-            tone="danger"
+            variant="danger"
             disabled={!onAir || busy}
             onClick={() => clearOnAir.mutate()}
           >
             Зняти з ефіру
-          </Pill>
+          </Button>
         </div>
       </div>
     </section>

@@ -1,4 +1,4 @@
-import { Pill } from '@/features/admin/ui';
+import { Button } from '@dendelion/func-ui';
 import { Input, Textarea } from '@dendelion/func-ui';
 import type { AlbumDataJson } from '@radio/types';
 import { useState } from 'react';
@@ -44,12 +44,16 @@ export const MetadataForm = ({
             .join(' · ')}
           {form.tracklist.length > 0 && ` · ${form.tracklist.length} треків`}
         </span>
-        <Pill tone="quiet" size="sm" onClick={() => setOpen((v) => !v)}>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => setOpen((v) => !v)}
+        >
           {open ? 'Згорнути' : 'Редагувати'}
-        </Pill>
-        <Pill tone="quiet" size="sm" onClick={onRefetch}>
+        </Button>
+        <Button variant="secondary" size="sm" onClick={onRefetch}>
           З Discogs ще раз
-        </Pill>
+        </Button>
       </div>
 
       {open && (
@@ -201,14 +205,14 @@ export const MetadataForm = ({
                 </div>
               ))}
             </div>
-            <Pill
-              tone="ghost"
+            <Button
+              variant="ghost"
               size="sm"
               className="self-start"
               onClick={form.tracks.add}
             >
               Додати трек
-            </Pill>
+            </Button>
           </Section>
 
           <Section title="Учасники">
@@ -246,14 +250,14 @@ export const MetadataForm = ({
                 </div>
               ))}
             </div>
-            <Pill
-              tone="ghost"
+            <Button
+              variant="ghost"
               size="sm"
               className="self-start"
               onClick={form.people.add}
             >
               Додати учасника
-            </Pill>
+            </Button>
           </Section>
 
           <Section title="Продакшн та оформлення">
@@ -301,14 +305,14 @@ export const MetadataForm = ({
           </Section>
 
           <div className="flex items-center gap-3">
-            <Pill
+            <Button
               type="submit"
-              tone="lit"
+              variant="lit"
               size="sm"
               disabled={form.saving || !form.dirty}
             >
               {form.saving ? 'Збереження…' : 'Зберегти'}
-            </Pill>
+            </Button>
             {form.dirty && !form.saving && (
               <span className="font-sans text-[11px] text-glow">
                 є незбережені зміни

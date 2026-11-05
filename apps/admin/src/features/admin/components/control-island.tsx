@@ -1,6 +1,6 @@
+import { Tabs } from '@dendelion/func-ui';
 import { SplatRecord } from '@radio/stage';
 import { useNavigate } from '@tanstack/react-router';
-import { GhostNav } from '../ui';
 import { TrackStrip } from './track-strip';
 import { UserMenu } from './user-menu';
 
@@ -37,17 +37,21 @@ export const ControlIsland = ({ currentRoute }: ControlIslandProps) => {
         <SplatRecord className="w-9" />
       </button>
 
-      <nav className="flex shrink-0 items-center gap-1">
-        {NAV_ITEMS.map((item) => (
-          <GhostNav
-            key={item.path}
-            active={isActive(currentRoute, item.path)}
-            onClick={() => navigate({ to: item.path })}
-          >
-            {item.label}
-          </GhostNav>
-        ))}
-      </nav>
+      <Tabs
+        variant="ghost"
+        size="sm"
+        tablistLabel="Розділи"
+        className="shrink-0"
+        items={NAV_ITEMS.map((item) => ({
+          value: item.path,
+          label: item.label,
+        }))}
+        value={
+          NAV_ITEMS.find((item) => isActive(currentRoute, item.path))?.path ??
+          ''
+        }
+        onChange={(path) => navigate({ to: path })}
+      />
 
       <div className="hidden min-w-0 shrink items-center border-l border-cream/10 pl-4 sm:flex">
         <TrackStrip />

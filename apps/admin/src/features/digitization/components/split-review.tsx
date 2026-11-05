@@ -1,5 +1,5 @@
-import { Pill, TabPills } from '@/features/admin/ui';
 import { useApplySplit, useSplitPlan } from '@/services/api';
+import { Button, SegmentedControl } from '@dendelion/func-ui';
 import type {
   DigitizationCutKind,
   DigitizationSplitApplySide,
@@ -100,14 +100,14 @@ const Tuning = ({
         step={1}
         onChange={(tolerance) => setPending((p) => ({ ...p, tolerance }))}
       />
-      <Pill
-        tone="ghost"
+      <Button
+        variant="ghost"
         size="sm"
         disabled={busy}
         onClick={() => onReanalyze(pending)}
       >
         {busy ? 'Аналіз…' : 'Переаналізувати'}
-      </Pill>
+      </Button>
     </div>
   );
 };
@@ -196,8 +196,8 @@ const Side = ({
       </div>
 
       <div className="flex flex-wrap gap-2.5">
-        <Pill
-          tone="ghost"
+        <Button
+          variant="ghost"
           size="sm"
           disabled={selected === null || !cuts[selected]}
           onClick={() =>
@@ -205,20 +205,20 @@ const Side = ({
           }
         >
           Прослухати з межі
-        </Pill>
-        <Pill tone="ghost" size="sm" onClick={addCut}>
+        </Button>
+        <Button variant="ghost" size="sm" onClick={addCut}>
           Додати межу
-        </Pill>
-        <Pill
-          tone="ghost"
+        </Button>
+        <Button
+          variant="ghost"
           size="sm"
           disabled={selected === null}
           onClick={removeCut}
         >
           Прибрати межу
-        </Pill>
-        <Pill
-          tone={confirm.hasWarnings ? 'danger' : 'lit'}
+        </Button>
+        <Button
+          variant={confirm.hasWarnings ? 'danger' : 'lit'}
           size="sm"
           disabled={confirm.disabled}
           onClick={confirm.onConfirm}
@@ -228,7 +228,7 @@ const Side = ({
             : confirm.hasWarnings
               ? 'Розкроїти попри попередження'
               : 'Зберегти розкрій'}
-        </Pill>
+        </Button>
       </div>
 
       {auditionError && (
@@ -372,7 +372,7 @@ export const SplitReview = ({
   const activeSide =
     plan.sides.find((item) => item.side === side) ?? plan.sides[0];
   const tabs = plan.sides.map((item) => ({
-    id: item.side,
+    value: item.side,
     label: `Сторона ${sideLetterFromFile(item.side).toUpperCase()}`,
   }));
 
@@ -382,7 +382,12 @@ export const SplitReview = ({
         <span className="type-label text-cream/60">Розкрій</span>
         <span className="flex-1" />
         {tabs.length > 1 && activeSide && (
-          <TabPills tabs={tabs} active={activeSide.side} onChange={setSide} />
+          <SegmentedControl
+            size="sm"
+            options={tabs}
+            value={activeSide.side}
+            onChange={setSide}
+          />
         )}
       </div>
 

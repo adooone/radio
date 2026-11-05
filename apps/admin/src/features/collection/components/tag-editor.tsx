@@ -1,4 +1,4 @@
-import { Pill } from '@/features/admin/ui';
+import { Button } from '@dendelion/func-ui';
 import { Input } from '@dendelion/func-ui';
 import { useState } from 'react';
 
@@ -50,20 +50,20 @@ export const TagEditor = ({
       <span className="type-label text-cream/60">Теги</span>
       <div className="flex flex-wrap gap-2">
         {PREDEFINED_TAGS.map((tag) => (
-          <Pill
+          <Button
             key={tag}
             size="sm"
-            tone={tags.includes(tag) ? 'lit' : 'ghost'}
+            variant={tags.includes(tag) ? 'lit' : 'ghost'}
             aria-pressed={tags.includes(tag)}
             onClick={() => toggle(tag)}
           >
             {tag}
-          </Pill>
+          </Button>
         ))}
         {extras.map((tag) => (
-          <Pill key={tag} size="sm" tone="lit" onClick={() => toggle(tag)}>
+          <Button key={tag} size="sm" variant="lit" onClick={() => toggle(tag)}>
             {tag} ✕
-          </Pill>
+          </Button>
         ))}
       </div>
       <div className="flex gap-2.5">
@@ -80,14 +80,14 @@ export const TagEditor = ({
           aria-label="Інший тег"
           className="min-w-0 flex-1"
         />
-        <Pill
-          tone="ghost"
+        <Button
+          variant="ghost"
           size="sm"
           disabled={!custom.trim()}
           onClick={addCustom}
         >
           Додати
-        </Pill>
+        </Button>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Pill } from '@/features/admin/ui';
+import { Button } from '@dendelion/func-ui';
 import { Input, Select } from '@dendelion/func-ui';
 import { useRtmpConfigForm } from '../hooks/use-rtmp-config-form';
 
@@ -134,27 +134,27 @@ export const SettingsForm = () => {
       <div className="flex flex-wrap items-center gap-3">
         {editing ? (
           <>
-            <Pill
-              tone="lit"
+            <Button
+              variant="lit"
               size="sm"
               disabled={form.saving}
               onClick={form.save}
             >
               Зберегти
-            </Pill>
-            <Pill
-              tone="ghost"
+            </Button>
+            <Button
+              variant="ghost"
               size="sm"
               disabled={form.saving}
               onClick={form.cancel}
             >
               Скасувати
-            </Pill>
+            </Button>
           </>
         ) : (
-          <Pill tone="ghost" size="sm" onClick={form.start}>
+          <Button variant="ghost" size="sm" onClick={form.start}>
             Редагувати
-          </Pill>
+          </Button>
         )}
         <span className="font-sans text-[11px] text-cream/45">
           Зміни діють після перезапуску RTMP-сервера.

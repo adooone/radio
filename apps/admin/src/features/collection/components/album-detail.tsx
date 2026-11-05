@@ -1,10 +1,11 @@
-import { Chip, Pill } from '@/features/admin/ui';
+import { Chip } from '@/features/admin/ui';
 import { useAlbum, useDeleteAlbum } from '@/services/api';
 import {
   useClearOnAir,
   useOnAir,
   useSetOnAir,
 } from '@/services/api/hooks/use-on-air-api';
+import { Button } from '@dendelion/func-ui';
 import type { Album, Song } from '@radio/types';
 import { useEffect, useState } from 'react';
 import { albumMetaLine, albumStateLine, albumTags } from '../lib/album-meta';
@@ -102,41 +103,41 @@ export const AlbumDetail = ({ album }: { album: Album }) => {
             <Chip tone="red" dot="live">
               в ефірі
             </Chip>
-            <Pill
-              tone="danger"
+            <Button
+              variant="danger"
               size="sm"
               disabled={clearOnAir.isPending}
               onClick={() => clearOnAir.mutate()}
             >
               Зняти з ефіру
-            </Pill>
+            </Button>
           </div>
         ) : (
-          <Pill
-            tone="red"
+          <Button
+            variant="danger"
             disabled={setOnAir.isPending}
             onClick={() => setOnAir.mutate({ albumId: album.id })}
           >
             Поставити в ефір
-          </Pill>
+          </Button>
         )}
         <div className="flex gap-2.5">
-          <Pill
-            tone="ghost"
+          <Button
+            variant="ghost"
             size="sm"
             className="flex-1"
             onClick={() => setMode('edit')}
           >
             Редагувати
-          </Pill>
-          <Pill
-            tone="ghost"
+          </Button>
+          <Button
+            variant="ghost"
             size="sm"
             className="flex-1"
             onClick={() => setMode('cover')}
           >
             Обкладинка
-          </Pill>
+          </Button>
         </div>
       </div>
 

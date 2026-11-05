@@ -1,5 +1,5 @@
-import { Pill } from '@/features/admin/ui';
 import { useUploadCoverArt } from '@/services/api';
+import { Button } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
 
@@ -93,12 +93,16 @@ export const CoverDropzone = ({
       />
       {message && <p className="font-sans text-xs text-accent">{message}</p>}
       <div className="flex gap-2.5">
-        <Pill tone="ghost" size="sm" onClick={() => inputRef.current?.click()}>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => inputRef.current?.click()}
+        >
           Вибрати файл
-        </Pill>
-        <Pill tone="quiet" size="sm" onClick={onDone}>
+        </Button>
+        <Button variant="secondary" size="sm" onClick={onDone}>
           Скасувати
-        </Pill>
+        </Button>
       </div>
     </div>
   );

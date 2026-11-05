@@ -1,5 +1,5 @@
-import { Pill } from '@/features/admin/ui';
 import { useDigitizationDraft } from '@/services/api';
+import { Button } from '@dendelion/func-ui';
 import { useState } from 'react';
 import { getErrorMessage } from '../lib/split-review-utils';
 import { formatFileSize, nextStepHint } from '../lib/stages';
@@ -114,9 +114,9 @@ export const DraftDetail = ({
           <p className="type-body text-cream/70">
             У цього драфту ще немає data.json.
           </p>
-          <Pill tone="lit" size="sm" onClick={() => setLookupForce(false)}>
+          <Button variant="lit" size="sm" onClick={() => setLookupForce(false)}>
             Отримати метадані з Discogs
-          </Pill>
+          </Button>
         </div>
       )}
     </>

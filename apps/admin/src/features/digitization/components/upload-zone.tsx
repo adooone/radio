@@ -1,4 +1,4 @@
-import { GhostNav } from '@/features/admin/ui';
+import { Button } from '@dendelion/func-ui';
 import { LampMeter } from '@dendelion/func-ui';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
@@ -33,15 +33,24 @@ export const UploadTasks = ({
           className="min-w-0 flex-1"
         />
         {task.status === 'uploading' && (
-          <GhostNav onClick={() => onPause(task.id)}>пауза</GhostNav>
+          <Button variant="ghost" size="sm" onClick={() => onPause(task.id)}>
+            пауза
+          </Button>
         )}
         {task.status === 'paused' && (
-          <GhostNav onClick={() => onResume(task.id)}>далі</GhostNav>
+          <Button variant="ghost" size="sm" onClick={() => onResume(task.id)}>
+            далі
+          </Button>
         )}
         {task.status === 'error' && (
-          <GhostNav onClick={() => onRetry(task.id)} title={task.error}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => onRetry(task.id)}
+            title={task.error}
+          >
             ще раз
-          </GhostNav>
+          </Button>
         )}
         {task.status === 'done' && (
           <span className="type-label text-glow">готово</span>

@@ -1,5 +1,5 @@
-import { Pill } from '@/features/admin/ui';
 import { useCreateUser } from '@/services/api/hooks/use-user-management';
+import { Button } from '@dendelion/func-ui';
 import { Input, Select } from '@dendelion/func-ui';
 import { useState } from 'react';
 
@@ -81,22 +81,22 @@ export const NewPerson = ({ onDone }: { onDone: () => void }) => {
       </div>
       {error && <p className="font-sans text-xs text-accent">{error}</p>}
       <div className="flex gap-2.5">
-        <Pill
+        <Button
           type="submit"
-          tone="lit"
+          variant="lit"
           size="sm"
           disabled={!valid || createUser.isPending}
         >
           {createUser.isPending ? 'Створення…' : 'Створити'}
-        </Pill>
-        <Pill
-          tone="ghost"
+        </Button>
+        <Button
+          variant="ghost"
           size="sm"
           disabled={createUser.isPending}
           onClick={onDone}
         >
           Скасувати
-        </Pill>
+        </Button>
       </div>
     </form>
   );

@@ -1,4 +1,4 @@
-import { Pill } from '@/features/admin/ui';
+import { Button } from '@dendelion/func-ui';
 import { Input, Select, Textarea } from '@dendelion/func-ui';
 import type { Album } from '@radio/types';
 import { CONDITION_OPTIONS, RPM_OPTIONS, useAlbumForm } from '../hooks';
@@ -119,17 +119,22 @@ export const AlbumForm = ({
       )}
 
       <div className="flex gap-2.5">
-        <Pill
+        <Button
           type="submit"
-          tone="lit"
+          variant="lit"
           size="sm"
           disabled={!form.valid || form.saving}
         >
           {form.saving ? 'Збереження…' : 'Зберегти'}
-        </Pill>
-        <Pill tone="ghost" size="sm" disabled={form.saving} onClick={onDone}>
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          disabled={form.saving}
+          onClick={onDone}
+        >
           Скасувати
-        </Pill>
+        </Button>
       </div>
     </form>
   );

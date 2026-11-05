@@ -1,6 +1,6 @@
 import { Split } from '@/features/admin/split';
-import { Pill } from '@/features/admin/ui';
 import { useDigitizationDrafts } from '@/services/api';
+import { Button } from '@dendelion/func-ui';
 import { useNavigate } from '@tanstack/react-router';
 import { type ReactNode, useMemo, useState } from 'react';
 import { DraftRows, NewDraft, RadioFolder, StageChips } from './components';
@@ -41,17 +41,17 @@ export const StudioShell = ({ children, activeSlug }: StudioShellProps) => {
     <Split
       corner={
         <>
-          <Pill tone="lit" size="sm" onClick={() => setCreating(true)}>
+          <Button variant="lit" size="sm" onClick={() => setCreating(true)}>
             + Новий запис
-          </Pill>
-          <Pill
-            tone="ghost"
+          </Button>
+          <Button
+            variant="ghost"
             size="sm"
             disabled={isFetching}
             onClick={() => refetch()}
           >
             {isFetching ? 'Оновлення…' : 'Оновити'}
-          </Pill>
+          </Button>
         </>
       }
       left={
@@ -85,14 +85,14 @@ export const StudioShell = ({ children, activeSlug }: StudioShellProps) => {
                   <p className="type-body text-accent">
                     Не вдалося завантажити драфти.
                   </p>
-                  <Pill
-                    tone="ghost"
+                  <Button
+                    variant="ghost"
                     size="sm"
                     disabled={isFetching}
                     onClick={() => refetch()}
                   >
                     Спробувати ще раз
-                  </Pill>
+                  </Button>
                 </div>
               ) : (
                 <DraftRows

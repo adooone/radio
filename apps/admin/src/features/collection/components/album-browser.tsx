@@ -1,7 +1,7 @@
-import { Pill } from '@/features/admin/ui';
 import { useSyncMedia } from '@/services/api';
 import { useOnAir } from '@/services/api/hooks/use-on-air-api';
 import { useNotificationStore } from '@/stores/notification-store';
+import { Button } from '@dendelion/func-ui';
 import { Input, Select } from '@dendelion/func-ui';
 import { useEffect, useMemo, useState } from 'react';
 import { useCollectionData } from '../hooks';
@@ -118,14 +118,14 @@ export const AlbumBrowser = () => {
           options={SORT_OPTIONS}
           className="shrink-0"
         />
-        <Pill
-          tone="ghost"
+        <Button
+          variant="ghost"
           size="sm"
           onClick={sync}
           disabled={syncMedia.isPending}
         >
           {syncMedia.isPending ? 'Оновлення…' : 'Оновити'}
-        </Pill>
+        </Button>
       </div>
       <p className="type-label pb-4 tabular-nums text-cream/60">
         {albumsCount(albums?.length ?? 0)} · {tracksCount(trackTotal)} · каталог{' '}

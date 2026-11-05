@@ -1,5 +1,6 @@
-import { Chip, Pill } from '@/features/admin/ui';
+import { Chip } from '@/features/admin/ui';
 import { useDeleteCollection, useUserCollections } from '@/services/api';
+import { Button } from '@dendelion/func-ui';
 import type { Collection } from '@radio/types';
 import clsx from 'clsx';
 import { useState } from 'react';
@@ -91,9 +92,9 @@ export const PlaylistBrowser = ({ onCreate }: { onCreate: () => void }) => {
           {playlistsCount(playlists?.length ?? 0)}
         </span>
         <span className="flex-1" />
-        <Pill tone="lit" size="sm" onClick={onCreate}>
+        <Button variant="lit" size="sm" onClick={onCreate}>
           + Новий плейлист
-        </Pill>
+        </Button>
       </div>
 
       <div className="work-scroll flex flex-col gap-2.5">

@@ -1,10 +1,11 @@
-import { FeedRow, Pill } from '@/features/admin/ui';
+import { FeedRow } from '@/features/admin/ui';
 import {
   digitizationKeys,
   useCleanupDraft,
   useDigitizationJob,
   usePublishDraft,
 } from '@/services/api';
+import { Button } from '@dendelion/func-ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { getErrorMessage } from '../lib/split-review-utils';
@@ -82,14 +83,14 @@ export const PublishSteps = ({
 
       {canPublish && !onAir && (
         <div className="flex flex-wrap items-center gap-3">
-          <Pill
-            tone={job?.status === 'error' ? 'danger' : 'lit'}
+          <Button
+            variant={job?.status === 'error' ? 'danger' : 'lit'}
             size="sm"
             disabled={running || publish.isPending}
             onClick={start}
           >
             {running ? 'Публікація…' : 'Опублікувати в ефір'}
-          </Pill>
+          </Button>
           {job?.status === 'success' && (
             <span className="font-sans text-xs text-glow">
               Альбом опубліковано.
@@ -119,22 +120,22 @@ export const PublishSteps = ({
 
       {onAir && (
         <div className="flex flex-wrap items-center gap-2.5">
-          <Pill
-            tone="ghost"
+          <Button
+            variant="ghost"
             size="sm"
             disabled={cleanup.isPending}
             onClick={deleteSides}
           >
             Видалити side-*.wav
-          </Pill>
-          <Pill
-            tone="danger"
+          </Button>
+          <Button
+            variant="danger"
             size="sm"
             disabled={cleanup.isPending}
             onClick={deleteFolder}
           >
             Видалити теку інбоксу
-          </Pill>
+          </Button>
           {cleanup.isError && (
             <span className="font-sans text-xs text-accent">
               {getErrorMessage(cleanup.error)}

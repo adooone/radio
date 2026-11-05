@@ -1,5 +1,5 @@
-import { Pill } from '@/features/admin/ui';
 import { useUsers } from '@/services/api/hooks/use-user-management';
+import { Button } from '@dendelion/func-ui';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { NewPerson, PeopleRows, type Person } from './components';
@@ -106,26 +106,26 @@ export const PeopleSheet = ({
 
         {!creating && (
           <div className="flex items-center gap-2.5">
-            <Pill tone="lit" size="sm" onClick={() => setCreating(true)}>
+            <Button variant="lit" size="sm" onClick={() => setCreating(true)}>
               + Створити обліковку
-            </Pill>
-            <Pill
-              tone="ghost"
+            </Button>
+            <Button
+              variant="ghost"
               size="sm"
               disabled={people.length === 0}
               onClick={() => exportPeople(people)}
             >
               Експорт
-            </Pill>
-            <Pill
-              tone="danger"
+            </Button>
+            <Button
+              variant="danger"
               size="sm"
               className="ml-auto"
               disabled={isLoggingOut}
               onClick={onLogout}
             >
               {isLoggingOut ? 'Вихід…' : 'Вийти'}
-            </Pill>
+            </Button>
           </div>
         )}
       </section>

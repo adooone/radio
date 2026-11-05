@@ -1,5 +1,6 @@
-import { Chip, Dot, Pill } from '@/features/admin/ui';
+import { Chip, Dot } from '@/features/admin/ui';
 import { useCreateDraft } from '@/services/api';
+import { Button } from '@dendelion/func-ui';
 import type { DigitizationDraft } from '@radio/types';
 import { useMemo, useState } from 'react';
 import { useBeforeUnloadWhileUploading } from '../hooks/use-before-unload-while-uploading';
@@ -53,8 +54,8 @@ const FolderRow = ({
         </span>
         {draft && <Chip tone="quiet">у драфтах</Chip>}
         {missing.length > 0 && (
-          <Pill
-            tone="ghost"
+          <Button
+            variant="ghost"
             size="sm"
             disabled={started || createDraft.isPending}
             onClick={upload}
@@ -64,7 +65,7 @@ const FolderRow = ({
               : draft
                 ? `Додати ${filesCount(missing.length)}`
                 : 'Завантажити'}
-          </Pill>
+          </Button>
         )}
       </div>
       {error && <p className="font-sans text-xs text-accent">{error}</p>}
@@ -120,27 +121,27 @@ export const RadioFolder = ({ drafts }: { drafts: DigitizationDraft[] }) => {
       {folder.supported && (
         <div className="flex flex-wrap gap-2">
           {folder.handle && folder.permission !== 'granted' && (
-            <Pill tone="lit" size="sm" onClick={folder.grantAccess}>
+            <Button variant="lit" size="sm" onClick={folder.grantAccess}>
               Надати доступ
-            </Pill>
+            </Button>
           )}
           {granted && (
-            <Pill
-              tone="ghost"
+            <Button
+              variant="ghost"
               size="sm"
               disabled={folder.isScanning}
               onClick={folder.refresh}
             >
               Сканувати
-            </Pill>
+            </Button>
           )}
-          <Pill tone="quiet" size="sm" onClick={folder.choose}>
+          <Button variant="secondary" size="sm" onClick={folder.choose}>
             {folder.handle ? 'Змінити теку' : 'Вибрати теку'}
-          </Pill>
+          </Button>
           {folder.handle && (
-            <Pill tone="quiet" size="sm" onClick={folder.forget}>
+            <Button variant="secondary" size="sm" onClick={folder.forget}>
               Забути
-            </Pill>
+            </Button>
           )}
         </div>
       )}
