@@ -2,8 +2,9 @@
 id: IDEA-18
 title: Wave tests always exit
 type: fix
-status: planned
+status: in-progress
 created: 2026-11-03
+updated: 2026-11-06
 tags:
   - wave
   - testing
@@ -49,3 +50,6 @@ three runs in a row, and `pgrep ffmpeg` finds nothing after each run.
 - [ ] Per-test timeout and spawn cleanup
       `bun test --timeout 30000`, the preloaded setup that kills leftover
       children, three clean runs in a row.
+
+### Thread
+- [ ] 2026-11-06 [question] [agent] Phase run parked on phase 1 ("Find and fix the hanging tests") — the agent needs a decision: Failed to authenticate: OAuth session expired and could not be refreshed
