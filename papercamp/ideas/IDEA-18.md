@@ -2,7 +2,7 @@
 id: IDEA-18
 title: Wave tests always exit
 type: fix
-status: in-progress
+status: review
 created: 2026-11-03
 updated: 2026-11-07
 tags:
@@ -48,9 +48,10 @@ three runs in a row, and `pgrep ffmpeg` finds nothing after each run.
       Each file alone under `timeout 120`; every ffmpeg, server, socket and
       interval stopped in `afterEach` where it was started.
       run: 1m15s · 20 in · 3.2k out · sonnet-5-5 · sess:c739eaa6-df54-46e5-beb5-70e72b61d55b
-- [ ] Per-test timeout and spawn cleanup
+- [x] Per-test timeout and spawn cleanup
       `bun test --timeout 30000`, the preloaded setup that kills leftover
       children, three clean runs in a row.
+      run: 22s · 28 in · 4k out · sonnet-5-5 · sess:c739eaa6-df54-46e5-beb5-70e72b61d55b
 
 ### Thread
 - [ ] 2026-11-07 [question] [agent] A fix is written but uncommitted in the `.claude/worktrees/laughing-shirley-b003eb` worktree (`turntableService.ts`, its test, `index.ts`), on a branch that is behind main. Land it from there, or redo Phase 1 on main?
