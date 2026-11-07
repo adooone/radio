@@ -53,3 +53,4 @@ three runs in a row, and `pgrep ffmpeg` finds nothing after each run.
 
 ### Thread
 - [ ] 2026-11-07 [question] [agent] A fix is written but uncommitted in the `.claude/worktrees/laughing-shirley-b003eb` worktree (`turntableService.ts`, its test, `index.ts`), on a branch that is behind main. Land it from there, or redo Phase 1 on main?
+- [ ] 2026-11-07 [question] [agent] Run-all parked on phase 1 ("Find and fix the hanging tests") — the agent needs a decision: Failed to authenticate: OAuth session expired and could not be refreshed
