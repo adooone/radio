@@ -25,6 +25,10 @@ export const ERROR_MESSAGES = {
       `Current account with ID ${id} not found`,
     EMAIL_EXISTS: 'Email already exists',
     USERNAME_EXISTS: 'Username already exists',
+    USERNAME_NOT_FOUND: (username: string | number) =>
+      `Account with username ${username} not found`,
+    CANNOT_DELETE_SELF: 'You cannot delete your own account',
+    PASSWORD_RESET_SUCCESS: 'Password reset successfully',
     CREATED_SUCCESS: 'Account created successfully',
     UPDATED_SUCCESS: 'Account updated successfully',
     DELETED_SUCCESS: 'Account deleted successfully',

@@ -1,5 +1,6 @@
 import {
   type NewAccountData,
+  countAccounts,
   createAccount,
   createSession,
   deleteAccount,
@@ -7,6 +8,9 @@ import {
   findAccountById,
   findAccountByUsername,
   findSessionByToken,
+  listAccounts,
+  setAccountAdminFields,
+  setAccountPasswordHash,
   updateAccount,
 } from '@/db/accounts/index';
 import { getErrorMessage } from '@/utils/errorMessages';
@@ -156,6 +160,66 @@ export class AccountService {
   async deleteCurrentAccount(accountId: number) {
     await deleteAccount(accountId);
     return { message: 'Account deleted successfully' };
+  }
+
+  async listAccounts(limit: number, offset: number) {
+    const [rows, total] = await Promise.all([
+      listAccounts(limit, offset),
+      countAccounts(),
+    ]);
+    return {
+      users: rows.map((row) => ({
+        ...this.formatAccountResponse(row),
+        updatedAt: row.updatedAt || row.createdAt || new Date().toISOString(),
+      })),
+      total,
+      limit,
+      offset,
+    };
+  }
+
+  async updateAccountByAdmin(
+    id: number,
+    data: { role?: string; isActive?: boolean },
+  ) {
+    const found = await setAccountAdminFields(id, data);
+    if (!found) {
+      throw new Error(getErrorMessage.account('NOT_FOUND', id));
+    }
+    return this.getAccountById(id);
+  }
+
+  async deleteAccountByAdmin(id: number, callerId: number) {
+    if (id === callerId) {
+      throw new Error(getErrorMessage.account('CANNOT_DELETE_SELF'));
+    }
+    const existing = await findAccountById(id);
+    if (!existing) {
+      throw new Error(getErrorMessage.account('NOT_FOUND', id));
+    }
+    await deleteAccount(id);
+    return { message: getErrorMessage.account('DELETED_SUCCESS') };
+  }
+
+  async resetPassword(id: number, password: string) {
+    if (password.length < 8) {
+      throw new Error(getErrorMessage.validation('INVALID_PASSWORD'));
+    }
+    const passwordHash = await bcrypt.hash(password, 12);
+    const found = await setAccountPasswordHash(id, passwordHash);
+    if (!found) {
+      throw new Error(getErrorMessage.account('NOT_FOUND', id));
+    }
+    return { message: getErrorMessage.account('PASSWORD_RESET_SUCCESS') };
+  }
+
+  async resetPasswordByUsername(username: string, password: string) {
+    const account = await findAccountByUsername(username);
+    if (!account) {
+      throw new Error(getErrorMessage.account('USERNAME_NOT_FOUND', username));
+    }
+    await this.resetPassword(account.id, password);
+    return { id: account.id, username: account.username };
   }
 
   async validateSession(token: string) {

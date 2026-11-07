@@ -41,9 +41,10 @@ Self-service sign-up and invitations. The login page. The player's chat
 nicknames, which are not accounts.
 
 ### Phases
-- [ ] Add the admin account queries in wave
+- [x] Add the admin account queries in wave
       Paged list without the hash, role/active update, delete, and password
       set in `db/accounts` and `accountService`, shared with `reset-password.ts`.
+      run: 1m16s · 20 in · 4.8k out · sonnet-5-5 · sess:d014e69f-fb1c-4ae1-b0cf-9e786977d105
 - [ ] Serve the four routes behind the admin check
       Handlers, validators and routes behind `authMiddleware` plus
       `adminMiddleware`, with tests for 403, self-delete and no hash.

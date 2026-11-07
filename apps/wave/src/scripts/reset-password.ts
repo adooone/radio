@@ -1,8 +1,7 @@
 import readline from 'node:readline';
 import { db } from '@/db';
 import { accounts } from '@/db/schema';
-import bcrypt from 'bcryptjs';
-import { eq } from 'drizzle-orm';
+import { accountService } from '@/services/accounts/accountService';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -50,25 +49,11 @@ const resetPassword = async () => {
       return;
     }
 
-    // Hash the new password
-    const passwordHash = await bcrypt.hash(newPassword, 12);
+    const updatedUser = await accountService.resetPasswordByUsername(
+      username,
+      newPassword,
+    );
 
-    // Update password
-    const result = await db
-      .update(accounts)
-      .set({
-        passwordHash,
-        updatedAt: new Date().toISOString(),
-      })
-      .where(eq(accounts.username, username))
-      .returning();
-
-    if (result.length === 0) {
-      console.log('❌ User not found:', username);
-      return;
-    }
-
-    const updatedUser = result[0];
     console.log('✅ Password reset successfully!');
     console.log('👤 Username:', updatedUser.username);
     console.log('🔑 New password:', newPassword);
