@@ -13,7 +13,6 @@ export const uk: Dictionary = {
   'island.openChat': 'Відкрити чат',
   'island.backToRadio': 'Назад до радіо',
 
-  'chat.title': 'Чатік',
   'chat.muteSounds': 'Вимкнути звуки чату',
   'chat.unmuteSounds': 'Увімкнути звуки чату',
   'chat.openSettings': 'Відкрити налаштування',
@@ -42,7 +41,6 @@ export const uk: Dictionary = {
   'chat.status.online': 'Онлайн',
   'chat.status.offline': 'Офлайн',
 
-  'listeners.title': 'Меломани на Городі',
   'listeners.empty': 'Поки тут нікого немає',
   'listeners.self': 'це ти',
   'listeners.lastSeen.now': 'щойно',

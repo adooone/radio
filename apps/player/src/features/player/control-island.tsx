@@ -30,13 +30,13 @@ type ControlIslandProps = {
 /**
  * The listening controls on an island, like the admin's navigation island —
  * the same pill — with func-ui's lamp controls glowing on it: the track
- * strip (play lamp and the words), the on-air dot and a lamp-meter volume
- * with an invisible range input over it for the hand and the keyboard. On
- * small portrait screens the pill turns compact — the strip and the chat
- * lamp that opens the room as its own view — doubling as the page's
- * navigation; and with the room open, the same pill holds the lamp back to
- * the radio, then the message (or name) field with its send (or join) lamp
- * at the right end, under the thumb.
+ * strip (play lamp and the words), a lamp-meter volume with an invisible
+ * range input over it for the hand and the keyboard, then the room's mute
+ * and settings lamps. On small portrait screens the pill turns compact —
+ * the strip and the chat lamp that opens the room as its own view —
+ * doubling as the page's navigation; and with the room open, the same pill
+ * holds the lamp back to the radio, then the message (or name) field with
+ * its send (or join) lamp at the right end, under the thumb.
  */
 export const ControlIsland = ({
   playing,
@@ -111,7 +111,8 @@ export const ControlIsland = ({
             />
           </div>
           {/* The room's lamps on wide screens — mute, then settings — at the
-              island's end; phones stack them over the input instead. */}
+              island's end; phones carry them in the track bar over the
+              open room instead. */}
           <div className="hidden shrink-0 border-l border-cream/10 pl-4 sm:landscape:block">
             <ChatLamps
               lampSize={lampSize}

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { SleeveWear } from './sleeve-wear';
 
 /** Points along the splat's outline: enough for a smooth, organic edge. */
@@ -122,7 +122,9 @@ export const VinylBox = ({
   const playingRef = useRef(playing);
   playingRef.current = playing;
 
-  useEffect(() => {
+  // Laid out before the first paint, so the sleeve never shows at its
+  // unsized default and then jumps into place.
+  useLayoutEffect(() => {
     const box = boxRef.current;
     const canvas = canvasRef.current;
     const sleeve = sleeveRef.current;

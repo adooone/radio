@@ -2,9 +2,9 @@
 id: IDEA-14
 title: Player speaks Ukrainian and English
 type: feat
-status: review
+status: done
 created: 2026-10-31
-updated: 2026-11-04
+updated: 2026-11-07
 tags:
   - player
   - i18n

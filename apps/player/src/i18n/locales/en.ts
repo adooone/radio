@@ -13,7 +13,6 @@ export const en: Dictionary = {
   'island.openChat': 'Open the chat',
   'island.backToRadio': 'Back to the radio',
 
-  'chat.title': 'Chatroom',
   'chat.muteSounds': 'Mute chat sounds',
   'chat.unmuteSounds': 'Unmute chat sounds',
   'chat.openSettings': 'Open settings',
@@ -42,7 +41,6 @@ export const en: Dictionary = {
   'chat.status.online': 'Online',
   'chat.status.offline': 'Offline',
 
-  'listeners.title': 'Listeners',
   'listeners.empty': 'No one is here yet',
   'listeners.self': "that's you",
   'listeners.lastSeen.now': 'just now',

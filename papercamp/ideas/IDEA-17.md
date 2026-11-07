@@ -2,9 +2,9 @@
 id: IDEA-17
 title: Admin controls on func-ui — no custom primitives
 type: refactor
-status: review
+status: in-progress
 created: 2026-11-02
-updated: 2026-11-05
+updated: 2026-11-07
 tags:
   - admin
   - design
@@ -123,6 +123,18 @@ not controls. The login page. Any change to what the pages do.
       and tests green; the four boards screenshotted in Chrome against
       the IDEA-16 mockups.
       run: 7s · 94 in · 23.6k out · sonnet-5-5 · sess:a77846ad-5d5d-4ae7-8b35-be04da85612b
+- [ ] Phase 6 — Publish func-ui and bump
+      Phase 1's last step, which never happened. The tokens, ghost
+      `Tabs`, lit `Button` and `ListItem` tones sit uncommitted in
+      `~/dev/func-ui` (its IDEA-13, in review), and the admin reaches
+      them only through the `pnpm link` symlink while `package.json`
+      and the lockfile still say `^0.3.0`. A fresh install or a deploy
+      builds the admin without them. func-ui commits its IDEA-13 work
+      and publishes 0.5.0 (0.4.0 is already on npm, from 2026-10-09,
+      without these changes); the admin depends on `^0.5.0`, the link
+      is removed and `pnpm install` brings the published package;
+      check-types, lint, build and the four boards checked again. The
+      player stays on 0.3.0 until IDEA-20.
 
 ### Thread
 - [x] 2026-11-02 [decision] [user] Use func-ui components across the app, no custom components at all; if a rounded (or other) option is needed, add it to func-ui rather than creating a custom component.
@@ -134,3 +146,4 @@ not controls. The login page. Any change to what the pages do.
 - [x] 2026-11-02 [decision] [user] Typography on the page: the on-air figures are type-label / type-title / type-meta markup, not a component — nothing to add to func-ui.
 - [x] 2026-11-02 [question] [agent] The player has not been audited against this rule; its island and chat controls may carry the same kind of hand-rolled pieces. Its own idea once the admin is done?
 - [x] 2026-11-02 [decision] [user] The player gets its own idea after this one lands, drafted from a fresh audit of its island, chat and controls.
+- [x] 2026-11-07 [decision] [agent] Back to in-progress from review: the admin builds only against the locally linked func-ui, which is uncommitted and unpublished. Phase 6 publishes it and bumps the dependency.

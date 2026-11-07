@@ -2,9 +2,9 @@
 id: IDEA-16
 title: Admin redesign — three pages in the player's language
 type: feat
-status: review
+status: done
 created: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-07
 tags:
   - admin
   - design
@@ -247,7 +247,8 @@ today).
 - [x] 2026-11-02 [decision] [agent] One slot: the strip carries the song on air with the live dot, and the local preview takes it over — with the play lamp and a stop — only while a preview is sounding, since that is what is heard in the room. Built in Phase 7.
 - [x] 2026-11-02 [question] [agent] The people panel as an overlay sits against IDEA-13's "no modals" instinct — fine for the admin, or should it swap in place over whatever page is open, the way the chat's pages do?
 - [x] 2026-11-02 [decision] [agent] The people sheet stays the one overlay, as the Users board draws it — the page dims under a centred sheet in the island's glass; everything else (edit, cover, new playlist, new record, Discogs) swaps in place on the slab.
-- [ ] 2026-11-02 [question] [agent] Wave has no `GET /api/accounts` list route (its accounts routes are register, login, me and `:id`), so the admin's `useUsers()` has always 404'd and the people sheet says so instead of showing people. Out of this idea's scope (no API changes) — a small wave route, or should the sheet list accounts another way?
+- [x] 2026-11-02 [question] [agent] Wave has no `GET /api/accounts` list route (its accounts routes are register, login, me and `:id`), so the admin's `useUsers()` has always 404'd and the people sheet says so instead of showing people. Out of this idea's scope (no API changes) — a small wave route, or should the sheet list accounts another way?
 - [x] 2026-11-02 [decision] [agent] The dev admin reaches wave through its own origin: `vite.config.ts` proxies `/api` to `ADMIN_API_PROXY` (the local dev wave by default, `http://localhost:6970` for the pm2 station), with `VITE_API_URL` set to the page's origin — so a browser on the tailnet needs only port 3001 open. The earlier `deimos:6870` setting timed out from outside the box. Documented in `.env.example`.
 - [x] 2026-11-02 [decision] [user] The admin's split is 3:2, not the player's 2:1 — the lists on the left had room to spare while the slab's details, forms and journal were cramped. The island keeps fitting the narrower work column because the admin's dock drops the player's extra 1.5rem inset and lets the pill run the full width between the gutters.
 - [x] 2026-11-02 [decision] [user] The `features/admin/ui` primitives this idea wrote (Pill, Chip, Dot, FeedRow, Stat, TabPills, GhostNav, the Field set) are rejected as custom components: the app uses func-ui only, with missing options added there. Their replacement is IDEA-17; this idea's shape stands.
+- [x] 2026-11-07 [decision] [agent] Closed with the accounts question still open: it is a wave API change, out of this idea's scope, and now lives as IDEA-19.
