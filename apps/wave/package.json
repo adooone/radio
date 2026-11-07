@@ -4,7 +4,7 @@
     "dev": "bun run --hot src/index.ts",
     "check-types": "tsc --noEmit",
     "lint": "biome lint --error-on-warnings ./src",
-    "test": "bun test",
+    "test": "bun test --timeout 30000",
     "test:watch": "bun test --watch",
     "test:coverage": "bun test --coverage",
     "db:migrate": "bun run src/db/migrate.ts",

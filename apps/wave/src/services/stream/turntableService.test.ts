@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'bun:test';
+import { afterEach, describe, expect, it } from 'bun:test';
 import {
   type Player,
   type QueuedTrack,
@@ -42,6 +42,8 @@ class FakePlayer implements Player {
   }
 }
 
+const started: TurntableService[] = [];
+
 function makeTurntable() {
   const players: FakePlayer[] = [];
   const marks: [number, number][] = [];
@@ -68,10 +70,15 @@ function makeTurntable() {
     },
     log: () => {},
   });
+  started.push(service);
   return { service, players, marks, finished: () => finished };
 }
 
 describe('turntableService', () => {
+  afterEach(() => {
+    for (const service of started.splice(0)) service.stop();
+  });
+
   it('plays the album from its first track and marks it on air', async () => {
     const { service, players, marks } = makeTurntable();
     const state = await service.play(ALBUM);

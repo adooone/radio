@@ -44,9 +44,10 @@ Done when `bun test` in `apps/wave` exits on its own in under five minutes,
 three runs in a row, and `pgrep ffmpeg` finds nothing after each run.
 
 ### Phases
-- [ ] Find and fix the hanging tests
+- [x] Find and fix the hanging tests
       Each file alone under `timeout 120`; every ffmpeg, server, socket and
       interval stopped in `afterEach` where it was started.
+      run: 1m15s · 20 in · 3.2k out · sonnet-5-5 · sess:c739eaa6-df54-46e5-beb5-70e72b61d55b
 - [ ] Per-test timeout and spawn cleanup
       `bun test --timeout 30000`, the preloaded setup that kills leftover
       children, three clean runs in a row.
