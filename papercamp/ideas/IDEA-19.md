@@ -2,7 +2,7 @@
 id: IDEA-19
 title: Wave serves the admin's account routes
 type: feat
-status: idea
+status: review
 created: 2026-11-07
 updated: 2026-11-07
 tags:
