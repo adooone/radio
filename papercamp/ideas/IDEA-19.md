@@ -49,9 +49,10 @@ nicknames, which are not accounts.
       Handlers, validators and routes behind `authMiddleware` plus
       `adminMiddleware`, with tests for 403, self-delete and no hash.
       run: 1m4s · 36 in · 10.8k out · sonnet-5-5 · sess:d014e69f-fb1c-4ae1-b0cf-9e786977d105
-- [ ] Drop the people sheet's "no route" notice
+- [x] Drop the people sheet's "no route" notice
       `people-sheet.tsx` lists people from `useUsers()`, matching the `User`
       type to what wave returns.
+      run: 30s · 46 in · 12.1k out · sonnet-5-5 · sess:d014e69f-fb1c-4ae1-b0cf-9e786977d105
 - [ ] [manual] See the people sheet list, edit and remove people in the admin
 
 ### Thread

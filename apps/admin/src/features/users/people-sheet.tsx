@@ -44,7 +44,7 @@ export const PeopleSheet = ({
   isLoggingOut,
 }: PeopleSheetProps) => {
   const { data, isLoading, isError } = useUsers();
-  const people = (data ?? []) as Person[];
+  const people: Person[] = data ?? [];
   const [creating, setCreating] = useState(false);
 
   useEffect(() => {
@@ -98,7 +98,7 @@ export const PeopleSheet = ({
           <p className="type-body text-cream/45">Завантаження…</p>
         ) : isError ? (
           <p className="type-body text-accent">
-            Wave не віддає список облікових (немає маршруту GET /api/accounts).
+            Не вдалося завантажити список облікових.
           </p>
         ) : (
           <PeopleRows people={people} selfId={selfId} />

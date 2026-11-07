@@ -34,10 +34,10 @@ type ApiResponse<T> = {
 export const userManagementApi = {
   // Get all users (admin only)
   getAllUsers: async (limit = 50, offset = 0): Promise<User[]> => {
-    const response = await waveApiClient.get<ApiResponse<User[]>>(
-      `/api/accounts?limit=${limit}&offset=${offset}`,
-    );
-    return response.data.data;
+    const response = await waveApiClient.get<
+      ApiResponse<{ users: User[]; total: number }>
+    >(`/api/accounts?limit=${limit}&offset=${offset}`);
+    return response.data.data.users;
   },
 
   // Get user by ID
