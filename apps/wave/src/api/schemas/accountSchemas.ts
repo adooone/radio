@@ -17,3 +17,12 @@ export const loginSchema = z.object({
   username: z.string().min(1),
   password: z.string().min(1),
 });
+
+export const adminUpdateAccountSchema = z.object({
+  role: z.string().min(1).optional(),
+  isActive: z.boolean().optional(),
+});
+
+export const resetPasswordSchema = z.object({
+  password: z.string().min(8),
+});

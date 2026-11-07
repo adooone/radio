@@ -78,6 +78,14 @@ export const ErrorHandler = {
         return ResponseHelper.error(c, error.message, 400);
       }
 
+      if (error.message === getErrorMessage.account('CANNOT_DELETE_SELF')) {
+        return ResponseHelper.error(c, error.message, 400);
+      }
+
+      if (error.message === getErrorMessage.validation('INVALID_PASSWORD')) {
+        return ResponseHelper.error(c, error.message, 400);
+      }
+
       // Handle account-specific errors
       if (error.message.includes('Account with ID')) {
         return ResponseHelper.notFound(c, error.message);

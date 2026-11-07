@@ -64,4 +64,43 @@ export const accountHandlers = {
       },
     );
   },
+
+  get listAccountsHandler() {
+    return withErrorHandling(async (c: Context) => {
+      const { limit, offset } = commonSchemas.pagination.parse(c.req.query());
+      const result = await accountService.listAccounts(limit, offset);
+      return ResponseHelper.success(c, result);
+    });
+  },
+
+  get adminUpdateAccountHandler() {
+    return withErrorHandling(async (c: Context) => {
+      const id = commonSchemas.id.parse(c.req.param('id'));
+      const data = await c.req.json();
+      const result = await accountService.updateAccountByAdmin(id, data);
+      return ResponseHelper.success(c, result);
+    });
+  },
+
+  get adminDeleteAccountHandler() {
+    return withErrorHandling(
+      async (c: Context<{ Variables: { accountId: number } }>) => {
+        const id = commonSchemas.id.parse(c.req.param('id'));
+        const result = await accountService.deleteAccountByAdmin(
+          id,
+          c.get('accountId'),
+        );
+        return ResponseHelper.success(c, result);
+      },
+    );
+  },
+
+  get resetPasswordHandler() {
+    return withErrorHandling(async (c: Context) => {
+      const id = commonSchemas.id.parse(c.req.param('id'));
+      const { password } = await c.req.json();
+      const result = await accountService.resetPassword(id, password);
+      return ResponseHelper.success(c, result);
+    });
+  },
 };
