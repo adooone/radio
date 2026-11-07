@@ -4,7 +4,7 @@ title: Wave tests always exit
 type: fix
 status: in-progress
 created: 2026-11-03
-updated: 2026-11-06
+updated: 2026-11-07
 tags:
   - wave
   - testing
@@ -53,3 +53,4 @@ three runs in a row, and `pgrep ffmpeg` finds nothing after each run.
 
 ### Thread
 - [ ] 2026-11-06 [question] [agent] Phase run parked on phase 1 ("Find and fix the hanging tests") — the agent needs a decision: Failed to authenticate: OAuth session expired and could not be refreshed
+- [ ] 2026-11-07 [question] [agent] Phase run parked on phase 1 ("Find and fix the hanging tests") — the agent needs a decision: Failed to authenticate: OAuth session expired and could not be refreshed
