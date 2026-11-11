@@ -170,14 +170,78 @@ describe('onAirService', () => {
     ]);
   });
 
-  it('broadcasts a bare now_playing message when clearing the on-air state', async () => {
+  it('broadcasts a now_playing without a song when clearing, the cleared one in the history', async () => {
     const messages: string[] = [];
     const service = makeService(filePath, (message) => messages.push(message));
     await service.setOnAir(ALBUM.id);
     messages.length = 0;
     service.clearOnAir();
 
-    expect(messages).toEqual([JSON.stringify({ type: 'now_playing' })]);
+    const message = JSON.parse(messages[0]);
+    expect(message.type).toBe('now_playing');
+    expect(message.title).toBeUndefined();
+    expect(message.recent).toHaveLength(1);
+    expect(message.recent[0]).toMatchObject({
+      artist: ALBUM.artist,
+      title: ALBUM.title,
+      cover: ALBUM.coverImageUrl,
+    });
+  });
+
+  it('keeps the last five songs played, newest first, without the one on air', async () => {
+    const service = makeService(filePath);
+    await service.setOnAir(ALBUM.id, SONG.id);
+    for (let i = 0; i < 3; i++) {
+      await service.setOnAir(OTHER_ALBUM.id);
+      await service.setOnAir(ALBUM.id, SONG_NO_ARTIST.id);
+    }
+    const recent = service.getRecent();
+    expect(recent).toHaveLength(5);
+    expect(recent[0].title).toBe(OTHER_ALBUM.title);
+    expect(recent[1].title).toBe(SONG_NO_ARTIST.title);
+    expect(recent[0].startedAt).toBeDefined();
+  });
+
+  it('does not log a song again when it is put on air while already on', async () => {
+    const service = makeService(filePath);
+    await service.setOnAir(ALBUM.id, SONG.id);
+    await service.setOnAir(ALBUM.id, SONG.id);
+    expect(service.getRecent()).toEqual([]);
+  });
+
+  it('keeps the history through a restart', async () => {
+    const first = makeService(filePath);
+    await first.setOnAir(ALBUM.id, SONG.id);
+    await first.setOnAir(OTHER_ALBUM.id);
+    const second = makeService(filePath);
+    expect(second.getRecent().map((song) => song.title)).toEqual([SONG.title]);
+  });
+
+  it('names the next song, with its cover, when the turntable knows it', async () => {
+    const messages: string[] = [];
+    const service = makeService(filePath, (message) => messages.push(message));
+    await service.setOnAir(OTHER_ALBUM.id, undefined, 'turntable', {
+      albumId: ALBUM.id,
+      songId: SONG.id,
+    });
+    const message = JSON.parse(messages[0]);
+    expect(message.next).toEqual({
+      artist: SONG.artist,
+      title: SONG.title,
+      cover: ALBUM.coverImageUrl,
+    });
+    expect(service.getOnAir()?.next?.songId).toBe(SONG.id);
+  });
+
+  it('tells a joining listener the history too', async () => {
+    const service = makeService(filePath);
+    await service.setOnAir(ALBUM.id, SONG.id);
+    await service.setOnAir(OTHER_ALBUM.id);
+    const message = JSON.parse(service.nowPlayingMessage());
+    expect(message.title).toBe(OTHER_ALBUM.title);
+    expect(message.recent.map((song: { title: string }) => song.title)).toEqual(
+      [SONG.title],
+    );
   });
 
   it('omits the cover field when the album has none', async () => {

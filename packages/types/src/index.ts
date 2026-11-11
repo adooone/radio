@@ -280,6 +280,17 @@ export interface StreamControlResponse {
   message: string;
 }
 
+/** A song as the player shows it beside the air: next, or played before. */
+export interface AirSong {
+  albumId: number;
+  songId?: number;
+  artist: string;
+  title: string;
+  cover?: string;
+  /** When it went on air (for songs already played). */
+  startedAt?: string;
+}
+
 export interface OnAirState {
   albumId: number;
   songId?: number;
@@ -291,6 +302,8 @@ export interface OnAirState {
   setAt: string;
   /** Who set it: the admin by hand, or the turntable as it plays. */
   source?: 'admin' | 'turntable';
+  /** The song the turntable plays after this one, when it knows. */
+  next?: AirSong;
 }
 
 /** A photo from an album's recording sessions, as wave serves it. */

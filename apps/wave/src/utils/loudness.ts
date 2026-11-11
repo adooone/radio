@@ -53,7 +53,9 @@ export function measureLoudness(filePath: string): Promise<Loudness | null> {
         filePath,
         '-vn',
         '-filter_complex',
-        'ebur128=peak=true',
+        // The per-frame lines go to the verbose level: ~100x less output
+        // for this process (and wave) to wade through; the summary stays.
+        'ebur128=peak=true:framelog=verbose',
         '-f',
         'null',
         '-',

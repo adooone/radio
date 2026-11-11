@@ -41,6 +41,13 @@ export const uk: Dictionary = {
   'chat.status.online': 'Онлайн',
   'chat.status.offline': 'Офлайн',
 
+  'air.next': 'Далі',
+  'air.earlier': 'Раніше',
+  'air.openEarlier': 'Показати, що грало раніше',
+  'air.closeEarlier': 'Назад до чату',
+  'history.title': 'Раніше в ефірі',
+  'history.empty': 'Ще нічого не грало',
+
   'listeners.empty': 'Поки тут нікого немає',
   'listeners.self': 'це ти',
   'listeners.lastSeen.now': 'щойно',

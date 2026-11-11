@@ -9,7 +9,7 @@ import { useUserList } from './use-user-list';
 
 /** The chat panel's three faces: the room itself, who is here, and the
     listener's own settings — swapped in place behind the header's lamps. */
-export type ChatPage = 'room' | 'listeners' | 'settings';
+export type ChatPage = 'room' | 'listeners' | 'settings' | 'history';
 
 /** How long a run of joins waits before it is judged settled enough to chime. */
 const JOIN_SOUND_DEBOUNCE_MS = 1_500;
@@ -25,8 +25,10 @@ export type ChatRoom = {
   users: ReturnType<typeof useUserList>;
   sound: ReturnType<typeof useSound>;
   page: ChatPage;
-  /** Opens a page, or closes it back to the room if it (or the other one) is already open. */
-  togglePage: (target: 'listeners' | 'settings') => void;
+  /** Opens a page, or closes it back to the room if it (or another one) is already open. */
+  togglePage: (target: Exclude<ChatPage, 'room'>) => void;
+  /** Opens a page whatever is open: the radio's "earlier" link. */
+  openPage: (target: ChatPage) => void;
   colorChoice: string | null;
   /** Sets the nickname's colour (or `null` for auto) and tells wave. */
   setColorChoice: (color: string | null) => void;
@@ -82,7 +84,7 @@ export const useChatRoom = (): ChatRoom => {
     });
   }, [nickname, colorChoice]);
 
-  const togglePage = (target: 'listeners' | 'settings') => {
+  const togglePage = (target: Exclude<ChatPage, 'room'>) => {
     setPage((current) => (current === 'room' ? target : 'room'));
   };
 
@@ -150,6 +152,7 @@ export const useChatRoom = (): ChatRoom => {
     sound,
     page,
     togglePage,
+    openPage: setPage,
     colorChoice,
     setColorChoice,
     clearData,

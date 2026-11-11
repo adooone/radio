@@ -87,8 +87,16 @@ keeps playing the same HLS and reading the same now-playing messages.
 - [x] Phase 5 — Docs and checks
       `docs/apps/wave.md` and `docs/apps/admin.md`; check-types, lint and
       tests green across the repo.
+- [x] Phase 6 — Next and earlier in the player
+      Wave keeps the last five songs on air (`data/on-air-history.json`)
+      and the turntable names the next one; both ride the now_playing
+      message, held with the listener's lag. Under the sleeve a tiny line
+      shows the next song with its sleeve in small, and an «Earlier» link
+      opens the last five as a page in the chat's column (the chat's own
+      view on phones).
 - [ ] [manual] pm2 starts at boot, wave runs, and an hour of the station sounds right
 
 ### Thread
 - [x] 2026-11-11 [decision] [user] Shuffled tracks across the library (not albums or sides), on wave's own turntable (not Liquidsoap), going live stays by hand, and the first version has even loudness, admin controls and crossfades.
 - [x] 2026-11-11 [decision] [agent] Crossfades only inside a batch (an `acrossfade` chain per ffmpeg process); a skip, a manual album or a new batch restarts ffmpeg with a short gap. An album put on air by hand interrupts the rotation, which resumes after it if on.
+- [x] 2026-11-11 [decision] [user] Only the next song shows under the record, as a tiny line with its sleeve; the last five open from a link as a page where the chat is.

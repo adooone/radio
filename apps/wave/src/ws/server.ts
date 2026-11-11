@@ -1,7 +1,4 @@
-import {
-  formatNowPlayingMessage,
-  onAirService,
-} from '@/services/stream/onAirService';
+import { onAirService } from '@/services/stream/onAirService';
 import { serve } from 'bun';
 import type { ServerWebSocket } from 'bun';
 import { getHistory } from '../utils/chatStore';
@@ -43,7 +40,7 @@ export function startWsServer(port = 6871): WebSocketServer {
             }
           }
 
-          ws.send(formatNowPlayingMessage(onAirService.getOnAir()));
+          ws.send(onAirService.nowPlayingMessage());
 
           // Broadcast updated listener count (debounced)
           debouncedBroadcastListeners();

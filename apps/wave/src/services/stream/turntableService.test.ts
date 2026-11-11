@@ -62,6 +62,7 @@ const started: TurntableService[] = [];
 function makeTurntable() {
   const players: FakePlayer[] = [];
   const marks: [number, number][] = [];
+  const nexts: (number | undefined)[] = [];
   let finished = 0;
   const service = new TurntableService({
     loadQueue: async (albumId, fromSongId) => {
@@ -77,8 +78,9 @@ function makeTurntable() {
       players.push(player);
       return player;
     },
-    onTrack: async (albumId, songId) => {
-      marks.push([albumId, songId]);
+    onTrack: async (track, next) => {
+      marks.push([track.albumId, track.songId]);
+      nexts.push(next?.songId);
     },
     onFinished: () => {
       finished++;
@@ -86,7 +88,7 @@ function makeTurntable() {
     log: () => {},
   });
   started.push(service);
-  return { service, players, marks, finished: () => finished };
+  return { service, players, marks, nexts, finished: () => finished };
 }
 
 describe('turntableService', () => {
@@ -104,6 +106,14 @@ describe('turntableService', () => {
     expect(state.queue?.map((entry) => entry.songId)).toEqual([1, 2, 3]);
     expect(players).toHaveLength(1);
     expect(marks).toEqual([[ALBUM, 1]]);
+  });
+
+  it('tells the air which track comes next, none after the last', async () => {
+    const { service, players, nexts } = makeTurntable();
+    await service.play(ALBUM);
+    players[0].playedTo(10);
+    players[0].playedTo(30);
+    expect(nexts).toEqual([2, 3, undefined]);
   });
 
   it('drops the needle on the chosen song and plays on from there', async () => {

@@ -1,3 +1,4 @@
+import type { AirTrack } from '@/features/stream/use-now-playing';
 import { useMedia } from '@/lib/use-media';
 import { Slab } from '@radio/stage';
 import type { ReactNode } from 'react';
@@ -5,6 +6,7 @@ import { ChatHeader } from './chat-header';
 import { ChatInput } from './chat-input';
 import { ChatLamps } from './chat-lamps';
 import { ChatMessages } from './chat-messages';
+import { HistoryPage } from './history-page';
 import { ListenersPage } from './listeners-page';
 import { NicknameInput } from './nickname-input';
 import { SettingsPage } from './settings-page';
@@ -19,6 +21,8 @@ type ChatProps = {
   /** What rides above the rim while the view is open on a small screen:
       the track strip, so the music stays in hand inside the room. */
   controls?: ReactNode;
+  /** The radio's songs played before the one on air, for the history page. */
+  recent: AirTrack[];
 };
 
 /**
@@ -27,7 +31,7 @@ type ChatProps = {
  * speaking to wave's WebSocket as before. On small screens the input is
  * not here but on the island, in the controls' place.
  */
-export const Chat = ({ room, mobileOpen, controls }: ChatProps) => {
+export const Chat = ({ room, mobileOpen, controls, recent }: ChatProps) => {
   // The header's lamps grow with the island's, for thumbs.
   const portrait = useMedia('(orientation: portrait)');
   const lampSize = portrait ? 'md' : 'sm';
@@ -103,6 +107,17 @@ export const Chat = ({ room, mobileOpen, controls }: ChatProps) => {
             }`}
           >
             <SettingsPage room={room} />
+          </div>
+
+          <div
+            className={`chat-page ${
+              page === 'history' ? 'chat-page-active' : ''
+            }`}
+          >
+            <HistoryPage
+              recent={recent}
+              onClose={() => room.openPage('room')}
+            />
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ import { RoomBackdrop, VinylBox, Wordmark } from '@radio/stage';
 import { useRef, useState } from 'react';
 import { ControlIsland } from './control-island';
 import { TrackStrip } from './track-strip';
+import { UpNext } from './up-next';
 import { useIslandEdge } from './use-island-edge';
 
 /**
@@ -29,7 +30,7 @@ export const PlayerPage = () => {
     getLag,
   } = useRadio();
   // Held back by the listener's lag, so the titles change with the music.
-  const song = useNowPlaying(getLag);
+  const { song, recent } = useNowPlaying(getLag);
   const quiet = status === 'offline';
   // Small screens keep the chat as its own view behind the island's lamp.
   // While it is open there, the island carries the room's input and the
@@ -37,6 +38,14 @@ export const PlayerPage = () => {
   // shared by both.
   const [chatOpen, setChatOpen] = useState(false);
   const room = useChatRoom();
+  // The songs played earlier open where the chat is: beside the radio on
+  // wide screens, as the chat's own view on phones.
+  const openEarlier = () => {
+    room.openPage('history');
+    if (window.matchMedia('(orientation: portrait)').matches) {
+      setChatOpen(true);
+    }
+  };
   // The sign starts where the sleeve and the island do.
   const signRef = useRef<HTMLElement>(null);
   useIslandEdge(signRef);
@@ -77,12 +86,20 @@ export const PlayerPage = () => {
             label={t(playing ? 'vinyl.pause' : 'vinyl.listenLive')}
             getLevels={getLevels}
             onToggle={toggle}
+            caption={
+              <UpNext
+                next={song?.next}
+                hasEarlier={recent.length > 0}
+                onOpenEarlier={openEarlier}
+              />
+            }
           />
         </div>
       </section>
 
       <Chat
         room={room}
+        recent={recent}
         mobileOpen={chatOpen}
         controls={
           <TrackStrip

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react';
+import { type ReactNode, useLayoutEffect, useRef } from 'react';
 import { SleeveWear } from './sleeve-wear';
 
 /** Points along the splat's outline: enough for a smooth, organic edge. */
@@ -97,6 +97,9 @@ type VinylBoxProps = {
   /** In the split the art spans the controls island docked under it; an
       app without that island lets the box size the art itself. */
   alignToIsland?: boolean;
+  /** A line set just under the sleeve, from its left edge, following it as
+      the art resizes: the player's "next" line. */
+  caption?: ReactNode;
 };
 
 /**
@@ -115,10 +118,12 @@ export const VinylBox = ({
   getLevels,
   onToggle,
   alignToIsland = true,
+  caption,
 }: VinylBoxProps) => {
   const boxRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const sleeveRef = useRef<HTMLButtonElement | null>(null);
+  const captionRef = useRef<HTMLDivElement | null>(null);
   const playingRef = useRef(playing);
   playingRef.current = playing;
 
@@ -206,6 +211,13 @@ export const VinylBox = ({
       sleeve.style.top = `${sleeveY}px`;
       sleeve.style.width = `${side}px`;
       sleeve.style.height = `${side}px`;
+      const captionBox = captionRef.current;
+      if (captionBox) {
+        captionBox.style.left = `${sleeveX}px`;
+        captionBox.style.top = `${sleeveY + side + 14}px`;
+        // As wide as the art: the sleeve, and in the split the record's reach.
+        captionBox.style.width = `${portrait ? side : side * REACH}px`;
+      }
       geo.w = w;
       geo.h = h;
       geo.r = side * 0.44;
@@ -378,6 +390,16 @@ export const VinylBox = ({
         <SleeveWear wearKey={song?.cover ?? 'puget-sound'} />
         <span aria-hidden="true" className="sleeve-bevel" />
       </button>
+      {/* Always mounted, so the layout pass places it even before there
+          is anything to say; empty, it takes no clicks. */}
+      {/* biome-ignore lint/a11y/useKeyWithClickEvents: only keeps a click on the caption from toggling the record */}
+      <div
+        ref={captionRef}
+        onClick={(e) => e.stopPropagation()}
+        className={`vinyl-caption absolute ${caption ? 'cursor-default' : 'pointer-events-none'}`}
+      >
+        {caption}
+      </div>
     </div>
   );
 };

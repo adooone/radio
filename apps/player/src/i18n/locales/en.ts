@@ -41,6 +41,13 @@ export const en: Dictionary = {
   'chat.status.online': 'Online',
   'chat.status.offline': 'Offline',
 
+  'air.next': 'Next',
+  'air.earlier': 'Earlier',
+  'air.openEarlier': 'Show the songs played earlier',
+  'air.closeEarlier': 'Back to the chat',
+  'history.title': 'Earlier on air',
+  'history.empty': 'Nothing has played yet',
+
   'listeners.empty': 'No one is here yet',
   'listeners.self': "that's you",
   'listeners.lastSeen.now': 'just now',

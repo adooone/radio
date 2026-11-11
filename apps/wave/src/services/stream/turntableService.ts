@@ -30,7 +30,7 @@ export interface TurntableDeps {
   /** Plays the tracks back to back, overlapping each join by `overlaps[i]` seconds. */
   spawnPlayer: (tracks: QueuedTrack[], overlaps: number[]) => Player;
   /** Called as each track starts, with the on-air state to set. */
-  onTrack: (albumId: number, songId: number) => Promise<unknown>;
+  onTrack: (track: QueuedTrack, next?: QueuedTrack) => Promise<unknown>;
   /** Called when the queue has played to its end (not on a stop). */
   onFinished: () => void;
   log: (line: string) => void;
@@ -193,13 +193,25 @@ const loadQueueFromLibrary: TurntableDeps['loadQueue'] = async (
   return tracks;
 };
 
-/** The stored durations are rounded to the second; the files know better. */
-export async function probeDurations(tracks: QueuedTrack[]): Promise<void> {
-  await Promise.all(
-    tracks.map(async (track) => {
+/**
+ * The stored durations are rounded to the second; the files know better.
+ * A few ffprobes at a time, so a two-hour batch does not start 30 at once
+ * on a two-core box.
+ */
+export async function probeDurations(
+  tracks: QueuedTrack[],
+  concurrency = 4,
+): Promise<void> {
+  let next = 0;
+  const worker = async () => {
+    while (next < tracks.length) {
+      const track = tracks[next++];
       const probed = await probeDuration(track.filePath);
       if (probed) track.durationSec = probed;
-    }),
+    }
+  };
+  await Promise.all(
+    Array.from({ length: Math.min(concurrency, tracks.length) }, worker),
   );
 }
 
@@ -260,8 +272,13 @@ const spawnFfmpegPlayer: TurntableDeps['spawnPlayer'] = (tracks, overlaps) => {
 const defaultDeps = (): TurntableDeps => ({
   loadQueue: loadQueueFromLibrary,
   spawnPlayer: spawnFfmpegPlayer,
-  onTrack: (albumId, songId) =>
-    onAirService.setOnAir(albumId, songId, 'turntable'),
+  onTrack: (track, next) =>
+    onAirService.setOnAir(
+      track.albumId,
+      track.songId,
+      'turntable',
+      next && { albumId: next.albumId, songId: next.songId },
+    ),
   onFinished: () => onAirService.clearOnAir(),
   log: (line) => console.log('turntable:', line),
 });
@@ -358,7 +375,7 @@ export class TurntableService {
       const index = trackIndexAt(queue, playedSec, overlaps);
       if (index === session.position) return;
       session.position = index;
-      this.trackStarted(queue[index], index, options);
+      this.trackStarted(queue, index, options);
     });
     player.onExit((code) => {
       if (this.session !== session) return;
@@ -372,7 +389,7 @@ export class TurntableService {
       else this.deps.onFinished();
     });
 
-    await this.trackStarted(queue[0], 0, options);
+    await this.trackStarted(queue, 0, options);
     this.deps.log(
       `playing ${queue.length} track(s) (${session.mode}) from song ${queue[0].songId}`,
     );
@@ -390,17 +407,18 @@ export class TurntableService {
   }
 
   private async trackStarted(
-    track: QueuedTrack,
+    queue: QueuedTrack[],
     index: number,
     options: PlayOptions,
   ) {
+    const track = queue[index];
     try {
       options.onTrackStart?.(track, index);
     } catch (error) {
       console.error('turntable: track start handler failed', error);
     }
     try {
-      await this.deps.onTrack(track.albumId, track.songId);
+      await this.deps.onTrack(track, queue[index + 1]);
     } catch (error) {
       console.error('turntable: failed to set the on-air track', error);
     }
