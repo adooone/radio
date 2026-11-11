@@ -127,6 +127,11 @@ export const onAirSchemas = {
   }),
 };
 
+export const rotationSchemas = {
+  set: z.object({ enabled: z.boolean() }),
+  playNext: z.object({ songId: z.number().int().positive() }),
+};
+
 // Passthrough everywhere: data.json is user-owned — unknown keys must survive a save.
 const albumDataJsonSchema = z
   .object({

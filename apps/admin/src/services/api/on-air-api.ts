@@ -1,4 +1,4 @@
-import type { OnAirState, TurntableState } from '@radio/types';
+import type { OnAirState, RotationState, TurntableState } from '@radio/types';
 import { waveApiClient } from './clients/http-client';
 
 type ApiResponse<T> = {
@@ -42,6 +42,38 @@ export const onAirApi = {
   /** Stops the sound; the record stays marked on air. */
   stopTurntable: async (): Promise<void> => {
     await waveApiClient.delete<ApiResponse<void>>('/api/stream/turntable');
+  },
+
+  getRotation: async (): Promise<RotationState> => {
+    const response = await waveApiClient.get<ApiResponse<RotationState>>(
+      '/api/stream/rotation',
+    );
+    return response.data.data;
+  },
+
+  /** The station's shuffle on or off. */
+  setRotation: async (enabled: boolean): Promise<RotationState> => {
+    const response = await waveApiClient.put<ApiResponse<RotationState>>(
+      '/api/stream/rotation',
+      { enabled },
+    );
+    return response.data.data;
+  },
+
+  skipRotation: async (): Promise<RotationState> => {
+    const response = await waveApiClient.post<ApiResponse<RotationState>>(
+      '/api/stream/rotation/skip',
+    );
+    return response.data.data;
+  },
+
+  /** Plays the song after the current track. */
+  playNext: async (songId: number): Promise<RotationState> => {
+    const response = await waveApiClient.post<ApiResponse<RotationState>>(
+      '/api/stream/rotation/next',
+      { songId },
+    );
+    return response.data.data;
   },
 };
 

@@ -1,5 +1,10 @@
 import { collectionApi, useDeleteSong } from '@/services/api';
-import { useOnAir, useSetOnAir } from '@/services/api/hooks/use-on-air-api';
+import {
+  useOnAir,
+  usePlayNext,
+  useRotation,
+  useSetOnAir,
+} from '@/services/api/hooks/use-on-air-api';
 import { useNowPlayingStore } from '@/stores/now-playing-store';
 import { Button, Stamp } from '@dendelion/func-ui';
 import { LampIconButton } from '@dendelion/func-ui';
@@ -36,8 +41,9 @@ type Preview = { title: string; artist: string; audioUrl?: string };
 
 /**
  * The album's tracks as rows: number, title, length; the play lamp for a
- * local preview, a chip when a track is the one on air, and the two things
- * to do with it — put it on air, or take it out of the album.
+ * local preview, a chip when a track is the one on air, and what to do
+ * with it — put it on air, have the rotation play it next, or take it out
+ * of the album.
  */
 export const SongRows = ({
   albumId,
@@ -49,6 +55,8 @@ export const SongRows = ({
   const deleteSong = useDeleteSong();
   const { data: onAir } = useOnAir();
   const setOnAir = useSetOnAir();
+  const { data: rotation } = useRotation();
+  const playNext = usePlayNext();
   const { currentTrack, isPlaying, playTrack } = useNowPlayingStore();
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
@@ -147,6 +155,18 @@ export const SongRows = ({
                 onClick={() => setOnAir.mutate({ albumId, songId: song.id })}
               >
                 В ефір
+              </Button>
+            )}
+            {rotation?.enabled && !songOnAir && (
+              <Button
+                variant="ghost"
+                size="sm"
+                disabled={
+                  playNext.isPending || rotation.upNext.includes(song.id)
+                }
+                onClick={() => playNext.mutate(song.id)}
+              >
+                {rotation.upNext.includes(song.id) ? 'У черзі' : 'Наступною'}
               </Button>
             )}
             <button

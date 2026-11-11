@@ -301,14 +301,21 @@ export interface SessionPhoto {
 
 export interface TurntableTrack {
   songId: number;
+  /** The track's own album: a rotation batch spans many. */
+  albumId?: number;
   title: string;
+  artist?: string;
   trackNumber: number;
   durationSec: number;
 }
 
+/** `album`: a record put on by hand; `rotation`: the station's shuffle. */
+export type TurntableMode = 'album' | 'rotation';
+
 /** Wave's own playback of a record into the stream. */
 export interface TurntableState {
   status: 'idle' | 'playing';
+  mode?: TurntableMode;
   /** Someone other than the turntable (OBS) is publishing to the stream. */
   live: boolean;
   albumId?: number;
@@ -317,6 +324,20 @@ export interface TurntableState {
   position?: number;
   queue?: TurntableTrack[];
   startedAt?: string;
+}
+
+/** The station's shuffle across the library (IDEA-21). */
+export interface RotationState {
+  enabled: boolean;
+  /** What the turntable is doing right now. */
+  mode: TurntableMode | 'idle';
+  /** The next tracks of the batch on air, after the one playing. */
+  upcoming: TurntableTrack[];
+  /** Songs asked for with "play next", in order, not yet on air. */
+  upNext: number[];
+  /** Tracks played in this pass through the library, and its size. */
+  playedInPass: number;
+  libraryTracks: number;
 }
 
 export interface ConfigResponse<T> {

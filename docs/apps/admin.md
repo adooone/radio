@@ -59,10 +59,10 @@ detail for the form); the people sheet is the one overlay.
 
 ## Features
 
-- **Collection Management** - Albums, songs, and playlists with search and filtering
+- **Collection Management** - Albums, songs, and playlists with search and filtering; each song can go on air («В ефір») or, while the rotation is on, play next («Наступною»)
 - **Vinyl Digitization** - In-app chunked upload of recorded vinyl sides into `MEDIA_INBOX_PATH` (drag-and-drop, or a remembered "тека Radio" folder in Chromium), Discogs metadata, waveform-based track splitting, encode and publish
 - **Three pages** - «Ефір» (`/`), «Колекція» (`/collection`) and «Студія» (`/studio`, `/studio/$slug`), each the player's 2 : 1 split on an ink stage with the control island docked at the bottom. `/digitization`, `/stream-control` and `/users` redirect
-- **On Air** - The record on air drawn as the player draws it, the turntable's place in it, and the three actions: «Наступний трек», «Зупинити вертушку», «Зняти з ефіру»; four figures (RTMP, listeners, bitrate, air time); on the slab, the station's journal from wave's logs, the RTMP service's rows with start / stop / restart, and its configuration edited in place
+- **On Air** - The record on air drawn as the player draws it, the turntable's place in it (or the rotation's progress through the library), the «Ротація» lamp switch for the station, and the three actions: «Наступний трек» (a skip while the rotation plays), «Зупинити вертушку», «Зняти з ефіру»; the rotation's next tracks under «Далі»; four figures (RTMP, listeners, bitrate, air time); on the slab, the station's journal from wave's logs, the RTMP service's rows with start / stop / restart, and its configuration edited in place
 - **People sheet** - Behind the island's user ring, over the dimmed page: accounts with their role and light, role / active toggles, delete, create (in place), JSON export and sign out
 - **Real-time Monitoring** - Service status and system health
 - **PWA Support** - Installable Progressive Web App, installed as a Dock app the Студія workflow is designed around

@@ -47,6 +47,17 @@ src/
 - **File Upload** - Audio file handling with metadata extraction
 - **RTMP Control** - Docker container management for RTMP server
 - **Monitoring** - System health and service status
+- **The station (rotation)** - While on, wave plays the whole library as a radio: every track once per pass in a shuffled order, no two neighbours from one album or by one artist, in batches of about two hours per ffmpeg run, crossfaded (4 s) and each track at its measured gain. A record put on air by hand interrupts it and the rotation carries on after it; «Зняти з ефіру» or «Зупинити вертушку» switch it off. Its state (on / off, this pass's played tracks, "play next" asks) is kept in `data/rotation.json`, and a watchdog restarts it within 30 s if it stops while on. Going live from OBS means switching it off first (nginx takes one publisher per stream key)
+- **Even loudness** - Every track's EBU R128 loudness is measured once and stored as `songs.gain_db` (target -16 LUFS, true peak kept under -1 dBTP, ±12 dB); the Studio's publish measures new records, `bun run measure-loudness` the rest
+
+### Station API
+
+| Method | Path | Body | |
+|--------|------|------|-|
+| `GET` | `/api/stream/rotation` | | On / off, mode, the next tracks, "play next" asks, pass progress |
+| `PUT` | `/api/stream/rotation` | `{ enabled }` | Station on or off (admin) |
+| `POST` | `/api/stream/rotation/skip` | | A fresh batch now (admin) |
+| `POST` | `/api/stream/rotation/next` | `{ songId }` | Play after the current track (admin) |
 
 ## Database Tables
 
@@ -58,6 +69,7 @@ src/
 | `collections` | Playlists / audio collections |
 | `collection_items` | Collection-to-audio relationships |
 | `sessions` | Authentication sessions |
+| `songs` | An album's tracks, with `gain_db` for the station's loudness |
 
 ## Scripts
 
@@ -66,6 +78,7 @@ See [apps/wave/README.md](../../apps/wave/README.md) for the full list.
 Key scripts:
 - `bun run dev` - Dev server with hot reload
 - `bun run db:migrate` - Run migrations
+- `bun run measure-loudness` - Measure tracks without a gain (`--all` remeasures)
 - `bun run admin` - Interactive admin creation
 - `bun run rtmp` - Start RTMP server
 
@@ -74,6 +87,10 @@ Key scripts:
 | Name | Script | Description |
 |------|--------|-------------|
 | `radio.wave` | `src/index.ts` | Main API server |
+
+pm2 does not start on boot by itself: run `pm2 startup` once (it prints a
+`sudo` command to run) and `pm2 save` after starting wave, or the station
+stays silent after a reboot.
 
 ## Environment Variables
 

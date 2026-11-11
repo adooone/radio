@@ -8,6 +8,8 @@ import {
   monitoringRoutes,
   streamRoutes,
 } from '@/api';
+import { startRotation } from '@/services/stream/rotationService';
+import { startTurntable } from '@/services/stream/turntableService';
 import { env } from '@/utils/env';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
@@ -47,6 +49,10 @@ app.route('/api/audio-files', audioFilesRoutes);
 app.route('/api/albums', albumsRoutes);
 app.route('/api/admin', adminRoutes);
 app.route('/api/digitization', digitizationRoutes);
+
+startTurntable();
+// After the turntable's boot step: the station resumes if it was on.
+startRotation();
 
 Bun.serve({
   fetch: app.fetch,

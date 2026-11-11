@@ -1,6 +1,6 @@
-import { and, desc, eq } from 'drizzle-orm';
+import { and, desc, eq, isNotNull } from 'drizzle-orm';
 import { db } from '../db';
-import { audioFiles, songs } from '../schema';
+import { albums, audioFiles, songs } from '../schema';
 
 type NewSongData = {
   albumId: number;
@@ -30,6 +30,7 @@ const findSongsByAlbum = async (albumId: number) => {
       format: songs.format,
       fileSlug: songs.fileSlug,
       position: songs.position,
+      gainDb: songs.gainDb,
       createdAt: songs.createdAt,
       audioFilePath: audioFiles.path,
       audioFileName: audioFiles.name,
@@ -82,7 +83,43 @@ const findSongByAlbumAndFileSlug = async (albumId: number, fileSlug: string) =>
     .where(and(eq(songs.albumId, albumId), eq(songs.fileSlug, fileSlug)))
     .get();
 
+/**
+ * Every track the station can play: a file slug on an album whose media
+ * folder is present, with what the rotation and loudness need.
+ */
+const findPlayableSongs = async () =>
+  db
+    .select({
+      id: songs.id,
+      albumId: songs.albumId,
+      title: songs.title,
+      trackNumber: songs.trackNumber,
+      duration: songs.duration,
+      fileSlug: songs.fileSlug,
+      gainDb: songs.gainDb,
+      artist: albums.artist,
+      folderSlug: albums.folderSlug,
+    })
+    .from(songs)
+    .innerJoin(albums, eq(songs.albumId, albums.id))
+    .where(
+      and(
+        isNotNull(songs.fileSlug),
+        isNotNull(albums.folderSlug),
+        eq(albums.hasMedia, 1),
+      ),
+    )
+    .all();
+
+type PlayableSong = Awaited<ReturnType<typeof findPlayableSongs>>[number];
+
+const setSongGain = async (id: number, gainDb: number) => {
+  db.update(songs).set({ gainDb }).where(eq(songs.id, id)).run();
+};
+
 export {
+  findPlayableSongs,
+  setSongGain,
   findSongById,
   findSongsByAlbum,
   findSongByAlbumAndFileSlug,
@@ -93,4 +130,4 @@ export {
   reorderSongs,
 };
 
-export type { NewSongData };
+export type { NewSongData, PlayableSong };

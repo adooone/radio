@@ -80,4 +80,30 @@ streamRoutes.delete(
   streamHandlers.stopTurntableHandler,
 );
 
+// The station's rotation (IDEA-21).
+streamRoutes.get('/rotation', streamHandlers.getRotationHandler);
+
+streamRoutes.put(
+  '/rotation',
+  authMiddleware,
+  adminMiddleware,
+  streamValidators.setRotationValidator,
+  streamHandlers.setRotationHandler,
+);
+
+streamRoutes.post(
+  '/rotation/skip',
+  authMiddleware,
+  adminMiddleware,
+  streamHandlers.skipRotationHandler,
+);
+
+streamRoutes.post(
+  '/rotation/next',
+  authMiddleware,
+  adminMiddleware,
+  streamValidators.playNextValidator,
+  streamHandlers.playNextHandler,
+);
+
 export { streamRoutes };

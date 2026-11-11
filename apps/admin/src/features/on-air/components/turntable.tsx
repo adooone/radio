@@ -1,16 +1,27 @@
 import {
   useClearOnAir,
   useOnAir,
+  useRotation,
   useSetOnAir,
+  useSetRotation,
+  useSkipRotation,
   useStopTurntable,
   useTurntable,
 } from '@/services/api/hooks/use-on-air-api';
-import { Button } from '@dendelion/func-ui';
+import { Button, LampSwitch } from '@dendelion/func-ui';
 import { VinylBox } from '@radio/stage';
-import type { TurntableState } from '@radio/types';
+import type { RotationState, TurntableState } from '@radio/types';
 
-const sourceLine = (turntable: TurntableState | undefined) => {
+const sourceLine = (
+  turntable: TurntableState | undefined,
+  rotation: RotationState | undefined,
+) => {
   if (!turntable) return 'Тиша в ефірі';
+  if (turntable.status === 'playing' && turntable.mode === 'rotation') {
+    return rotation
+      ? `Ротація · ${rotation.playedInPass} з ${rotation.libraryTracks} у цьому колі`
+      : 'Ротація';
+  }
   if (turntable.status === 'playing') {
     const position = (turntable.position ?? 0) + 1;
     const total = turntable.queue?.length ?? 0;
@@ -29,22 +40,32 @@ const sinceLine = (setAt: string) =>
 
 /**
  * The air itself: the player's record with the song on it, the turntable's
- * place in the record, and the three things the admin can do to it — go
- * to the next track (the one lit action), stop the sound, take it off air.
+ * place in the record or the station's rotation, and what the admin can do
+ * to it — switch the rotation on or off, go to the next track (the one lit
+ * action), stop the sound, take it off air — with the tracks coming next.
  */
 export const Turntable = () => {
   const { data: onAir, isLoading } = useOnAir();
   const { data: turntable } = useTurntable();
+  const { data: rotation } = useRotation();
   const setOnAir = useSetOnAir();
   const stopTurntable = useStopTurntable();
   const clearOnAir = useClearOnAir();
+  const setRotation = useSetRotation();
+  const skipRotation = useSkipRotation();
 
   const playing = turntable?.status === 'playing';
+  const rotating = playing && turntable?.mode === 'rotation';
   const queue = turntable?.queue ?? [];
   const position = turntable?.position ?? 0;
   const next = playing ? queue[position + 1] : undefined;
+  const upcoming = rotation?.upcoming ?? [];
   const busy =
-    setOnAir.isPending || stopTurntable.isPending || clearOnAir.isPending;
+    setOnAir.isPending ||
+    stopTurntable.isPending ||
+    clearOnAir.isPending ||
+    setRotation.isPending ||
+    skipRotation.isPending;
 
   return (
     <section className="flex items-center gap-12">
@@ -59,7 +80,9 @@ export const Turntable = () => {
       </div>
 
       <div className="flex min-w-0 flex-col gap-3">
-        <span className="type-label text-glow">{sourceLine(turntable)}</span>
+        <span className="type-label text-glow">
+          {sourceLine(turntable, rotation)}
+        </span>
         {isLoading ? (
           <p className="font-serif text-xl text-cream/70">Завантаження…</p>
         ) : onAir ? (
@@ -80,16 +103,27 @@ export const Turntable = () => {
           </p>
         )}
 
-        <div className="mt-3 flex flex-wrap gap-3">
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <LampSwitch
+            size="sm"
+            tone="red"
+            label="Ротація"
+            checked={rotation?.enabled ?? false}
+            disabled={!rotation || busy}
+            onChange={(event) => setRotation.mutate(event.target.checked)}
+          />
           <Button
             size="sm"
             variant="lit"
-            disabled={!next || busy || !onAir}
-            onClick={() =>
-              next &&
-              onAir &&
-              setOnAir.mutate({ albumId: onAir.albumId, songId: next.songId })
-            }
+            disabled={rotating ? busy : !next || busy || !onAir}
+            onClick={() => {
+              if (rotating) skipRotation.mutate();
+              else if (next && onAir)
+                setOnAir.mutate({
+                  albumId: onAir.albumId,
+                  songId: next.songId,
+                });
+            }}
           >
             Наступний трек
           </Button>
@@ -110,6 +144,22 @@ export const Turntable = () => {
             Зняти з ефіру
           </Button>
         </div>
+
+        {rotating && upcoming.length > 0 && (
+          <div className="mt-4 flex flex-col gap-1">
+            <span className="type-label text-cream/45">Далі</span>
+            {upcoming.map((track) => (
+              <p
+                key={track.songId}
+                className="truncate font-serif text-[15px] text-cream/70"
+              >
+                <span className="text-cream/45">{track.artist}</span>
+                {' — '}
+                {track.title}
+              </p>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

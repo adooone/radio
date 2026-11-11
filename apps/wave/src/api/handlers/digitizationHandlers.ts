@@ -1,4 +1,4 @@
-import { syncMediaToDatabase } from '@/services/albums';
+import { measureMissingGains, syncMediaToDatabase } from '@/services/albums';
 import {
   applySplits,
   completeUpload,
@@ -250,8 +250,10 @@ export const digitizationHandlers = {
             env.mediaBaseUrl,
             accountId,
           );
+          log('measuring loudness for the station...');
+          const loudness = await measureMissingGains({}, { log });
           log('published');
-          return { encode: encodeResult, sync: syncResult };
+          return { encode: encodeResult, sync: syncResult, loudness };
         });
         return ResponseHelper.success(c, job);
       },

@@ -22,6 +22,7 @@
     "backup-db": "bun src/scripts/backup-db.ts",
     "restore-db": "bun src/scripts/restore-db.ts",
     "repair-db": "bun src/scripts/repair-albums-schema.ts",
+    "measure-loudness": "bun src/scripts/measure-loudness.ts",
     "seed-data-json": "bun scripts/seed-data-json.ts",
     "rtmp": "./scripts/start-rtmp.sh",
     "pm2:start": "pm2 start ecosystem.config.js --env production",

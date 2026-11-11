@@ -6,6 +6,7 @@ export const onAirKeys = {
   all: ['on-air'] as const,
   current: () => [...onAirKeys.all, 'current'] as const,
   turntable: () => [...onAirKeys.all, 'turntable'] as const,
+  rotation: () => [...onAirKeys.all, 'rotation'] as const,
 };
 
 export const useOnAir = () => {
@@ -57,3 +58,31 @@ export const useStopTurntable = () => {
     },
   });
 };
+
+/** The station's shuffle: on / off, what comes next. Polled like the turntable. */
+export const useRotation = () => {
+  return useQuery({
+    queryKey: onAirKeys.rotation(),
+    queryFn: onAirApi.getRotation,
+    refetchInterval: 5000,
+  });
+};
+
+const useOnAirMutation = <T>(mutationFn: (arg: T) => Promise<unknown>) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: onAirKeys.all });
+    },
+  });
+};
+
+export const useSetRotation = () =>
+  useOnAirMutation((enabled: boolean) => onAirApi.setRotation(enabled));
+
+export const useSkipRotation = () =>
+  useOnAirMutation<void>(() => onAirApi.skipRotation());
+
+export const usePlayNext = () =>
+  useOnAirMutation((songId: number) => onAirApi.playNext(songId));

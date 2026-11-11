@@ -50,6 +50,13 @@
       "when": 1773583100000,
       "tag": "0006_album_metadata_data_json",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1794422400000,
+      "tag": "0007_song_gain",
+      "breakpoints": true
     }
   ]
 }

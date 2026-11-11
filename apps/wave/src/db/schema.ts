@@ -1,6 +1,7 @@
 import { sql } from 'drizzle-orm';
 import {
   integer,
+  real,
   sqliteTable,
   text,
   uniqueIndex,
@@ -128,6 +129,8 @@ export const songs = sqliteTable(
     format: text('format').notNull(),
     fileSlug: text('file_slug'),
     position: text('position'),
+    /** dB to reach the station's loudness target (EBU R128); null until measured. */
+    gainDb: real('gain_db'),
     createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
   },
   (table) => [
