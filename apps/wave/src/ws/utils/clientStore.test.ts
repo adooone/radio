@@ -18,6 +18,15 @@ function makeFakeSocket() {
   };
 }
 
+// The message's own shape is onAirService's to test; here it only has to
+// reach the right sockets.
+const message = formatNowPlayingMessage({
+  albumId: 1,
+  artist: 'Album Artist',
+  title: 'Album Title',
+  setAt: '2026-11-07T12:00:00.000Z',
+});
+
 describe('clientStore', () => {
   it('broadcasts the now-playing message to every connected client', () => {
     const store = new ClientStore();
@@ -26,22 +35,10 @@ describe('clientStore', () => {
     store.addClient(a);
     store.addClient(b);
 
-    store.broadcast(
-      formatNowPlayingMessage({
-        albumId: 1,
-        artist: 'Album Artist',
-        title: 'Album Title',
-        setAt: new Date().toISOString(),
-      }),
-    );
+    store.broadcast(message);
 
-    const expected = JSON.stringify({
-      type: 'now_playing',
-      artist: 'Album Artist',
-      title: 'Album Title',
-    });
-    expect(a.sent).toEqual([expected]);
-    expect(b.sent).toEqual([expected]);
+    expect(a.sent).toEqual([message]);
+    expect(b.sent).toEqual([message]);
   });
 
   it('broadcasts a bare now-playing message on clear', () => {
@@ -61,22 +58,9 @@ describe('clientStore', () => {
 
     const joining = makeFakeSocket();
     store.addClient(joining);
-    joining.send(
-      formatNowPlayingMessage({
-        albumId: 1,
-        artist: 'Album Artist',
-        title: 'Album Title',
-        setAt: new Date().toISOString(),
-      }),
-    );
+    joining.send(message);
 
-    expect(joining.sent).toEqual([
-      JSON.stringify({
-        type: 'now_playing',
-        artist: 'Album Artist',
-        title: 'Album Title',
-      }),
-    ]);
+    expect(joining.sent).toEqual([message]);
     expect(existing.sent).toEqual([]);
   });
 });
