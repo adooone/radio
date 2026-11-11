@@ -1,9 +1,8 @@
-/* func-ui ships an unlayered Tailwind v3 build (its own preflight, `body`
-   font, even a `.hidden`). Layered between base and utilities, its
-   components survive this page's preflight (`button { background:
-   transparent; font: inherit }` would strip them from below) while the
-   page's utilities still win above it; the body font is pinned back
-   further down, unlayered. */
+/* func-ui ships an unlayered Tailwind v3 build (its own preflight, even a
+   `.hidden`; since 0.5.0 it leaves `body` alone). Layered between base and
+   utilities, its components survive this page's preflight (`button {
+   background: transparent; font: inherit }` would strip them from below)
+   while the page's utilities still win above it. */
 @layer theme, base, func-ui, components, utilities;
 @import "@dendelion/func-ui/dist/index.css" layer(func-ui);
 @import "tailwindcss";
@@ -81,15 +80,10 @@
   }
   body {
     @apply bg-ink font-serif text-cream antialiased;
+    font-weight: 500;
     /* One screen, nothing to scroll. */
     overflow: hidden;
   }
-}
-
-/* func-ui's body rule sits above the base layer; the page reads KyivType. */
-body {
-  font-family: var(--font-serif);
-  font-weight: 500;
 }
 
 /* The player's type, all KyivType Serif: the read voice (the song, the

@@ -4,7 +4,7 @@ title: Player controls on func-ui — the audit
 type: refactor
 status: idea
 created: 2026-11-07
-updated: 2026-11-07
+updated: 2026-11-11
 tags:
   - player
   - design
@@ -53,7 +53,7 @@ are.
 ### Phases
 - [ ] Add the player's missing options to func-ui
       In `~/dev/func-ui`: a lamp slider for the volume, a single ghost-word toggle, a colour-swatch choice and a bare `Input` / auto-growing `Textarea` for the island's fields, published as the next release.
-- [ ] Bump func-ui and set the player's own body styles
+- [x] Bump func-ui and set the player's own body styles
       `apps/player` on the new release; `styles/index.css` sets the body font, colour and background and drops the unlayered font pin-back.
 - [ ] Move the chat's raw controls onto func-ui
       `chat-input` textarea, `nickname-input` and settings nickname inputs, the settings colour picker buttons, the `chat-header` listeners toggle.
@@ -63,3 +63,4 @@ are.
 
 ### Thread
 - [x] 2026-11-02 [decision] [user] The player gets its own idea after IDEA-17 lands, drafted from a fresh audit of its island, chat and controls. (Recorded on IDEA-17's thread.)
+- [x] 2026-11-11 [decision] [user] Phase 2 pulled forward, ahead of Phase 1: the player moves to func-ui 0.5.0 now for its darker unlit lamps (asked for on the settings page's Clear all data button). The player already set its own body background and colour; the unlayered font pin-back is gone, its weight folded into the base body rule. Island, chat and settings screenshotted unchanged apart from the dark lamps.
