@@ -34,8 +34,8 @@ importers:
   apps/admin:
     dependencies:
       '@dendelion/func-ui':
-        specifier: ^0.3.0
-        version: 0.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.5.0
+        version: 0.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@fontsource/jetbrains-mono':
         specifier: ^5.2.8
         version: 5.2.8
@@ -982,6 +982,12 @@ packages:
 
   '@dendelion/func-ui@0.3.0':
     resolution: {integrity: sha512-M4Sss9wEv3faN6vM9NEwezBm/NHTXBP/lHJindFx1JGbdPShkHIq9S1+ZDdPiT0NWlXQoda82T3D9E1Jlod4zw==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+
+  '@dendelion/func-ui@0.5.0':
+    resolution: {integrity: sha512-/BaTPudTuyngZ+j7rcK6DR2Yz4XptzNcdomo8RifyTZiTDvlXISXGBX2EDQKuP11fsjFsDzjsO1+oD/iq68NDQ==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
@@ -5928,6 +5934,16 @@ snapshots:
   '@csstools/css-tokenizer@3.0.4': {}
 
   '@dendelion/func-ui@0.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      clsx: 2.1.1
+      framer-motion: 12.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tailwind-merge: 2.6.1
+    transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
+
+  '@dendelion/func-ui@0.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       clsx: 2.1.1
       framer-motion: 12.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)

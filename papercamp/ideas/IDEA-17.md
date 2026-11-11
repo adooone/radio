@@ -2,9 +2,9 @@
 id: IDEA-17
 title: Admin controls on func-ui — no custom primitives
 type: refactor
-status: in-progress
+status: review
 created: 2026-11-02
-updated: 2026-11-07
+updated: 2026-11-11
 tags:
   - admin
   - design
@@ -123,10 +123,10 @@ not controls. The login page. Any change to what the pages do.
       and tests green; the four boards screenshotted in Chrome against
       the IDEA-16 mockups.
       run: 7s · 94 in · 23.6k out · sonnet-5-5 · sess:a77846ad-5d5d-4ae7-8b35-be04da85612b
-- [ ] Phase 6 — Publish func-ui and bump
+- [x] Phase 6 — Publish func-ui and bump
       Phase 1's last step, which never happened. The tokens, ghost
       `Tabs`, lit `Button` and `ListItem` tones sit uncommitted in
-      `~/dev/func-ui` (its IDEA-13, in review), and the admin reaches
+      `~/dev/func-ui` (its IDEA-13 locally, landed as IDEA-14), and the admin reaches
       them only through the `pnpm link` symlink while `package.json`
       and the lockfile still say `^0.3.0`. A fresh install or a deploy
       builds the admin without them. func-ui commits its IDEA-13 work
@@ -147,3 +147,4 @@ not controls. The login page. Any change to what the pages do.
 - [x] 2026-11-02 [question] [agent] The player has not been audited against this rule; its island and chat controls may carry the same kind of hand-rolled pieces. Its own idea once the admin is done?
 - [x] 2026-11-02 [decision] [user] The player gets its own idea after this one lands, drafted from a fresh audit of its island, chat and controls.
 - [x] 2026-11-07 [decision] [agent] Back to in-progress from review: the admin builds only against the locally linked func-ui, which is uncommitted and unpublished. Phase 6 publishes it and bumps the dependency.
+- [x] 2026-11-11 [decision] [agent] Phase 6 done: the token work landed in func-ui as its IDEA-14 (adooone/func-ui#13, which also turned the unlit dark lamp tone into smoked glass, asked for from the player's settings page) and shipped as 0.5.0 through release-please. The admin depends on `^0.5.0` from npm with the local link gone; its check-types, lint, build and tests pass. func-ui's open `rounded` prop PR (#12) was closed as superseded.
