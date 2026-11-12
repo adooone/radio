@@ -2,9 +2,9 @@
 id: IDEA-17
 title: Admin controls on func-ui — no custom primitives
 type: refactor
-status: review
+status: done
 created: 2026-11-02
-updated: 2026-11-11
+updated: 2026-11-12
 tags:
   - admin
   - design
