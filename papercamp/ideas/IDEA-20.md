@@ -2,7 +2,7 @@
 id: IDEA-20
 title: Player controls on func-ui — the audit
 type: refactor
-status: idea
+status: in-progress
 created: 2026-11-07
 updated: 2026-11-13
 tags:
@@ -65,3 +65,8 @@ are.
 ### Thread
 - [x] 2026-11-02 [decision] [user] The player gets its own idea after IDEA-17 lands, drafted from a fresh audit of its island, chat and controls. (Recorded on IDEA-17's thread.)
 - [x] 2026-11-11 [decision] [user] Phase 2 pulled forward, ahead of Phase 1: the player moves to func-ui 0.5.0 now for its darker unlit lamps (asked for on the settings page's Clear all data button). The player already set its own body background and colour; the unlayered font pin-back is gone, its weight folded into the base body rule. Island, chat and settings screenshotted unchanged apart from the dark lamps.
+- [ ] 2026-11-13 [question] [agent] Run-all parked on phase 3 ("Move the chat's raw controls onto func-ui") — the agent needs a decision: func-ui 0.5.0 on npm lacks GhostToggle, ColorSwatches and bare Input/Textarea, so how should the player consume them?
+      option: Publish func-ui's next release first, then bump the player — the clean path; needs func-ui commit, PR and merge
+      option: Link the player to the local func-ui worktree for now — unblocks work, but the repo can't install elsewhere
+      option: Skip the swatches and listeners toggle, move only what 0.5.0 has — partial phase, still raw controls
+      context: Phase 1's additions exist only as uncommitted changes in the func-ui worktree. npm latest is 0.5.0, which is what the player has installed, and none of the new components are in its typings. No release has been cut because nothing was committed or pushed.
