@@ -6,7 +6,7 @@ import type { ChatRoom } from '@/features/chat/use-chat-room';
 import type { NowPlaying } from '@/features/stream/use-now-playing';
 import { useT } from '@/i18n';
 import { useMedia } from '@/lib/use-media';
-import { LampIconButton, LampMeter } from '@dendelion/func-ui';
+import { LampIconButton, LampSlider } from '@dendelion/func-ui';
 import { TrackStrip } from './track-strip';
 
 type ControlIslandProps = {
@@ -89,27 +89,18 @@ export const ControlIsland = ({
             lampSize={lampSize}
             wordsClassName="w-[340px] min-w-0 shrink portrait:w-auto portrait:flex-1"
           />
-          <div className="relative hidden shrink-0 sm:landscape:block">
-            <LampMeter
-              aria-hidden="true"
-              value={volume}
-              max={1}
-              tone="red"
-              size="sm"
-              lampCount={8}
-              className="block"
-            />
-            <input
-              type="range"
-              min={0}
-              max={1}
-              step={0.05}
-              value={volume}
-              onChange={(e) => onVolume(Number(e.target.value))}
-              aria-label={t('island.volume')}
-              className="absolute inset-0 cursor-pointer appearance-none opacity-0"
-            />
-          </div>
+          <LampSlider
+            value={volume}
+            onChange={onVolume}
+            label={t('island.volume')}
+            min={0}
+            max={1}
+            step={0.05}
+            tone="red"
+            size="sm"
+            lampCount={8}
+            className="hidden shrink-0 sm:landscape:block"
+          />
           {/* The room's lamps on wide screens — mute, then settings — at the
               island's end; phones carry them in the track bar over the
               open room instead. */}

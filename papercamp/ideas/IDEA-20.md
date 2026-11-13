@@ -59,8 +59,9 @@ are.
 - [x] Move the chat's raw controls onto func-ui
       First link the player's `@dendelion/func-ui` to the local worktree at ~/dev/func-ui (Denys's decision, 2026-11-13), since the published 0.5.0 lacks GhostToggle, ColorSwatches and bare Input/Textarea. Then replace the chat's raw `<button>` (listeners toggle) and raw `<input>`/`<textarea>` (message, nickname, settings fields, colour picker) with those func-ui components. Pin back to a released func-ui version once one ships with these exports.
       run: 1m8s · 20 in · 4.5k out · sonnet-5-5 · sess:88df04e2-e2a2-4130-ab22-20e189f6c64e
-- [ ] Move the island's volume onto the lamp slider
+- [x] Move the island's volume onto the lamp slider
       `control-island`'s `LampMeter` plus invisible range becomes the func-ui slider; `docs/apps/player.md` updated, check-types, lint and tests green.
+      run: 28s · 34 in · 6.2k out · sonnet-5-5 · sess:88df04e2-e2a2-4130-ab22-20e189f6c64e
 - [ ] [manual] Check the island, chat and settings in Chrome against today's look
 
 ### Thread

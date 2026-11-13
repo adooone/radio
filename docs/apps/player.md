@@ -42,6 +42,7 @@ src/
 
 - **HLS Streaming**: Adaptive audio playback via HLS.js
 - **Real-time Chat**: WebSocket-based messaging with user colors
+- **Controls**: Every control comes from `@dendelion/func-ui` — the island's volume is a `LampSlider`, the chat's listeners toggle a `GhostToggle`, its fields `Input`/`Textarea`, the colour choice `ColorSwatches`
 - **Collection Browse**: Album grid with filtering and detail views
 - **PWA Support**: Progressive Web App with service worker
 - **Responsive Design**: Mobile and desktop support
