@@ -7,6 +7,9 @@ import tsPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   plugins: [react(), tsPaths(), tailwindcss()],
+  resolve: {
+    dedupe: ['react', 'react-dom'],
+  },
   server: {
     host: true,
     port: 3030,
