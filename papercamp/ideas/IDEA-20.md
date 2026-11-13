@@ -56,8 +56,9 @@ are.
       run: 58s · 16 in · 2.3k out · sonnet-5-5 · sess:c7d0ff88-3631-4508-8b7b-093c7e68eb3b
 - [x] Bump func-ui and set the player's own body styles
       `apps/player` on the new release; `styles/index.css` sets the body font, colour and background and drops the unlayered font pin-back.
-- [ ] Move the chat's raw controls onto func-ui
+- [x] Move the chat's raw controls onto func-ui
       First link the player's `@dendelion/func-ui` to the local worktree at ~/dev/func-ui (Denys's decision, 2026-11-13), since the published 0.5.0 lacks GhostToggle, ColorSwatches and bare Input/Textarea. Then replace the chat's raw `<button>` (listeners toggle) and raw `<input>`/`<textarea>` (message, nickname, settings fields, colour picker) with those func-ui components. Pin back to a released func-ui version once one ships with these exports.
+      run: 1m8s · 20 in · 4.5k out · sonnet-5-5 · sess:88df04e2-e2a2-4130-ab22-20e189f6c64e
 - [ ] Move the island's volume onto the lamp slider
       `control-island`'s `LampMeter` plus invisible range becomes the func-ui slider; `docs/apps/player.md` updated, check-types, lint and tests green.
 - [ ] [manual] Check the island, chat and settings in Chrome against today's look

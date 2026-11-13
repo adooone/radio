@@ -1,5 +1,10 @@
 import { useLocale, useT } from '@/i18n';
-import { LampButton, LampSwitch } from '@dendelion/func-ui';
+import {
+  ColorSwatches,
+  Input,
+  LampButton,
+  LampSwitch,
+} from '@dendelion/func-ui';
 import { type KeyboardEvent, useState } from 'react';
 import { NICKNAME_COLORS } from './colors';
 import type { ChatRoom } from './use-chat-room';
@@ -64,7 +69,8 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
       <section className="space-y-2">
         <p className={SECTION_LABEL}>{t('settings.nickname.label')}</p>
         <div className="control-island flex flex-row items-center gap-2 rounded-full border border-cream/10 p-2 pl-4">
-          <input
+          <Input
+            bare
             value={nickInput}
             onChange={(event) => {
               setNickInput(event.target.value);
@@ -72,9 +78,7 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
             }}
             onKeyDown={handleKeyDown}
             aria-invalid={!!room.nicknameError}
-            className={`w-full flex-grow rounded bg-transparent p-2 type-ui text-base text-cream outline-none placeholder:text-cream/45 ${
-              room.nicknameError ? 'border border-accent/50 bg-accent/10' : ''
-            }`}
+            className="w-full flex-grow"
           />
           <LampButton
             type="button"
@@ -96,33 +100,19 @@ export const SettingsPage = ({ room }: SettingsPageProps) => {
 
       <section className="space-y-2">
         <p className={SECTION_LABEL}>{t('settings.color.label')}</p>
-        <div className="flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            onClick={() => room.setColorChoice(null)}
-            className={`rounded-full border px-3 py-1 type-label text-cream/70 ${
-              room.colorChoice === null
-                ? 'border-cream/60 bg-cream/10'
-                : 'border-cream/15'
-            }`}
-          >
-            {t('settings.color.auto')}
-          </button>
-          {NICKNAME_COLORS.map((color) => (
-            <button
-              key={color}
-              type="button"
-              aria-label={t('settings.color.useColor', { color })}
-              onClick={() => room.setColorChoice(color)}
-              className={`size-7 rounded-full border-2 ${
-                room.colorChoice === color
-                  ? 'border-cream/80'
-                  : 'border-transparent'
-              }`}
-              style={{ backgroundColor: color }}
-            />
-          ))}
-        </div>
+        <ColorSwatches
+          label={t('settings.color.label')}
+          value={room.colorChoice}
+          onChange={room.setColorChoice}
+          options={[
+            { value: null, label: t('settings.color.auto') },
+            ...NICKNAME_COLORS.map((color) => ({
+              value: color,
+              color,
+              label: t('settings.color.useColor', { color }),
+            })),
+          ]}
+        />
       </section>
 
       <section className="space-y-2">

@@ -1,5 +1,5 @@
 import { useT } from '@/i18n';
-import { LampButton, LampIconButton } from '@dendelion/func-ui';
+import { Input, LampButton, LampIconButton } from '@dendelion/func-ui';
 import { type KeyboardEvent, useState } from 'react';
 import { CheckIcon } from './icons';
 
@@ -32,7 +32,8 @@ export const NicknameInput = ({
   };
 
   const field = (
-    <input
+    <Input
+      bare
       value={nickInput}
       onChange={(e) => {
         setNickInput(e.target.value);
@@ -41,9 +42,7 @@ export const NicknameInput = ({
       onKeyDown={handleKeyDown}
       placeholder={t('chat.nickname.placeholder')}
       aria-invalid={!!error}
-      className={`w-full flex-grow rounded bg-transparent p-2 type-ui text-base text-cream outline-none placeholder:text-cream/45 ${
-        island ? 'min-w-0 text-base' : ''
-      } ${error ? 'border border-accent/50 bg-accent/10' : ''}`}
+      className={`w-full flex-grow ${island ? 'min-w-0' : ''}`}
     />
   );
 

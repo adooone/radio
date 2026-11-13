@@ -1,12 +1,6 @@
 import { useT } from '@/i18n';
-import { LampButton, LampIconButton } from '@dendelion/func-ui';
-import {
-  type FormEvent,
-  type KeyboardEvent,
-  useCallback,
-  useRef,
-  useState,
-} from 'react';
+import { LampButton, LampIconButton, Textarea } from '@dendelion/func-ui';
+import { type FormEvent, type KeyboardEvent, useState } from 'react';
 import { SendIcon } from './icons';
 
 type ChatInputProps = {
@@ -19,23 +13,12 @@ type ChatInputProps = {
 export const ChatInput = ({ onSend, island = false }: ChatInputProps) => {
   const t = useT();
   const [message, setMessage] = useState('');
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const adjustHeight = useCallback(() => {
-    const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = `${textarea.scrollHeight}px`;
-    }
-  }, []);
-
   const handleSend = (e: FormEvent) => {
     e.preventDefault();
     const text = message.trim();
     if (!text) return;
     onSend(text);
     setMessage('');
-    if (textareaRef.current) textareaRef.current.style.height = 'auto';
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -46,18 +29,16 @@ export const ChatInput = ({ onSend, island = false }: ChatInputProps) => {
   };
 
   const field = (
-    <textarea
-      ref={textareaRef}
+    <Textarea
+      bare
+      autoGrow
       value={message}
-      onChange={(e) => {
-        setMessage(e.target.value);
-        adjustHeight();
-      }}
+      onChange={(e) => setMessage(e.target.value)}
       onKeyDown={handleKeyDown}
       placeholder={t('chat.input.placeholder')}
       rows={1}
-      className={`min-h-[38px] w-full flex-grow resize-none overflow-hidden bg-transparent p-2 type-ui text-base text-cream outline-none placeholder:text-cream/45 ${
-        island ? 'min-w-0 max-h-[64px] text-base' : 'max-h-[200px]'
+      className={`min-h-[38px] w-full flex-grow ${
+        island ? 'min-w-0 max-h-[64px]' : 'max-h-[200px]'
       }`}
     />
   );

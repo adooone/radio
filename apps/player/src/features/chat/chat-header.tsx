@@ -1,4 +1,5 @@
 import { useT } from '@/i18n';
+import { GhostToggle } from '@dendelion/func-ui';
 import { effectiveColor } from './colors';
 import type { ChatPage } from './use-chat-room';
 
@@ -28,18 +29,13 @@ export const ChatHeader = ({
   const listenersOpen = page === 'listeners';
   return (
     <header className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-x-3 pb-3">
-      <button
-        type="button"
+      <GhostToggle
+        pressed={listenersOpen}
         onClick={() => onTogglePage('listeners')}
-        aria-pressed={listenersOpen}
-        className={`type-label col-start-2 row-start-1 justify-self-center whitespace-nowrap rounded-full px-3 py-2 underline-offset-[6px] transition-colors ${
-          listenersOpen
-            ? 'text-cream underline decoration-accent decoration-2'
-            : 'text-cream/70 hover:text-cream'
-        }`}
+        className="col-start-2 row-start-1 justify-self-center whitespace-nowrap"
       >
         {t('chat.listenersCount', { count: othersCount })}
-      </button>
+      </GhostToggle>
       <span className="col-start-3 row-start-1 min-w-0 justify-self-end">
         {nickname && (
           <span
