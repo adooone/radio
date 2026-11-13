@@ -70,3 +70,8 @@ are.
       option: Link the player to the local func-ui worktree for now — unblocks work, but the repo can't install elsewhere
       option: Skip the swatches and listeners toggle, move only what 0.5.0 has — partial phase, still raw controls
       context: Phase 1's additions exist only as uncommitted changes in the func-ui worktree. npm latest is 0.5.0, which is what the player has installed, and none of the new components are in its typings. No release has been cut because nothing was committed or pushed.
+- [ ] 2026-11-13 [question] [agent] Run-all parked on phase 3 ("Move the chat's raw controls onto func-ui") — the agent needs a decision: func-ui 0.5.0 lacks GhostToggle, ColorSwatches and bare Input/Textarea — how should the player consume them?
+      option: Publish func-ui's next release first, then bump the player — clean path; needs a func-ui commit and release
+      option: Link the player to the local func-ui worktree — unblocks now, but the repo can't install elsewhere
+      option: Move only what 0.5.0 has, skipping swatches and listeners toggle — partial phase, raw controls remain
+      context: Phase 1's additions are uncommitted in ~/dev/func-ui, and npm latest is 0.5.0, which is what the player has installed. None of the new components are in its typings, and no release has been cut.
