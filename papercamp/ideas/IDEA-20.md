@@ -4,7 +4,7 @@ title: Player controls on func-ui — the audit
 type: refactor
 status: idea
 created: 2026-11-07
-updated: 2026-11-11
+updated: 2026-11-13
 tags:
   - player
   - design
@@ -51,8 +51,9 @@ The stage package's canvas art (`VinylBox`, `Slab`, `SplatRecord`,
 are.
 
 ### Phases
-- [ ] Add the player's missing options to func-ui
+- [x] Add the player's missing options to func-ui
       In `~/dev/func-ui`: a lamp slider for the volume, a single ghost-word toggle, a colour-swatch choice and a bare `Input` / auto-growing `Textarea` for the island's fields, published as the next release.
+      run: 58s · 16 in · 2.3k out · sonnet-5-5 · sess:c7d0ff88-3631-4508-8b7b-093c7e68eb3b
 - [x] Bump func-ui and set the player's own body styles
       `apps/player` on the new release; `styles/index.css` sets the body font, colour and background and drops the unlayered font pin-back.
 - [ ] Move the chat's raw controls onto func-ui
