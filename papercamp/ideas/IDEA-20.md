@@ -2,7 +2,7 @@
 id: IDEA-20
 title: Player controls on func-ui — the audit
 type: refactor
-status: in-progress
+status: review
 created: 2026-11-07
 updated: 2026-11-13
 tags:
